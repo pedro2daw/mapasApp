@@ -12,7 +12,7 @@ echo('
         echo ("<div class='form-group'>");
         echo ("
             Nombre</br>
-            <input type='text' class='form-control' placeholder='Introduce tu nombre' name='nombre' onblur='check_user();' id='user' required/>
+            <input type='text' class='form-control' placeholder='Introduce tu nombre' name='name' onblur='check_user();' id='user' required/>
             <p id='ajax'></p>
             <!--</br>-->");
         echo(" </div>");
