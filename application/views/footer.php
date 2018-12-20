@@ -1,5 +1,5 @@
 <br><br>
-<span id="footer" class="text-center">&copy Trident Web Developers</span>
+<span id="footer" class="text-center">&copy </span>
 </div>
 </div>
 </div><!-- cierra el container -->

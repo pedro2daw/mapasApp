@@ -1,5 +1,3 @@
-
-
 <?php 
 echo('    
 <div class="container-fluid" id="login"> 
@@ -32,6 +30,4 @@ echo('
     <br><br><br>
     
     ");
-?>
-   
-
+    

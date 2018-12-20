@@ -2,8 +2,8 @@
 class modelUser extends CI_Model{
 
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
-    public function checkLogin($nombre,$pass){
-        $query = $this->db->query("SELECT id FROM usuarios WHERE usuario='$nombre' AND pass='$pass'");
+    public function checkLogin($name,$pass){
+        $query = $this->db->query("SELECT id FROM users WHERE usuario='$name' AND pass='$pass'");
 
         return $query->num_rows();
     }

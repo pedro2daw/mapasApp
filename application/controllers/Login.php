@@ -6,31 +6,26 @@ class Login extends Security{
      
 // ------- CARGO LA VISTA DEL LOGIN POR DEFECTO ------------ //        
     public function index(){
-        $data["nombreVista"] = "login";
+        $data["viewName"] = "login";
         $this->load->view('template',$data);
     }
 // ------- CARGO LA VISTA DEL LOGIN POR DEFECTO ------------ //
 
 // ------- COMPRUEBO EL LOGIN REALIZADO -------------------- //
     public function checkLogin(){
-        $data["nombreVista"] = "login";
-        $nombre = $this->input->get_post("nombre");
+        $data["viewName"] = "login";
+        $name = $this->input->get_post("name");
         $pass = $this->input->get_post("password");
         $this->load->model('modelUser');
-        $resultado = $this->modelUser->checkLogin($nombre,$pass);
+        $r = $this->modelUser->checkLogin($name,$pass);
 
-        if($resultado == 0){
+        if($r == 0){
             $data["msg"] = "<h5 class='error'>Usuario o contraseña incorrectos</h5>";
             $this->load->view('template',$data);
         }
         else{
-            echo("YEEEESS");
+            echo(" Funciona ##########completar ");
         }
     }
 // ------- COMPRUEBO EL LOGIN REALIZADO -------------------- //
 }
-
-
-
-
-?>

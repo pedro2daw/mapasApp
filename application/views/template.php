@@ -1,5 +1,6 @@
 <?php
 
     include("header.php");
-    include("$nombreVista.php");
+    include("$viewName.php");
     include("footer.php");
+    

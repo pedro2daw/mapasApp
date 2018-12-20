@@ -11,7 +11,7 @@
             {
                 if (!isset($this->session->loguedIn)){
                     //echo("<script>alert('No tienes permiso para acceder a este sitio');</script>");
-                    $data['nombreVista'] = 'login';
+                    $data['viewName'] = 'login';
                     $this->load->view('template', $data);
                     return false;
                 }else{
@@ -19,12 +19,12 @@
                 }
             }
     
-            public function create_session() {
-                $session_logued = array('loguedIn' => TRUE);
-                $this->session->set_userdata($session_logued);
+            public function createSession() {
+                $sessionLogued = array('loguedIn' => TRUE);
+                $this->session->set_userdata($sessionLogued);
 
             }
-            public function destroy_session() {
+            public function destroySession() {
                 $this->session->sess_destroy();
 
             }
