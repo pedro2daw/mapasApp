@@ -21,10 +21,12 @@ class Login extends Security{
 
         if($r == 0){
             $data["msg"] = "<h5 class='error'>Usuario o contraseña incorrectos</h5>";
+            $data["viewName"] = "login";
             $this->load->view('template',$data);
         }
         else{
-            echo(" Funciona ##########completar ");
+            $data["viewName"] = "admin_panel";
+            $this->load->view('template',$data);
         }
     }
 // ------- COMPRUEBO EL LOGIN REALIZADO -------------------- //
