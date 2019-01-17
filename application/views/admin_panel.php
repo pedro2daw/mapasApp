@@ -124,17 +124,22 @@ echo '
             <div class='form-group'>
                 <label for='fecha'>Fecha</label>
                 <input type='date' class='form-control' placeholder='Introduce una Fecha' name='fecha' id='fecha' required/> 
-            </div>";
-
-            HAY QUE INSERTAR UNA IMAGENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+            </div>
+            <div class='form-group'>
+                <label for='exampleFormControlFile1'>Example file input</label>
+                <input type='file' class='form-control-file' id='exampleFormControlFile1'>
+            </div>
+            
 
 
             
-             <div class='form-group'>
+
+
+            
+            <div class='form-group'>
                 <label for='fecha'>Fecha</label>
                 <input type='date' class='form-control' placeholder='Introduce una Fecha' name='fecha' id='fecha' required/> 
-            </div>
-            ";
+            </div>";
 
     echo "
         </div>
