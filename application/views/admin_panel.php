@@ -10,7 +10,6 @@ echo '
             </nav>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <nav aria-label="Page navigation example">
@@ -52,7 +51,6 @@ echo '
             </nav>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <table class="table table-hover">
@@ -86,16 +84,13 @@ echo '
             </table>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">';
-
     echo '
     <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
     Launch demo modal
     </button>
-
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -107,7 +102,6 @@ echo '
         </div>
         <div class="modal-body">
         <!-- ****************** CUERPO DEL CUADRO MODAL *********************** --> ';
-
         echo form_open('Login/checkLogin');
         echo "<div class='form-group'>
                 <label for='titulo'>Título</label>
@@ -124,18 +118,18 @@ echo '
             <div class='form-group'>
                 <label for='fecha'>Fecha</label>
                 <input type='date' class='form-control' placeholder='Introduce una Fecha' name='fecha' id='fecha' required/> 
-            </div>";
-
-            HAY QUE INSERTAR UNA IMAGENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-
-
+            </div>
+            <div class='form-group'>
+                <label for='exampleFormControlFile1'>Example file input</label>
+                <input type='file' class='form-control-file' id='exampleFormControlFile1'>
+            </div>
             
-             <div class='form-group'>
+            
+            
+            <div class='form-group'>
                 <label for='fecha'>Fecha</label>
                 <input type='date' class='form-control' placeholder='Introduce una Fecha' name='fecha' id='fecha' required/> 
-            </div>
-            ";
-
+            </div>";
     echo "
         </div>
             <div class='modal-footer'>
@@ -146,11 +140,8 @@ echo '
         </div>
     </div>
     </div>
-
         <!-- ****************** CUERPO DEL CUADRO MODAL *********************** --> 
         <!-- ****************** INSERCIÓN DE UN MAPA    *********************** -->";
-
     echo '</div>';
     echo '</div>';
 echo '</div>';
-
