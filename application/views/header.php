@@ -8,7 +8,10 @@
         <!-- <link rel="stylesheet" type="text/css" href="< ##################  ?php echo base_url()?>/assets/style/estilo.css" /> -->
         <!-- Required meta tags -->
         <!-- AJAX -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script
+			  src="https://code.jquery.com/jquery-3.3.1.js"
+			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+			  crossorigin="anonymous"></script>
         <!-- SCRIPT JS -->
         <script src=<?php echo base_url("assets/js/Mapas.js"); ?>></script>
         <!-- Bootstrap CSS -->

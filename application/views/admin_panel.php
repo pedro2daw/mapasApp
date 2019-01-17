@@ -123,24 +123,22 @@ echo '
             </div>
             <div class='form-group'>
                 <label for='fecha'>Fecha</label>
-                <input type='date' class='form-control' placeholder='Introduce una Fecha' name='fecha' id='fecha' required/> 
+                <input type='number' class='form-control' placeholder='Introduce una Fecha' min='0'  name='fecha' id='fecha' required/> 
             </div>
             <div class='form-group'>
-                <label for='exampleFormControlFile1'>Example file input</label>
-                <input type='file' class='form-control-file' id='exampleFormControlFile1'>
-            </div>
+                <label for='mapa_img'>Subir un Mapa</label>
+
+                <!-- ***************************** MULTIPLE FILES ******************** -->";
+               echo "<input type='file' name='imagen' onchange='openFile(event)'><br>
+                     <img id='output' class='img-thumbnail'>";
+      echo "</div>";
             
 
 
             
 
 
-            
-            <div class='form-group'>
-                <label for='fecha'>Fecha</label>
-                <input type='date' class='form-control' placeholder='Introduce una Fecha' name='fecha' id='fecha' required/> 
-            </div>";
-
+        
     echo "
         </div>
             <div class='modal-footer'>
