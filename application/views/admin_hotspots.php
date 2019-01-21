@@ -41,6 +41,7 @@
         </div>
     </div>";
     ?>
+
 <script>
     $(document).ready(function() {
         $('img').click(function(e) {
@@ -51,10 +52,14 @@
             x_coords.push(e.pageX - offset.left);
             y_coords.push(e.pageY - offset.top);
             $("#posX").val(x_coords[0]);
-            $("#posY").val(y_coords[0]);
-        });
-    });
+            $("#posY").val(y_coords[0]);            
+    });       
+        $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
+            $(this).find('form')[0].reset();
+        })
+    });        
 </script>
+
 <div class="span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
     <img src="../../assets/img/mapas/almeria/7_c_medium.jpg" />
 </div>
