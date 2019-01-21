@@ -1,3 +1,4 @@
+// La preview del mapa en la inserción del mapa:
 var openFile = function (event) {
     var input = event.target;
 
@@ -10,7 +11,15 @@ var openFile = function (event) {
     reader.readAsDataURL(input.files[0]);
 };
 
-/*$(function () {
+// Cuando click en cerrar en el Modal (pop up de insertar...) se resetean los campos y la imagen.
+$(document).ready(function () {
+$('#exampleModalCenter').on('hidden.bs.modal', function (e) {
+    $(this).find('form')[0].reset();
+    $('#output').attr('src','');
+})
+});
+/*
+$(function () {
     // Multiple images preview in browser
     var imagesPreview = function (input, placeToInsertImagePreview) {
 
@@ -34,4 +43,5 @@ var openFile = function (event) {
     $('#gallery-photo-add').on('change', function () {
         imagesPreview(this, 'div.gallery');
     });
-});*/
+});
+*/

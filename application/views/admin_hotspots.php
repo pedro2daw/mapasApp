@@ -61,5 +61,9 @@
 </script>
 
 <div class="span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
-    <img src="../../assets/img/mapas/almeria/7_c_medium.jpg" />
+    <?php
+        echo "<img src=' ".base_url('/assets/img/mapas/almeria/7_c_medium.jpg')."'>";
+    ?>
+    
+
 </div>
