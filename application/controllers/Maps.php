@@ -47,5 +47,10 @@ class Maps extends Security{
             }
         }
     }   
+    
+    public function hotspots() {
+        $data["viewName"] = "admin_hotspots";
+        $this->load->view('template', $data);
+    }
 
 }

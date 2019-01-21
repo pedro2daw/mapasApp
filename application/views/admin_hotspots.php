@@ -56,7 +56,7 @@
     });
 </script>
 <div class="span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
-    <img src="../../assets/mapas/almeria/7_c_medium.jpg" />
+    <img src="../../assets/img/mapas/almeria/7_c_medium.jpg" />
 </div>
 <?php /*
 echo '
