@@ -6,7 +6,7 @@ echo '
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <a class="flex-sm-fill text-sm-center nav-link active" '.anchor('Maps/hotspots/','Mapas').'></a>
                 <a class="flex-sm-fill text-sm-center nav-link" '.anchor('Maps/hotspots/','Puntos de Interés').'></a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="">Calles</a>
+                <a class="flex-sm-fill text-sm-center nav-link" href="'.anchor('Streets/view_admin_streets/','Calles').'"></a>
                 <a class="flex-sm-fill text-sm-center nav-link" href="#">Configuración</a>
             </nav>
         </div>
