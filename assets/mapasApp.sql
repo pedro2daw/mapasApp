@@ -33,8 +33,8 @@ CREATE TABLE mapas(
     fecha SMALLINT NOT NULL,
     imagen VARCHAR(250) NOT NULL,
     nivel SMALLINT NOT NULL,
-    ancho TINYINT NOT NULL,
-    altura TINYINT NOT NULL
+    ancho INT NOT NULL,
+    altura INT NOT NULL
 );
 
 CREATE TABLE laminas(
