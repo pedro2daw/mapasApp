@@ -4,20 +4,19 @@ echo '
 
         <div class="row" style="margin-top:10px;">
         <div class="col-md-12">
-            <nav class="nav nav-pills flex-column flex-sm-row">
-                <a class="flex-sm-fill text-sm-center nav-link " '.anchor('Maps/hotspots/','Mapas').'></a>
-                <a class="flex-sm-fill text-sm-center nav-link" '.anchor('Maps/hotspots/','Puntos de Interés').'></a>
-                <a class="flex-sm-fill text-sm-center nav-link active" '.anchor('Streets/view_admin_streets/','Calles').'></a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#">Configuración</a>
-            </nav>
+            <nav class="nav nav-pills flex-column flex-sm-row">';
+                echo anchor('Maps/hotspots/','Mapas','class="flex-sm-fill text-sm-center nav-link "');
+                echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link active"');
+                echo anchor('','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+        echo '    </nav>
         </div>
         </div>
 
 
-    <br><br><br><br><br>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-hover table-responsive">
+    <br><br><br><br><br>';
+    echo'<div class="table-responsive">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -26,6 +25,8 @@ echo '
                         <th scope="col">Año de inicio</th>
                         <th scope="col">Año final</th>
                         <th scope="col">Lámina a la que pertenece</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -36,9 +37,9 @@ echo '
                     echo ("<td>".$each_street["tipo"]."</td>");
                     echo ("<td>".$each_street["ano_inicio"]."</td>");
                     echo ("<td>".$each_street["ano_fin"]."</td>");
+                    echo ("<td></td>");
                     echo("<td>");
                             echo anchor("Streets/update_street/".$each_street['id'],"Modificar","class='btn btn-info'");
-                            
                     echo("</td>");  
                     echo("<td>");
                             echo anchor("Streets/delete_street/".$each_street['id'],"Eliminar","class='btn btn-danger'");
@@ -48,14 +49,13 @@ echo '
                 </tbody>
             </table>
         </div>
-    </div>
 
     <div class="row">
         <div class="col-md-12">';
 
     echo '
     <!-- *********************** INSERCIÓN DE UNA CALLE ************************** -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#streetModal">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#streetModal">
     INSERTAR CALLE
     </button>
 

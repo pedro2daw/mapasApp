@@ -1,5 +1,6 @@
 <?php
-   class Streets extends CI_Controller {
+include_once('Security.php');
+   class Streets extends Security {
 
         public function view_admin_streets(){
             //$data["$slides_avialables"] =  $this->modelMapas->get_slides(); // traigo todos las laminas disponibles // decirle a Tony que me implemente la siguiente
