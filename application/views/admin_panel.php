@@ -105,7 +105,7 @@ echo '
         </div>
         <div class="modal-body">
         <!-- ****************** CUERPO DEL CUADRO MODAL *********************** --> ';
-        echo form_open('Login/checkLogin');
+        echo form_open_multipart('Maps/insert');
         echo "<div class='form-group'>
                 <label for='titulo'>Título</label>
                 <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' required/> 
@@ -130,7 +130,7 @@ echo '
                 <label for='mapa_img'>Subir un Mapa</label>
                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->";
                 echo '<div class="custom-file">
-                        <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es" onchange="openFile(event)">
+                        <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang" lang="es" onchange="openFile(event)">
                         <label class="custom-file-label" for="customFileLang"  >Seleccionar Archivo</label>
                      </div>';
                 echo "<img id='output' class='img-thumbnail'>";
@@ -142,7 +142,9 @@ echo '
         </div>
             <div class='modal-footer'>
                     <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                    <input type='submit' class='btn btn-primary' value='Insertar Mapa'/>
+                    <input type='submit' value='Insertar Mapa' class='btn btn-primary'>";
+                    
+    echo "
                 </form> 
             </div>
         </div>

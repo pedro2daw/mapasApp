@@ -1,24 +1,35 @@
 <?php
 class modelMapas extends CI_Model {
+    // $titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto
 
-    function insert ($titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto){
-        $query = $this->db->query("INSERT INTO mapas VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$img','$nivel','$ancho','$alto');");
+    function insert ($titulo, $descripcion, $ciudad, $fecha, $mapa,$nivel,$ancho,$altura){
+        $query = $this->db->query("INSERT INTO mapas VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$mapa','$nivel','$ancho','$altura');");
      return $this->db->affected_rows();
     }
 
-    public function checkImg(){
-        $config['upload_path'] = './assets/img';
-        $config['allowed_types'] = 'jpg|png';
-        $config['max_size']     = 1000000;
-        $config['max_width'] = 1024000;
-        $config['max_height'] = 768000;
+    function get_last(){
+        $query = $this->db->query("SELECT id FROM mapas order by id desc limit 1");
+        $row = $query->row();
 
-        $img_name = false;
+        if (isset($row)){
+         $data = $row->id;       
+        }
+     return $data;
+    }
 
+    public function checkImg($id,$ciudad){
+        $config['upload_path'] = './assets/img/mapas/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size']     = 9999999;
+        $config['max_width'] = 999999;
+        $config['max_height'] = 9999999;
+        $config['file_name'] = $id.'_'.$ciudad;
+    
         $this->load->library('upload', $config);
 
-        if(!$this->upload->do_upload('mapa_img')){
+        if(!$this->upload->do_upload('img_mapa')){
             echo $this->upload->display_errors();
+            $img_name = false;
         }else{
             $img_name = $this->upload->data('file_name'); 
         }

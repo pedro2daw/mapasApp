@@ -23,7 +23,7 @@ echo('
             <!--</br></br></br>-->");
             echo("</div>");
          echo("
-            <input type='submit' class='btn btn-success' value='Acceder'/>
+            <input type='submit' class='btn btn-primary' value='Acceder'/>
             
         </form>
     
