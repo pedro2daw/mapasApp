@@ -53,20 +53,14 @@
             y_coords.push(e.pageY - offset.top);
             $("#posX").val(x_coords[0]);
             $("#posY").val(y_coords[0]);
-            $("#mapa").append("<img id='icon' src='../../assets/img/icono/icon.png'/>");
-            $("#icon").attr("style", "index-z:2;");
-        });
-        $('#exampleModalCenter').on('hidden.bs.modal', function(e) {
+            alert(x_coords + ":" + y_coords)
+    });       
+        $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
             $(this).find('form')[0].reset();
         })
-    });
-
+    });        
 </script>
 
 <div class="span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
-    <?php
-        echo "<img id='mapa' src=' ".base_url('/assets/img/mapas/almeria/7_c_medium.jpg')."'>";
-    ?>
-
-
+    <img src="../../assets/img/mapas/almeria/7_c_medium.jpg" />
 </div>
