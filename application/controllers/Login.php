@@ -25,6 +25,8 @@ class Login extends Security{
             $this->load->view('template',$data);
         }
         else{
+            $this->load->model('modelMapas'); // * ####### ELIIMNAR CON EL CONSTRUCTOR */
+            $data['ListaMapas'] = $this->modelMapas->get_all();
             $data["viewName"] = "admin_panel";
             $this->load->view('template',$data);
         }

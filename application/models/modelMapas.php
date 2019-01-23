@@ -2,6 +2,17 @@
 class modelMapas extends CI_Model {
     // $titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto
 
+    function get_all(){
+        $query = $this->db->query("SELECT * FROM mapas;"); 
+        $data = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $data[] = $row;
+                }
+            }
+        return $data;
+    }
+
     function insert ($titulo, $descripcion, $ciudad, $fecha, $ruta){
         /*
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

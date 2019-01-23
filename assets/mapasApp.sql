@@ -81,3 +81,4 @@ CREATE TABLE hotspots (
 );
 
 INSERT INTO usuarios VALUES (null, 'admin','1');
+-- INSERT INTO mapas VALUES (null,'Almería del Siglo XIX', 'Mapa de Almería del Siglo XIX Perez de Rozas','Almeria',1890,'/assets/img/mapas/1_almeria.jpg/',1,1000,1000);

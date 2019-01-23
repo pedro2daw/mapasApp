@@ -61,27 +61,27 @@ echo '
                         <th scope="col">Imagen</th>
                         <th scope="col">Titulo</th>
                         <th scope="col">Ciudad</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Descripción</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>img</td>
-                        <td>Almería Siglo 19</td>
-                        <td>Almería</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>img</td>
-                        <td>Almería Siglo 18</td>
-                        <td>Almería</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
+                <tbody>';
+                for($i = 0; $i < count($ListaMapas);$i++){
+                    $mapa = $ListaMapas[$i];
+                    echo ("<tr><td>".$mapa["id"]."</td>");
+                    echo ("<td><img src='".base_url($mapa["imagen"])."' width=300px height=300px></td>");
+                    echo ("<td>".$mapa["titulo"]."</td>");
+                    echo ("<td>".$mapa["ciudad"]."</td>");
+                    echo ("<td>".$mapa["fecha"]."</td>");
+                    echo ("<td>".$mapa["descripcion"]."</td>");
+                    echo("<td>");
+                            echo anchor("Streets/update_street/".$mapa['id'],"Modificar","class='btn btn-info'");
+                    echo("</td>");  
+                    echo("<td>");
+                            echo anchor("Streets/delete_street/".$mapa['id'],"Eliminar","class='btn btn-danger'");
+                    echo("</td></tr>");
+                }
+            echo '</tbody>
             </table>
         </div>
     </div>
