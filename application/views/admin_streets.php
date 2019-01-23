@@ -17,7 +17,7 @@ echo '
     <br><br><br><br><br>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-hover">
+            <table class="table table-hover table-responsive">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -28,9 +28,23 @@ echo '
                         <th scope="col">Lámina a la que pertenece</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
-                    
+                <tbody>';
+                for($i = 0; $i < count($listaCalles);$i++){
+                    $each_street = $listaCalles[$i];
+                    echo ("<tr><td>".$each_street["id"]."</td>");
+                    echo ("<td>".$each_street["nombre"]."</td>");
+                    echo ("<td>".$each_street["tipo"]."</td>");
+                    echo ("<td>".$each_street["ano_inicio"]."</td>");
+                    echo ("<td>".$each_street["ano_fin"]."</td>");
+                    echo("<td>");
+                            echo anchor("Streets/update_street/".$each_street['id'],"Modificar","class='btn btn-info'");
+                            
+                    echo("</td>");  
+                    echo("<td>");
+                            echo anchor("Streets/delete_street/".$each_street['id'],"Eliminar","class='btn btn-danger'");
+                    echo("</td></tr>");
+                }
+echo '                    
                 </tbody>
             </table>
         </div>

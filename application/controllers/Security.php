@@ -3,8 +3,8 @@
             public function __construct(){
                 parent::__construct();
                 $this->load->model('modelUser');
-                // $this->load->model('');
-                //$this->load->model('');
+                $this->load->model('modelMapas');
+                $this->load->model('modelCalles');
             }
             
             public function security_check()
