@@ -3,12 +3,12 @@ echo '
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <nav class="nav nav-pills flex-column flex-sm-row">
-                <a class="flex-sm-fill text-sm-center nav-link active" '.anchor('Maps/hotspots/','Mapas').'></a>
-                <a class="flex-sm-fill text-sm-center nav-link" '.anchor('Maps/hotspots/','Puntos de Interés').'></a>
-                <a class="flex-sm-fill text-sm-center nav-link" '.anchor('Streets/view_admin_streets/','Calles').'></a>
-                <a class="flex-sm-fill text-sm-center nav-link" href="#">Configuración</a>
-            </nav>
+            <nav class="nav nav-pills flex-column flex-sm-row">';
+                echo anchor('Maps/hotspots/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
+                echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('/view_admin_streets/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+       echo '</nav>
         </div>
     </div>
     <div class="row">
@@ -120,13 +120,15 @@ echo '
             </div>
             <div class='form-group'>
                 <label for='fecha'>Fecha</label>
-                <input type='number' class='form-control' placeholder='Introduce una Fecha' min='0'  name='fecha' id='fecha' required/> 
+                <input type='number' class='form-control' placeholder='Fecha (año)' min='0'  name='fecha' id='fecha' required/> 
+            </div>
+            <div class='form-group'>
+                <label for='fecha'>Nivel</label>
+                <input type='number' class='form-control' placeholder='Nivel' min='0'  name='nivel' id='nivel' required/> 
             </div>
             <div class='form-group'>
                 <label for='mapa_img'>Subir un Mapa</label>
                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->";
-               
-
                 echo '<div class="custom-file">
                         <input type="file" name="imagen" class="custom-file-input" id="customFileLang" lang="es" onchange="openFile(event)">
                         <label class="custom-file-label" for="customFileLang"  >Seleccionar Archivo</label>
