@@ -25,6 +25,8 @@
 
         $(document).ready(function() {
             $('#map').dblclick(function(e) {
+                var scale_temp = $("#map").css("transform");
+                alert(scale_temp);
                 var offset = $(this).offset();
                 x_coords.push(parseInt(e.pageX - offset.left));
                 y_coords.push(parseInt(e.pageY - offset.top));
@@ -62,11 +64,14 @@
         #dialog {
             margin: 0 auto;
             overflow: auto;
-            /*width: 1000px;*/
             height: 550px;
             cursor: crosshair;
             border: 1px solid black;
             float: right;
+        }
+        img{
+            transform: scale(0.5,0.5);
+            transform-origin: top left;
         }
 
     </style>
