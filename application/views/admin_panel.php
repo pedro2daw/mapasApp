@@ -104,27 +104,29 @@ echo '
             </button>
         </div>
         <div class="modal-body">
+        
         <!-- ****************** CUERPO DEL CUADRO MODAL *********************** --> ';
+        
         echo form_open_multipart('Maps/insert');
         echo "<div class='form-group'>
                 <label for='titulo'>Título</label>
-                <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' required/> 
+                <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' value='1' required/> 
             </div>
             <div class='form-group'>
                 <label for='descripcion'>Descripción</label>
-                <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' required/> 
+                <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' value='1' required/> 
             </div>
             <div class='form-group'>
                 <label for='ciudad'>Ciudad</label>
-                <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad' id='ciudad' required/> 
+                <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad' id='ciudad' value='1' required/> 
             </div>
             <div class='form-group'>
                 <label for='fecha'>Fecha</label>
-                <input type='number' class='form-control' placeholder='Fecha (año)' min='0'  name='fecha' id='fecha' required/> 
+                <input type='number' class='form-control' placeholder='Fecha (año)' min='0'  name='fecha' id='fecha' value='1' required/> 
             </div>
             <div class='form-group'>
                 <label for='fecha'>Nivel</label>
-                <input type='number' class='form-control' placeholder='Nivel' min='0'  name='nivel' id='nivel' required/> 
+                <input type='number' class='form-control' placeholder='Nivel' min='0'  name='nivel' id='nivel' value='1' required/> 
             </div>
             <div class='form-group'>
                 <label for='mapa_img'>Subir un Mapa</label>
@@ -136,19 +138,13 @@ echo '
                 echo "<img id='output' class='img-thumbnail'>";
       echo "</div>";
             
-            
-        
-    echo "
+    echo "<div class='modal-footer'>
+                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>";
+                    echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'");
+    echo "</div>";
+    echo form_close();
+    echo "</div>
         </div>
-            <div class='modal-footer'>
-                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                    <input type='submit' value='Insertar Mapa' class='btn btn-primary'>";
-                    
-    echo "
-                </form> 
-            </div>
-        </div>
-    </div>
     </div>";
         
     echo '</div>';
