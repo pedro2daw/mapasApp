@@ -7,7 +7,7 @@ echo '
                 echo anchor('Maps/hotspots/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
                 echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('/view_admin_streets/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('','Configuración','class="flex-sm-fill text-sm-center nav-link"');
        echo '</nav>
         </div>
     </div>
