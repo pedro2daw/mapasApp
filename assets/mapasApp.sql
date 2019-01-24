@@ -34,7 +34,15 @@ CREATE TABLE mapas(
     imagen VARCHAR(250) NOT NULL,
     nivel SMALLINT NOT NULL,
     ancho INT NOT NULL,
-    altura INT NOT NULL
+    altura INT NOT NULL,
+
+        id_paquete INT UNSIGNED NOT NULL
+);
+
+
+CREATE TABLE paquete_mapas(
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    descripcion VARCHAR(250) NOT NULL
 );
 
 CREATE TABLE laminas(
