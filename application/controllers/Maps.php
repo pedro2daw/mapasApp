@@ -1,11 +1,11 @@
 <?php
 
-//include_once('Security.php');
+include_once('Security.php');
 
-class Maps extends CI_Controller {
+class Maps extends Security {
     
     public function insert(){
-        $this->load->model('modelMapas');
+        
         $titulo = $this->input->get_post('titulo');
         $descripcion = $this->input->get_post('descripcion');
         $ciudad =$this->input->get_post('ciudad');
@@ -15,18 +15,13 @@ class Maps extends CI_Controller {
         // Obtenemos el ultimo id para cambiar el nombre del archivo subido:
         $ultimoId = $this->modelMapas->get_last()+1;
         var_dump($ultimoId); 
-        
-        $img_name = $this->modelMapas->checkImg($ultimoId,strtolower($ciudad));
+
+        // Formateamos la ciudad para que sea minuscula y elimine las tildes:
+        $ciudad_format = $this->modelMapas->format();
+        $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
         $ruta = "assets/img/mapas/".$img_name; 
 
-        
-        /*GETIMAGESIZE DEVUELVE UN ARRAY DE 7 ELEMENTOS, 0 Y 1 CONTIENEN EL ANCHO Y EL ALTO, RESPECTIVAMENTE 
-        $ancho[0] = $this->modelMapas->get_img_size('/assets/img/mapas/test.jpg');
-        $ancho[1] = $this->modelMapas->get_img_size('/assets/img/mapas/test.jpg');
-        */
-
-        
-        
+        // BD Que mapas contiene un paquete de mapas para saber la fecha de los mapas y compararlos y ordenarlos automatica/.    
         // NIVEL LO ORDENARÁ AUTOMATICAMENTE POR LA FECHA
 
         $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta);
@@ -52,7 +47,6 @@ class Maps extends CI_Controller {
 
             } else {
                 echo "<h4 class='success'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
-                $this->load->model('modelMapas'); // * $$$$$$$$$$$$$$$$ ELIIMNAR CON EL CONSTRUCTOR */
                 $data['ListaMapas'] = $this->modelMapas->get_all();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template', $data);

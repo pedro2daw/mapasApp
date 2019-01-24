@@ -69,16 +69,16 @@ echo '
                 for($i = 0; $i < count($ListaMapas);$i++){
                     $mapa = $ListaMapas[$i];
                     echo ("<tr><td>".$mapa["id"]."</td>");
-                    echo ("<td><img src='".base_url($mapa["imagen"])."' width=300px height=300px></td>");
+                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='img-thumbnail' ></td>");
                     echo ("<td>".$mapa["titulo"]."</td>");
                     echo ("<td>".$mapa["ciudad"]."</td>");
                     echo ("<td>".$mapa["fecha"]."</td>");
                     echo ("<td>".$mapa["descripcion"]."</td>");
                     echo("<td>");
-                            echo anchor("Streets/update_street/".$mapa['id'],"Modificar","class='btn btn-info'");
+                            echo anchor("Maps/update_map/".$mapa['id'],"Modificar","class='btn btn-info'");
                     echo("</td>");  
                     echo("<td>");
-                            echo anchor("Streets/delete_street/".$mapa['id'],"Eliminar","class='btn btn-danger'");
+                            echo anchor("Maps/delete_map/".$mapa['id'],"Eliminar","class='btn btn-danger'");
                     echo("</td></tr>");
                 }
             echo '</tbody>
@@ -123,6 +123,10 @@ echo '
             <div class='form-group'>
                 <label for='fecha'>Fecha</label>
                 <input type='number' class='form-control' placeholder='Fecha (año)' min='0'  name='fecha' id='fecha' value='1' required/> 
+            </div>
+            <div class='form-group'>
+                <label for='fecha'>Nivel</label>
+                <input type='number' class='form-control' placeholder='Nivel' min='0'  name='nivel' id='nivel' value='1' required/> 
             </div>
             <div class='form-group'>
                 <label for='fecha'>Nivel</label>
