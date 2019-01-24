@@ -13,7 +13,6 @@ class Login extends Security{
 
 // ------- COMPRUEBO EL LOGIN REALIZADO -------------------- //
     public function checkLogin(){
-        $data["viewName"] = "login";
         $name = $this->input->get_post("name");
         $pass = $this->input->get_post("password");
         $this->load->model('modelUser');
