@@ -65,7 +65,7 @@
 
 <div class="span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
     <?php
-        echo "<img id='mapa' src=' ".base_url('/assets/img/mapas/almeria/7_c_medium.jpg')."'>";
+        echo "<img id='mapa' src=' ".base_url('/assets/img/mapas/7_c_medium.jpg')."'>";
     ?>
 
 
