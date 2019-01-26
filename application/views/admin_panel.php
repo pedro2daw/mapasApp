@@ -1,14 +1,15 @@
-<?php 
-echo '
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <nav class="nav nav-pills flex-column flex-sm-row">';
+            <nav class="nav nav-pills flex-column flex-sm-row">
+                <?php
                 echo anchor('Maps/hotspots/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
                 echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('','Configuración','class="flex-sm-fill text-sm-center nav-link"');
-       echo '</nav>
+                ?>
+            </nav>
         </div>
     </div>
     <div class="row">
@@ -58,6 +59,7 @@ echo '
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">#</th>
                         <th scope="col">Imagen</th>
                         <th scope="col">Titulo</th>
                         <th scope="col">Ciudad</th>
@@ -65,92 +67,99 @@ echo '
                         <th scope="col">Descripción</th>
                     </tr>
                 </thead>
-                <tbody>';
+                <tbody>
+
+                    <?php
                 for($i = 0; $i < count($ListaMapas);$i++){
                     $mapa = $ListaMapas[$i];
-                    echo ("<tr><td>".$mapa["id"]."</td>");
-                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='img-thumbnail' ></td>");
+                    echo ("<tr><td><input type='checkbox' id=".$mapa["id"]." disabled ></td>");
+                    echo ("<td>".$mapa["id"]."</td>");
+                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa'></td>");
                     echo ("<td>".$mapa["titulo"]."</td>");
                     echo ("<td>".$mapa["ciudad"]."</td>");
                     echo ("<td>".$mapa["fecha"]."</td>");
                     echo ("<td>".$mapa["descripcion"]."</td>");
                     echo("<td>");
-                            echo anchor("Maps/update_map/".$mapa['id'],"Modificar","class='btn btn-info'");
+                            echo anchor("Maps/update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn btn-info'");
                     echo("</td>");  
                     echo("<td>");
-                            echo anchor("Maps/delete_map/".$mapa['id'],"Eliminar","class='btn btn-danger'");
+                            echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
                     echo("</td></tr>");
                 }
-            echo '</tbody>
+                ?>
+                </tbody>
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">';
-    echo '
+
     
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Insertar Mapa
-    </button>
-    <input type="submit" class="btn btn-primary" value="Superponer Mapas"/>
-    <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Insertar Mapa
             </button>
+            <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
+            <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <!-- ****************** CUERPO DEL CUADRO MODAL *********************** --> 
+                            <?php echo form_open_multipart('Maps/insert'); ?>
+
+                            <div class='form-group'>
+                                <label for='titulo'>Título</label>
+                                <input type='text' class='form-control' placeholder='Introduce un título' name='titulo'
+                                    id='titulo' value='1' required />
+                            </div>
+                            <div class='form-group'>
+                                <label for='descripcion'>Descripción</label>
+                                <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion'
+                                    id='descripcion' value='1' required />
+                            </div>
+                            <div class='form-group'>
+                                <label for='ciudad'>Ciudad</label>
+                                <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad'
+                                    id='ciudad' value='1' required />
+                            </div>
+                            <div class='form-group'>
+                                <label for='fecha'>Fecha</label>
+                                <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha'
+                                    id='fecha' value='1' required />
+                            </div>
+                            <div class='form-group'>
+                                <label for='fecha'>Nivel</label>
+                                <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
+                                    value='1' required />
+                            </div>
+                            <div class='form-group'>
+                                <label for='mapa_img'>Subir un Mapa</label>
+                                <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
+                                <div class="custom-file">
+                                    <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang"
+                                        lang="es" onchange="openFile(event)" required>
+                                    <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                </div>
+                                <img id='output' class='img-thumbnail'>
+                            </div>
+
+                            <div class='modal-footer'>
+                                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
+                                <?php form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
+                            </div>
+                            <?php form_close(); ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="modal-body">
-        
-        <!-- ****************** CUERPO DEL CUADRO MODAL *********************** --> ';
-        
-        echo form_open_multipart('Maps/insert');
-        echo "<div class='form-group'>
-                <label for='titulo'>Título</label>
-                <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' value='1' required/> 
-            </div>
-            <div class='form-group'>
-                <label for='descripcion'>Descripción</label>
-                <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' value='1' required/> 
-            </div>
-            <div class='form-group'>
-                <label for='ciudad'>Ciudad</label>
-                <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad' id='ciudad' value='1' required/> 
-            </div>
-            <div class='form-group'>
-                <label for='fecha'>Fecha</label>
-                <input type='number' class='form-control' placeholder='Fecha (año)' min='0'  name='fecha' id='fecha' value='1' required/> 
-            </div>
-            <div class='form-group'>
-                <label for='fecha'>Nivel</label>
-                <input type='number' class='form-control' placeholder='Nivel' min='0'  name='nivel' id='nivel' value='1' required/> 
-            </div>
-            <div class='form-group'>
-                <label for='fecha'>Nivel</label>
-                <input type='number' class='form-control' placeholder='Nivel' min='0'  name='nivel' id='nivel' value='1' required/> 
-            </div>
-            <div class='form-group'>
-                <label for='mapa_img'>Subir un Mapa</label>
-                <!-- ***************************** SUBIR UNA IMAGEN ******************** -->";
-                echo '<div class="custom-file">
-                        <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang" lang="es" onchange="openFile(event)">
-                        <label class="custom-file-label" for="customFileLang"  >Seleccionar Archivo</label>
-                     </div>';
-                echo "<img id='output' class='img-thumbnail'>";
-      echo "</div>";
-            
-    echo "<div class='modal-footer'>
-                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>";
-                    echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'");
-    echo "</div>";
-    echo form_close();
-    echo "</div>
-        </div>
-    </div>";
-        
-    echo '</div>';
-    echo '</div>';
-echo '</div>';
+    </div>

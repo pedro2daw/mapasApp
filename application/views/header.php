@@ -6,15 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="< ##################  ?php echo base_url()?>/assets/style/estilo.css" /> -->
-    <!-- Required meta tags -->
-    <!-- AJAX -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css"/> 
     <!-- SCRIPT JS -->
-    <script src=<?php echo base_url("assets/js/Mapas.js"); ?>
-        >
-
-    </script>
+    <script src=<?php echo base_url("assets/js/Mapas.js"); ?>></script>
+    <!-- LOS ICONOS FONTAWESOME -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
@@ -55,9 +51,7 @@
                 x_coords.splice(index_x, 1);
                 y_coords.splice(index_y, 1);
             });
-
-        });
-
+});
     </script>
     <style>
         #dialog {

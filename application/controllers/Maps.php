@@ -17,7 +17,7 @@ class Maps extends Security {
         var_dump($ultimoId); 
 
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
-        $ciudad_format = $this->modelMapas->format();
+        $ciudad_format = $this->modelMapas->format($ciudad);
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
         $ruta = "assets/img/mapas/".$img_name; 
 
