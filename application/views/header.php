@@ -14,59 +14,63 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script src="jquery.hotspot.js"></script>
     <script>
         x_coords = [];
         y_coords = [];
+    $(document).ready(function() {
 
-        $(document).ready(function() {
-            $('#map').dblclick(function(e) {
-                var scale_temp = $("#map").css("transform");
-                alert(scale_temp);
-                var offset = $(this).offset();
-                x_coords.push(parseInt(e.pageX - offset.left));
-                y_coords.push(parseInt(e.pageY - offset.top));
-                var x_temp = e.pageX - offset.left;
-                var y_temp = e.pageY - offset.top;
-                $("#coords").append("<li class='coords'> X : " + x_temp + " / Y : " + y_temp + "</li>");
+        $('#slide').dblclick(function(e) {
 
-            });
-            $("#map").mousedown(function() {
-                $("div").css("cursor", "grabbing");
-            });
+        var offset = $(this).offset();
+        x_coords.push(parseInt(e.pageX - offset.left));
+        y_coords.push(parseInt(e.pageY - offset.top));
+            var x_def = parseInt(e.pageX - offset.left);
+            var y_def = parseInt(e.pageY - offset.top);
+                var x_temp = parseInt((e.pageX - offset.left)-5);
+                var y_temp = (parseInt(e.pageY - offset.top)-5);
+        $("#coords").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
+            $("#slide").after("<div class='hot-spot' x='"+x_temp+"'y='"+y_temp+"'style='top:"+y_temp+"px;left:"+x_temp+"px; display:block;'></div>");
+        });
 
-            $("#map").mouseup(function() {
-                $("div").css("cursor", "crosshair");
-            });
-
-            $("#show").click(function() {
+        $("#show").click(function() {
                 alert("Las coordenadas del eje x son: " + x_coords);
                 alert("Las coordenadas del eje y son: " + y_coords);
-            });
+        });
 
-            $("#delCoord").click(function() {
+        $("#delCoord").click(function() {
                 $("#coords li:last-child").remove();
+
                 index_x = x_coords.length - 1;
                 index_y = y_coords.length - 1;
-                alert(index_x);
                 x_coords.splice(index_x, 1);
                 y_coords.splice(index_y, 1);
-            });
-});
+
+                $(".hot-spot:first").remove();
+        });
+    });
     </script>
     <style>
-        #dialog {
-            margin: 0 auto;
+        #prueba {
             overflow: auto;
             height: 550px;
             cursor: crosshair;
-            border: 1px solid black;
-            float: right;
         }
-        img{
-            transform: scale(0.5,0.5);
-            transform-origin: top left;
+        #hotspotImg {
+            background-color: #ededed;
+            background-size: cover;
+            background-position: center center;
+            position: relative;
         }
 
+        #hotspotImg .hot-spot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            text-align: center;
+            background-color: blue;
+            border-radius: 100%;
+         }
     </style>
 </head>
 
