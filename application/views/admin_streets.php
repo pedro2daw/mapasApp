@@ -115,7 +115,7 @@ echo '
             <div class='form-group'>
                 <label for='slide_list'>Selecciona la lámina</label>";
                 
-                form_dropdown('lamina',$slides_avialables, 'class="form-control"');
+                //form_dropdown('lamina',$slides_avialables, 'class="form-control"');
                 //$slides_avialables
                 // añadir mas adelante que se seleccione un mapa, y en funcion de ese mapa solo salgan las laminas de ese mapa
         echo"

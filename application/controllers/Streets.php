@@ -20,7 +20,7 @@ include_once('Security.php');
             
             */
             //$data["$maps_avialables"] =  $this->modelMapas->get_all_maps(); // traigo todos las laminas disponibles
-            $data["slides_avialables"] = $this->modelCalles->get_slides();
+           // $data["slides_avialables"] = $this->modelCalles->get_slides();
             $data["listaCalles"] = $this->modelCalles->get_all();
             $data["viewName"] = "admin_streets";
             $this->load->view('template', $data);
