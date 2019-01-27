@@ -1,6 +1,8 @@
 <?php
 var_dump($nombre);
 var_dump($tipo);
+var_dump($aInicio);
+var_dump($aFinal);
 ?>
 <div class="container-fluid">
         <div class="row" style="margin-top:10px;">
@@ -18,6 +20,7 @@ var_dump($tipo);
                         </div>
                             
                 </div>
+            <div class="col-md"><?php echo anchor('Streets/view_admin_streets/','Volver al menu', 'class="btn btn-danger"')?></div>
         </div>
 </div>
 
