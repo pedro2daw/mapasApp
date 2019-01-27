@@ -13,6 +13,11 @@ class modelMapas extends CI_Model {
         return $data;
     }
 
+    function get($id){
+        $query = $this->db->query("SELECT titulo,descripcion,ciudad,fecha,imagen FROM mapas WHERE id = '$id';"); 
+        return $query->result_array()[0];
+    }
+
     function insert ($titulo, $descripcion, $ciudad, $fecha, $ruta){
         /*
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
