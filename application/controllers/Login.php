@@ -25,6 +25,8 @@ class Login extends Security{
         }
         else{
             $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaPaquetes'] = $this->modelPaquetes->get_all();
+            // var_dump($data['ListaPaquetes']);
             $data["viewName"] = "admin_panel";
             $this->load->view('template',$data);
         }

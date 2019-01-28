@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
             <nav class="nav nav-pills flex-column flex-sm-row">
@@ -53,6 +53,13 @@
             </nav>
         </div>
     </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
+                Insertar Mapa
+    </button>
+    <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
+
+
     <div class="row">
         <div class="col-md-12">
             <table class="table table-hover">
@@ -95,10 +102,7 @@
     
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
-                Insertar Mapa
-            </button>
-            <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
+            
             <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
             <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true">
@@ -141,7 +145,24 @@
                                     value='1' required />
                             </div>
                             <div class='form-group'>
+                                <label for='paquete'>Paquete</label>
+                            <!-- arreglar todo esto ASAP -->
+                                <?php
+                                echo "<input list='paquetes' name='paquete'>";
+                                echo "<datalist name='paquetes'>";
+                                echo "<option id='default' value='Crear un Paquete Nuevo'> ";
+                                for($i = 0; $i < count($ListaPaquetes);$i++){
+                                    $paquete = $ListaPaquetes[$i];
+                                   echo "<option value='".$paquete['nombre']."' id='".$paquete['id']."'>";
+                                }
+                                echo "</datalist>";
+                                ?>
+
+                            </div>
+                            
+                            <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
+
                                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
                                 <div class="custom-file">
                                     <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang"

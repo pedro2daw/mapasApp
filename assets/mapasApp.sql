@@ -43,6 +43,7 @@ CREATE TABLE mapas(
 
 CREATE TABLE paquetes(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(250) NOT NULL,
     fecha_subida DATETIME NOT NULL,
     descripcion VARCHAR(250) NOT NULL
 );
@@ -97,8 +98,8 @@ INSERT INTO usuarios VALUES (null, 'admin','1');
 INSERT INTO mapas VALUES (null,'Almería del Siglo XIX', 'Mapa de Almería del Siglo XIX Perez de Rozas','Almeria',1890,'/assets/img/mapas/7_c_medium.jpg',1,1000,1000,10,10);
 INSERT INTO mapas VALUES (null,'Almería del Siglo XXI', 'Mapa de Almería del Siglo XXI','Almeria',2017,'/assets/img/mapas/7_o_medium.jpg',2,1000,1000,10,10);
 
-INSERT INTO paquetes VALUES (null,'1000-01-01 00:00:00', 'Descripción');
+INSERT INTO paquetes VALUES (null,'Paquete primero','1000-01-01 00:00:00', 'Descripción');
 
-INSERT INTO paquetes VALUES (null,'1000-02-01 00:00:00', 'Descripción');
+INSERT INTO paquetes VALUES (null,'Paquete segundo','1000-02-01 00:00:00', 'Descripción');
 
-INSERT INTO paquetes VALUES (null,'1000-03-01 00:00:00', 'Descripción');
+INSERT INTO paquetes VALUES (null,'Paquete tercero','1000-03-01 00:00:00', 'Descripción');
