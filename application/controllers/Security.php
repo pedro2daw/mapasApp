@@ -19,12 +19,12 @@
                 }
             }
     
-            public function createSession() {
+            public function create_session() {
                 $sessionLogued = array('loguedIn' => TRUE);
                 $this->session->set_userdata($sessionLogued);
 
             }
-            public function destroySession() {
+            public function destroy_session() {
                 $this->session->sess_destroy();
 
             }
