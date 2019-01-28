@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <nav class="nav nav-pills flex-column flex-sm-row">
@@ -117,7 +117,7 @@
                         <div class="modal-body">
 
                             <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** --> 
-                            <?php echo form_open_multipart('Maps/insert'); ?>
+                            <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
 
                             <div class='form-group'>
                                 <label for='titulo'>Título</label>
@@ -147,15 +147,16 @@
                             <div class='form-group'>
                                 <label for='paquete'>Paquete</label>
                             <!-- arreglar todo esto ASAP -->
-                                <?php
-                                echo "<input list='paquetes' name='paquete'>";
-                                echo "<datalist name='paquetes'>";
-                                echo "<option id='default' value='Crear un Paquete Nuevo'> ";
+                            <input id="inset-autocomplete-input" data-type="search" placeholder="Search cars...">
+                             
+                            </ul>
+                            <?php
+                                echo '<ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="true" data-input="#inset-autocomplete-input">';
                                 for($i = 0; $i < count($ListaPaquetes);$i++){
                                     $paquete = $ListaPaquetes[$i];
-                                   echo "<option value='".$paquete['nombre']."' id='".$paquete['id']."'>";
+                                    echo '<li><a href="'.$paquete['id'].'">'.$paquete['nombre'].'</a></li>';
                                 }
-                                echo "</datalist>";
+                                echo "</ul>";
                                 ?>
 
                             </div>

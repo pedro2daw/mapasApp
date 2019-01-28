@@ -24,7 +24,7 @@ class Login extends Security{
             $this->load->view('template',$data);
         }
         else{
-            create_session();
+           //  create_session();
             $data['ListaMapas'] = $this->modelMapas->get_all();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_all();
             // var_dump($data['ListaPaquetes']);
