@@ -11,8 +11,8 @@ class modelCalles extends CI_Model {
             }
         return $data;
     }
-    public function get_slides(){
-        $query = $this->db->query("SELECT id AS id_slide,nombre FROM laminas");
+    public function get_maps(){
+        $query = $this->db->query("SELECT id AS id_mapa,titulo FROM mapas");
 
         $data = array();
         if ($query->num_rows() > 0){
@@ -20,6 +20,6 @@ class modelCalles extends CI_Model {
                 $data[] = $row;
             }
         }
-        return array_column($data,'nombre','id_slide');
+        return array_column($data,'titulo','id_mapa');
     }
 } // cierra la class modelCalles

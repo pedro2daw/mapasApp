@@ -1,8 +1,9 @@
 <?php
-var_dump($nombre);
+/*var_dump($nombre);
 var_dump($tipo);
 var_dump($aInicio);
-var_dump($aFinal);
+var_dump($aFinal);*/
+var_dump($id_mapa);
 ?>
 <div class="container-fluid">
         <div class="row" style="margin-top:10px;">
