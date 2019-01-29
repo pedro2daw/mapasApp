@@ -158,14 +158,19 @@
                                 }
                                 echo "</ul>";
                                 -->
-                            <div class='form-group'>
+                            <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
+                            <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Añadir Mapa a un paquete existente</button>
+                            
+                            <div id='crear_paquete' class='form-group'>
+                                <!-- CREAR PAQUETE -->
                                 <label for='nombre_paquete'>Nombre del Paquete Nuevo:</label>
                                 <input type='text' class='form-control' placeholder='Introduce un nombre para el paquete nuevo' name='nombre_paquete'
                                         id='nombre_paquete' value='' required/>
                             </div>
-                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Crear paquete nuevo</button>
-                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Añadir a un paquete existente</button>
 
+                            <div id='seleccionar_paquete' class='form-group'>
+                                <!-- SELECCIONAR UN PAQUETE -->
+                                <label for='nombre_paquete'>Selecciona un paquete:</label>
                             <?php 
                                 echo "<select name='nombre_paquete'>";
                                 echo "<option value='default'>Selecciona un paquete</option>";
@@ -176,7 +181,7 @@
                                 }    
                                 echo "</select>";
                             ?>
-                            
+                             </div>
                                 
                             </div>
                             
