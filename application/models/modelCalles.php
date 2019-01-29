@@ -22,4 +22,11 @@ class modelCalles extends CI_Model {
         }
         return array_column($data,'titulo','id_mapa');
     }
+
+    public function get_img($id){
+
+        $ruta = $this->db->query("SELECT imagen FROM mapas WHERE id = $id");
+
+        return $ruta->result_array()[0];
+    }
 } // cierra la class modelCalles

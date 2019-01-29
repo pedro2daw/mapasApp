@@ -4,6 +4,7 @@ var_dump($tipo);
 var_dump($aInicio);
 var_dump($aFinal);*/
 var_dump($id_mapa);
+var_dump($ruta_imagen);
 ?>
 <div class="container-fluid">
         <div class="row" style="margin-top:10px;">
@@ -17,7 +18,7 @@ var_dump($id_mapa);
                 <div class="col-md-9 dragscroll" id="prueba">
                         <h3 class="text-center">Selecciona las coordenadas haciendo doble-click</h3>
                         <div id="hotspotImg" class="responsive-hotspot-wrap">
-                            <img src="<?php echo base_url('assets/img/mapas/8_c.png');?>" alt="img" id="slide"> <?php // añadir la ruta de la imagen traida del formulario ?>
+                            <img src="<?php echo base_url($ruta_imagen);?>" alt="img" id="slide"> <?php // añadir la ruta de la imagen traida del formulario ?>
                         </div>
                             
                 </div>

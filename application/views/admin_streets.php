@@ -1,5 +1,4 @@
 <?php 
-var_dump($mapas_disponibles);
 echo '
 <div class="container-fluid">
 

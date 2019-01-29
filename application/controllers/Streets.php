@@ -31,6 +31,7 @@ include_once('Security.php');
             $data['aInicio'] = $this->input->get_post('aInicio');
             $data['aFinal'] = $this->input->get_post('aFinal');
             $data['id_mapa'] = $this->input->get_post('mapa');
+            $data["ruta_imagen"] = $this->modelCalles->get_img($data['id_mapa']);
             $data["viewName"] = "insert_coords";
             $this->load->view('template', $data);
         }
