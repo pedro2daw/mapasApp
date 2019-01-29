@@ -13,10 +13,23 @@ var openFile = function (event) {
 
 // Cuando click en cerrar en el Modal (pop up de insertar...) se resetean los campos y la imagen.
 $(document).ready(function () {
-$('#exampleModalCenter').on('hidden.bs.modal', function (e) {
-    $(this).find('form')[0].reset();
-    $('#output').attr('src','');
-})
+    $("#seleccionar_paquete").hide();
+    $("#crear_paquete").hide();
+    // RESETEAR VALUE DE CADA UNO SI LE DAS CLICK AL OTRO 
+
+    $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
+        $(this).find('form')[0].reset();
+        $('#output').attr('src','');
+    });
+
+    $("#btn_crearpaquete").click(function() {
+        $("#seleccionar_paquete").hide();
+        $("#crear_paquete").show();
+    });
+    $("#btn_selectpaquete").click(function () {
+        $("#seleccionar_paquete").show();
+        $("#crear_paquete").hide();
+    });
 });
 /*
 $(function () {
