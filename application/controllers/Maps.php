@@ -3,9 +3,13 @@
 include_once('Security.php');
 
 class Maps extends Security {
-    
+
+    public function index(){
+        $data["viewName"] = "admin_panel";
+        $this->load->view('template',$data);
+    }
+
     public function insert(){
-        
         $titulo = $this->input->get_post('titulo');
         $descripcion = $this->input->get_post('descripcion');
         $ciudad =$this->input->get_post('ciudad');

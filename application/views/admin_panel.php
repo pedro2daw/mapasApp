@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <?php
-                echo anchor('Maps/hotspots/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
+                echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
                 echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('','Configuración','class="flex-sm-fill text-sm-center nav-link"');
@@ -145,20 +145,39 @@
                                     value='1' required />
                             </div>
                             <div class='form-group'>
-                                <label for='paquete'>Paquete</label>
-                            <!-- arreglar todo esto ASAP -->
-                            <input id="inset-autocomplete-input" data-type="search" placeholder="Search cars...">
-                             
+                                <label for='paquete'>Paquete <span class="far fa-question-circle"></span></label><br/>
+                            <!-- CON JQUERY MOBILE  BORRAR...-->
+                            <!--
+                                <input id="inset-autocomplete-input" data-type="search" placeholder="Search cars...">
                             </ul>
-                            <?php
+                                
                                 echo '<ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="true" data-input="#inset-autocomplete-input">';
                                 for($i = 0; $i < count($ListaPaquetes);$i++){
                                     $paquete = $ListaPaquetes[$i];
                                     echo '<li><a href="'.$paquete['id'].'">'.$paquete['nombre'].'</a></li>';
                                 }
                                 echo "</ul>";
-                                ?>
+                                -->
+                            <div class='form-group'>
+                                <label for='nombre_paquete'>Nombre del Paquete Nuevo:</label>
+                                <input type='text' class='form-control' placeholder='Introduce un nombre para el paquete nuevo' name='nombre_paquete'
+                                        id='nombre_paquete' value='' required/>
+                            </div>
+                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Crear paquete nuevo</button>
+                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Añadir a un paquete existente</button>
 
+                            <?php 
+                                echo "<select name='nombre_paquete'>";
+                                echo "<option value='default'>Selecciona un paquete</option>";
+                                
+                                for ($i = 0; $i < count($ListaPaquetes); $i++){
+                                    $paquete = $ListaPaquetes[$i];
+                                echo "<option value='".$paquete['id']."'>".$paquete['nombre']."</option>";
+                                }    
+                                echo "</select>";
+                            ?>
+                            
+                                
                             </div>
                             
                             <div class='form-group'>
@@ -175,7 +194,7 @@
 
                             <div class='modal-footer'>
                                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                                <?php form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
+                                <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
                             </div>
                             <?php form_close(); ?>
                         </div>
