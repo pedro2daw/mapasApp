@@ -159,7 +159,7 @@
                                 echo "</ul>";
                                 -->
                             <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
-                            <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Añadir Mapa a un paquete existente</button>
+                            <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Seleccionar un paquete existente</button>
                             
                             <div id='crear_paquete' class='form-group'>
                                 <!-- CREAR PAQUETE -->
@@ -172,14 +172,14 @@
                                 <!-- SELECCIONAR UN PAQUETE -->
                                 <label for='nombre_paquete'>Selecciona un paquete:</label>
                             <?php 
-                                echo "<select name='nombre_paquete'>";
+                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control" ');
+                                /* echo "<select id='select_paquetes' name='nombre_paquete'>";
                                 echo "<option value='default'>Selecciona un paquete</option>";
-                                
                                 for ($i = 0; $i < count($ListaPaquetes); $i++){
                                     $paquete = $ListaPaquetes[$i];
                                 echo "<option value='".$paquete['id']."'>".$paquete['nombre']."</option>";
                                 }    
-                                echo "</select>";
+                                echo "</select>"; */
                             ?>
                              </div>
                                 

@@ -25,10 +25,13 @@ $(document).ready(function () {
     $("#btn_crearpaquete").click(function() {
         $("#seleccionar_paquete").hide();
         $("#crear_paquete").show();
+        // Cuando click en crear paquete, se pone el valor del select en default.
+        $("#select_paquetes").val(1);
     });
     $("#btn_selectpaquete").click(function () {
         $("#seleccionar_paquete").show();
         $("#crear_paquete").hide();
+        $("#nombre_paquete").val("");
     });
 });
 /*

@@ -97,9 +97,15 @@ CREATE TABLE hotspots (
 INSERT INTO usuarios VALUES (null, 'admin','1');
 INSERT INTO mapas VALUES (null,'Almería del Siglo XIX', 'Mapa de Almería del Siglo XIX Perez de Rozas','Almeria',1890,'/assets/img/mapas/7_c_medium.jpg',1,1000,1000,10,10);
 INSERT INTO mapas VALUES (null,'Almería del Siglo XXI', 'Mapa de Almería del Siglo XXI','Almeria',2017,'/assets/img/mapas/7_o_medium.jpg',2,1000,1000,10,10);
+INSERT INTO mapas VALUES (null,'Almería del Siglo 21', 'Mapa de Almería del Siglo XIX Perez de Rozas','Almeria',1890,'/assets/img/mapas/7_c_medium.jpg',1,1000,1000,10,10);
+INSERT INTO mapas VALUES (null,'Almería del Siglo 22', 'Mapa de Almería del Siglo XXI','Almeria',2017,'/assets/img/mapas/7_o_medium.jpg',2,1000,1000,10,10);
 
-INSERT INTO paquetes VALUES (null,'Paquete primero','1000-01-01 00:00:00', 'Descripción');
+DELETE FROM mapas WHERE id = 3;
+INSERT INTO paquetes VALUES (null,'Seleccione un paquete','1000-01-01 00:00:00', 'Descripción');
+INSERT INTO paquetes VALUES (null,'Paquete primero(2)','1000-01-01 00:00:00', 'Descripción');
+INSERT INTO paquetes VALUES (null,'Paquete segundo(3)','1000-02-01 00:00:00', 'Descripción');
+INSERT INTO paquetes VALUES (null,'Paquete tercero(4)','1000-03-01 00:00:00', 'Descripción');
 
-INSERT INTO paquetes VALUES (null,'Paquete segundo','1000-02-01 00:00:00', 'Descripción');
+DELETE FROM paquetes WHERE id = 2;
 
-INSERT INTO paquetes VALUES (null,'Paquete tercero','1000-03-01 00:00:00', 'Descripción');
+select * from paquetes;
