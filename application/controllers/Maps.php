@@ -65,7 +65,7 @@ class Maps extends Security {
         // BD Que mapas contiene un paquete de mapas para saber la fecha de los mapas y compararlos y ordenarlos automatica/.    
         // NIVEL LO ORDENARÁ AUTOMATICAMENTE POR LA FECHA
        if ($r == 0) {
-                echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
+                $data["msg"] = "1";
                         $data["viewName"] = "admin_panel";
                         $this->load->view('template', $data);
 
@@ -77,12 +77,13 @@ class Maps extends Security {
                 $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
 
             if ($r2 == 0){
-                echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
+                $data["msg"] = "1";
                         $data["viewName"] = "admin_panel";
                         $this->load->view('template', $data);
 
             } else {
-                echo "<h4 class='success'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
+                // CAMBIAR MSG POR ERROR, FALSE, o 0 o 1 Y LUEGO CONTROLAR ESTO EN PHP EN LA VISTA.
+                $data["msg"] = "0";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
                 $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";

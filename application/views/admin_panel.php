@@ -2,6 +2,27 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
+        <?php
+        if (isset($msg)){
+            switch ($msg) {
+                case 0:
+                    echo "<h4 class='success'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
+                    break;
+                case 1:
+                    echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
+                    break;
+                case 2:
+                    echo "i es igual a 2";
+                    break;
+            }
+        }
+            
+        ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <?php
                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
@@ -57,6 +78,7 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
                 Insertar Mapa
     </button>
+    
     <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
 
 
@@ -140,8 +162,9 @@
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
                                     value='1' required />
                             </div>
-                            <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
-                            <label for='paquete'>Paquete <span class="far fa-question-circle"></span></label><br/>
+                            <label for='paquete'>Paquete</label>
+                            <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
+                            <br/>
                             <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
                             <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Seleccionar un paquete existente</button>
                             

@@ -43,7 +43,7 @@ CREATE TABLE mapas(
 
 CREATE TABLE paquetes(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(250) NOT NULL,
+    nombre VARCHAR(250) NOT NULL UNIQUE,
     fecha_subida DATETIME NOT NULL,
     descripcion VARCHAR(250) NOT NULL
 );

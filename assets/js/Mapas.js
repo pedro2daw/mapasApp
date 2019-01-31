@@ -14,7 +14,8 @@ var openFile = function (event) {
 
 // Cuando click en cerrar en el Modal (pop up de insertar...) se resetean los campos y la imagen.
 $(document).ready(function () {
-
+    $('[data-toggle="popover"]').popover();
+    
     // Si no hay una imagen seleccionada, se oculta la etiqueta <img> de la previsualización
     $("#output").hide();
 
