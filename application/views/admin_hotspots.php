@@ -98,6 +98,6 @@
     <!-- ENTORNO DONDE SE CREA EL PUNTO -->
     <div id="hotspotImg" class="responsive-hotspot-wrap">
 
-        <img src="<?php echo base_url(" assets/img/mapas/7_o_medium.jpg"); ?>" id="slide" class="img-responsive span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
+        <img src="<?php echo base_url("/assets/img/mapas/7_o_medium.jpg"); ?>" id="slide" class="img-responsive span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
 
     </div>
