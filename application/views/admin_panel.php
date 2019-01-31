@@ -140,7 +140,7 @@
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
                                     value='1' required />
                             </div>
-                            
+                            <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
                             <label for='paquete'>Paquete <span class="far fa-question-circle"></span></label><br/>
                             <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
                             <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Seleccionar un paquete existente</button>
