@@ -17,6 +17,10 @@ $(document).ready(function () {
         posY = y_coords[0];
     });
 
+    $('#slide').dblclick(function () {
+        $('#myModal').modal('toggle');
+    });
+
     $("#insert").click(function () {
         var src = "1.jpg";
         var titulo = $("#titulo").val();

@@ -54,6 +54,12 @@
     });
     </script>
     <style>
+        #hotspotImg {
+            overflow: auto;
+            width: 1000px;
+            height: 550px;
+            cursor: crosshair;
+        }
         #prueba {
             overflow: auto;
             height: 550px;

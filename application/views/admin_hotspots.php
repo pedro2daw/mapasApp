@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,8 +96,8 @@
         </div>
     </div>
     <!-- ENTORNO DONDE SE CREA EL PUNTO -->
-    <div id="hotspotImg" class="responsive-hotspot-wrap">
+    <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
-        <img src="<?php echo base_url("/assets/img/mapas/7_o_medium.jpg"); ?>" id="slide" class="img-responsive span4 proj-div" data-toggle="modal" data-target="#exampleModalCenter">
+        <img src="<?php echo base_url("/assets/img/mapas/7_o_medium.jpg"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
 
     </div>
