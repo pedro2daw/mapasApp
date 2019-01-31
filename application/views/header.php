@@ -60,6 +60,7 @@
             height: 550px;
             cursor: crosshair;
             margin: 0 auto;
+            margin-top: 2%;
         }
         #prueba {
             overflow: auto;
