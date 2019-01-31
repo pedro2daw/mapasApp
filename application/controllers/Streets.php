@@ -25,7 +25,7 @@ include_once('Security.php');
             $this->load->view('template', $data);
         }
 
-        public function insert_street(){
+        public function insert_coords(){
             $data['nombre'] = $this->input->get_post('nombre');
             $data['tipo'] = $this->input->get_post('tipo');
             $data['aInicio'] = $this->input->get_post('aInicio');
@@ -34,6 +34,23 @@ include_once('Security.php');
             $data["ruta_imagen"] = $this->modelCalles->get_img($data['id_mapa']);
             $data["viewName"] = "insert_coords";
             $this->load->view('template', $data);
+        }
+
+        public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa){
+           $resultado = $this->modelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa);
+
+            if ($resultado == -1){
+                echo("<h3>ERROR AL INSERTAR LA CALLE<h3>");
+                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["viewName"] = "admin_streets";
+                $this->load->view('template', $data);
+            }else{
+                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["viewName"] = "admin_streets";
+                $this->load->view('template', $data);
+            }
         }
 
    } // cierro la class Streets

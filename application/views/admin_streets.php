@@ -71,7 +71,7 @@ echo '
         <div class="modal-body">
         <!-- ****************** CUERPO DEL CUADRO MODAL STREET *********************** --> ';
 
-        echo form_open('Streets/insert_street');
+        echo form_open('Streets/insert_coords');
         echo "<div class='form-group'>
                 <label for='nombre'>Nombre de la calle</label>
                 <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='nombre' id='nombre' required/> 

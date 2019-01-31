@@ -29,4 +29,10 @@ class modelCalles extends CI_Model {
 
         return $ruta->result_array()[0];
     }
+
+    public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa){
+        $this->db->query("INSERT INTO calles
+                        VALUES (null,)
+        ");
+    }
 } // cierra la class modelCalles
