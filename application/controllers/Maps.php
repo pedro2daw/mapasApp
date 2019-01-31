@@ -5,6 +5,8 @@ include_once('Security.php');
 class Maps extends Security {
 
     public function index(){
+        $data['ListaMapas'] = $this->modelMapas->get_all();
+        $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
         $data["viewName"] = "admin_panel";
         $this->load->view('template',$data);
     }
@@ -50,8 +52,14 @@ class Maps extends Security {
         } else {
             $descripcion_paquete = $this->input->get_post('descripcion_paquete');
             $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
-            $paquete_nuevo = $this->modelPaquetes->get_last();
-            $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_nuevo);
+            if ($r == 0) {
+                echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR EN LA INSERCIÓN DEL PAQUETE </h4>";
+                        $data["viewName"] = "admin_panel";
+                        $this->load->view('template', $data);
+            } else {
+                $paquete_nuevo = $this->modelPaquetes->get_last();
+                $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_nuevo);
+            }
         }
         // FECHA DE SUBIDA
         // BD Que mapas contiene un paquete de mapas para saber la fecha de los mapas y compararlos y ordenarlos automatica/.    
@@ -76,6 +84,7 @@ class Maps extends Security {
             } else {
                 echo "<h4 class='success'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template', $data);
             }

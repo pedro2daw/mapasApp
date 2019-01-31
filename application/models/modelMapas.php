@@ -18,7 +18,7 @@ class modelMapas extends CI_Model {
         return $query->result_array()[0];
     }
 
-    function insert ($titulo, $descripcion, $ciudad, $fecha, $ruta){
+    function insert ($titulo, $descripcion, $ciudad, $fecha, $ruta, $id_paquete){
         /*
             id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             titulo VARCHAR(150) NOT NULL,
@@ -32,7 +32,7 @@ class modelMapas extends CI_Model {
             altura TINYINT NOT NULL
         */
         
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta');"); 
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen, id_paquete) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta','$id_paquete');"); 
         return $this->db->affected_rows();
     }
 
