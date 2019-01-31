@@ -19,21 +19,38 @@ include_once('Security.php');
             }
             
             */
-            //$data["$maps_avialables"] =  $this->modelMapas->get_all_maps(); // traigo todos las laminas disponibles
-           // $data["slides_avialables"] = $this->modelCalles->get_slides();
+            $data["mapas_disponibles"] = $this->modelCalles->get_maps();
             $data["listaCalles"] = $this->modelCalles->get_all();
             $data["viewName"] = "admin_streets";
             $this->load->view('template', $data);
         }
 
-        public function insert_street(){
+        public function insert_coords(){
             $data['nombre'] = $this->input->get_post('nombre');
             $data['tipo'] = $this->input->get_post('tipo');
             $data['aInicio'] = $this->input->get_post('aInicio');
             $data['aFinal'] = $this->input->get_post('aFinal');
-            $data['lamina'] = $this->input->get_post('lamina');
+            $data['id_mapa'] = $this->input->get_post('mapa');
+            $data["ruta_imagen"] = $this->modelCalles->get_img($data['id_mapa']);
             $data["viewName"] = "insert_coords";
             $this->load->view('template', $data);
+        }
+
+        public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa){
+           $resultado = $this->modelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa);
+
+            if ($resultado == -1){
+                echo("<h3>ERROR AL INSERTAR LA CALLE<h3>");
+                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["viewName"] = "admin_streets";
+                $this->load->view('template', $data);
+            }else{
+                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["viewName"] = "admin_streets";
+                $this->load->view('template', $data);
+            }
         }
 
    } // cierro la class Streets

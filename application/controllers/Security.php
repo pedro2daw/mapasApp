@@ -3,6 +3,7 @@
             public function __construct(){
                 parent::__construct();
                 $this->load->model('modelUser');
+                $this->load->model('modelPaquetes');
                 $this->load->model('modelMapas');
                 $this->load->model('modelCalles');
             }
@@ -19,12 +20,12 @@
                 }
             }
     
-            public function createSession() {
+            public function create_session() {
                 $sessionLogued = array('loguedIn' => TRUE);
                 $this->session->set_userdata($sessionLogued);
 
             }
-            public function destroySession() {
+            public function destroy_session() {
                 $this->session->sess_destroy();
 
             }

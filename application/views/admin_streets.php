@@ -71,7 +71,7 @@ echo '
         <div class="modal-body">
         <!-- ****************** CUERPO DEL CUADRO MODAL STREET *********************** --> ';
 
-        echo form_open('Streets/insert_street');
+        echo form_open('Streets/insert_coords');
         echo "<div class='form-group'>
                 <label for='nombre'>Nombre de la calle</label>
                 <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='nombre' id='nombre' required/> 
@@ -115,7 +115,8 @@ echo '
             <div class='form-group'>
                 <label for='slide_list'>Selecciona la lámina</label>";
                 
-                //form_dropdown('lamina',$slides_avialables, 'class="form-control"');
+                 echo form_dropdown('mapa', $mapas_disponibles,'','class="form-control form-control-md"') ;
+                 var_dump($mapas_disponibles);
                 //$slides_avialables
                 // añadir mas adelante que se seleccione un mapa, y en funcion de ese mapa solo salgan las laminas de ese mapa
         echo"

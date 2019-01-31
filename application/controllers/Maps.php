@@ -3,9 +3,13 @@
 include_once('Security.php');
 
 class Maps extends Security {
-    
+
+    public function index(){
+        $data["viewName"] = "admin_panel";
+        $this->load->view('template',$data);
+    }
+
     public function insert(){
-        
         $titulo = $this->input->get_post('titulo');
         $descripcion = $this->input->get_post('descripcion');
         $ciudad =$this->input->get_post('ciudad');
@@ -14,16 +18,16 @@ class Maps extends Security {
         
         // Obtenemos el ultimo id para cambiar el nombre del archivo subido:
         $ultimoId = $this->modelMapas->get_last()+1;
-        var_dump($ultimoId); 
 
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
         $ciudad_format = $this->modelMapas->format($ciudad);
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
         $ruta = "assets/img/mapas/".$img_name; 
 
+        // FECHA DE SUBIDA
         // BD Que mapas contiene un paquete de mapas para saber la fecha de los mapas y compararlos y ordenarlos automatica/.    
         // NIVEL LO ORDENARÁ AUTOMATICAMENTE POR LA FECHA
-
+        
         $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta);
 
        if ($r == 0) {
@@ -34,9 +38,7 @@ class Maps extends Security {
         } else {
                 $data['img_size'] = $this->modelMapas->get_img_size($ruta);
                 $ancho = $data['img_size'][0];
-                var_dump($ancho);
                 $alto = $data['img_size'][1];
-                var_dump($alto);
 
                 $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
 
@@ -63,5 +65,7 @@ class Maps extends Security {
     public function form_update_map($id) {
         $data['datosMapa'] = $this->modelMapas->get($id);
     }
+
+
 
 }

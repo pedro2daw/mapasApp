@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <?php
-                echo anchor('Maps/hotspots/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
+                echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
                 echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('','Configuración','class="flex-sm-fill text-sm-center nav-link"');
@@ -53,6 +53,13 @@
             </nav>
         </div>
     </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
+                Insertar Mapa
+    </button>
+    <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
+
+
     <div class="row">
         <div class="col-md-12">
             <table class="table table-hover">
@@ -95,10 +102,7 @@
     
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
-                Insertar Mapa
-            </button>
-            <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
+            
             <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
             <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true">
@@ -113,7 +117,7 @@
                         <div class="modal-body">
 
                             <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** --> 
-                            <?php echo form_open_multipart('Maps/insert'); ?>
+                            <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
 
                             <div class='form-group'>
                                 <label for='titulo'>Título</label>
@@ -141,7 +145,49 @@
                                     value='1' required />
                             </div>
                             <div class='form-group'>
+                                <label for='paquete'>Paquete <span class="far fa-question-circle"></span></label><br/>
+                            <!-- CON JQUERY MOBILE  BORRAR...-->
+                            <!--
+                                <input id="inset-autocomplete-input" data-type="search" placeholder="Search cars...">
+                            </ul>
+                                
+                                echo '<ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="true" data-input="#inset-autocomplete-input">';
+                                for($i = 0; $i < count($ListaPaquetes);$i++){
+                                    $paquete = $ListaPaquetes[$i];
+                                    echo '<li><a href="'.$paquete['id'].'">'.$paquete['nombre'].'</a></li>';
+                                }
+                                echo "</ul>";
+                                -->
+                            <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
+                            <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Seleccionar un paquete existente</button>
+                            
+                            <div id='crear_paquete' class='form-group'>
+                                <!-- CREAR PAQUETE -->
+                                <label for='nombre_paquete'>Nombre del Paquete Nuevo:</label>
+                                <input type='text' class='form-control' placeholder='Introduce un nombre para el paquete nuevo' name='nombre_paquete'
+                                        id='nombre_paquete' value='' required/>
+                            </div>
+
+                            <div id='seleccionar_paquete' class='form-group'>
+                                <!-- SELECCIONAR UN PAQUETE -->
+                                <label for='nombre_paquete'>Selecciona un paquete:</label>
+                            <?php 
+                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control" ');
+                                /* echo "<select id='select_paquetes' name='nombre_paquete'>";
+                                echo "<option value='default'>Selecciona un paquete</option>";
+                                for ($i = 0; $i < count($ListaPaquetes); $i++){
+                                    $paquete = $ListaPaquetes[$i];
+                                echo "<option value='".$paquete['id']."'>".$paquete['nombre']."</option>";
+                                }    
+                                echo "</select>"; */
+                            ?>
+                             </div>
+                                
+                            </div>
+                            
+                            <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
+
                                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
                                 <div class="custom-file">
                                     <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang"
@@ -153,7 +199,7 @@
 
                             <div class='modal-footer'>
                                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                                <?php form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
+                                <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
                             </div>
                             <?php form_close(); ?>
                         </div>
