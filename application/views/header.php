@@ -24,11 +24,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-    <!--<script>
+    <script>
         x_coords = [];
         y_coords = [];
     $(document).ready(function() {
-        $('#slide').dblclick(function(e) {
+        $('#callejero').dblclick(function(e) {
         var offset = $(this).offset();
         x_coords.push(parseInt(e.pageX - offset.left));
         y_coords.push(parseInt(e.pageY - offset.top));
@@ -36,8 +36,8 @@
             var y_def = parseInt(e.pageY - offset.top);
                 var x_temp = parseInt((e.pageX - offset.left)-5);
                 var y_temp = (parseInt(e.pageY - offset.top)-5);
-        $("#coords").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
-            $("#slide").after("<div class='hot-spot' x='"+x_temp+"'y='"+y_temp+"'style='top:"+y_temp+"px;left:"+x_temp+"px; display:block;'></div>");
+        $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
+            $("#callejero").after("<div class='hot-spot-1' x='"+x_temp+"'y='"+y_temp+"'style='top:"+y_temp+"px;left:"+x_temp+"px; display:block;'></div>");
         });
         $("#show").click(function() {
                 alert("Las coordenadas del eje x son: " + x_coords);
@@ -59,13 +59,13 @@
             height: 550px;
             cursor: crosshair;
         }
-        #hotspotImg {
+        #hotspotImg-1 {
             background-color: #ededed;
             background-size: cover;
             background-position: center center;
             position: relative;
         }
-        #hotspotImg .hot-spot {
+        #hotspotImg-1 .hot-spot-1 {
             position: absolute;
             width: 10px;
             height: 10px;
@@ -73,14 +73,6 @@
             background-color: blue;
             border-radius: 100%;
          }
-    </style>-->
-    <style>
-        #hotspotImg {
-            overflow: auto;
-            width: 1000px;
-            height: 550px;
-            cursor: crosshair;
-        }
     </style>
 </head>
 

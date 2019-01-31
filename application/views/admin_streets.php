@@ -37,7 +37,7 @@ echo '
                     echo ("<td>".$each_street["tipo"]."</td>");
                     echo ("<td>".$each_street["ano_inicio"]."</td>");
                     echo ("<td>".$each_street["ano_fin"]."</td>");
-                    echo ("<td></td>");
+                    echo ("<td>".$each_street["id_mapa"]."</td>");
                     echo("<td>");
                             echo anchor("Streets/update_street/".$each_street['id'],"Modificar","class='btn btn-info'");
                     echo("</td>");  
@@ -116,8 +116,6 @@ echo '
                 <label for='slide_list'>Selecciona la lámina</label>";
                 
                  echo form_dropdown('mapa', $mapas_disponibles,'','class="form-control form-control-md"') ;
-                 var_dump($mapas_disponibles);
-                //$slides_avialables
                 // añadir mas adelante que se seleccione un mapa, y en funcion de ese mapa solo salgan las laminas de ese mapa
         echo"
             </div>";

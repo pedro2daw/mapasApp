@@ -32,7 +32,8 @@ class modelCalles extends CI_Model {
 
     public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa){
         $this->db->query("INSERT INTO calles
-                        VALUES (null,)
+                        VALUES (null,'$nombre','$tipo',$aInicio,$aFin,$id_mapa)
         ");
+            return $this->db->affected_rows();
     }
 } // cierra la class modelCalles
