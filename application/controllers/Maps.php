@@ -24,12 +24,38 @@ class Maps extends Security {
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
         $ruta = "assets/img/mapas/".$img_name; 
 
+        
+        $paquete_seleccionado = $this->input->get_post('select_paquetes');
+
+        $nombre_paquete_nuevo = $this->input->get_post('nombre_paquete');
+        //var_dump("Paquete-seleccionado: ". $paquete_seleccionado . " Paquete nuevo: " .$paquete_nuevo );
+
+        /* 
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descripcion VARCHAR(250) NOT NULL,
+    ciudad VARCHAR(50) NOT NULL,
+    fecha SMALLINT NOT NULL,
+    imagen VARCHAR(250) NOT NULL,
+    nivel SMALLINT NOT NULL,
+    ancho INT NOT NULL,
+    altura INT NOT NULL,
+    fecha_de_subida DATETIME NOT NULL,
+
+        id_paquete INT UNSIGNED NOT NULL
+        */
+
+        if ($paquete_seleccionado != '1'){
+            $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_seleccionado);
+        } else {
+            $descripcion_paquete = $this->input->get_post('descripcion_paquete');
+            $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
+            $paquete_nuevo = $this->modelPaquetes->get_last();
+            $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_nuevo);
+        }
         // FECHA DE SUBIDA
         // BD Que mapas contiene un paquete de mapas para saber la fecha de los mapas y compararlos y ordenarlos automatica/.    
         // NIVEL LO ORDENARÁ AUTOMATICAMENTE POR LA FECHA
-        
-        $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta);
-
        if ($r == 0) {
                 echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
                         $data["viewName"] = "admin_panel";

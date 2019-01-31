@@ -7,32 +7,48 @@ var openFile = function (event) {
         var dataURL = reader.result;
         var output = document.getElementById('output');
         output.src = dataURL;
+        output.style.display = 'block';
     };
     reader.readAsDataURL(input.files[0]);
 };
 
 // Cuando click en cerrar en el Modal (pop up de insertar...) se resetean los campos y la imagen.
 $(document).ready(function () {
-    $("#seleccionar_paquete").hide();
-    $("#crear_paquete").hide();
-    // RESETEAR VALUE DE CADA UNO SI LE DAS CLICK AL OTRO 
 
+    // Si no hay una imagen seleccionada, se oculta la etiqueta <img> de la previsualización
+    $("#output").hide();
+
+    // RESETEAR VALUE DE CADA UNO SI LE DAS CLICK AL OTRO 
     $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
         $('#output').attr('src','');
     });
-
+    
+    $("#seleccionar_paquete").hide();
+    $("#crear_paquete").hide();
+    
     $("#btn_crearpaquete").click(function() {
         $("#seleccionar_paquete").hide();
         $("#crear_paquete").show();
+        
         // Cuando click en crear paquete, se pone el valor del select en default.
         $("#select_paquetes").val(1);
+        // El campo se vuelve required.
+        $("#nombre_paquete").prop('required', true);
+        $("#descripcion_paquete").prop("required", true);
+        $("#select_paquetes").prop("required", false);
+        
     });
     $("#btn_selectpaquete").click(function () {
         $("#seleccionar_paquete").show();
         $("#crear_paquete").hide();
         $("#nombre_paquete").val("");
+        // El campo se vuelve required.
+        $("#select_paquetes").prop("required", true);
+        $("#nombre_paquete").prop("required", false);
+        $("#descripcion_paquete").prop("required", false);
     });
+    
 });
 /*
 $(function () {
