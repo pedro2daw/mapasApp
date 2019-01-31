@@ -26,9 +26,7 @@
         x_coords = [];
         y_coords = [];
     $(document).ready(function() {
-
         $('#slide').dblclick(function(e) {
-
         var offset = $(this).offset();
         x_coords.push(parseInt(e.pageX - offset.left));
         y_coords.push(parseInt(e.pageY - offset.top));
@@ -39,20 +37,16 @@
         $("#coords").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
             $("#slide").after("<div class='hot-spot' x='"+x_temp+"'y='"+y_temp+"'style='top:"+y_temp+"px;left:"+x_temp+"px; display:block;'></div>");
         });
-
         $("#show").click(function() {
                 alert("Las coordenadas del eje x son: " + x_coords);
                 alert("Las coordenadas del eje y son: " + y_coords);
         });
-
         $("#delCoord").click(function() {
                 $("#coords li:last-child").remove();
-
                 index_x = x_coords.length - 1;
                 index_y = y_coords.length - 1;
                 x_coords.splice(index_x, 1);
                 y_coords.splice(index_y, 1);
-
                 $(".hot-spot:first").remove();
         });
     });
@@ -69,7 +63,6 @@
             background-position: center center;
             position: relative;
         }
-
         #hotspotImg .hot-spot {
             position: absolute;
             width: 10px;
