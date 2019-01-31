@@ -99,11 +99,7 @@
         </div>
     </div>
 
-    
-    <div class="row">
-        <div class="col-md-12">
-            
-            <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
+                        <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
             <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -144,46 +140,31 @@
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
                                     value='1' required />
                             </div>
-                            <div class='form-group'>
-                                <label for='paquete'>Paquete <span class="far fa-question-circle"></span></label><br/>
-                            <!-- CON JQUERY MOBILE  BORRAR...-->
-                            <!--
-                                <input id="inset-autocomplete-input" data-type="search" placeholder="Search cars...">
-                            </ul>
-                                
-                                echo '<ul data-role="listview" data-inset="true" data-filter="true" data-filter-reveal="true" data-input="#inset-autocomplete-input">';
-                                for($i = 0; $i < count($ListaPaquetes);$i++){
-                                    $paquete = $ListaPaquetes[$i];
-                                    echo '<li><a href="'.$paquete['id'].'">'.$paquete['nombre'].'</a></li>';
-                                }
-                                echo "</ul>";
-                                -->
+                            <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
+                            <label for='paquete'>Paquete <span class="far fa-question-circle"></span></label><br/>
                             <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
                             <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Seleccionar un paquete existente</button>
                             
                             <div id='crear_paquete' class='form-group'>
-                                <!-- CREAR PAQUETE -->
                                 <label for='nombre_paquete'>Nombre del Paquete Nuevo:</label>
                                 <input type='text' class='form-control' placeholder='Introduce un nombre para el paquete nuevo' name='nombre_paquete'
-                                        id='nombre_paquete' value='' required/>
+                                        id='nombre_paquete' value=''/>
+                                <label for='descripcion_paquete'>Descripción:</label>
+
+                                <div class="md-form">
+                                     <textarea type="text" name='descripcion_paquete' id="descripcion_paquete" class="md-textarea form-control" rows="3"></textarea>
+                                </div>
+
                             </div>
 
                             <div id='seleccionar_paquete' class='form-group'>
-                                <!-- SELECCIONAR UN PAQUETE -->
-                                <label for='nombre_paquete'>Selecciona un paquete:</label>
+                                <label for='select_paquetes'>Selecciona un paquete:</label>
                             <?php 
-                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control" ');
-                                /* echo "<select id='select_paquetes' name='nombre_paquete'>";
-                                echo "<option value='default'>Selecciona un paquete</option>";
-                                for ($i = 0; $i < count($ListaPaquetes); $i++){
-                                    $paquete = $ListaPaquetes[$i];
-                                echo "<option value='".$paquete['id']."'>".$paquete['nombre']."</option>";
-                                }    
-                                echo "</select>"; */
+                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control"');
                             ?>
                              </div>
                                 
-                            </div>
+                            
                             
                             <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
@@ -191,7 +172,7 @@
                                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
                                 <div class="custom-file">
                                     <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang"
-                                        lang="es" onchange="openFile(event)" required>
+                                        lang="es" onchange="openFile(event)">
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
                                 <img id='output' class='img-thumbnail'>
@@ -201,12 +182,13 @@
                                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
                                 <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
                             </div>
-                            <?php form_close(); ?>
-                        </div>
+                            <?php 
+                            echo form_close(); 
+                            ?>
                     </div>
-                </div>
-
+                </div> <!-- cierra el modal body --> 
             </div>
+        </div> <!-- modal_insert -->
 
             <!-- MODAL DEL UPDATE MAPS : -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -264,13 +246,9 @@
                                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
                                 <?php form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
                             </div>
-                            <?php form_close(); ?>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>
 
             </div>
-
-            <!-- FIN MODAL UPDATE MAPAS -->
-        </div>
-    </div>
