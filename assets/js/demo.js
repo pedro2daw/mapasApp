@@ -23,8 +23,8 @@ $(document).ready(function () {
     });
     
     // Eliminacion de los puntos de interes
-    $('.circle').on("contextmenu", function(e){
-        var id_hs = $(this).attr('id');
+    $('div').on("contextmenu", ".hot-spot", function(e){
+        var id_hs = this.id;
         $("#" + id_hs).remove();
         return false;
     });
