@@ -70,6 +70,8 @@ CREATE TABLE calles(
     tipo VARCHAR(25) NOT NULL,
     ano_inicio SMALLINT NOT NULL,
     ano_fin SMALLINT NOT NULL
+
+        id_mapa INT UNSIGNED
 );
 
 CREATE TABLE mapas_calles(
@@ -83,6 +85,8 @@ CREATE TABLE puntos(
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     punto_x INT UNSIGNED NOT NULL,
     punto_y INT UNSIGNED NOT NULL
+
+        id_calle INT UNSIGNED
 );
 
 CREATE TABLE hotspots (
