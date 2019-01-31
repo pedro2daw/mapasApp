@@ -20,6 +20,12 @@ $(document).ready(function () {
     $('#slide').dblclick(function () {
         $('#myModal').modal('toggle');
     });
+    
+    $('.hot-spot').on("contextmenu", function(e){
+        var id_hs = $(this).attr('id');
+        $("#" + id_hs).remove();
+        return false;
+    });
 
     $("#insert").click(function () {
         var src = "1.jpg";
