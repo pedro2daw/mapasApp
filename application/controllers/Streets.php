@@ -24,7 +24,7 @@ include_once('Security.php');
             $data["viewName"] = "admin_streets";
             $this->load->view('template', $data);
         }
-
+        // este es la funcion del formulario de la clase modal, que nos manda a la insercion de las coordenadas //
         public function insert_coords(){
             $data['nombre'] = $this->input->get_post('nombre');
             $data['tipo'] = $this->input->get_post('tipo');
@@ -35,9 +35,12 @@ include_once('Security.php');
             $data["viewName"] = "insert_coords";
             $this->load->view('template', $data);
         }
-
-        public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa){
-           $resultado = $this->modelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa);
+        // esta es la funcion que inserta la calle y los puntos de la calle
+        public function insert_street(){
+            // recuperar los datos de insert_coords
+            // pasar el json a php array
+            //$next_id_street = modelCalles->get_ids();
+           $resultado = $this->modelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa,$xCoord,$yCoord,$next_id_street);
 
             if ($resultado == -1){
                 echo("<h3>ERROR AL INSERTAR LA CALLE<h3>");

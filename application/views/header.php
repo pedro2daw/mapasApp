@@ -44,12 +44,12 @@
                 alert("Las coordenadas del eje y son: " + coords_y);
         });
         $("#delCoord").click(function() {
-                $("#coords li:last-child").remove();
+                $("#coord-list li:last-child").remove();
                 index_x = coords_x.length - 1;
                 index_y = coords_y.length - 1;
                 coords_x.splice(index_x, 1);
                 coords_y.splice(index_y, 1);
-                $(".hot-spot:first").remove();
+                $(".hot-spot-1:first").remove();
         });
     });
     </script>
