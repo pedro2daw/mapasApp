@@ -59,6 +59,7 @@
             width: 1000px;
             height: 550px;
             cursor: crosshair;
+            margin: 0 auto;
         }
         #prueba {
             overflow: auto;
