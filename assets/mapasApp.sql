@@ -86,7 +86,7 @@ CREATE TABLE puntos(
     punto_x INT UNSIGNED NOT NULL,
     punto_y INT UNSIGNED NOT NULL
 
-        id_calle INT UNSIGNED
+        id_calle INT UNSIGNED 
 );
 
 CREATE TABLE hotspots (
