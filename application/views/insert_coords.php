@@ -27,7 +27,7 @@ var_dump($ruta_imagen);
                         <!--<button id="saveCoord" class="btn btn-link">Guardar coordenadas</button>-->
                         <br><br>
                         <?php
-        echo form_open('Streets/insert_coords');
+        echo form_open('Streets/insert_street');
         echo("
             <input type='hidden' value='$nombre' name='nombre'/>
             <input type='hidden' value='$tipo' name='tipo'/>
@@ -36,19 +36,20 @@ var_dump($ruta_imagen);
             <input type='hidden' value='$id_mapa' name='idMapa'/>
             <input type='hidden' value='' name='x_coord' id='x_coord'/>
             <input type='hidden' value='' name='y_coord' id='y_coord'/>
-                    <input type='reset' class='btn btn-secondary' value='Reestablecer formulario' />
-                    <input type='submit' class='btn btn-success' value='Insertar' id='toJson'/>
+            
+                    <input type='reset' class='btn btn-secondary' value='Reestablecer formulario'/>
+                    <input type='submit' class='btn btn-success' value='Insertar' id='toJson' />
                 </form> 
                 ");
-
             //echo anchor('Streets/insert_street/'.$nombre.'/'.$tipo.'/'.$aInicio.'/'.$aFinal.'/'.$id_mapa, 'Insertar', 'id="btn-insertar" class="btn btn-success"');?>
                         <script>
                             $("#toJson").click(function(){
                                 var jsonx = JSON.stringify(coords_x);
                                 var jsony = JSON.stringify(coords_y);
 
-                                    $("#x_coord").attr("value",jsonx);
-                                    $("#y_coord").attr("value",jsony);
+                                    $("#x_coord").val(jsonx);
+                                    $("#y_coord").val(jsony);
+                                    alert( $("#x_coord").val());
                                 /*
                                 var url = $("#btn-insertar").attr("href") + "/" + jsonx;
                                 $("#btn-insertar").attr("href",url);
