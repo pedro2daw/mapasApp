@@ -74,6 +74,14 @@
             border-radius: 100%;
          }
     </style>-->
+    <style>
+        #hotspotImg {
+            overflow: auto;
+            width: 1000px;
+            height: 550px;
+            cursor: crosshair;
+        }
+    </style>
 </head>
 
 <body>
