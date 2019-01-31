@@ -25,13 +25,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
     <script>
-        x_coords = [];
-        y_coords = [];
+        coords_x = [];
+        coords_y = [];
     $(document).ready(function() {
         $('#callejero').dblclick(function(e) {
         var offset = $(this).offset();
-        x_coords.push(parseInt(e.pageX - offset.left));
-        y_coords.push(parseInt(e.pageY - offset.top));
+        coords_x.push(parseInt(e.pageX - offset.left));
+        coords_y.push(parseInt(e.pageY - offset.top));
             var x_def = parseInt(e.pageX - offset.left);
             var y_def = parseInt(e.pageY - offset.top);
                 var x_temp = parseInt((e.pageX - offset.left)-5);
@@ -40,15 +40,15 @@
             $("#callejero").after("<div class='hot-spot-1' x='"+x_temp+"'y='"+y_temp+"'style='top:"+y_temp+"px;left:"+x_temp+"px; display:block;'></div>");
         });
         $("#show").click(function() {
-                alert("Las coordenadas del eje x son: " + x_coords);
-                alert("Las coordenadas del eje y son: " + y_coords);
+                alert("Las coordenadas del eje x son: " + coords_x);
+                alert("Las coordenadas del eje y son: " + coords_y);
         });
         $("#delCoord").click(function() {
                 $("#coords li:last-child").remove();
-                index_x = x_coords.length - 1;
-                index_y = y_coords.length - 1;
-                x_coords.splice(index_x, 1);
-                y_coords.splice(index_y, 1);
+                index_x = coords_x.length - 1;
+                index_y = coords_y.length - 1;
+                coords_x.splice(index_x, 1);
+                coords_y.splice(index_y, 1);
                 $(".hot-spot:first").remove();
         });
     });
