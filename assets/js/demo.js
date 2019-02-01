@@ -56,6 +56,7 @@ $(document).ready(function () {
 
     // Guardado de los puntos insertados en un array
     puntos = [];
+    
 
     // Reset de los campos del modal
     $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
