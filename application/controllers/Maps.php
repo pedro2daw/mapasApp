@@ -8,6 +8,7 @@ class Maps extends Security {
         $data['ListaMapas'] = $this->modelMapas->get_all();
         $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
         $data["viewName"] = "admin_panel";
+        
         $this->load->view('template',$data);
     }
 
@@ -28,7 +29,6 @@ class Maps extends Security {
 
         
         $paquete_seleccionado = $this->input->get_post('select_paquetes');
-
         $nombre_paquete_nuevo = $this->input->get_post('nombre_paquete');
         //var_dump("Paquete-seleccionado: ". $paquete_seleccionado . " Paquete nuevo: " .$paquete_nuevo );
 
@@ -49,6 +49,8 @@ class Maps extends Security {
 
         if ($paquete_seleccionado != '1'){
             $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_seleccionado);
+            $data['mapas_paquetes'] = $this->modelMapas->mapas_paquetes($paquete_seleccionado);
+            
         } else {
             $descripcion_paquete = $this->input->get_post('descripcion_paquete');
             $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
@@ -59,9 +61,9 @@ class Maps extends Security {
             } else {
                 $paquete_nuevo = $this->modelPaquetes->get_last();
                 $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_nuevo);
+                $data['mapas_paquetes'] = $this->modelMapas->mapas_paquetes($paquete_nuevo);
             }
         }
-        // FECHA DE SUBIDA
         // BD Que mapas contiene un paquete de mapas para saber la fecha de los mapas y compararlos y ordenarlos automatica/.    
         // NIVEL LO ORDENARÁ AUTOMATICAMENTE POR LA FECHA
        if ($r == 0) {
@@ -71,6 +73,7 @@ class Maps extends Security {
 
         } else {
                 $data['img_size'] = $this->modelMapas->get_img_size($ruta);
+                
                 $ancho = $data['img_size'][0];
                 $alto = $data['img_size'][1];
 

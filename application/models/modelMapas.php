@@ -32,8 +32,13 @@ class modelMapas extends CI_Model {
             altura TINYINT NOT NULL
         */
         
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen, id_paquete) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta','$id_paquete');"); 
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen, id_paquete,fecha_subida) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta','$id_paquete',NOW());"); 
         return $this->db->affected_rows();
+    }
+
+    function mapas_paquetes ($id){        
+        $query = $this->db->query("SELECT id, id_paquete from mapas WHERE id_paquete = $id;"); 
+        
     }
 
     function insert_size($ancho, $alto,$id){
