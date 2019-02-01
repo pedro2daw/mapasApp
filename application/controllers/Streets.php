@@ -51,9 +51,10 @@ include_once('Security.php');
             //$next_id_street = modelCalles->get_ids();
             $next_id_street = $this->modelCalles->get_next_id();
 
-           $resultado = $this->modelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa,$xCoord,$yCoord,$next_id_street);
+           $resultado = $this->modelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa);
+           $resultado_dos = $this->modelCalles->insert_coords($xCoord,$yCoord,$next_id_street);
 
-            if ($resultado == false){
+            if ($resultado <= 0 || $resultado_dos <= 0){
                 echo("<h3>ERROR AL INSERTAR LA CALLE<h3>");
                 $data["mapas_disponibles"] = $this->modelCalles->get_maps();
                 $data["listaCalles"] = $this->modelCalles->get_all();

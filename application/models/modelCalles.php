@@ -30,23 +30,23 @@ class modelCalles extends CI_Model {
         return $ruta->result_array()[0];
     }
 
-    public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa,$xCoord,$yCoord,$next_id_street){
+    public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa){
         $control_variable = false;
         
-        $insert_street = $this->db->query("INSERT INTO calles
+        $this->db->query("INSERT INTO calles
                         VALUES (null,'$nombre','$tipo',$aInicio,$aFin,$id_mapa)
         ");
+        return $this->db->affected_rows();
+    }
 
+    public function insert_coords($xCoord,$yCoord,$next_id_street){
         $length_array = count($xCoord);
 
         for($i = 0;$i < $length_array;$i++){
             $this->db->query("INSERT INTO puntos 
             VALUES(null,$xCoord[$i],$yCoord[$i],$next_id_street)");
         }
-        if($this->db->affected_rows() > 0){
-            $control_variable = true;
-        }
-        return $control_variable;
+        return $this->db->affected_rows();
     }
 
     public function get_next_id(){
