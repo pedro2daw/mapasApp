@@ -2,7 +2,8 @@ $(document).ready(function () {
     var posX,
         posY;
     var id = 0;
-    
+    var src;
+
     // Obtencion de las coordenadas del mapa
     $('.img-responsive').click(function (e) {
         x_coords = [];
@@ -16,22 +17,26 @@ $(document).ready(function () {
         posX = x_coords[0];
         posY = y_coords[0];
     });
-    
+
     // El modal para insertar puntos sale con el doble click
     $('#slide').dblclick(function () {
         $('#myModal').modal('toggle');
     });
-    
+
     // Eliminacion de los puntos de interes
-    $('div').on("contextmenu", ".hot-spot", function(e){
+    $('div').on("contextmenu", ".hot-spot", function (e) {
         var id_hs = this.id;
         $("#" + id_hs).remove();
         return false;
     });
     
+    // Obtencion del src de la imagen del punto
+    $('#imagen').change(function (e) {
+        src = "http://localhost/mapasApp/assets/img/mapas/" + e.target.files[0].name;
+    });
+
     // Insercion de puntos de interes
     $("#insert").click(function () {
-        var src = "1.jpg";
         var titulo = $("#titulo").val();
         var contenido = $("#descripcion").val();
 
@@ -48,7 +53,10 @@ $(document).ready(function () {
         });
         id++;
     });
-    
+
+    // Guardado de los puntos insertados en un array
+    puntos = [];
+
     // Reset de los campos del modal
     $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
