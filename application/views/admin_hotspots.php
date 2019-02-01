@@ -60,3 +60,7 @@
         <img src="<?php echo base_url("/assets/img/mapas/7_o_medium.jpg"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
 
     </div>
+    <div id="botonHotspots">
+        <input type="submit" class="btn btn-primary" value="Guardar Puntos" />
+    </div>
+    

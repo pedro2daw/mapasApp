@@ -81,6 +81,11 @@
             background-color: blue;
             border-radius: 100%;
          }
+        #botonHotspots {
+            width: 150px;
+            margin: 0 auto;
+            margin-top: 2%;
+        }
     </style>
 </head>
 
