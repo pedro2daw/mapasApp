@@ -24,7 +24,7 @@ echo '
                         <th scope="col">Tipo de vía</th>
                         <th scope="col">Año de inicio</th>
                         <th scope="col">Año final</th>
-                        <th scope="col">Lámina a la que pertenece</th>
+                        <th scope="col">Mapa al que pertenece</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -39,10 +39,11 @@ echo '
                     echo ("<td>".$each_street["ano_fin"]."</td>");
                     echo ("<td>".$each_street["id_mapa"]."</td>");
                     echo("<td>");
-                            echo anchor("Streets/update_street/".$each_street['id'],"Modificar","class='btn btn-info'");
+                            echo anchor("Streets/update_street/".$each_street['id'],"<span class='far fa-edit'></span>","class='btn btn-info'");
+                           echo ' <a href="#" title="Modificación de coordenadas" data-toggle="popover" data-trigger="focus" data-content="Si desea actualizar las coordenadas de la calle, elimine la calle e insertela de nuevo"><span class="far fa-question-circle"></span></a> ';
                     echo("</td>");  
                     echo("<td>");
-                            echo anchor("Streets/delete_street/".$each_street['id'],"Eliminar","class='btn btn-danger'");
+                            echo anchor("Streets/delete_street/".$each_street['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
                     echo("</td></tr>");
                 }
 echo '                    
@@ -55,8 +56,9 @@ echo '
 
     echo '
     <!-- *********************** INSERCIÓN DE UNA CALLE ************************** -->
+    
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#streetModal">
-    INSERTAR CALLE
+    <i class="fas fa-plus-circle" style="font-size:45px;"></i>
     </button>
 
     <div class="modal fade bd-example-modal-xl" id="streetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
