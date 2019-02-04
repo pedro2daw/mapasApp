@@ -127,6 +127,7 @@ INSERT INTO mapas VALUES (null,'Mapa Almería del Siglo XIX', 'Mapa de Almería 
 INSERT INTO mapas VALUES (null,'Ortofoto Almería del Siglo XXI', 'Ortofoto de Almería del Siglo XXI','Almeria',2017,'/assets/img/mapas/8_almeria.png',2,1000,1000,10,4);
 INSERT INTO mapas VALUES (null,'Satelite Almería del Siglo XXI', 'Satelite de Almería del Siglo XXI','Almeria',2017,'/assets/img/mapas/9_almeria.png',2,1000,1000,10,4);
 
+DELETE FROM MAPAS where id = 4;
 
 INSERT INTO paquetes VALUES (null,'Seleccione un paquete','1000-01-01 00:00:00', 'default');
 INSERT INTO paquetes VALUES (null,'Almería Centro',now(), 'Descripción');

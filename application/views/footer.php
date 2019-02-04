@@ -1,5 +1,5 @@
 <br><br>
-<span id="footer" class="text-center">&copy Mapas Developers </span>
+<span id="footer" class="text-center">&copy; Mapas Developers </span>
 
 <!-- Optional JavaScript -->
     <!-- Popper.js, then Bootstrap JS -->

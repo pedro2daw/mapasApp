@@ -1,4 +1,24 @@
 
+
+<script language="javascript">
+    $(document).ready( function (){
+
+    $('.id_mapas').each( function () {
+        console.log($(this).text());
+    });
+
+    $('.btn-update').click( function () {
+        var id = $(this).data('id'); 
+        
+    });
+
+   
+    });
+
+
+    
+</script>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -10,9 +30,6 @@
                     break;
                 case 1:
                     echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
-                    break;
-                case 2:
-                    echo "i es igual a 2";
                     break;
             }
         }
@@ -97,7 +114,7 @@
                 </thead>
                 <tbody>
 
-                    <?php
+                <?php
                 for($i = 0; $i < count($ListaMapas);$i++){
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
@@ -108,7 +125,7 @@
                     echo ("<td>".$mapa["fecha"]."</td>");
                     echo ("<td>".$mapa["descripcion"]."</td>");
                     echo("<td>");
-                            echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn btn-info', data-toggle='modal' data-target='#modal_insert'");
+                            echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."'");
                     echo("</td>");  
                     echo("<td>");
                             echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
@@ -214,7 +231,7 @@
         </div> <!-- modal_insert -->
 
             <!-- MODAL DEL UPDATE MAPS : -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -228,7 +245,6 @@
 
                             <!-- ****************** CUERPO DEL CUADRO MODAL UPDATE *********************** --> 
                             <?php echo form_open_multipart('Maps/update'); ?>
-
                             <div class='form-group'>
                                 <label for='titulo'>Título</label>
                                 <input type='text' class='form-control' placeholder='Introduce un título' name='titulo'
@@ -254,20 +270,13 @@
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
                                     value='1' required />
                             </div>
-                            <div class='form-group'>
-                                <label for='mapa_img'>Subir un Mapa</label>
-                                <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
-                                <div class="custom-file">
-                                    <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang"
-                                        lang="es" onchange="openFile(event)" required>
-                                    <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                                </div>
-                                <img id='output' class='img-thumbnail' src=''>
-                            </div>
+                            <label for='paquete'>Paquete</label>
+                            <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
+                            <br/>
 
                             <div class='modal-footer'>
                                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                                <?php form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
+                                <?php echo form_submit('submit', 'Modificar Mapa',"class='btn btn-primary'"); ?>
                             </div>
                             <?php echo form_close(); ?>
                         </div>

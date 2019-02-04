@@ -55,7 +55,7 @@ class Maps extends Security {
             $descripcion_paquete = $this->input->get_post('descripcion_paquete');
             $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
             if ($r == 0) {
-                echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR EN LA INSERCIÓN DEL PAQUETE </h4>";
+                $data["msg"] = "1";
                         $data["viewName"] = "admin_panel";
                         $this->load->view('template', $data);
             } else {
