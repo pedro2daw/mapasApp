@@ -2,17 +2,10 @@
 
 <script language="javascript">
     $(document).ready( function (){
-
-    $('.id_mapas').each( function () {
-        console.log($(this).text());
-    });
-
     $('.btn-update').click( function () {
         var id = $(this).data('id'); 
-        
+        console.log(id);
     });
-
-   
     });
 
 
