@@ -16,7 +16,7 @@ class Users extends Security {
         $contrasena = $this->input->get_post('contrasena');
         $nivel = $this->input->get_post('nivel');
         
-        $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_seleccionado);
+        $r = $this->modelUser->insert($usuario, $contrasena, $nivel);
             
         /*} else {
             $descripcion_paquete = $this->input->get_post('descripcion_paquete');

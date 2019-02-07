@@ -19,8 +19,8 @@ class modelUser extends CI_Model{
         return $data;
     }
     
-    function insert ($usuario, $contrasena){        
-        $query = $this->db->query("INSERT INTO usuarios (username, passwd) VALUES ('$usuario','$contrasena';"); 
+    function insert ($usuario, $contrasena, $nivel){        
+        $query = $this->db->query("INSERT INTO usuarios (username, passwd, nivel) VALUES ('$usuario','$contrasena', '$nivel';"); 
         return $this->db->affected_rows();
         
     }
