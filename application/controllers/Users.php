@@ -17,7 +17,16 @@ class Users extends Security {
         $nivel = $this->input->get_post('nivel');
         
         $r = $this->modelUser->insert($usuario, $contrasena, $nivel);
-            
+        
+        if ($r == 0) {
+            $data["msg"] = "1";
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
+        } else {
+            $data["msg"] = "0";
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
+        }
         /*} else {
             $descripcion_paquete = $this->input->get_post('descripcion_paquete');
             $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
@@ -62,7 +71,7 @@ class Users extends Security {
         }
     
     public function delete_user() {
-        
+        $r = $this->modelUser->delete();
     }
     
     public function mod_user() {
