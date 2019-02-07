@@ -21,8 +21,9 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 
 CREATE TABLE usuarios (
     id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30),
-    passwd VARCHAR(30)
+    username VARCHAR(30) NOT NULL,
+    passwd VARCHAR(30) NOT NULL,
+    nivel SMALLINT UNSIGNED DEFAULT 1
 );
 
 CREATE TABLE mapas(
@@ -98,7 +99,7 @@ CREATE TABLE hotspots (
     id_mapa INT UNSIGNED
 );
 
-INSERT INTO usuarios VALUES (null, 'admin','1');
+INSERT INTO usuarios VALUES (null, 'admin','1', '2');
 
 /*id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(150) NOT NULL,

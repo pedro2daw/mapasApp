@@ -26,13 +26,16 @@ $(document).ready(function () {
     // Eliminacion de los puntos de interes
     $('div').on("contextmenu", ".hot-spot", function (e) {
         var id_hs = this.id;
-        $("#" + id_hs).remove();
+        if (confirm("Seguro que quieres borrar el punto?")) {
+            $("#" + id_hs).remove();
+        } else {
+        }
         return false;
     });
-    
+
     // Obtencion del src de la imagen del punto
     $('#imagen').change(function (e) {
-        src = "http://localhost/mapasApp/assets/img/mapas/" + e.target.files[0].name;
+        src = "http://localhost/mapasApp/assets/img/laminas/" + e.target.files[0].name;
     });
 
     // Insercion de puntos de interes
@@ -56,10 +59,10 @@ $(document).ready(function () {
 
     // Guardado de los puntos insertados en un array
     puntos = [];
-    
+
 
     // Reset de los campos del modal
-    $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
+    $('#myModal').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
 

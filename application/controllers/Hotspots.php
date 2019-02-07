@@ -2,15 +2,12 @@
 
 include_once('Security.php');
 
-class Maps extends Security {
-
-    public function index(){
-        $data['ListaMapas'] = $this->modelMapas->get_all();
-        $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-        $data["viewName"] = "admin_panel";
-        
-        $this->load->view('template',$data);
-    }
+class Hotspots extends Security {
+    
+    public function view_hotspots() {
+        $data["viewName"] = "admin_hotspots";
+        $this->load->view('template', $data);
+    } 
 
     public function insert(){
         $titulo = $this->input->get_post('titulo');
@@ -93,13 +90,5 @@ class Maps extends Security {
                 $this->load->view('template', $data);
             }
         }
-    }     
-    
-    public function form_update_map($id) {
-        $data['datosMapa'] = $this->modelMapas->get($id);
-        echo json_encode($data['datosMapa']);
     }
-
-
 }
-

@@ -2,56 +2,32 @@
 
 include_once('Security.php');
 
-class Maps extends Security {
+class Users extends Security {
 
-    public function index(){
-        $data['ListaMapas'] = $this->modelMapas->get_all();
-        $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-        $data["viewName"] = "admin_panel";
+    public function view_users() {
+        $data['ListaUsuarios'] = $this->modelUser->get_all(); 
+        $data["viewName"] = "admin_users";
         
-        $this->load->view('template',$data);
+        $this->load->view('template', $data);
     }
 
-    public function insert(){
-        $titulo = $this->input->get_post('titulo');
-        $descripcion = $this->input->get_post('descripcion');
-        $ciudad =$this->input->get_post('ciudad');
-        $fecha = $this->input->get_post('fecha');
+    public function insert_user(){
+        $usuario = $this->input->get_post('usuario');
+        $contrasena = $this->input->get_post('contrasena');
         $nivel = $this->input->get_post('nivel');
         
-        // Obtenemos el ultimo id para cambiar el nombre del archivo subido:
-        $ultimoId = $this->modelMapas->get_last()+1;
-
-        // Formateamos la ciudad para que sea minuscula y elimine las tildes:
-        $ciudad_format = $this->modelMapas->format($ciudad);
-        $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
-        $ruta = "assets/img/mapas/".$img_name; 
-
+        $r = $this->modelUser->insert($usuario, $contrasena, $nivel);
         
-        $paquete_seleccionado = $this->input->get_post('select_paquetes');
-        $nombre_paquete_nuevo = $this->input->get_post('nombre_paquete');
-        //var_dump("Paquete-seleccionado: ". $paquete_seleccionado . " Paquete nuevo: " .$paquete_nuevo );
-
-        /* 
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    titulo VARCHAR(150) NOT NULL,
-    descripcion VARCHAR(250) NOT NULL,
-    ciudad VARCHAR(50) NOT NULL,
-    fecha SMALLINT NOT NULL,
-    imagen VARCHAR(250) NOT NULL,
-    nivel SMALLINT NOT NULL,
-    ancho INT NOT NULL,
-    altura INT NOT NULL,
-    fecha_de_subida DATETIME NOT NULL,
-
-        id_paquete INT UNSIGNED NOT NULL
-        */
-
-        if ($paquete_seleccionado != '1'){
-            $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_seleccionado);
-            $data['mapas_paquetes'] = $this->modelMapas->mapas_paquetes($paquete_seleccionado);
-            
+        if ($r == 0) {
+            $data["msg"] = "1";
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
         } else {
+            $data["msg"] = "0";
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
+        }
+        /*} else {
             $descripcion_paquete = $this->input->get_post('descripcion_paquete');
             $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
             if ($r == 0) {
@@ -91,15 +67,15 @@ class Maps extends Security {
                 $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template', $data);
-            }
+            }*/
         }
-    }     
     
-    public function form_update_map($id) {
-        $data['datosMapa'] = $this->modelMapas->get($id);
-        echo json_encode($data['datosMapa']);
+    public function delete_user() {
+        $r = $this->modelUser->delete();
     }
-
-
+    
+    public function mod_user() {
+        
+    }
+    
 }
-

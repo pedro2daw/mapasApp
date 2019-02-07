@@ -54,6 +54,9 @@
     });
     </script>
     <style>
+        #boton_usuario {
+            margin: 3%;
+        }
         #hotspotImg {
             overflow: auto;
             width: 1000px;

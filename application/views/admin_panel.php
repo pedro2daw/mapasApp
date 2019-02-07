@@ -15,10 +15,6 @@
                             
                             console.log('SUCCESS: ', a);
 
-
-               es como si me estuviera afixiando pero 
-               no. porque mis bronquios estan ok
-
                         },
                         error: function(data) {
                             console.log('ERROR: ', data);

@@ -7,6 +7,23 @@ class modelUser extends CI_Model{
 
         return $query->num_rows();
     }
+    
+    function get_all(){
+        $query = $this->db->query("SELECT * FROM usuarios;"); 
+        $data = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $data[] = $row;
+                }
+            }
+        return $data;
+    }
+    
+    function insert($usuario, $contrasena, $nivel){        
+        $query = $this->db->query("INSERT INTO usuarios (username, passwd, nivel) VALUES ('$usuario','$contrasena', '$nivel';"); 
+        return $this->db->affected_rows();
+        
+    }
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
 
 } // cierra class modelUser
