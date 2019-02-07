@@ -101,10 +101,14 @@ class Maps extends Security {
         $this->load->view('template', $data);
     }
 
-    public function form_update_map($id) {
+    
+    public function get_datos_update() {
+        $id = $this->input->get_post('id');
+        
         $data['datosMapa'] = $this->modelMapas->get($id);
+        echo json_encode($data['datosMapa']);
     }
 
 
-
 }
+

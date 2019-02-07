@@ -5,17 +5,34 @@
     $('.btn-update').click( function () {
         var id = $(this).data('id'); 
         console.log(id);
-    });
-    });
+                    $.ajax({
+                        type: "post",
+                        url: "<?php echo base_url(); ?>index.php/Maps/get_datos_update",       
+                        dataType: 'text',
+                        data: "id="+id,                        
+                        success: function(data) {
+                            var a = $.parseJSON(data);
+                            
+                            console.log('SUCCESS: ', a);
 
 
-    
+               es como si me estuviera afixiando pero 
+               no. porque mis bronquios estan ok
+
+                        },
+                        error: function(data) {
+                            console.log('ERROR: ', data);
+                        },
+                    });
+    });
+});
 </script>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
         <?php
+        
         if (isset($msg)){
             switch ($msg) {
                 case 0:
@@ -38,7 +55,7 @@
                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link active"');
                 echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('Maps/users','Configuración','class="flex-sm-fill text-sm-center nav-link"');
                 ?>
             </nav>
         </div>
@@ -118,7 +135,7 @@
                     echo ("<td>".$mapa["fecha"]."</td>");
                     echo ("<td>".$mapa["descripcion"]."</td>");
                     echo("<td>");
-                            echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."'");
+                            echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
                     echo("</td>");  
                     echo("<td>");
                             echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");

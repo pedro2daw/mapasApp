@@ -94,4 +94,6 @@ class modelMapas extends CI_Model {
         return $img_name;
     }
 
+
+
 }
