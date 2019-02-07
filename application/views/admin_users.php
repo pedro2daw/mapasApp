@@ -40,47 +40,6 @@
             </nav>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">A</a></li>
-                    <li class="page-item"><a class="page-link" href="#">B</a></li>
-                    <li class="page-item"><a class="page-link" href="#">C</a></li>
-                    <li class="page-item"><a class="page-link" href="#">D</a></li>
-                    <li class="page-item"><a class="page-link" href="#">E</a></li>
-                    <li class="page-item"><a class="page-link" href="#">F</a></li>
-                    <li class="page-item"><a class="page-link" href="#">G</a></li>
-                    <li class="page-item"><a class="page-link" href="#">H</a></li>
-                    <li class="page-item"><a class="page-link" href="#">I</a></li>
-                    <li class="page-item"><a class="page-link" href="#">J</a></li>
-                    <li class="page-item"><a class="page-link" href="#">K</a></li>
-                    <li class="page-item"><a class="page-link" href="#">L</a></li>
-                    <li class="page-item"><a class="page-link" href="#">M</a></li>
-                    <li class="page-item"><a class="page-link" href="#">N</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Ñ</a></li>
-                    <li class="page-item"><a class="page-link" href="#">O</a></li>
-                    <li class="page-item"><a class="page-link" href="#">P</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Q</a></li>
-                    <li class="page-item"><a class="page-link" href="#">R</a></li>
-                    <li class="page-item"><a class="page-link" href="#">S</a></li>
-                    <li class="page-item"><a class="page-link" href="#">T</a></li>
-                    <li class="page-item"><a class="page-link" href="#">U</a></li>
-                    <li class="page-item"><a class="page-link" href="#">V</a></li>
-                    <li class="page-item"><a class="page-link" href="#">W</a></li>
-                    <li class="page-item"><a class="page-link" href="#">X</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Y</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Z</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
         Insertar Mapa
@@ -94,12 +53,8 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Ciudad</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Descripción</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Contraseña</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,7 +83,7 @@
         </div>
     </div>
 
-    <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
+    <!-- *********************** INSERCIÓN DE UN USUARIO ************************** -->
     <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -144,65 +99,22 @@
                     <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
 
                     <div class='form-group'>
-                        <label for='titulo'>Título</label>
+                        <label for='titulo'>Usuario</label>
                         <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' value='1' required />
                     </div>
                     <div class='form-group'>
-                        <label for='descripcion'>Descripción</label>
+                        <label for='descripcion'>Contraseña</label>
                         <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' value='1' required />
-                    </div>
-                    <div class='form-group'>
-                        <label for='ciudad'>Ciudad</label>
-                        <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad' id='ciudad' value='1' required />
-                    </div>
-                    <div class='form-group'>
-                        <label for='fecha'>Fecha</label>
-                        <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha' id='fecha' value='1' required />
                     </div>
                     <div class='form-group'>
                         <label for='fecha'>Nivel</label>
                         <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel' value='1' required />
                     </div>
-                    <label for='paquete'>Paquete</label>
-                    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
                     <br />
-                    <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
-                    <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Seleccionar un paquete existente</button>
-
-                    <div id='crear_paquete' class='form-group'>
-                        <label for='nombre_paquete'>Nombre del Paquete Nuevo:</label>
-                        <input type='text' class='form-control' placeholder='Introduce un nombre para el paquete nuevo' name='nombre_paquete' id='nombre_paquete' value='' />
-                        <label for='descripcion_paquete'>Descripción:</label>
-
-                        <div class="md-form">
-                            <textarea type="text" name='descripcion_paquete' id="descripcion_paquete" class="md-textarea form-control" rows="3"></textarea>
-                        </div>
-
-                    </div>
-
-                    <div id='seleccionar_paquete' class='form-group'>
-                        <label for='select_paquetes'>Selecciona un paquete:</label>
-                        <?php 
-                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control"');
-                            ?>
-                    </div>
-
-
-
-                    <div class='form-group'>
-                        <label for='mapa_img'>Subir un Mapa</label>
-
-                        <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
-                        <div class="custom-file">
-                            <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang" lang="es" onchange="openFile(event)">
-                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                        </div>
-                        <img id='output' class='img-thumbnail'>
-                    </div>
 
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                        <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
+                        <?php echo form_submit('submit', 'Insertar Usuario',"class='btn btn-primary'"); ?>
                     </div>
                     <?php 
                             echo form_close(); 
@@ -212,12 +124,12 @@
         </div>
     </div> <!-- modal_insert -->
 
-    <!-- MODAL DEL UPDATE MAPS : -->
-    <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- MODAL DEL UPDATE USERS : -->
+    <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modificar un mapa</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modificar usuario</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -225,38 +137,30 @@
                 <div class="modal-body">
 
                     <!-- ****************** CUERPO DEL CUADRO MODAL UPDATE *********************** -->
-                    <?php echo form_open_multipart('Maps/update'); ?>
+                    <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
+
                     <div class='form-group'>
-                        <label for='titulo'>Título</label>
+                        <label for='titulo'>Usuario</label>
                         <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' value='1' required />
                     </div>
                     <div class='form-group'>
-                        <label for='descripcion'>Descripción</label>
+                        <label for='descripcion'>Contraseña</label>
                         <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' value='1' required />
-                    </div>
-                    <div class='form-group'>
-                        <label for='ciudad'>Ciudad</label>
-                        <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad' id='ciudad' value='1' required />
-                    </div>
-                    <div class='form-group'>
-                        <label for='fecha'>Fecha</label>
-                        <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha' id='fecha' value='1' required />
                     </div>
                     <div class='form-group'>
                         <label for='fecha'>Nivel</label>
                         <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel' value='1' required />
                     </div>
-                    <label for='paquete'>Paquete</label>
-                    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
                     <br />
 
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                        <?php echo form_submit('submit', 'Modificar Mapa',"class='btn btn-primary'"); ?>
+                        <?php echo form_submit('submit', 'Modificar Usuario',"class='btn btn-primary'"); ?>
                     </div>
-                    <?php echo form_close(); ?>
+                    <?php 
+                            echo form_close(); 
+                            ?>
                 </div>
-            </div>
+            </div> <!-- cierra el modal body -->
         </div>
-
-    </div>
+    </div> <!-- modal_insert -->
