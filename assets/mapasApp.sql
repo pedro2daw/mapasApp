@@ -99,7 +99,7 @@ CREATE TABLE hotspots (
     id_mapa INT UNSIGNED
 );
 
-INSERT INTO usuarios VALUES (null, 'admin','1');
+INSERT INTO usuarios VALUES (null, 'admin','1', '2');
 
 /*id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(150) NOT NULL,
