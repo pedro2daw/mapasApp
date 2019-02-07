@@ -6,7 +6,7 @@
                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link active"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('Maps/users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
                 ?>
             </nav>
         </div>
@@ -57,7 +57,7 @@
     <!-- ENTORNO DONDE SE CREA EL PUNTO -->
     <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
-        <img src="<?php echo base_url("/assets/img/mapas/7_o_medium.jpg"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
+        <img src="<?php echo base_url("/assets/img/laminas/8_c.png"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
 
     </div>
     <div id="botonHotspots">
