@@ -11,7 +11,7 @@ class Users extends Security {
         $this->load->view('template', $data);
     }
 
-    public function insert(){
+    public function insert_user(){
         $usuario = $this->input->get_post('usuario');
         $contrasena = $this->input->get_post('contrasena');
         $nivel = $this->input->get_post('nivel');
@@ -62,6 +62,10 @@ class Users extends Security {
         }
     
     public function delete_user() {
+        
+    }
+    
+    public function mod_user() {
         
     }
     

@@ -33,9 +33,9 @@
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <?php
                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Maps/users/','Configuración','class="flex-sm-fill text-sm-center nav-link active"');
+                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link active"');
                 ?>
             </nav>
         </div>
@@ -53,6 +53,7 @@
                         <th scope="col">Id</th>
                         <th scope="col">Usuario</th>
                         <th scope="col">Contraseña</th>
+                        <th scope="col">Nivel</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,11 +65,12 @@
                     echo ("<td>".$usuario["id"]."</td>");
                     echo ("<td>".$usuario["username"]."</td>");
                     echo ("<td>".$usuario["passwd"]."</td>");
+                    echo ("<td>".$usuario["nivel"]."</td>");
                     echo ("<td>");
-                            echo anchor("Maps/form_update_user/".$usuario['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$usuario['id']."'");
+                            echo anchor("Users/form_update_user/".$usuario['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$usuario['id']."'");
                     echo ("</td>");  
                     echo ("<td>");
-                            echo anchor("Maps/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
+                            echo anchor("Users/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
                     echo ("</td>");
                     echo ("</tr>");
                 }
@@ -91,19 +93,27 @@
                 <div class="modal-body">
 
                     <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
-                    <?php echo form_open_multipart('Maps/insert_user','class="ui-filterable"'); ?>
-                    
+                    <?php echo form_open_multipart('Users/insert_user','class="ui-filterable"'); ?>
+
                     <div class='form-group'>
-                        <label for='titulo'>Usuario</label>
-                        <input type='text' class='form-control' placeholder='Introduce un usuario' name='usuairo' id='usuario' value='1' required />
+                        <label for='usuario'>Usuario</label>
+                        <input type='text' class='form-control' placeholder='Introduce un usuario' name='usuarioIns' id='usuarioIns' required />
                     </div>
                     <div class='form-group'>
-                        <label for='descripcion'>Contraseña</label>
-                        <input type='text' class='form-control' placeholder='Introduce una contraseña' name='contrasena' id='contrasena' value='1' required />
+                        <label for='contrasena'>Contraseña</label>
+                        <input type='text' class='form-control' placeholder='Introduce una contraseña' name='contrasenaIns' id='contrasenaIns' required />
                     </div>
                     <div class='form-group'>
-                        <label for='fecha'>Nivel</label>
-                        <input type='number' class='form-control' placeholder='Nivel' name='nivel' id='nivel' value='1' min='1' max='2' required />
+                        <label for='nivel'>Nivel</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Nivel permiso</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1" selected>Usuario</option>
+                                <option value="2">Administrador</option>
+                            </select>
+                        </div>
                     </div>
                     <br />
 
@@ -120,7 +130,7 @@
     </div> <!-- modal_insert -->
 
     <!-- MODAL DEL UPDATE USERS : -->
-    <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modal_mod" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -132,19 +142,27 @@
                 <div class="modal-body">
 
                     <!-- ****************** CUERPO DEL CUADRO MODAL UPDATE *********************** -->
-                    <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
+                    <?php echo form_open_multipart('Users/mod_user','class="ui-filterable"'); ?>
 
                     <div class='form-group'>
-                        <label for='titulo'>Usuario</label>
-                        <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' value='1' required />
+                        <label for='usuario'>Usuario</label>
+                        <input type='text' class='form-control' placeholder='Introduce un título' name='usuarioMod' id='usuarioMod' required />
                     </div>
                     <div class='form-group'>
-                        <label for='descripcion'>Contraseña</label>
-                        <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' value='1' required />
+                        <label for='contrasena'>Contraseña</label>
+                        <input type='text' class='form-control' placeholder='Introduce una contraseña' name='contrasenaMod' id='contrasenaMod' required />
                     </div>
                     <div class='form-group'>
-                        <label for='fecha'>Nivel</label>
-                        <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel' value='1' required />
+                        <label for='nivel'>Nivel</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Nivel permiso</label>
+                            </div>
+                            <select class="custom-select" id="inputGroupSelect01">
+                                <option value="1" selected>Usuario</option>
+                                <option value="2">Administrador</option>
+                            </select>
+                        </div>
                     </div>
                     <br />
 
