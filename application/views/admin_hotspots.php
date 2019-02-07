@@ -4,9 +4,9 @@
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <?php
                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Maps/hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link active"');
+                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link active"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Maps/users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
                 ?>
             </nav>
         </div>

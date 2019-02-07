@@ -41,18 +41,16 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
-        Insertar Mapa
+    <button type="button" id="boton_usuario" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
+        Insertar Usuario
     </button>
-
-    <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
-
 
     <div class="row">
         <div class="col-md-12">
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th scope="col">Id</th>
                         <th scope="col">Usuario</th>
                         <th scope="col">Contraseña</th>
                     </tr>
@@ -60,22 +58,19 @@
                 <tbody>
 
                     <?php
-                for($i = 0; $i < count($ListaMapas);$i++){
-                    $mapa = $ListaMapas[$i];
+                for($i = 0; $i < count($ListaUsuarios);$i++){
+                    $usuario = $ListaUsuarios[$i];
                     echo ("<tr>");
-                    echo ("<td>".$mapa["id"]."</td>");
-                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa'></td>");
-                    echo ("<td>".$mapa["titulo"]."</td>");
-                    echo ("<td>".$mapa["ciudad"]."</td>");
-                    echo ("<td>".$mapa["fecha"]."</td>");
-                    echo ("<td>".$mapa["descripcion"]."</td>");
-                    echo("<td>");
-                            echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."'");
-                    echo("</td>");  
-                    echo("<td>");
-                            echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
-                    echo("</td>");
-                    echo("</tr>");
+                    echo ("<td>".$usuario["id"]."</td>");
+                    echo ("<td>".$usuario["username"]."</td>");
+                    echo ("<td>".$usuario["passwd"]."</td>");
+                    echo ("<td>");
+                            echo anchor("Maps/form_update_user/".$usuario['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$usuario['id']."'");
+                    echo ("</td>");  
+                    echo ("<td>");
+                            echo anchor("Maps/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
+                    echo ("</td>");
+                    echo ("</tr>");
                 }
                 ?>
                 </tbody>
@@ -88,7 +83,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Insertar un mapa</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Insertar Usuario</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -96,19 +91,19 @@
                 <div class="modal-body">
 
                     <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
-                    <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
-
+                    <?php echo form_open_multipart('Maps/insert_user','class="ui-filterable"'); ?>
+                    
                     <div class='form-group'>
                         <label for='titulo'>Usuario</label>
-                        <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' value='1' required />
+                        <input type='text' class='form-control' placeholder='Introduce un usuario' name='usuairo' id='usuario' value='1' required />
                     </div>
                     <div class='form-group'>
                         <label for='descripcion'>Contraseña</label>
-                        <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' value='1' required />
+                        <input type='text' class='form-control' placeholder='Introduce una contraseña' name='contrasena' id='contrasena' value='1' required />
                     </div>
                     <div class='form-group'>
                         <label for='fecha'>Nivel</label>
-                        <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel' value='1' required />
+                        <input type='number' class='form-control' placeholder='Nivel' name='nivel' id='nivel' value='1' min='1' max='2' required />
                     </div>
                     <br />
 

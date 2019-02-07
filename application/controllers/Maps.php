@@ -93,19 +93,8 @@ class Maps extends Security {
                 $this->load->view('template', $data);
             }
         }
-    }   
-
+    }     
     
-    public function hotspots() {
-        $data["viewName"] = "admin_hotspots";
-        $this->load->view('template', $data);
-    }
-    
-    public function users() {
-        $data["viewName"] = "admin_users";
-        $this->load->view('template', $data);
-    }
-
     public function form_update_map($id) {
         $data['datosMapa'] = $this->modelMapas->get($id);
     }
