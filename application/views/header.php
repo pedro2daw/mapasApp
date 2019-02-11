@@ -101,7 +101,7 @@
                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link active"');
+                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
                 ?>
             </nav>
         </div>
