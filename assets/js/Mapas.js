@@ -12,6 +12,27 @@ var openFile = function (event) {
     reader.readAsDataURL(input.files[0]);
 };
 
+// La preview del mapa en la inserción del mapa:
+var openFile = function (event, opc) {
+    input = event.target;
+    reader = new FileReader();
+    reader.onload = function () {
+        dataURL = reader.result;
+        switch (opc) {
+            case '1':
+                output = document.getElementById('output');
+                break;
+            case '2':
+                output = document.getElementById('upd_imagen');
+                break;
+        }
+        output.src = dataURL;
+        output.style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+};
+
+
 // Cuando click en cerrar en el Modal (pop up de insertar...) se resetean los campos y la imagen.
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();

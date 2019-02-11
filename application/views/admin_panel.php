@@ -4,22 +4,46 @@
     $(document).ready( function (){
     $('.btn-update').click( function () {
         var id = $(this).data('id'); 
-        console.log(id);
-                    $.ajax({
+
+        var img = $('#imagen_'+id).attr('src');
+        var titulo = $('#titulo_'+id).text();
+        var ciudad = $('#ciudad_'+id).text();
+        var fecha = $('#fecha_'+id).text();
+        var descripcion = $('#descripcion_'+id).text();
+        
+
+        $('#upd_titulo').val(titulo);
+        $('#upd_descripcion').val(descripcion);
+        $('#upd_ciudad').val(ciudad);
+        $('#upd_fecha').val(fecha);
+        $('#upd_imagen').attr('src',img);
+
+
+                   /* $.ajax({
                         type: "post",
-                        url: "<?php echo base_url(); ?>index.php/Maps/get_datos_update",       
+                        url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",       
                         dataType: 'text',
                         data: "id="+id,                        
                         success: function(data) {
                             var a = $.parseJSON(data);
-                            
+                            var titulo = a.titulo;
+                            var descripcion = a.descripcion;
+                            var ciudad = a.ciudad;
+                            var fecha = a.fecha;
+                            var img = "<?php echo base_url(); ?>"+a.imagen;
+                        
+                            $('#upd_titulo').val(titulo);
+                            $('#upd_descripcion').val(descripcion);
+                            $('#upd_ciudad').val(ciudad);
+                            $('#upd_fecha').val(fecha);
+                            $('#upd_imagen').attr('src',img);
                             console.log('SUCCESS: ', a);
-
                         },
                         error: function(data) {
                             console.log('ERROR: ', data);
                         },
                     });
+                    */
     });
 });
 </script>
@@ -124,12 +148,15 @@
                 for($i = 0; $i < count($ListaMapas);$i++){
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
+                    echo ("<td id=id_paquete_".$mapa["id"].">".$mapa["id_paquete"]."</td>");
+                    echo ("<td id=nombre_paquete_".$mapa["id"].">".$mapa["nombre"]."</td>");
+
                     echo ("<td>".$mapa["id"]."</td>");
-                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa'></td>");
-                    echo ("<td>".$mapa["titulo"]."</td>");
-                    echo ("<td>".$mapa["ciudad"]."</td>");
-                    echo ("<td>".$mapa["fecha"]."</td>");
-                    echo ("<td>".$mapa["descripcion"]."</td>");
+                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='imagen_".$mapa["id"]."'></td>");
+                    echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
+                    echo ("<td id=ciudad_".$mapa["id"].">".$mapa["ciudad"]."</td>");
+                    echo ("<td id=fecha_".$mapa["id"].">".$mapa["fecha"]."</td>");
+                    echo ("<td id=descripcion_".$mapa["id"].">".$mapa["descripcion"]."</td>");
                     echo("<td>");
                             echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
                     echo("</td>");  
@@ -217,8 +244,8 @@
 
                                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
                                 <div class="custom-file">
-                                    <input type="file" name="img_mapa" class="custom-file-input" id="customFileLang"
-                                        lang="es" onchange="openFile(event)">
+                                    <input type="file" name="img_mapa" class="custom-file-input" id="img"
+                                        lang="es" onchange="openFile(event,'1')">
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
                                 <img id='output' class='img-thumbnail'>
@@ -254,31 +281,50 @@
                             <div class='form-group'>
                                 <label for='titulo'>Título</label>
                                 <input type='text' class='form-control' placeholder='Introduce un título' name='titulo'
-                                    id='titulo' value='1' required />
+                                    id='upd_titulo' value='1' required />
                             </div>
                             <div class='form-group'>
                                 <label for='descripcion'>Descripción</label>
                                 <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion'
-                                    id='descripcion' value='1' required />
+                                    id='upd_descripcion' value='1' required />
                             </div>
                             <div class='form-group'>
                                 <label for='ciudad'>Ciudad</label>
                                 <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad'
-                                    id='ciudad' value='1' required />
+                                    id='upd_ciudad' value='1' required />
                             </div>
                             <div class='form-group'>
                                 <label for='fecha'>Fecha</label>
                                 <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha'
-                                    id='fecha' value='1' required />
+                                    id='upd_fecha' value='1' required />
                             </div>
                             <div class='form-group'>
                                 <label for='fecha'>Nivel</label>
-                                <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
+                                <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='upd_nivel'
                                     value='1' required />
                             </div>
                             <label for='paquete'>Paquete</label>
                             <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
                             <br/>
+                            <div id='seleccionar_paquete' class='form-group'>
+                                <label for='select_paquetes'>Selecciona un paquete:</label>
+                            <?php 
+                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"$paqueteSeleccionado" ,'id="select_paquetes" class="form-control"');
+                            ?>
+                             </div>
+
+                            <div class='form-group'>
+                                <label for='mapa_img'>Subir un Mapa</label>
+
+                                <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
+                                <div class="custom-file">
+                                    <input type="file" name="img_mapa" class="custom-file-input" id="upd_img"
+                                        lang="es" onchange="openFile(event,'2')">
+                                    <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                                </div>
+                                <img id='upd_imagen' class='img-thumbnail' src=''>
+                            </div>
+
 
                             <div class='modal-footer'>
                                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>

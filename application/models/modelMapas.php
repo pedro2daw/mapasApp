@@ -13,10 +13,6 @@ class modelMapas extends CI_Model {
         return $data;
     }
 
-    function get($id){
-        $query = $this->db->query("SELECT titulo,descripcion,ciudad,fecha,imagen FROM mapas WHERE id = '$id';"); 
-        return $query->result_array()[0];
-    }
 
     function insert ($titulo, $descripcion, $ciudad, $fecha, $ruta, $id_paquete){
         /*
@@ -36,10 +32,11 @@ class modelMapas extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    /*
     function mapas_paquetes ($id){        
         $query = $this->db->query("SELECT id, id_paquete from mapas WHERE id_paquete = $id;"); 
         
-    }
+    } */
 
     function insert_size($ancho, $alto,$id){
         $query = $this->db->query("UPDATE mapas SET ancho='$ancho', altura='$alto' WHERE id='$id';");
