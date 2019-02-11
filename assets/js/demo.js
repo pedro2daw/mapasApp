@@ -26,7 +26,7 @@ $(document).ready(function () {
     // Eliminacion de los puntos de interes
     $('div').on("contextmenu", ".hot-spot", function (e) {
         var id_hs = this.id;
-        if (confirm("Seguro que quieres borrar el punto?")) {
+        if (confirm("¿Seguro que quieres borrar el punto?")) {
             $("#" + id_hs).remove();
         } else {
         }
