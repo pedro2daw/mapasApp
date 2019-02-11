@@ -35,19 +35,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="nav nav-pills flex-column flex-sm-row">
-                <?php
-                echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link active"');
-                ?>
-            </nav>
-        </div>
-    </div>
-
     <button type="button" id="boton_usuario" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
         Insertar Usuario
     </button>

@@ -1,16 +1,4 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="nav nav-pills flex-column flex-sm-row">
-                <?php
-                echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link active"');
-                echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
-                ?>
-            </nav>
-        </div>
-    </div>
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

@@ -11,12 +11,12 @@ class Users extends Security {
         
             $this->load->view('template', $data);
        }*/
-       /* else if ($nivel == 2) {*/
+       /*else if ($nivel == 2) {*/
             $data['ListaUsuarios'] = $this->modelUser->get_all();
             $data["viewName"] = "admin_users";
         
             $this->load->view('template', $data);   
-       /* }*/
+       
     }  
     
     public function insert_user(){
