@@ -26,7 +26,7 @@
 
                     <form>
                         <div class='form-group'>
-                            <label for='iamgen'>Imagen</label>
+                            <label for='imagen'>Imagen</label>
                             <input type='file' class='form-control' placeholder='Introduce una imagen' name='imagen' id='imagen' required />
                         </div>
                         <div class='form-group'>

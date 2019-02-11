@@ -1,12 +1,19 @@
-<script language="javascript">
-
-    $(document).ready( function (){
-        $('.btn-update').click( function () {
-            var id = $(this).data('id'); 
-            console.log(id);
+<script>
+    $(document).ready(function(){
+        $(".btn-update").on("click", function(){
+            var cont = new Array();
+            var id = $(this).attr("data-id");
+            $(".fila" + id).each( function() {
+                cont.push($(this).text());
+            });
+            var usu = cont[1];
+            var contra = cont[2];
+            var niv = cont[3];
+            $("#usuarioMod").val(usu);
+            $("#contrasenaMod").val(contra);
+            $("#nivelMod").val(niv);
         });
     });
-    
 </script>
 
 <div class="container-fluid">
@@ -16,7 +23,7 @@
         if (isset($msg)){
             switch ($msg) {
                 case 0:
-                    echo "<h4 class='success'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
+                    echo "<h4 class='success' style='color:red;'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
                     break;
                 case 1:
                     echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
@@ -62,12 +69,12 @@
                 for($i = 0; $i < count($ListaUsuarios);$i++){
                     $usuario = $ListaUsuarios[$i];
                     echo ("<tr>");
-                    echo ("<td>".$usuario["id"]."</td>");
-                    echo ("<td>".$usuario["username"]."</td>");
-                    echo ("<td>".$usuario["passwd"]."</td>");
-                    echo ("<td>".$usuario["nivel"]."</td>");
+                    echo ("<td class='fila".$usuario["id"]."'>".$usuario["id"]."</td>");
+                    echo ("<td class='fila".$usuario["id"]."'>".$usuario["username"]."</td>");
+                    echo ("<td class='fila".$usuario["id"]."'>".$usuario["passwd"]."</td>");
+                    echo ("<td class='fila".$usuario["id"]."'>".$usuario["nivel"]."</td>");
                     echo ("<td>");
-                            echo anchor("Users/form_update_user/".$usuario['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$usuario['id']."'");
+                            echo anchor("Users/update_user/".$usuario['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' id='update_button' data-target='#modal_mod' data-id='".$usuario['id']."'");
                     echo ("</td>");  
                     echo ("<td>");
                             echo anchor("Users/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
@@ -96,20 +103,20 @@
                     <?php echo form_open_multipart('Users/insert_user','class="ui-filterable"'); ?>
 
                     <div class='form-group'>
-                        <label for='usuario'>Usuario</label>
-                        <input type='text' class='form-control' placeholder='Introduce un usuario' name='usuarioIns' id='usuarioIns' required />
+                        <label for='usuarioIns'>Usuario</label>
+                        <input type='text' class='form-control' placeholder='Introduce un nombre de usuario' name='usuarioIns' id='usuarioIns' required />
                     </div>
                     <div class='form-group'>
-                        <label for='contrasena'>Contraseña</label>
+                        <label for='contrasenaIns'>Contraseña</label>
                         <input type='text' class='form-control' placeholder='Introduce una contraseña' name='contrasenaIns' id='contrasenaIns' required />
                     </div>
                     <div class='form-group'>
-                        <label for='nivel'>Nivel</label>
+                        <label for='nivelIns'>Nivel</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">Nivel permiso</label>
                             </div>
-                            <select class="custom-select" id="inputGroupSelect01">
+                            <select class="custom-select" id="nivelIns" name="nivelIns">
                                 <option value="1" selected>Usuario</option>
                                 <option value="2">Administrador</option>
                             </select>
@@ -142,28 +149,29 @@
                 <div class="modal-body">
 
                     <!-- ****************** CUERPO DEL CUADRO MODAL UPDATE *********************** -->
-                    <?php echo form_open_multipart('Users/mod_user','class="ui-filterable"'); ?>
+                    <?php echo form_open_multipart('Users/update_user','class="ui-filterable"'); ?>
 
                     <div class='form-group'>
-                        <label for='usuario'>Usuario</label>
-                        <input type='text' class='form-control' placeholder='Introduce un título' name='usuarioMod' id='usuarioMod' required />
+                        <label for='usuarioMod'>Usuario</label>
+                        <input type='text' class='form-control' placeholder='Introduce un nombre de usuario nuevo' name='usuarioMod' id='usuarioMod' required />
                     </div>
                     <div class='form-group'>
-                        <label for='contrasena'>Contraseña</label>
-                        <input type='text' class='form-control' placeholder='Introduce una contraseña' name='contrasenaMod' id='contrasenaMod' required />
+                        <label for='contrasenaMod'>Contraseña</label>
+                        <input type='text' class='form-control' placeholder='Introduce una contraseña nueva' name='contrasenaMod' id='contrasenaMod' required />
                     </div>
                     <div class='form-group'>
-                        <label for='nivel'>Nivel</label>
+                        <label for='nivelMod'>Nivel</label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputGroupSelect01">Nivel permiso</label>
                             </div>
-                            <select class="custom-select" id="inputGroupSelect01">
+                            <select class="custom-select" id="nivelMod" name="nivelMod">
                                 <option value="1" selected>Usuario</option>
                                 <option value="2">Administrador</option>
                             </select>
                         </div>
                     </div>
+                    <?php echo "<input type='hidden' id='idMod' name='idMod' value='" .$usuario['id']. "'>"; ?>
                     <br />
 
                     <div class='modal-footer'>
