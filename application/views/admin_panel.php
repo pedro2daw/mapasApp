@@ -10,7 +10,7 @@
         var ciudad = $('#ciudad_'+id).text();
         var fecha = $('#fecha_'+id).text();
         var descripcion = $('#descripcion_'+id).text();
-        
+
 
         $('#upd_titulo').val(titulo);
         $('#upd_descripcion').val(descripcion);
