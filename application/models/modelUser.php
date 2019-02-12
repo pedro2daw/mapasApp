@@ -20,6 +20,14 @@ class modelUser extends CI_Model{
         return $data;
     }
     
+    public function get_id($name, $passwd) {
+        $query = $this->db->query("SELECT id FROM usuarios WHERE username = '$name'AND passwd = '$passwd';"); 
+        foreach ($query->result_array() as $row) {
+            $id = $row['id'];
+        }
+        return $id;
+    }
+    
     public function insert($usuario, $contrasena, $nivel) {        
         $query = $this->db->query("INSERT INTO usuarios (username, passwd, nivel) VALUES ('$usuario','$contrasena', '$nivel');"); 
         

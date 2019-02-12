@@ -6,6 +6,7 @@ class Login extends Security{
      
 // ------- CARGO LA VISTA DEL LOGIN POR DEFECTO ------------ //        
     public function index(){
+        $data["noHeader"] = false;
         $data["viewName"] = "login";
         $this->load->view('template',$data);
     }
@@ -16,6 +17,7 @@ class Login extends Security{
         $name = $this->input->get_post("name");
         $pass = $this->input->get_post("password");
         $this->load->model('modelUser');
+        $id = $this->modelUser->get_id($name, $pass);
         $r = $this->modelUser->checkLogin($name,$pass);
 
         if($r == 0){
@@ -25,6 +27,7 @@ class Login extends Security{
         }
         else{
             $this->create_session();
+            $this->session->set_userdata("id", $id);
             $data['ListaMapas'] = $this->modelMapas->get_all();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             // var_dump($data['ListaPaquetes']);

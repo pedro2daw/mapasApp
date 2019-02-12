@@ -5,19 +5,20 @@ include_once('Security.php');
 class Users extends Security {
 
     public function view_users() {
-        /*$nivel = $this->modelUser->getNivel($id);
+        $id = $this->session->userdata("id");
+        $nivel = $this->modelUser->getNivel($id);
         if ($nivel == 1) {
-            $data["viewName"] = "application/views/errors/cli/error_general.php";
+            $data["viewName"] = "application/views/errors/cli/error_general";
         
             $this->load->view('template', $data);
-       }*/
-       /*else if ($nivel == 2) {*/
+        } else if ($nivel == 2) {
             $data['ListaUsuarios'] = $this->modelUser->get_all();
             $data["viewName"] = "admin_users";
         
             $this->load->view('template', $data);   
        
-    }  
+        }
+    }
     
     public function insert_user(){
         $usuario = $this->input->get_post('usuarioIns');
