@@ -3,7 +3,7 @@ class modelMapas extends CI_Model {
     // $titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto
 
     function get_all(){
-        $query = $this->db->query("SELECT * FROM mapas;"); 
+        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.descripcion, mapas.ciudad, mapas.fecha, mapas.imagen, paquetes.nombre, mapas.id_paquete as 'id_paquete', paquetes.id as 'id_tpaquetes' from mapas INNER JOIN paquetes ON mapas.id_paquete = paquetes.id"); 
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){
@@ -11,6 +11,12 @@ class modelMapas extends CI_Model {
                 }
             }
         return $data;
+    }
+
+    function get_paquete($id){
+        $query = $this->db->query("SELECT paquetes.nombre, paquetes.id FROM mapas INNER JOIN paquetes ON mapas.id_paquete = paquetes.id"); 
+        $data = $query->result_array();
+        return array_column($data,'nombre','id');
     }
 
 

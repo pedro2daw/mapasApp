@@ -97,8 +97,8 @@ class Maps extends Security {
     
     public function form_update_map() {
         $id = $this->input->post('id');
-        $data['datosMapa'] = $this->modelMapas->get($id);
-        echo json_encode($data['datosMapa']);
+        $data['paquete'] = $this->modelMapas->get_paquete($id);
+        echo json_encode($data['paquete']);
     }
 
 

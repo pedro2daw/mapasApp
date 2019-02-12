@@ -1,49 +1,39 @@
 
 
 <script language="javascript">
-    $(document).ready( function (){
-    $('.btn-update').click( function () {
-        var id = $(this).data('id'); 
 
+    $(document).ready( function (){
+    $('.btn-update').click(function () {
+        var id = $(this).data('id'); 
         var img = $('#imagen_'+id).attr('src');
         var titulo = $('#titulo_'+id).text();
         var ciudad = $('#ciudad_'+id).text();
         var fecha = $('#fecha_'+id).text();
         var descripcion = $('#descripcion_'+id).text();
-
-
+        var id_paquete = $("#id_paquete_"+id).data('id-p');
+        console.log(id_paquete);
+        
+        $('#update_paquete').val(id_paquete);
         $('#upd_titulo').val(titulo);
         $('#upd_descripcion').val(descripcion);
         $('#upd_ciudad').val(ciudad);
         $('#upd_fecha').val(fecha);
         $('#upd_imagen').attr('src',img);
-
-
-                   /* $.ajax({
+        /*
+                $.ajax({
                         type: "post",
                         url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",       
                         dataType: 'text',
                         data: "id="+id,                        
                         success: function(data) {
                             var a = $.parseJSON(data);
-                            var titulo = a.titulo;
-                            var descripcion = a.descripcion;
-                            var ciudad = a.ciudad;
-                            var fecha = a.fecha;
-                            var img = "<?php echo base_url(); ?>"+a.imagen;
-                        
-                            $('#upd_titulo').val(titulo);
-                            $('#upd_descripcion').val(descripcion);
-                            $('#upd_ciudad').val(ciudad);
-                            $('#upd_fecha').val(fecha);
-                            $('#upd_imagen').attr('src',img);
                             console.log('SUCCESS: ', a);
                         },
                         error: function(data) {
                             console.log('ERROR: ', data);
                         },
                     });
-                    */
+*/
     });
 });
 </script>
@@ -51,8 +41,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
+
+
         <?php
-        
         if (isset($msg)){
             switch ($msg) {
                 case 0:
@@ -68,47 +59,7 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">A</a></li>
-                    <li class="page-item"><a class="page-link" href="#">B</a></li>
-                    <li class="page-item"><a class="page-link" href="#">C</a></li>
-                    <li class="page-item"><a class="page-link" href="#">D</a></li>
-                    <li class="page-item"><a class="page-link" href="#">E</a></li>
-                    <li class="page-item"><a class="page-link" href="#">F</a></li>
-                    <li class="page-item"><a class="page-link" href="#">G</a></li>
-                    <li class="page-item"><a class="page-link" href="#">H</a></li>
-                    <li class="page-item"><a class="page-link" href="#">I</a></li>
-                    <li class="page-item"><a class="page-link" href="#">J</a></li>
-                    <li class="page-item"><a class="page-link" href="#">K</a></li>
-                    <li class="page-item"><a class="page-link" href="#">L</a></li>
-                    <li class="page-item"><a class="page-link" href="#">M</a></li>
-                    <li class="page-item"><a class="page-link" href="#">N</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Ñ</a></li>
-                    <li class="page-item"><a class="page-link" href="#">O</a></li>
-                    <li class="page-item"><a class="page-link" href="#">P</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Q</a></li>
-                    <li class="page-item"><a class="page-link" href="#">R</a></li>
-                    <li class="page-item"><a class="page-link" href="#">S</a></li>
-                    <li class="page-item"><a class="page-link" href="#">T</a></li>
-                    <li class="page-item"><a class="page-link" href="#">U</a></li>
-                    <li class="page-item"><a class="page-link" href="#">V</a></li>
-                    <li class="page-item"><a class="page-link" href="#">W</a></li>
-                    <li class="page-item"><a class="page-link" href="#">X</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Y</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Z</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
                 Insertar Mapa
@@ -137,6 +88,7 @@
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
                     echo ("<td>".$mapa["id"]."</td>");
+                    echo ("<td class='d-none' id=id_paquete_".$mapa["id"]." data-id-p='".$mapa['id_paquete']."'></td>");
                     echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='imagen_".$mapa["id"]."'></td>");
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
                     echo ("<td id=ciudad_".$mapa["id"].">".$mapa["ciudad"]."</td>");
@@ -294,7 +246,7 @@
                             <div id='seleccionar_paquete' class='form-group'>
                                 <label for='select_paquetes'>Selecciona un paquete:</label>
                             <?php 
-                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"$paqueteSeleccionado" ,'id="select_paquetes" class="form-control"');
+                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"",'id="update_paquete" class="form-control"');
                             ?>
                              </div>
 
