@@ -10,7 +10,7 @@ class modelUser extends CI_Model{
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
     
     public function get_all() {
-        $query = $this->db->query("SELECT * FROM usuarios;"); 
+        $query = $this->db->query("SELECT id, username, nivel FROM usuarios;"); 
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){

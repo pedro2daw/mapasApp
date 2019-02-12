@@ -50,5 +50,7 @@
     </div>
     <div id="botonHotspots">
         <input type="submit" class="btn btn-primary" value="Guardar Puntos" />
+        <button id="mas">+</button>
+        <button id="menos">-</button>
     </div>
     

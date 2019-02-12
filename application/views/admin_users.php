@@ -7,10 +7,8 @@
                 cont.push($(this).text());
             });
             var usu = cont[1];
-            var contra = cont[2];
-            var niv = cont[3];
+            var niv = cont[2];
             $("#usuarioMod").val(usu);
-            $("#contrasenaMod").val(contra);
             $("#nivelMod").val(niv);
         });
     });
@@ -58,7 +56,7 @@
                     echo ("<tr>");
                     echo ("<td class='fila".$usuario["id"]."'>".$usuario["id"]."</td>");
                     echo ("<td class='fila".$usuario["id"]."'>".$usuario["username"]."</td>");
-                    echo ("<td class='fila".$usuario["id"]."'>".$usuario["passwd"]."</td>");
+                    echo ("<td>*****</td>");
                     echo ("<td class='fila".$usuario["id"]."'>".$usuario["nivel"]."</td>");
                     echo ("<td>");
                             echo anchor("Users/update_user/".$usuario['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' id='update_button' data-target='#modal_mod' data-id='".$usuario['id']."'");

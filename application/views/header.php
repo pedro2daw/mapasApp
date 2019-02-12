@@ -60,6 +60,15 @@
                 coords_y.splice(index_y, 1);
                 $(".hot-spot-1:first").remove();
             });
+            
+            $("#mas").on("click", function() {
+                $("#slide").css("transform-origin", "top left");
+                $("#slide").css("transform", "scale(1.5)");
+            });
+            $("#menos").on("click", function() {
+                $("#slide").css("transform-origin", "top left");
+                $("#slide").css("transform", "scale(0.5)");
+            });
         });
 
     </script>
