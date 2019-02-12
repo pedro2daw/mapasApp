@@ -47,8 +47,8 @@ class modelUser extends CI_Model{
     }
 
     public function getNivel($id) {
-        $query = $this->db->query("SELECT nivel FROM usuarios WHERE id = $id"); 
-        
+        $query = $this->db->query("SELECT nivel FROM usuarios WHERE id = '$id';"); 
+        $nivel = 0;
         foreach ($query->result_array() as $row) {
             $nivel = $row['nivel'];
         }
