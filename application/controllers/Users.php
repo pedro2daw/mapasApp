@@ -8,7 +8,7 @@ class Users extends Security {
         $id = $this->session->userdata("id");
         $nivel = $this->modelUser->getNivel($id);
         if ($nivel == 1) {
-            $data["viewName"] = "application/views/errors/cli/error_general";
+            $data["viewName"] = "error";
         
             $this->load->view('template', $data);
         } else if ($nivel == 2) {
