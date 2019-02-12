@@ -136,9 +136,6 @@
                 for($i = 0; $i < count($ListaMapas);$i++){
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
-                    echo ("<td id=id_paquete_".$mapa["id"].">".$mapa["id_paquete"]."</td>");
-                    echo ("<td id=nombre_paquete_".$mapa["id"].">".$mapa["nombre"]."</td>");
-
                     echo ("<td>".$mapa["id"]."</td>");
                     echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='imagen_".$mapa["id"]."'></td>");
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
