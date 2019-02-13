@@ -34,7 +34,7 @@ class modelMapas extends CI_Model {
             altura TINYINT NOT NULL
         */
         
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen, id_paquete,fecha_subida) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta','$id_paquete',NOW());"); 
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen, id_paquete,fecha_de_subida) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta','$id_paquete',NOW());"); 
         return $this->db->affected_rows();
     }
 
@@ -46,6 +46,13 @@ class modelMapas extends CI_Model {
 
     function insert_size($ancho, $alto,$id){
         $query = $this->db->query("UPDATE mapas SET ancho='$ancho', altura='$alto' WHERE id='$id';");
+        return $this->db->affected_rows();
+    }
+
+    function update($id, $titulo, $ciudad, $fecha, $ruta, $id_paquete){
+        $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
+        
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, ciudad, fecha, imagen, id_paquete, fecha_de_subida) VALUES ($id,'$titulo','$ciudad',$fecha,'$ruta','$id_paquete',NOW());"); 
         return $this->db->affected_rows();
     }
 
@@ -89,6 +96,44 @@ class modelMapas extends CI_Model {
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('img_mapa')){
+            echo $this->upload->display_errors();
+            $img_name = false;
+        }else{
+            $img_name = $this->upload->data('file_name'); 
+        }
+        return $img_name;
+    }
+
+    public function update_img($id,$ciudad){
+        $config['upload_path'] = './assets/img/mapas/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size']     = 9999999;
+        $config['max_width'] = 999999;
+        $config['max_height'] = 9999999;
+        $config['file_name'] = $id.'_'.$ciudad;
+    
+        $this->load->library('upload', $config);
+
+        if(!$this->upload->do_upload('upd_img')){
+            echo $this->upload->display_errors();
+            $img_name = false;
+        }else{
+            $img_name = $this->upload->data('file_name'); 
+        }
+        return $img_name;
+    }
+
+    public function checkImgDefault(){
+        $config['upload_path'] = './assets/img/mapas/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size']     = 9999999;
+        $config['max_width'] = 999999;
+        $config['max_height'] = 9999999;
+        
+
+        $this->load->library('upload', $config);
+
+        if(!$this->upload->do_upload('ruta_original')){
             echo $this->upload->display_errors();
             $img_name = false;
         }else{

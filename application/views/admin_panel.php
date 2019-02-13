@@ -5,20 +5,23 @@
     $(document).ready( function (){
     $('.btn-update').click(function () {
         var id = $(this).data('id'); 
-        var img = $('#imagen_'+id).attr('src');
+        var img_src = $('#src_imagen_'+id).attr('src');
+        var img = $('#imagen_'+id).data('id-imagen');
         var titulo = $('#titulo_'+id).text();
         var ciudad = $('#ciudad_'+id).text();
         var fecha = $('#fecha_'+id).text();
-        var descripcion = $('#descripcion_'+id).text();
-        var id_paquete = $("#id_paquete_"+id).data('id-p');
-        console.log(id_paquete);
-        
-        $('#update_paquete').val(id_paquete);
+       /* var descripcion = $('#descripcion_'+id).text(); */
+        var id_paquete = $("#id_paquete_"+id).data('id-p');        
+        $('#upd_paquete').val(id_paquete);
         $('#upd_titulo').val(titulo);
-        $('#upd_descripcion').val(descripcion);
+        /* $('#upd_descripcion').val(descripcion); */
         $('#upd_ciudad').val(ciudad);
         $('#upd_fecha').val(fecha);
-        $('#upd_imagen').attr('src',img);
+        $('#upd_imagen').attr('src',img_src);
+        //campos hidden:
+        $('#id_update').val(id);
+        $('#ruta_original').val(img);
+        
         /*
                 $.ajax({
                         type: "post",
@@ -89,7 +92,8 @@
                     echo ("<tr>");
                     echo ("<td>".$mapa["id"]."</td>");
                     echo ("<td class='d-none' id=id_paquete_".$mapa["id"]." data-id-p='".$mapa['id_paquete']."'></td>");
-                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='imagen_".$mapa["id"]."'></td>");
+                    echo ("<td class='d-none' id='imagen_".$mapa["id"]."' data-id-imagen='".$mapa['imagen']."'></td>");
+                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
                     echo ("<td id=ciudad_".$mapa["id"].">".$mapa["ciudad"]."</td>");
                     echo ("<td id=fecha_".$mapa["id"].">".$mapa["fecha"]."</td>");
@@ -144,11 +148,13 @@
                                 <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha'
                                     id='fecha' value='1' required />
                             </div>
+                            <!-- 
                             <div class='form-group'>
                                 <label for='fecha'>Nivel</label>
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
                                     value='1' required />
                             </div>
+                            -->
                             <label for='paquete'>Paquete</label>
                             <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
                             <br/>
@@ -169,12 +175,8 @@
 
                             <div id='seleccionar_paquete' class='form-group'>
                                 <label for='select_paquetes'>Selecciona un paquete:</label>
-                            <?php 
-                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control"');
-                            ?>
+                            <?php echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control"'); ?>
                              </div>
-                                
-                            
                             
                             <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
@@ -217,45 +219,52 @@
                             <?php echo form_open_multipart('Maps/update'); ?>
                             <div class='form-group'>
                                 <label for='titulo'>Título</label>
-                                <input type='text' class='form-control' placeholder='Introduce un título' name='titulo'
+                                <input type='text' class='form-control' placeholder='Introduce un título' name='upd_titulo'
                                     id='upd_titulo' value='1' required />
                             </div>
+                            <!--
                             <div class='form-group'>
                                 <label for='descripcion'>Descripción</label>
-                                <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion'
+                                <input type='text' class='form-control' placeholder='Introduce una descripción' name='upd_descripcion'
                                     id='upd_descripcion' value='1' required />
                             </div>
+                            -->
                             <div class='form-group'>
                                 <label for='ciudad'>Ciudad</label>
-                                <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad'
+                                <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='upd_ciudad'
                                     id='upd_ciudad' value='1' required />
                             </div>
                             <div class='form-group'>
                                 <label for='fecha'>Fecha</label>
-                                <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha'
+                                <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='upd_fecha'
                                     id='upd_fecha' value='1' required />
                             </div>
+                            <!--
                             <div class='form-group'>
                                 <label for='fecha'>Nivel</label>
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='upd_nivel'
                                     value='1' required />
                             </div>
+                            -->
                             <label for='paquete'>Paquete</label>
                             <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
                             <br/>
                             <div id='seleccionar_paquete' class='form-group'>
                                 <label for='select_paquetes'>Selecciona un paquete:</label>
                             <?php 
-                                echo form_dropdown('select_paquetes',$ListaPaquetes ,"",'id="update_paquete" class="form-control"');
+                                echo form_dropdown('upd_paquete',$ListaPaquetes ,"",'id="upd_paquete" class="form-control"');
                             ?>
                              </div>
+ 
+                             <input type='hidden' name='id_update' id='id_update' value=''/>
+                             <input type='hidden' name='ruta_original' id='ruta_original' value=''/>
 
                             <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
 
                                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
                                 <div class="custom-file">
-                                    <input type="file" name="img_mapa" class="custom-file-input" id="upd_img"
+                                    <input type="file" name="upd_img" class="custom-file-input" id="upd_img"
                                         lang="es" onchange="openFile(event,'2')">
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>

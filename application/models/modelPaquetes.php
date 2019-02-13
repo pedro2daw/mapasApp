@@ -31,7 +31,7 @@ class modelPaquetes extends CI_Model {
     fecha_subida DATETIME NOT NULL,
     descripcion VARCHAR(250) NOT NULL
     */
-        $query = $this->db->query("INSERT INTO paquetes (id, nombre, descripcion) VALUES (null,'$nombre','$descripcion');"); 
+        $query = $this->db->query("INSERT INTO paquetes (id, nombre, descripcion,fecha_subida) VALUES (null,'$nombre','$descripcion',NOW());"); 
         return $this->db->affected_rows();
     }
 
