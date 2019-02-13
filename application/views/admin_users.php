@@ -1,19 +1,3 @@
-<script>
-    $(document).ready(function(){
-        $(".btn-update").on("click", function(){
-            var cont = new Array();
-            var id = $(this).attr("data-id");
-            $(".fila" + id).each( function() {
-                cont.push($(this).text());
-            });
-            var usu = cont[1];
-            var niv = cont[2];
-            $("#usuarioMod").val(usu);
-            $("#nivelMod").val(niv);
-        });
-    });
-</script>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -25,6 +9,9 @@
                     break;
                 case 1:
                     echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
+                    break;
+                case 2:
+                    echo "<h4 class='error'>NO PUEDES BORRAR EL USUARIO QUE SE ESTA USANDO ACTUALMENTE</h4>";
                     break;
             }
         }

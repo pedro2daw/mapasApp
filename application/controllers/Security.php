@@ -11,7 +11,6 @@
             public function security_check()
             {
                 if (!isset($this->session->loguedIn)){
-                    //echo("<script>alert('No tienes permiso para acceder a este sitio');</script>");
                     $data['viewName'] = 'login';
                     $this->load->view('template', $data);
                     return false;
@@ -27,7 +26,6 @@
             }
             public function destroy_session() {
                 $this->session->sess_destroy();
-
             }
     }
     

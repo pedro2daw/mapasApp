@@ -3,9 +3,19 @@ class modelUser extends CI_Model{
 
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
     public function checkLogin($name,$pass) {
-        $query = $this->db->query("SELECT id FROM usuarios WHERE username='$name' AND passwd='$pass'");
-
-        return $query->num_rows();
+        $query = $this->db->query("SELECT passwd FROM usuarios WHERE username = '$name';"); 
+        foreach ($query->result_array() as $row) {
+            $hash = $row['passwd'];
+        }
+        
+        if (isset($hash)) {
+            $checkHash = password_verify($pass, $hash);
+        }
+        
+        else {
+            $checkHash = false;
+        }
+        return $checkHash;
     }
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
     
@@ -20,8 +30,8 @@ class modelUser extends CI_Model{
         return $data;
     }
     
-    public function get_id($name, $passwd) {
-        $query = $this->db->query("SELECT id FROM usuarios WHERE username = '$name'AND passwd = '$passwd';"); 
+    public function get_id($name) {
+        $query = $this->db->query("SELECT id FROM usuarios WHERE username = '$name';"); 
         foreach ($query->result_array() as $row) {
             $id = $row['id'];
         }
@@ -54,6 +64,11 @@ class modelUser extends CI_Model{
         }
         
         return $nivel;
+    }
+    
+    public function hash_pass($pass) {
+        $pass = password_hash($pass, PASSWORD_DEFAULT);
+        return $pass;
     }
     
 } // cierra class modelUser

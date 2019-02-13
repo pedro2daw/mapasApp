@@ -65,5 +65,18 @@ $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
+    
+    // Rellena los campos del modal
+    $(".btn-update").on("click", function(){
+            var cont = new Array();
+            var id = $(this).attr("data-id");
+            $(".fila" + id).each( function() {
+                cont.push($(this).text());
+            });
+            var usu = cont[1];
+            var niv = cont[2];
+            $("#usuarioMod").val(usu);
+            $("#nivelMod").val(niv);
+        });
 
 });
