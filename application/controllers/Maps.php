@@ -91,13 +91,32 @@ class Maps extends Security {
         $img_name = $this->modelMapas->update_img($id,$ciudad_format);
         $ruta = "assets/img/mapas/".$img_name; 
 
-        var_dump($ruta);
+        
         if (!$img_name){
             $img_name = $this->modelMapas->checkImgDefault();
-            $ruta = "assets/img/mapas/".$img_name; 
-        }
+            $ruta = $ruta_original;
+            $r = $this->modelMapas->update($id, $titulo, $ciudad, $fecha, $ruta, $paquete);
+            if ($r == 0 ){
+                $data['img_size'] = $this->modelMapas->get_img_size($ruta);
+                
+                $ancho = $data['img_size'][0];
+                $alto = $data['img_size'][1];
 
-        
+                $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
+
+            if ($r2 == 0){
+                $data["msg"] = "1";
+                $this->datos();
+                $this->load->view('template', $data);
+
+            } else {
+                // CAMBIAR MSG POR ERROR, FALSE, o 0 o 1 Y LUEGO CONTROLAR ESTO EN PHP EN LA VISTA.
+                $data["msg"] = "0";
+                $this->datos();
+                $this->load->view('template', $data);
+            }
+            }
+        }
     }     
 
 

@@ -133,7 +133,7 @@ class modelMapas extends CI_Model {
 
         $this->load->library('upload', $config);
 
-        if(!$this->upload->do_upload('ruta_original')){
+        if(!$this->upload->do_upload('upd_img')){
             echo $this->upload->display_errors();
             $img_name = false;
         }else{
