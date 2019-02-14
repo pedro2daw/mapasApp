@@ -28,8 +28,7 @@ $(document).ready(function () {
         var id_hs = this.id;
         if (confirm("¿Seguro que quieres borrar el punto?")) {
             $("#" + id_hs).remove();
-        } else {
-        }
+        } else {}
         return false;
     });
 
@@ -65,18 +64,37 @@ $(document).ready(function () {
     $('#myModal').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
-    
+
     // Rellena los campos del modal
-    $(".btn-update").on("click", function(){
-            var cont = new Array();
-            var id = $(this).attr("data-id");
-            $(".fila" + id).each( function() {
-                cont.push($(this).text());
-            });
-            var usu = cont[1];
-            var niv = cont[2];
-            $("#usuarioMod").val(usu);
-            $("#nivelMod").val(niv);
+    $(".btn-update").on("click", function () {
+        var cont = new Array();
+        var id = $(this).attr("data-id");
+        $(".fila" + id).each(function () {
+            cont.push($(this).text());
         });
+        var usu = cont[1];
+        var niv = cont[2];
+        $("#usuarioMod").val(usu);
+        $("#nivelMod").val(niv);
+    });
+    
+    // Guardar puntos en la BD por ajax
+    function realizaProceso(valorCaja1, valorCaja2) {
+        var parametros = {
+            "valorCaja1": valorCaja1,
+            "valorCaja2": valorCaja2
+        };
+        $.ajax({
+            data: parametros,
+            url: 'ejemplo_ajax_proceso.php',
+            type: 'post',
+            beforeSend: function () {
+                $("#resultado").html("Procesando, espere por favor...");
+            },
+            success: function (response) {
+                $("#resultado").html(response);
+            }
+        });
+    }
 
 });
