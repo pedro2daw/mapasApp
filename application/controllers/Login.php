@@ -15,6 +15,18 @@ class Login extends CI_Controller {
         $data["viewName"] = "login";
         $this->load->view('template',$data);
     }
+    
+    public function logout() {
+        $this->load->model('modelSecurity');
+        $this->load->model('modelUser');
+        $this->load->model('modelPaquetes');
+        $this->load->model('modelMapas');
+        $this->load->model('modelCalles');
+        $data["noHeader"] = false;
+        $data["viewName"] = "login";
+        $this->modelSecurity->destroy_session();
+        $this->load->view('template',$data);
+    }
 // ------- CARGO LA VISTA DEL LOGIN POR DEFECTO ------------ //
 
 // ------- COMPRUEBO EL LOGIN REALIZADO -------------------- //

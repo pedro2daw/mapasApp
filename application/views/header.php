@@ -113,6 +113,10 @@
             margin: 0 auto;
             margin-top: 2%;
         }
+        .fa-sign-out-alt {
+            width: 30px;
+            color: #0056b3;
+        }
 
     </style>
 </head>
@@ -129,17 +133,36 @@
                     if (isset($noHeader)) {
                         if ($noHeader == false) {
                         }
+                        else {
+                            if ($nivel == 2) {
+                                echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt"');
+                            }
+                            else if ($nivel == 1) {
+                                echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt"');
+                            }
+                        }
                     }
-                    if ($nivel == 2) {
-                        echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                        echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
-                        echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                        echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
-                    }
-                    else if ($nivel == 1) {
-                        echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                        echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
-                        echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
+                    else {
+                        if ($nivel == 2) {
+                            echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt"');
+                        }
+                        else if ($nivel == 1) {
+                            echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt"');
+                        }
                     }
                 }
                 
