@@ -6,6 +6,11 @@ class Login extends CI_Controller {
      
 // ------- CARGO LA VISTA DEL LOGIN POR DEFECTO ------------ //        
     public function index(){
+        $this->load->model('modelSecurity');
+        $this->load->model('modelUser');
+        $this->load->model('modelPaquetes');
+        $this->load->model('modelMapas');
+        $this->load->model('modelCalles');
         $data["noHeader"] = false;
         $data["viewName"] = "login";
         $this->load->view('template',$data);
