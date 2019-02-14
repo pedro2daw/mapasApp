@@ -3,7 +3,7 @@ class modelMapas extends CI_Model {
     // $titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto
 
     function get_all(){
-        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.descripcion, mapas.ciudad, mapas.fecha, mapas.imagen, paquetes.nombre, mapas.id_paquete as 'id_paquete', paquetes.id as 'id_tpaquetes' from mapas INNER JOIN paquetes ON mapas.id_paquete = paquetes.id"); 
+        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.descripcion, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto', paquetes.nombre, mapas.id_paquete as 'id_paquete', paquetes.id as 'id_tpaquetes' from mapas INNER JOIN paquetes ON mapas.id_paquete = paquetes.id"); 
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){
@@ -21,19 +21,6 @@ class modelMapas extends CI_Model {
 
 
     function insert ($titulo, $descripcion, $ciudad, $fecha, $ruta, $id_paquete){
-        /*
-            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            titulo VARCHAR(150) NOT NULL,
-            descripcion VARCHAR(250) NOT NULL,
-            ciudad VARCHAR(50) NOT NULL,
-            fecha SMALLINT NOT NULL,
-            imagen VARCHAR(250) NOT NULL,
-
-            nivel SMALLINT NOT NULL,
-            ancho TINYINT NOT NULL,
-            altura TINYINT NOT NULL
-        */
-        
         $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen, id_paquete,fecha_de_subida) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta','$id_paquete',NOW());"); 
         return $this->db->affected_rows();
     }
@@ -49,21 +36,35 @@ class modelMapas extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    function update($id, $titulo, $ciudad, $fecha, $ruta, $id_paquete){
+    function update($id, $titulo, $ciudad, $fecha, $ruta, $id_paquete,$ancho, $alto, $opc){
+        // SI HAY IMAGEN TIENE QUE BORRAR:
+        if ($opc == true){
+            $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
+            $fileToDelete = implode($query2->result_array()[0]);
+            unlink($fileToDelete);
+        } 
+
         $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
-        
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, ciudad, fecha, imagen, id_paquete, fecha_de_subida) VALUES ($id,'$titulo','$ciudad',$fecha,'$ruta','$id_paquete',NOW());"); 
+
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, ciudad, fecha, imagen, id_paquete, fecha_de_subida, ancho, altura) VALUES ($id,'$titulo','$ciudad',$fecha,'$ruta','$id_paquete',NOW(),'$ancho','$alto');"); 
         return $this->db->affected_rows();
     }
 
-    function get_last(){
-        $query = $this->db->query("SELECT id FROM mapas order by id desc limit 1");
-        $row = $query->row();
-       
-        if (isset($row)){
-         $data = $row->id;       
-        }
-     return $data;
+    function delete($id){
+        $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
+        $fileToDelete = implode($query2->result_array()[0]);
+        unlink($fileToDelete);
+        
+        $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
+        return $this->db->affected_rows();
+    }
+
+
+    function get_next_id(){
+        $query = $this->db->query("SHOW TABLE STATUS LIKE 'mapas';");
+        $next_auto_increment = $query->result_array()[0]['Auto_increment'];
+
+     return $next_auto_increment;
     }
 
     function get_img_size ($img_name){

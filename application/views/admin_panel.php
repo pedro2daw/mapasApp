@@ -11,9 +11,14 @@
         var ciudad = $('#ciudad_'+id).text();
         var fecha = $('#fecha_'+id).text();
        /* var descripcion = $('#descripcion_'+id).text(); */
-        var id_paquete = $("#id_paquete_"+id).data('id-p');        
+        var id_paquete = $("#id_paquete_"+id).data('id-p');   
+        var ancho = $('#ancho_'+id).data('ancho');
+        var alto = $('#alto_'+id).data('alto'); 
+
         $('#upd_paquete').val(id_paquete);
         $('#upd_titulo').val(titulo);
+        $('#upd_ancho').val(ancho);
+        $('#upd_alto').val(alto);
         /* $('#upd_descripcion').val(descripcion); */
         $('#upd_ciudad').val(ciudad);
         $('#upd_fecha').val(fecha);
@@ -93,6 +98,8 @@
                     echo ("<td>".$mapa["id"]."</td>");
                     echo ("<td class='d-none' id=id_paquete_".$mapa["id"]." data-id-p='".$mapa['id_paquete']."'></td>");
                     echo ("<td class='d-none' id='imagen_".$mapa["id"]."' data-id-imagen='".$mapa['imagen']."'></td>");
+                    echo ("<td class='d-none' id=ancho_".$mapa["id"]." data-ancho='".$mapa['ancho']."'></td>");
+                    echo ("<td class='d-none' id='alto_".$mapa["id"]."' data-alto='".$mapa['alto']."'></td>");
                     echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
                     echo ("<td id=ciudad_".$mapa["id"].">".$mapa["ciudad"]."</td>");
@@ -255,10 +262,12 @@
                                 echo form_dropdown('upd_paquete',$ListaPaquetes ,"",'id="upd_paquete" class="form-control"');
                             ?>
                              </div>
- 
+                            
+                            <!-- CAMPOS HIDDEN -->
                              <input type='hidden' name='id_update' id='id_update' value=''/>
                              <input type='hidden' name='ruta_original' id='ruta_original' value=''/>
-
+                             <input type='hidden' name='upd_ancho' id='upd_ancho' value=''/>
+                             <input type='hidden' name='upd_alto' id='upd_alto' value=''/>
                             <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
 
