@@ -6,26 +6,13 @@
                 $this->load->model('modelPaquetes');
                 $this->load->model('modelMapas');
                 $this->load->model('modelCalles');
-            }
-            
-            public function security_check()
-            {
-                if (!isset($this->session->loguedIn)){
-                    $data['viewName'] = 'login';
-                    $this->load->view('template', $data);
-                    return false;
-                }else{
-                    return true;
+                
+                if (isset($this->session->userdata['loguedIn'])) {
+                    
+                } else {
+                    redirect(base_url("index.php"));
                 }
+                
             }
     
-            public function create_session() {
-                $sessionLogued = array('loguedIn' => TRUE);
-                $this->session->set_userdata($sessionLogued);
-
-            }
-            public function destroy_session() {
-                $this->session->sess_destroy();
-            }
     }
-    

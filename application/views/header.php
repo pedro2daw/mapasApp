@@ -123,22 +123,26 @@
         <div class="col-md-12">
             <nav class="nav nav-pills flex-column flex-sm-row">
                 <?php
-                $id = $this->session->userdata("id");
-                $nivel = $this->modelUser->getNivel($id);
-                if (isset($noHeader)) {
-                    if ($noHeader == false) {
+                if (isset($this->session->userdata["id"])) {
+                    $id = $this->session->userdata["id"];
+                    $nivel = $this->modelUser->getNivel($id);
+                    if (isset($noHeader)) {
+                        if ($noHeader == false) {
+                        }
+                    }
+                    if ($nivel == 2) {
+                        echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
+                        echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                        echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
+                        echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                    }
+                    else {
+                        echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
+                        echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                        echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                     }
                 }
-                else if ($nivel == 1) {
-                    echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                    echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
-                    echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                } else if ($nivel == 2) {
-                    echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                    echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
-                    echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                    echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
-                }
+                
                 ?>
             </nav>
         </div>
