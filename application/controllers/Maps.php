@@ -18,7 +18,8 @@ class Maps extends Security {
         $fecha = $this->input->get_post('fecha');
         $nivel = $this->input->get_post('nivel');
         // Obtenemos el ultimo id para cambiar el nombre del archivo subido:
-        $ultimoId = $this->modelMapas->get_last()+1;
+        $ultimoId = $this->modelMapas->get_next_id();
+        var_dump($ultimoId);
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
         $ciudad_format = $this->modelMapas->format($ciudad);
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
@@ -34,7 +35,10 @@ class Maps extends Security {
             $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
             if ($r == 0) {
                 $data["msg"] = "1";
-                $this->datos();
+                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                $data["viewName"] = "admin_panel";
+                $this->load->view('template',$data);
             } else {
                 $paquete_nuevo = $this->modelPaquetes->get_last();
                 $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_nuevo);
@@ -43,7 +47,10 @@ class Maps extends Security {
 
        if ($r == 0) {
                 $data["msg"] = "1";
-                $this->datos();
+                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                $data["viewName"] = "admin_panel";
+                $this->load->view('template',$data);
         } else {
                 $data['img_size'] = $this->modelMapas->get_img_size($ruta);
                 $ancho = $data['img_size'][0];
@@ -51,10 +58,16 @@ class Maps extends Security {
                 $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
             if ($r2 == 0){
                 $data["msg"] = "1";
-                $this->datos();
+                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                $data["viewName"] = "admin_panel";
+                $this->load->view('template',$data);
             } else {
                 $data["msg"] = "0";
-                $this->datos();
+                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                $data["viewName"] = "admin_panel";
+                $this->load->view('template',$data);
             }
         }
     }     
@@ -79,14 +92,14 @@ class Maps extends Security {
         if (!$img_name){
             $img_name = $this->modelMapas->checkImgDefault();
             $ruta = $ruta_original;
-            $r = $this->modelMapas->update($id, $titulo, $ciudad, $fecha, $ruta, $paquete, $ancho, $alto);
+            $opc = false;
+            $r = $this->modelMapas->update($id, $titulo, $ciudad, $fecha, $ruta, $paquete, $ancho, $alto,$opc);
             if ($r == 0){
                 // ERROR
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
                 $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
-        
                 $this->load->view('template',$data);
             } else {
                 $data["msg"] = "0";
@@ -97,16 +110,15 @@ class Maps extends Security {
                 $this->load->view('template',$data);
             }
         } else {
-            $r = $this->modelMapas->update($id, $titulo, $ciudad, $fecha, $ruta, $paquete, $ancho, $alto);
+            $opc = true;
+            $r = $this->modelMapas->update($id, $titulo, $ciudad, $fecha, $ruta, $paquete, $ancho, $alto,$opc);
 
             if ($r == 0){
                 // ERROR
                 $data["msg"] = "1";
-               
                 $data['ListaMapas'] = $this->modelMapas->get_all();
                 $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
-                
                 $this->load->view('template',$data);
             } else {
                 $data['img_size'] = $this->modelMapas->get_img_size($ruta);
@@ -136,5 +148,28 @@ class Maps extends Security {
             }
         }   
     }     
+
+    public function delete_map($id) {
+        $r = $this->modelMapas->delete($id);
+
+        if ($r == 0){
+            // ERROR 
+            $data["msg"] = "1";
+            
+            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            $data["viewName"] = "admin_panel";
+
+            $this->load->view('template',$data);
+        } else {
+            $data["msg"] = "0";
+            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            $data["viewName"] = "admin_panel";
+
+            $this->load->view('template',$data);
+        }
+    }
+
 }
 

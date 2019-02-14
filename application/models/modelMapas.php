@@ -36,21 +36,35 @@ class modelMapas extends CI_Model {
         return $this->db->affected_rows();
     }
 
-    function update($id, $titulo, $ciudad, $fecha, $ruta, $id_paquete,$ancho, $alto){
+    function update($id, $titulo, $ciudad, $fecha, $ruta, $id_paquete,$ancho, $alto, $opc){
+        // SI HAY IMAGEN TIENE QUE BORRAR:
+        if ($opc == true){
+            $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
+            $fileToDelete = implode($query2->result_array()[0]);
+            unlink($fileToDelete);
+        } 
+
         $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
-        
+
         $query = $this->db->query("INSERT INTO mapas (id, titulo, ciudad, fecha, imagen, id_paquete, fecha_de_subida, ancho, altura) VALUES ($id,'$titulo','$ciudad',$fecha,'$ruta','$id_paquete',NOW(),'$ancho','$alto');"); 
         return $this->db->affected_rows();
     }
 
-    function get_last(){
-        $query = $this->db->query("SELECT id FROM mapas order by id desc limit 1");
-        $row = $query->row();
-       
-        if (isset($row)){
-         $data = $row->id;       
-        }
-     return $data;
+    function delete($id){
+        $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
+        $fileToDelete = implode($query2->result_array()[0]);
+        unlink($fileToDelete);
+        
+        $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
+        return $this->db->affected_rows();
+    }
+
+
+    function get_next_id(){
+        $query = $this->db->query("SHOW TABLE STATUS LIKE 'mapas';");
+        $next_auto_increment = $query->result_array()[0]['Auto_increment'];
+
+     return $next_auto_increment;
     }
 
     function get_img_size ($img_name){
