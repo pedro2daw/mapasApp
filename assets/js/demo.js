@@ -3,6 +3,7 @@ $(document).ready(function () {
         posY;
     var id = 0;
     var src;
+    var zoom = 1;
 
     // Obtencion de las coordenadas del mapa
     $('.img-responsive').click(function (e) {
@@ -77,7 +78,7 @@ $(document).ready(function () {
         $("#usuarioMod").val(usu);
         $("#nivelMod").val(niv);
     });
-    
+
     // Guardar puntos en la BD por ajax
     function realizaProceso(valorCaja1, valorCaja2) {
         var parametros = {
@@ -96,5 +97,17 @@ $(document).ready(function () {
             }
         });
     }
+    
+    // Aumentar tamaño del mapa manteniendo la posicion de los puntos
+    $("#mas").on("click", function () {
+        $("#slide").css("transform-origin", "top left");
+        $("#slide").css("transform", "scale(" + (zoom + 0.1) + ")");
+    });
+    
+    // Disminuir tamaño del mapa manteniendo la posicion de los puntos
+    $("#menos").on("click", function () {
+        $("#slide").css("transform-origin", "top left");
+        $("#slide").css("transform", "scale(" + (zoom - 0.1) + ")");
+    });
 
 });
