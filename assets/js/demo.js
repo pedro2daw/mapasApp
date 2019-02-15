@@ -97,17 +97,29 @@ $(document).ready(function () {
             }
         });
     }
-    
+
     // Aumentar tamaño del mapa manteniendo la posicion de los puntos
-    $("#mas").on("click", function () {
-        $("#slide").css("transform-origin", "top left");
-        $("#slide").css("transform", "scale(" + (zoom + 0.1) + ")");
+    $("#slide").on("wheel", function (e) {
+        var e0 = e.originalEvent,
+            delta = e0.wheelDelta || -e0.detail;
+
+        this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+        e.preventDefault();
+         if(e.originalEvent.deltaY < 0){
+            zoom += 0.04;
+            $("#slide").css("transform-origin", "top left");
+            $("#slide").css("transform", "scale(" + (zoom) + ")");
+        } else {
+            zoom -= 0.04;
+            $("#slide").css("transform-origin", "top left");
+            $("#slide").css("transform", "scale(" + (zoom) + ")");
+        }
     });
     
-    // Disminuir tamaño del mapa manteniendo la posicion de los puntos
-    $("#menos").on("click", function () {
+    $("#reset").on("click", function() {
+        zoom = 1;
         $("#slide").css("transform-origin", "top left");
-        $("#slide").css("transform", "scale(" + (zoom - 0.1) + ")");
+        $("#slide").css("transform", "scale(" + (zoom) + ")");
     });
 
 });

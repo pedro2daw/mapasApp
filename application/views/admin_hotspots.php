@@ -52,5 +52,6 @@
         <input type="submit" class="btn btn-primary" value="Guardar Puntos" />
         <button id="mas">+</button>
         <button id="menos">-</button>
+        <button id="reset">Reset</button>
     </div>
     
