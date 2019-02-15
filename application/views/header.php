@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
     <!-- SCRIPT JS -->
     <script src=<?php echo base_url("assets/js/Mapas.js"); ?>> </script>
-    <script src=<?php echo base_url("/path/to/noframework.waypoints.min.js"); ?> > </script>
     <script src=<?php echo base_url("assets/js/demo.js"); ?>> </script>
     <script src=<?php echo base_url("assets/js/jquery.hotspot.js"); ?>> </script>
     <!-- LOS ICONOS FONTAWESOME -->
