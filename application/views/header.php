@@ -10,18 +10,10 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
     <!-- SCRIPT JS -->
-    <script src=<?php echo base_url("assets/js/Mapas.js"); ?>
-        >
-
-    </script>
-    <script src=<?php echo base_url("assets/js/demo.js"); ?>
-        >
-
-    </script>
-    <script src=<?php echo base_url("assets/js/jquery.hotspot.js"); ?>
-        >
-
-    </script>
+    <script src=<?php echo base_url("assets/js/Mapas.js"); ?>> </script>
+    <script src=<?php echo base_url("/path/to/noframework.waypoints.min.js"); ?> > </script>
+    <script src=<?php echo base_url("assets/js/demo.js"); ?>> </script>
+    <script src=<?php echo base_url("assets/js/jquery.hotspot.js"); ?>> </script>
     <!-- LOS ICONOS FONTAWESOME -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
