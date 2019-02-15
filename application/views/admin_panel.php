@@ -3,6 +3,8 @@
 <script language="javascript">
 
     $(document).ready( function (){
+        $('.alert').fadeIn().delay(4000).fadeOut();
+
     $('.btn-update').click(function () {
         var id = $(this).data('id'); 
         var img_src = $('#src_imagen_'+id).attr('src');
@@ -10,7 +12,6 @@
         var titulo = $('#titulo_'+id).text();
         var ciudad = $('#ciudad_'+id).text();
         var fecha = $('#fecha_'+id).text();
-       /* var descripcion = $('#descripcion_'+id).text(); */
         var id_paquete = $("#id_paquete_"+id).data('id-p');   
         var ancho = $('#ancho_'+id).data('ancho');
         var alto = $('#alto_'+id).data('alto'); 
@@ -19,14 +20,12 @@
         $('#upd_titulo').val(titulo);
         $('#upd_ancho').val(ancho);
         $('#upd_alto').val(alto);
-        /* $('#upd_descripcion').val(descripcion); */
         $('#upd_ciudad').val(ciudad);
         $('#upd_fecha').val(fecha);
         $('#upd_imagen').attr('src',img_src);
         //campos hidden:
         $('#id_update').val(id);
         $('#ruta_original').val(img);
-        
         /*
                 $.ajax({
                         type: "post",
@@ -41,7 +40,7 @@
                             console.log('ERROR: ', data);
                         },
                     });
-*/
+        */
     });
 });
 </script>
@@ -49,21 +48,20 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-
-
+        <div class='box'>
         <?php
         if (isset($msg)){
             switch ($msg) {
                 case 0:
-                    echo "<h4 class='success'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
+                    echo "<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>";
                     break;
                 case 1:
-                    echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
+                    echo "<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>";  
                     break;
             }
         }
-            
         ?>
+        </div> <!-- final del div .box -->
         </div>
     </div>
 

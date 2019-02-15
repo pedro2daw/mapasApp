@@ -3,3 +3,11 @@
     max-width: 50% !important;
     transform: none !important;
 }
+
+.box {
+    height: 60px;
+    margin: 10px;
+}
+.alert {
+    padding: 10px !important;
+}
