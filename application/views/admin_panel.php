@@ -74,6 +74,8 @@
     
     <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
 
+    <?php echo anchor('Streets/get_maps/','super test','class="btn btn-primary"');?>
+
 
     <div class="row">
         <div class="col-md-12">

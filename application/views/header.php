@@ -99,7 +99,31 @@
             width: 30px;
             color: #0056b3;
         }
+        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
+        #mapa,#super{
+            overflow: auto;
+            width: 1000px;
+            height: 550px;
+            cursor: crosshair;
+            border: 1px solid black;
+            margin: 0 auto;
+            margin-bottom: 10px;
+            position: relative;
+            float: right;
+            margin-right: 20px;
+        }
 
+        #mapa:active:hover,#super:active:hover {
+            cursor: grabbing;
+        }
+
+        .hidden{
+            display: none;
+        }
+        #opacity,#opacity_dos{
+            width: 300px;
+        }
+        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
     </style>
 </head>
 
