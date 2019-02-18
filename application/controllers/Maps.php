@@ -170,6 +170,5 @@ class Maps extends Security {
             $this->load->view('template',$data);
         }
     }
-
 }
 
