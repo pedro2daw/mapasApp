@@ -27,6 +27,7 @@
         $('#id_update').val(id);
         $('#ruta_original').val(img);
         /*
+        
                 $.ajax({
                         type: "post",
                         url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",       

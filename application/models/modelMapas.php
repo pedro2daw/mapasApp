@@ -36,6 +36,7 @@ class modelMapas extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    
     function update($id, $titulo, $ciudad, $fecha, $ruta, $id_paquete,$ancho, $alto, $opc){
         // SI HAY IMAGEN TIENE QUE BORRAR:
         if ($opc == true){
