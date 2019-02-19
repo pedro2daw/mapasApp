@@ -72,11 +72,8 @@
                 Insertar Mapa
     </button>
     
-    <input type="submit" class="btn btn-primary" value="Superponer Mapas" />
-
-    <?php echo anchor('Streets/get_maps/','super test','class="btn btn-primary"');?>
-
-
+    <?php echo anchor('Streets/get_maps/','Superponer Mapas','class="btn btn-primary"');?>
+    
     <div class="row">
         <div class="col-md-12">
             <table class="table table-hover">
@@ -88,6 +85,8 @@
                         <th scope="col">Ciudad</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Descripción</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

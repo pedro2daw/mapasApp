@@ -155,7 +155,6 @@ class Maps extends Security {
         if ($r == 0){
             // ERROR 
             $data["msg"] = "1";
-            
             $data['ListaMapas'] = $this->modelMapas->get_all();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $data["viewName"] = "admin_panel";

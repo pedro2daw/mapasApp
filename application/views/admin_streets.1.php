@@ -17,42 +17,44 @@
             </div> <!-- final del div .box -->
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-md-4">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Vía</th>
-                            <th scope="col">Nombre</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
+    <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo de vía</th>
+                        <th scope="col">Año de inicio</th>
+                        <th scope="col">Año final</th>
+                        <th scope="col">Mapa al que pertenece</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    <tbody>
-                    <?php 
-                    for($i = 0; $i < count($listaCalles);$i++){
-                        $each_street = $listaCalles[$i];
-                        echo ("<tr><td class='d-none'>".$each_street["id"]."</td>");
-                        echo ("<td>".$each_street["tipo"]."</td>");
-                        echo ("<td>".$each_street["nombre"]."</td>");
-                        echo("<td>");
-                        echo anchor("Streets/update_street/".$each_street['id'],"<span class='far fa-edit'></span>","class='btn btn-info'");
-                        echo '<a href="#" title="Modificación de coordenadas" data-toggle="popover" data-trigger="focus" data-content="Si desea actualizar las coordenadas de la calle, elimine la calle e insertela de nuevo"><span class="far fa-question-circle"></span></a> ';
-                        echo("</td>");  
-                        echo("<td>");
-                        echo anchor("Streets/delete_street/".$each_street['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
-                        echo("</td></tr>");
-                    }
-                    ?>      
-                    </tbody>
+                <?php 
+                for($i = 0; $i < count($listaCalles);$i++){
+                    $each_street = $listaCalles[$i];
+                    echo ("<tr><td>".$each_street["id"]."</td>");
+                    echo ("<td>".$each_street["nombre"]."</td>");
+                    echo ("<td>".$each_street["tipo"]."</td>");
+                    echo ("<td>".$each_street["ano_inicio"]."</td>");
+                    echo ("<td>".$each_street["ano_fin"]."</td>");
+                    echo ("<td>".$each_street["id_mapa"]."</td>");
+                    echo("<td>");
+                    echo anchor("Streets/update_street/".$each_street['id'],"<span class='far fa-edit'></span>","class='btn btn-info'");
+                    echo '<a href="#" title="Modificación de coordenadas" data-toggle="popover" data-trigger="focus" data-content="Si desea actualizar las coordenadas de la calle, elimine la calle e insertela de nuevo"><span class="far fa-question-circle"></span></a> ';
+                    echo("</td>");  
+                    echo("<td>");
+                    echo anchor("Streets/delete_street/".$each_street['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
+                    echo("</td></tr>");
+                }
+                ?>      
 
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
-    </div>
 
     <div class="row">
         <div class="col-md-12">

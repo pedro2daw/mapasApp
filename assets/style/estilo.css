@@ -11,3 +11,10 @@
 .alert {
     padding: 10px !important;
 }
+
+/* ESTILO MENU DE ADMINISTRACION CALLES */
+
+.selected {
+    color: white;
+    background-color:#17A2B8;
+}

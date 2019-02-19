@@ -30,11 +30,11 @@ class modelCalles extends CI_Model {
         return $ruta->result_array()[0];
     }
 
-    public function insert_street($nombre,$tipo,$id_mapa){
+    public function insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa){
         $control_variable = false;
         
-        $this->db->query("INSERT INTO calles (id,nombre,tipo,id_mapa)
-                        VALUES (null,'$nombre','$tipo',$id_mapa);
+        $this->db->query("INSERT INTO calles
+                        VALUES (null,'$nombre','$tipo',$aInicio,$aFin,$id_mapa)
         ");
         return $this->db->affected_rows();
     }
@@ -57,6 +57,8 @@ class modelCalles extends CI_Model {
 
     public function delete_street($id){
         $delete_street = $this->db->query("DELETE FROM calles WHERE id = $id;");
+        $delete_coords = $this->db->query("DELETE FROM puntos WHERE id_calle = $id;");
+
         return $this->db->affected_rows();
     }
 
