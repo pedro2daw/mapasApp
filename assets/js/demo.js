@@ -112,22 +112,6 @@ $(document).ready(function () {
             $("#slide").css("transition", "transform 1s");
             $("#slide").css("transform-origin", "top left");
             $("#slide").css("transform", "scale(" + (zoom) + ")");
-            if (zoom >= 1) {
-                $(".hot-spot").each(function () {
-                    coordX = $(this).data("posx");
-                    coordY = $(this).data("posy");
-                    $(this).removeAttr("style");
-                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
-                });
-            }
-            if (zoom < 1) {
-                $(".hot-spot").each(function () {
-                    coordX = $(this).data("posx");
-                    coordY = $(this).data("posy");
-                    $(this).removeAttr("style");
-                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
-                });
-            }
         } else {
             if (zoom > 0.28) {
                 zoom -= 0.04;
@@ -135,25 +119,17 @@ $(document).ready(function () {
             $("#slide").css("transition", "transform 1s");
             $("#slide").css("transform-origin", "top left");
             $("#slide").css("transform", "scale(" + (zoom) + ")");
-            if (zoom >= 1) {
-                $(".hot-spot").each(function () {
-                    coordX = $(this).data("posx");
-                    coordY = $(this).data("posy");
-                    $(this).removeAttr("style");
-                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
-                });
-            }
-            if (zoom < 1) {
-                $(".hot-spot").each(function () {
-                    coordX = $(this).data("posx");
-                    coordY = $(this).data("posy");
-                    $(this).removeAttr("style");
-                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
-                });
-            }
         }
+        
+        $(".hot-spot").each(function () {
+            coordX = $(this).data("posx");
+            coordY = $(this).data("posy");
+            $(this).removeAttr("style");
+            $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
+        });
     });
 
+    // Resetear la posicion del mapa al inicial
     $("#reset").on("click", function () {
         zoom = 1;
         $("#slide").css("transition", "transform 1s");
