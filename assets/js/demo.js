@@ -43,7 +43,7 @@ $(document).ready(function () {
         var titulo = $("#titulo").val();
         var contenido = $("#descripcion").val();
 
-        $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posY + "' data-posy='" + posX + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img src='" + src + "' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
+        $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posX / zoom + "' data-posy='" + posY / zoom + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img src='" + src + "' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
         $(this).attr("data-dismiss", "modal");
         $('#hotspotImg').hotSpot({
 
@@ -106,27 +106,51 @@ $(document).ready(function () {
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
         e.preventDefault();
         if (e.originalEvent.deltaY < 0) {
-            coordX = $(".hot-spot").data("posx");
-            coordY = $(".hot-spot").data("posy");
             if (zoom < 3) {
                 zoom += 0.04;
             }
             $("#slide").css("transition", "transform 1s");
             $("#slide").css("transform-origin", "top left");
             $("#slide").css("transform", "scale(" + (zoom) + ")");
-            $(".hot-spot").removeAttr("style");
-            $(".hot-spot").attr("style", "top: " + (coordY/zoom) + "px; left: " + (coordX/zoom) + "px; display: block;");
+            if (zoom >= 1) {
+                $(".hot-spot").each(function () {
+                    coordX = $(this).data("posx");
+                    coordY = $(this).data("posy");
+                    $(this).removeAttr("style");
+                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
+                });
+            }
+            if (zoom < 1) {
+                $(".hot-spot").each(function () {
+                    coordX = $(this).data("posx");
+                    coordY = $(this).data("posy");
+                    $(this).removeAttr("style");
+                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
+                });
+            }
         } else {
-            coordX = $(".hot-spot").data("posx");
-            coordY = $(".hot-spot").data("posy");
             if (zoom > 0.28) {
                 zoom -= 0.04;
             }
             $("#slide").css("transition", "transform 1s");
             $("#slide").css("transform-origin", "top left");
             $("#slide").css("transform", "scale(" + (zoom) + ")");
-            $(".hot-spot").removeAttr("style");
-            $(".hot-spot").attr("style", "top: " + (coordY*zoom) + "px; left: " + (coordX*zoom) + "px; display: block;");
+            if (zoom >= 1) {
+                $(".hot-spot").each(function () {
+                    coordX = $(this).data("posx");
+                    coordY = $(this).data("posy");
+                    $(this).removeAttr("style");
+                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
+                });
+            }
+            if (zoom < 1) {
+                $(".hot-spot").each(function () {
+                    coordX = $(this).data("posx");
+                    coordY = $(this).data("posy");
+                    $(this).removeAttr("style");
+                    $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
+                });
+            }
         }
     });
 
@@ -134,7 +158,11 @@ $(document).ready(function () {
         zoom = 1;
         $("#slide").css("transition", "transform 1s");
         $("#slide").css("transform-origin", "top left");
-        $("#slide").css("transform", "scale(" + (zoom) + ")");        
+        $("#slide").css("transform", "scale(" + (zoom) + ")");
+        coordX = $(this).data("posx");
+        coordY = $(this).data("posy");
+        $(this).removeAttr("style");
+        $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
     });
 
 });

@@ -10,9 +10,18 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
     <!-- SCRIPT JS -->
-    <script src=<?php echo base_url("assets/js/Mapas.js"); ?>> </script>
-    <script src=<?php echo base_url("assets/js/demo.js"); ?>> </script>
-    <script src=<?php echo base_url("assets/js/jquery.hotspot.js"); ?>> </script>
+    <script src=<?php echo base_url("assets/js/Mapas.js"); ?>
+        >
+
+    </script>
+    <script src=<?php echo base_url("assets/js/demo.js"); ?>
+        >
+
+    </script>
+    <script src=<?php echo base_url("assets/js/jquery.hotspot.js"); ?>
+        >
+
+    </script>
     <!-- LOS ICONOS FONTAWESOME -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
@@ -58,9 +67,9 @@
         #boton_usuario {
             margin: 3%;
         }
-
         #hotspotImg {
-            overflow: auto;
+            overflow: hidden;
+            display: grid;
             width: 1000px;
             height: 550px;
             cursor: crosshair;
@@ -95,6 +104,7 @@
             margin: 0 auto;
             margin-top: 2%;
         }
+
         .fa-sign-out-alt {
             width: 30px;
             color: #0056b3;

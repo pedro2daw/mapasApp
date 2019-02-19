@@ -43,7 +43,7 @@
         </div>
     </div>
     <!-- ENTORNO DONDE SE CREA EL PUNTO -->
-    <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll wrapper_jQuery">
+    <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
         <img src="<?php echo base_url("/assets/img/laminas/8_c.png"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
 
@@ -54,4 +54,3 @@
         <button id="menos">-</button>
         <button id="reset">Reset</button>
     </div>
-    
