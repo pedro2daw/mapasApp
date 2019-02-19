@@ -67,8 +67,13 @@
         #boton_usuario {
             margin: 3%;
         }
+        #slide {
+            display: flex;
+            min-height: 0;
+            min-width: 0;
+        }
         #hotspotImg {
-            overflow: hidden;
+            overflow: auto;
             display: grid;
             width: 1000px;
             height: 550px;
