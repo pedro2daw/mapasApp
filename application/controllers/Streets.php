@@ -86,4 +86,10 @@ include_once('Security.php');
             }
         }
 
+        public function get_maps(){
+            $data["mapas"] = $this->modelCalles->get_maps_img();
+            $data["viewName"] = "superponer";
+            $this->load->view('template', $data);
+            
+        }
    } // cierro la class Streets
