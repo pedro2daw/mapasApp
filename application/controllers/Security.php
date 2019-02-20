@@ -6,6 +6,7 @@
                 $this->load->model('modelPaquetes');
                 $this->load->model('modelMapas');
                 $this->load->model('modelCalles');
+                $this->load->model('modelHotspot');
                 
                 if (isset($this->session->userdata['loguedIn'])) {
                     
