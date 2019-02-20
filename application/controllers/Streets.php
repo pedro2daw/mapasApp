@@ -17,38 +17,39 @@ include_once('Security.php');
                 }
                 return array_column($data,'nombre','id_slide');
             }
-            
             */
-            $data["mapas_disponibles"] = $this->modelCalles->get_maps();
+            $data["listaMapas"] = $this->modelMapas->get_all();
             $data["listaCalles"] = $this->modelCalles->get_all();
-            $data["viewName"] = "admin_streets";
+            $data["viewName"] = "insert_coords";
             $this->load->view('template', $data);
         }
-        // este es la funcion del formulario de la clase modal, que nos manda a la insercion de las coordenadas //
-        public function insert_coords(){
-            $nombre = $this->input->get_post('nombre');
-            $tipo = $this->input->get_post('tipo');
-            $id_mapa = $this->input->get_post('mapa');
-    
-            $r = $this->modelCalles->insert_street($nombre,$tipo,$id_mapa);
 
+        public function form_update_map() {
+            $data['datosMapa'] = $this->modelMapas->get($id);
+            echo json_encode($data['datosMapa']);
+        }
+
+        // este es la funcion del formulario de la clase modal, que nos manda a la insercion de las coordenadas //
+        public function insert_street(){
+            $nombre= $this->input->post('nombre');
+            $tipo = $this->input->post('via');
+
+            $r = $this->modelCalles->insert_street($nombre,$tipo);
             if ($r == 0){
                 $data["msg"] = "1";
-                $data["viewName"] = "admin_streets";
                 $data["listaMapas"] = $this->modelMapas->get_all();
                 $data["listaCalles"] = $this->modelCalles->get_all();
-                $this->load->view('template', $data);
+                
             } else {
-                $data["msg"] = "0";
-                $data["viewName"] = "insert_coords";
-                $data["ruta_imagen"] = $this->modelCalles->get_img($id_mapa);
-                $data["listaMapas"] = $this->modelMapas->get_all();
-                $data["listaCalles"] = $this->modelCalles->get_all();
-                $this->load->view('template', $data);
+                
+                $data = $this->modelCalles->get_last();
+                $data['msg'] = '0';
+                echo json_encode($data);
             }
+            
         }
         // esta es la funcion que inserta la calle y los puntos de la calle
-        public function insert_street(){
+        /*public function insert_street(){
             // recuperar los datos de insert_coords            
             $xCoordjson = $this->input->get_post('x_coord');
             $yCoordjson = $this->input->get_post('y_coord');
@@ -98,7 +99,7 @@ include_once('Security.php');
             $data["mapas"] = $this->modelCalles->get_maps_img();
             $data["viewName"] = "superponer";
             $this->load->view('template', $data);
-        }
+        }*/
 
         // A PARTIR DE AQUI ES LO DE LA INSERCION DE CALLES. O ALGO ASI:
 
