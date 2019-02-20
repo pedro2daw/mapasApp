@@ -92,7 +92,10 @@ var_dump($ruta_imagen);
             <button id="delCoord" class="btn btn-secondary">Borrar última coordenada</button>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert">
                 <span class="fas fa-plus-circle"></span> Insertar Calle </button>
-                echo anchor("Streets/form_update_street/".$calle['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$calle['id']."' class=''");
+            <button class="btn-update btn-info"><span class='far fa-edit'></span>Mostrar Coordenadas</button>
+
+            
+            echo anchor("Streets/form_update_street/".$calle['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$calle['id']."' class=''");
             <!--<button id="saveCoord" class="btn btn-link">Guardar coordenadas</button>-->
         </div>
     </div>
