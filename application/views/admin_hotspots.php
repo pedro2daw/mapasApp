@@ -1,17 +1,34 @@
-<script>
-    // Insercion con ajax de los puntos en la BD
-    $.ajax({
-        type: "post",
-        url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",
-        dataType: 'text',
-        data: "id=" + id,
-        success: function (data) {
-            var a = $.parseJSON(data);
-            console.log('SUCCESS: ', a);
-        },
-        error: function (data) {
-            console.log('ERROR: ', data);
-        },
+<script data-hotspotid="<?php echo $$hotspot["id"]?>">
+    $(document).ready(function () {
+        // Insercion con ajax de los puntos en la BD
+        $("#insert").on("click", function() {
+            $.ajax({
+                type: "post",
+                url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",
+                dataType: 'text',
+                data: "id=" + id,
+                success: function (data) {
+                    var a = $.parseJSON(data);
+                    console.log('SUCCESS: ', a);
+                },
+                error: function (data) {
+                    console.log('ERROR: ', data);
+                },
+            });
+        });
+        // Carga de los puntos insertados desde la BD
+        $('#hotspotImg').hotSpot({
+
+          // default selectors
+          mainselector: '#hotspotImg',
+          selector: '.hot-spot',
+          imageselector: '.img-responsive',
+          tooltipselector: '.tooltip',
+
+          // or 'click'
+          bindselector: 'hover'
+
+        });
     });
 </script>
 
@@ -63,6 +80,23 @@
     <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
         <img src="<?php echo base_url("/assets/img/laminas/8_c.png"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
+
+        <?php 
+        
+        foreach ($ListaHotspots as $hotspot) {
+            echo "<div id='".$hotspot["id"]."' class='hot-spot' data-posx='".$hotspot["punto_x"]."' data-posy='".$hotspot["punto_y"]."' style='top: ".$hotspot["punto_y"]."px; left: ".$hotspot["punto_x"]."px; display: block;'>
+                <div class='circle'></div>
+                <div class='tooltip' style='margin-left: -135px; display: none;'>
+                    <div class='img-row'><img src='".$hotspot["imagen"]."' width='100'></div>
+                    <div class='text-row'>
+                        <h4>".$hotspot["titulo"]."</h4>
+                        <p>".$hotspot["descripcion"]."</p>
+                    </div>
+                </div>
+            </div>";
+        }
+        
+        ?>
 
     </div>
     <div id="botonHotspots">

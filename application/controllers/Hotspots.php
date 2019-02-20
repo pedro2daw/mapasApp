@@ -10,10 +10,9 @@ class Hotspots extends Security {
         $this->load->view('template', $data);
     }
 
-    public function insert_hotspot(){
+    public function insert_hotspot() {
         $usuario = $this->input->get_post('usuarioIns');
         $contrasena = $this->input->get_post('contrasenaIns');
-        $hash = $this->modelUser->hash_pass($contrasena);
         $nivel = $this->input->get_post('nivelIns');
         
         if ($r == 0) {
