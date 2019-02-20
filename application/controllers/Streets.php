@@ -48,6 +48,8 @@ include_once('Security.php');
             }
             
         }
+
+        
         // esta es la funcion que inserta la calle y los puntos de la calle
         /*public function insert_street(){
             // recuperar los datos de insert_coords            
