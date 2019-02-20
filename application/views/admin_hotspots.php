@@ -1,3 +1,20 @@
+<script>
+    // Insercion con ajax de los puntos en la BD
+    $.ajax({
+        type: "post",
+        url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",
+        dataType: 'text',
+        data: "id=" + id,
+        success: function (data) {
+            var a = $.parseJSON(data);
+            console.log('SUCCESS: ', a);
+        },
+        error: function (data) {
+            console.log('ERROR: ', data);
+        },
+    });
+</script>
+
 <div class="container-fluid">
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -49,7 +66,6 @@
 
     </div>
     <div id="botonHotspots">
-        <input type="submit" class="btn btn-primary" value="Guardar Puntos" />
         <button id="mas">+</button>
         <button id="menos">-</button>
         <button id="reset">Reset</button>

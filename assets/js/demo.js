@@ -57,10 +57,6 @@ $(document).ready(function () {
         id++;
     });
 
-    // Guardado de los puntos insertados en un array
-    puntos = [];
-
-
     // Reset de los campos del modal
     $('#myModal').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
@@ -120,7 +116,7 @@ $(document).ready(function () {
             $("#slide").css("transform-origin", "top left");
             $("#slide").css("transform", "scale(" + (zoom) + ")");
         }
-        
+
         $(".hot-spot").each(function () {
             coordX = $(this).data("posx");
             coordY = $(this).data("posy");

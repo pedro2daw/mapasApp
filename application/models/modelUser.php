@@ -72,4 +72,3 @@ class modelUser extends CI_Model{
     }
     
 } // cierra class modelUser
-?>
