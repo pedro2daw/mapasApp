@@ -63,8 +63,8 @@
                 $("#mapa").addClass("hidden");
 
                 for(i = 0; i < rutas.length; i++){
-                $("#super").append("<img src='"+dominio+rutas[i]+"' class='maps' id='imagen_"+i+"' /> ");
-                $("#super").after("<input style='float:left;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' name='points' min='0' max='1' step='0.1'/>");
+                    $("#super").append("<img src='"+rutas[i]+"' class='maps' id='imagen_"+i+"' /> ");
+                $("#toJson").before("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
                 }
 
                 $(".maps").css("position","absolute");
@@ -121,22 +121,38 @@
 
 </script>
 
-<div id="mapa" class="dragscroll">
-    <img src="" alt="mapa" id="foto">
-    </div>
-    <button id="coord">SHOW COORDS</button>
-    <button id="superponer" class="hidden">superponer</button>
-    <!-- <button id="toJson" class="hidden">GUARDAR</button>-->
-    <div id="super" class="dragscroll hidden">
-</div>
-<?php 
+<div class="container-fluid">
+<div class="box"></div>
+    <div class="row">
+    
+    <div class="col-md-3" id="panel_left">
+    <button id="superponer" class="hidden">Previsualizar</button>
+    
+    <!--<button id="toJson" class="hidden">GUARDAR</button>-->
+    <?php 
 echo form_open('Maps/superponer');
 echo("
     <input type='hidden' value='' name='x_coord' id='x'/>
     <input type='hidden' value='' name='y_coord' id='y'/>
     <input type='hidden' value='' name='array_rutas' id='array_rutas'/>
-            <input type='submit' class='btn btn-success hidden' value='Insertar' id='toJson' />
+            <input type='submit' class='btn btn-success hidden' value='SUPERPONER' id='toJson' />
         </form> 
         ");
 
 ?>
+    </div>
+    <div id="mapa" class="dragscroll col-md-9">
+            <img src="" alt="mapa" id="foto">
+        </div>
+    <div id="super" class="dragscroll hidden col-md-9">
+    </div>
+    
+</div>
+</div>
+
+
+
+
+
+
+

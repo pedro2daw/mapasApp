@@ -117,15 +117,16 @@
         /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
         #mapa,#super{
             overflow: auto;
-            width: 1000px;
+            /*width: 1000px;*/
             height: 550px;
             cursor: crosshair;
             border: 1px solid black;
-            margin: 0 auto;
-            margin-bottom: 10px;
-            position: relative;
-            float: right;
-            margin-right: 20px;
+            /*margin: 0 auto;*/
+            /*margin-bottom: 10px;
+            margin-top: 15px;*/
+            /*position: relative;*/
+            /*float: right;*/
+            /*margin-right: 20px;*/
         }
 
         #mapa:active:hover,#super:active:hover {
@@ -133,10 +134,7 @@
         }
 
         .hidden{
-            display: none;
-        }
-        #opacity,#opacity_dos{
-            width: 300px;
+            display: none !important;
         }
         /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
     </style>
