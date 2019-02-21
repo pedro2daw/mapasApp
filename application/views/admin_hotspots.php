@@ -1,21 +1,49 @@
 <script>
     $(document).ready(function () {
-        // Insercion con ajax de los puntos en la BD
-        /*$("#insert").on("click", function() {
+        $("#insert").on("click", function() {
+                var hotspot = {
+                "imagen" : $("#hiddImg").data("img"),
+                "titulo" : $("#titulo").val(),
+                "descripcion" : $("#descripcion").val(),
+                "punto_x" : $("#posX").val(),
+                "punto_y" : $("#posY").val()
+            }
+
+            // Insercion con ajax de los puntos en la BD
             $.ajax({
                 type: "post",
-                url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",
-                dataType: 'text',
-                data: "id=" + id,
+                url: "<?php echo base_url(); ?>index.php/Hotspots/insert_hotspot",
+                dataType: 'json',
+                data: hotspot,
                 success: function (data) {
                     var a = $.parseJSON(data);
-                    console.log('SUCCESS: ', a);
+                    console.log('SUCCESS!');
                 },
                 error: function (data) {
                     console.log('ERROR: ', data);
                 },
             });
-        });*/
+        });
+        
+        $('div').on("contextmenu", ".hot-spot", function (e) {
+            var id_hs = this.id;
+            if (confirm("¿Seguro que quieres borrar el punto?")) {
+                $("#" + id_hs).remove();
+                $.ajax({
+                url: "<?php echo base_url(); ?>index.php/Hotspots/delete_hotspot",
+                type: 'get',
+                data: {id : id_hs},
+                success: function () {
+                    console.log('SUCCESS!');
+                },
+                error: function () {
+                    console.log('ERROR!');
+                },
+            });
+            } else {}
+            return false;
+        });
+        
         // Carga de los puntos insertados desde la BD
         $('#hotspotImg').hotSpot({
 
@@ -50,6 +78,7 @@
                         <div class='form-group'>
                             <label for='imagen'>Imagen</label>
                             <input type='file' class='form-control' placeholder='Introduce una imagen' name='imagen' id='imagen' required />
+                            <input type="hidden" id="hiddImg" />
                         </div>
                         <div class='form-group'>
                             <label for='titulo'>Titulo</label>

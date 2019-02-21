@@ -13,8 +13,8 @@ $(document).ready(function () {
         var offset = $(this).offset();
         x_coords.push(parseInt(e.pageX - offset.left));
         y_coords.push(parseInt(e.pageY - offset.top));
-        $("#posX").val(x_coords[0]);
-        $("#posY").val(y_coords[0]);
+        $("#posX").val(parseInt(x_coords[0]/zoom));
+        $("#posY").val(parseInt(y_coords[0]/zoom));
         posX = x_coords[0];
         posY = y_coords[0];
     });
@@ -24,27 +24,23 @@ $(document).ready(function () {
         $('#myModal').modal('toggle');
     });
 
-    // Eliminacion de los puntos de interes
-    $('div').on("contextmenu", ".hot-spot", function (e) {
-        var id_hs = this.id;
-        if (confirm("¿Seguro que quieres borrar el punto?")) {
-            $("#" + id_hs).remove();
-        } else {}
-        return false;
-    });
-
     // Obtencion del src de la imagen del punto
     $('#imagen').change(function (e) {
         src = "http://localhost/mapasApp/assets/img/laminas/" + e.target.files[0].name;
     });
-
     // Insercion de puntos de interes
     $("#insert").click(function () {
         var titulo = $("#titulo").val();
         var contenido = $("#descripcion").val();
+        if (isNaN(id)) {
+            id = 0;
+        }
 
-        $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posX / zoom + "' data-posy='" + posY / zoom + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img src='" + src + "' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
+        $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posX / zoom + "' data-posy='" + posY / zoom + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img id='insImg' src='" + src + "' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
         $(this).attr("data-dismiss", "modal");
+        
+        $("#hiddImg").data("img", src);
+        
         $('#hotspotImg').hotSpot({
 
             mainselector: '#hotspotImg',
@@ -74,25 +70,6 @@ $(document).ready(function () {
         $("#usuarioMod").val(usu);
         $("#nivelMod").val(niv);
     });
-
-    // Guardar puntos en la BD por ajax
-    function realizaProceso(valorCaja1, valorCaja2) {
-        var parametros = {
-            "valorCaja1": valorCaja1,
-            "valorCaja2": valorCaja2
-        };
-        $.ajax({
-            data: parametros,
-            url: 'ejemplo_ajax_proceso.php',
-            type: 'post',
-            beforeSend: function () {
-                $("#resultado").html("Procesando, espere por favor...");
-            },
-            success: function (response) {
-                $("#resultado").html(response);
-            }
-        });
-    }
 
     // Aumentar tamaño del mapa manteniendo la posicion de los puntos
     $("#slide").on("wheel", function (e) {
