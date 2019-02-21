@@ -76,7 +76,7 @@ include_once('Security.php');
                 
             } else {
                 $data['msg'] = '0';
-                echo json_encode($data);
+                echo json_encode($data['msg']);
             }   
         }
 
