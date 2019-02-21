@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var posX,
         posY;
-    var id = 0;
+    var id = parseInt($(".hot-spot").last().attr("id")) + 1;
     var src;
     var zoom = 1;
 

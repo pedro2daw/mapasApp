@@ -1,7 +1,7 @@
-<script data-hotspotid="<?php echo $$hotspot["id"]?>">
+<script>
     $(document).ready(function () {
         // Insercion con ajax de los puntos en la BD
-        $("#insert").on("click", function() {
+        /*$("#insert").on("click", function() {
             $.ajax({
                 type: "post",
                 url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",
@@ -15,7 +15,7 @@
                     console.log('ERROR: ', data);
                 },
             });
-        });
+        });*/
         // Carga de los puntos insertados desde la BD
         $('#hotspotImg').hotSpot({
 
