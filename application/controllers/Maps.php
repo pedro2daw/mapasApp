@@ -169,5 +169,36 @@ class Maps extends Security {
             $this->load->view('template',$data);
         }
     }
+
+    public function superponer(){
+        $x_json = $this->input->get_post('x_coord');
+        $y_json = $this->input->get_post('y_coord');
+        $rutas_json = $this->input->get_post('array_rutas');
+
+        $desv_x = json_decode($x_json);
+        $desv_y = json_decode($y_json);
+        $rutas = json_decode($rutas_json,true);
+        
+        $r = $this->modelMapas->superponer($desv_x,$desv_y,$rutas);
+
+        if ($r == 0){
+            // ERROR 
+            $data["msg"] = "1";
+            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            $data["viewName"] = "admin_panel";
+
+            $this->load->view('template',$data);
+
+        }else {
+            $data["msg"] = "0";
+            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            $data["viewName"] = "admin_panel";
+
+            $this->load->view('template',$data);
+        }
+    }
+
 }
 

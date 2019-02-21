@@ -41,12 +41,43 @@ include_once('Security.php');
                 $data["listaCalles"] = $this->modelCalles->get_all();
                 
             } else {
-                
                 $data = $this->modelCalles->get_last();
                 $data['msg'] = '0';
                 echo json_encode($data);
             }
+        }
+
+        public function update_street() {
+            $id = $this->input->post('id');
+            $nombre= $this->input->post('nombre');
+            $tipo = $this->input->post('via');
             
+            $r = $this->modelCalles->update_street($id,$nombre,$tipo);
+            if ($r == 0){
+                $data["msg"] = "1";
+                $data["listaMapas"] = $this->modelMapas->get_all();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+                
+            } else {
+                $data = $this->modelCalles->get($id);
+                $data['msg'] = '0';
+                echo json_encode($data);
+            }
+        }
+
+        public function delete_street() {
+            $id = $this->input->post('id');
+            
+            $r = $this->modelCalles->delete_street($id);
+            if ($r == 0){
+                $data["msg"] = "1";
+                $data["listaMapas"] = $this->modelMapas->get_all();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+                
+            } else {
+                $data['msg'] = '0';
+                echo json_encode($data);
+            }   
         }
 
         
@@ -96,12 +127,12 @@ include_once('Security.php');
                 $this->load->view('template', $data);
             }
         }
-
+*/
         public function get_maps(){
             $data["mapas"] = $this->modelCalles->get_maps_img();
             $data["viewName"] = "superponer";
             $this->load->view('template', $data);
-        }*/
+        }
 
         // A PARTIR DE AQUI ES LO DE LA INSERCION DE CALLES. O ALGO ASI:
 

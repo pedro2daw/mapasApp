@@ -31,15 +31,29 @@ class modelCalles extends CI_Model {
     }
 
     public function insert_street($nombre,$tipo){
-        $control_variable = false;
-        
         $this->db->query("INSERT INTO calles (id,nombre,tipo)
                         VALUES (null,'$nombre','$tipo');");
         return $this->db->affected_rows();
     }
 
+    public function update_street($id,$nombre,$tipo){
+        $this->db->query("DELETE FROM calles WHERE id = '$id';");
+        $this->db->query("INSERT INTO calles (id,nombre,tipo) VALUES ('$id','$nombre','$tipo');");
+        return $this->db->affected_rows();
+    }
+    public function delete_street($id){
+        $this->db->query("DELETE FROM calles WHERE id = '$id';");
+        return $this->db->affected_rows();
+    }
+
+
     public function get_last (){       
         $query = $this->db->query("SELECT * FROM calles ORDER BY id DESC limit 1");
+        return $query->result_array()[0];
+    }
+
+    public function get($id){       
+        $query = $this->db->query("SELECT * FROM calles WHERE id = '$id';");
         return $query->result_array()[0];
     }
 
@@ -59,10 +73,6 @@ class modelCalles extends CI_Model {
         return $next_auto_increment;
     }
 
-    public function delete_street($id){
-        $delete_street = $this->db->query("DELETE FROM calles WHERE id = $id;");
-        return $this->db->affected_rows();
-    }
 
     public function get_maps_img(){
         $mapas = $this->db->query("SELECT imagen FROM mapas ORDER BY ancho DESC ,altura");

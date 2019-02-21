@@ -11,10 +11,18 @@ var_dump($ruta_imagen);
 <script>
     $(document).ready( function (){
     $('.alert').fadeIn().delay(4000).fadeOut();
+    $('.btn-update').prop('disabled', true);
+    $('.btn-delete').prop('disabled', true);
 
     $(document).on( "click", '.calles',function() {
+        var id =  $(this).data('id');
+        
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
+        $('.btn-update').prop('disabled', false);
+        $('.btn-update').data('id',id);
+        $('.btn-delete').prop('disabled', false);
+        $('.btn-delete').data('id',id);
     });
 
     // ENVIO DE INSERCION DE CALLES:
@@ -29,7 +37,7 @@ var_dump($ruta_imagen);
     $.ajax({
         type     : "POST",
         cache    : false,
-        url      : "<?php echo base_url(); ?>index.php/Streets/insert_street", //
+        url      : "<?php echo base_url(); ?>index.php/Streets/insert_street",
         data     : formData,
         dataType : 'json',
         encode : true
@@ -39,25 +47,73 @@ var_dump($ruta_imagen);
         .done(function(data) {
             var msg =  '<?php echo $msg=0;?>';
             $('#modal_insert').modal('toggle');
-        $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td class='d-none'>"+data.id+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td></tr>");
+            
+            $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
      });
     // stop the form from submitting the normal way and refreshing the page
      e.preventDefault();
     });
 
+// MODIFICAR CALLE:
     $('.btn-update').click(function () {
         var id = $(this).data('id'); 
+        
         var nombre = $('#nombre_'+id).text(); 
         var tipo = $('#tipo_'+id).text();
         console.log(id , nombre , tipo);
 
         $('#upd_nombre_calle').val(nombre);
         $('#upd_tipo_calle').val(tipo);
-
-
-
+        $('#upd_id_calle').val(id);
+        $('#form_update').on('submit',function(e){
+    
+            var formData = {
+            'id' : $("#upd_id_calle").val(),
+            'nombre' : $("#upd_nombre_calle").val(),
+            'via' : $("#upd_tipo_calle").val()
+            };
+    
+    // UPDATE MEDIANTE AJAX:
+        $.ajax({
+            type     : "POST",
+            cache    : false,
+            url      : "<?php echo base_url(); ?>index.php/Streets/update_street",
+            data     : formData,
+            dataType : 'json',
+            encode : true
+            })
+            // using the done promise callback
+            .done(function(data) {
+                $('#modal_update').modal('toggle');
+                $('#calle_'+data.id).html("<td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
+            });
+            // stop the form from submitting the normal way and refreshing the page
+            e.preventDefault();
+        });
     });
+    
+    // ENVIO DE DELETE DE CALLES:
+    $('.btn-delete').click(function(e){
+        var id = $(this).data('id'); 
+        console.log(id);
 
+    $.ajax({
+        type     : "POST",
+        cache    : false,
+        url      : "<?php echo base_url(); ?>index.php/Streets/delete_street",
+        data     : 'id='+id,
+        dataType : 'text'
+        })
+
+        // using the done promise callback
+        .done(function(data) {
+            console.log('success');
+            $('#calle_'+id).html("");
+            
+         });
+    // stop the form from submitting the normal way and refreshing the page
+     e.preventDefault();
+    });
 
 
 });
@@ -90,17 +146,13 @@ var_dump($ruta_imagen);
             <?php echo anchor('Streets/view_admin_streets/','Volver al menu', 'class="btn btn-info"')?>
             <button id="show" class="btn btn-info">Mostrar Coordenadas</button>
             <button id="delCoord" class="btn btn-secondary">Borrar última coordenada</button>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert">
-                <span class="fas fa-plus-circle"></span> Insertar Calle </button>
-            <button class="btn-update btn-info"><span class='far fa-edit'></span>Mostrar Coordenadas</button>
-
-            
-            echo anchor("Streets/form_update_street/".$calle['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$calle['id']."' class=''");
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert"> <span class="fas fa-plus-circle"></span> Insertar Calle </button>
+            <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span>Modificar Calle</button>
+            <button type='button' class="btn btn-info btn-delete" data-id=''><span class='fas fa-trash-alt'></span>Borrar Calle</button>
             <!--<button id="saveCoord" class="btn btn-link">Guardar coordenadas</button>-->
         </div>
     </div>
 
-    
     <div class="row">
         <div class="col-md-3">
             <div class="table-responsive">
@@ -128,7 +180,7 @@ var_dump($ruta_imagen);
 
         <div class="col-md-9 dragscroll" id="prueba">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
-                <!--<img src="< ########## ? php echo base_url($ruta_imagen);?>" alt="img" id="callejero"> < ? php // añadir la ruta de la imagen traida del formulario -->
+                <img src="<?php echo base_url($ruta_imagen);?>" alt="img" id="callejero">
             </div>        
         </div>
         
@@ -261,12 +313,12 @@ var_dump($ruta_imagen);
                 <?php echo form_open('Streets/update_street',"id='form_update'");?>
                 <div class='form-group'>
                     <label for='nombre'>Nombre de la calle</label>
-                    <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='nombre' value='test' id='upd_nombre_calle' required/> 
+                    <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='upd_nombre_calle' value='test' id='upd_nombre_calle' required/> 
                 </div>
-
+                    <input type='hidden' name='upd_id_calle' value='' id='upd_id_calle'/>
                 <div class='form-group'>
-                    <label for='upd_tipo'>Tipo de vía</label>
-                        <select id='upd_tipo_calle' name='upd_tipo' class='form-control'>
+                    <label for='upd_tipo_calle'>Tipo de vía</label>
+                        <select id='upd_tipo_calle' name='upd_tipo_calle' class='form-control'>
                                 <option value='Avenida'>Avenida</option>
                                 <option value='Calle'>Calle</option>
                                 <option value='Callejon'>Callejón</option>
