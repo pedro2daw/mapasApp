@@ -94,18 +94,19 @@
                 });
 
             $("#toJson").click(function(){
-                
-                alert( "antes de JSON " + desviacion_x);
-                alert("antes de JSON " + desviacion_y);
 
                 var jsonX = JSON.stringify(desviacion_x);
                 var jsonY = JSON.stringify(desviacion_y);
 
-                alert("en json la x " + jsonX);
-                alert("en json la y " + jsonY);
-
                 $("#x").val(jsonX);
                 $("#y").val(jsonY);
+
+                rutas.splice(0,1);
+
+                var jsonRutas = JSON.stringify(rutas);
+
+                $("#array_rutas").val(jsonRutas);
+
             });
 
             });
@@ -129,10 +130,11 @@
     <div id="super" class="dragscroll hidden">
 </div>
 <?php 
-echo form_open('Streets/insert_street');
+echo form_open('Maps/superponer');
 echo("
     <input type='hidden' value='' name='x_coord' id='x'/>
     <input type='hidden' value='' name='y_coord' id='y'/>
+    <input type='hidden' value='' name='array_rutas' id='array_rutas'/>
             <input type='submit' class='btn btn-success hidden' value='Insertar' id='toJson' />
         </form> 
         ");

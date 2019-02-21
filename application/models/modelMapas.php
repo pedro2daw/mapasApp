@@ -144,6 +144,21 @@ class modelMapas extends CI_Model {
         return $img_name;
     }
 
+    public function superponer($desv_x,$desv_y,$rutas){
 
+        $length_array = count($rutas);
+
+        
+
+        for ($i = 0; $i < $length_array; $i++){
+            $rutas_insert = ($rutas[$i]["imagen"]);
+            $this->db->query("UPDATE mapas
+                                SET desviacion_x = $desv_x[$i],
+                                    desviacion_y = $desv_y[$i]
+                                WHERE imagen = '$rutas_insert';
+            ");
+        }
+        return $this->db->affected_rows();
+    }
 
 }

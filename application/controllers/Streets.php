@@ -96,12 +96,12 @@ include_once('Security.php');
                 $this->load->view('template', $data);
             }
         }
-
+*/
         public function get_maps(){
             $data["mapas"] = $this->modelCalles->get_maps_img();
             $data["viewName"] = "superponer";
             $this->load->view('template', $data);
-        }*/
+        }
 
         // A PARTIR DE AQUI ES LO DE LA INSERCION DE CALLES. O ALGO ASI:
 
