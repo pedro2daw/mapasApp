@@ -30,13 +30,17 @@ class modelCalles extends CI_Model {
         return $ruta->result_array()[0];
     }
 
-    public function insert_street($nombre,$tipo,$id_mapa){
+    public function insert_street($nombre,$tipo){
         $control_variable = false;
         
-        $this->db->query("INSERT INTO calles (id,nombre,tipo,id_mapa)
-                        VALUES (null,'$nombre','$tipo',$id_mapa);
-        ");
+        $this->db->query("INSERT INTO calles (id,nombre,tipo)
+                        VALUES (null,'$nombre','$tipo');");
         return $this->db->affected_rows();
+    }
+
+    public function get_last (){       
+        $query = $this->db->query("SELECT * FROM calles ORDER BY id DESC limit 1");
+        return $query->result_array()[0];
     }
 
     public function insert_coords($xCoord,$yCoord,$next_id_street){
