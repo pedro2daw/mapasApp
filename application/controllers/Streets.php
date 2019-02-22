@@ -18,6 +18,7 @@ include_once('Security.php');
                 return array_column($data,'nombre','id_slide');
             }
             */
+            $data["img_mapas"] = $this->modelCalles->get_maps_img();
             $data["listaMapas"] = $this->modelMapas->get_all();
             $data["listaCalles"] = $this->modelCalles->get_all();
             $data["viewName"] = "insert_coords";

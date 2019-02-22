@@ -7,6 +7,7 @@ var_dump($aFinal);
 var_dump($id_mapa);
 var_dump($ruta_imagen);
 */
+var_dump($img_mapas);
 ?>
 <script>
     $(document).ready( function (){    
@@ -16,7 +17,6 @@ var_dump($ruta_imagen);
 
     $(document).on( "click", '.calles',function() {
         var id =  $(this).data('id');
-        
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
         $('.btn-update').prop('disabled', false);
@@ -46,12 +46,13 @@ var_dump($ruta_imagen);
         // using the done promise callback
         .done(function(data) {
             if (data.msg == '0'){
+                $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
                 } else {
+                $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
-
             $('#modal_insert').modal('toggle');
             
             $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
@@ -92,8 +93,10 @@ var_dump($ruta_imagen);
             .done(function(data) {
                 
                 if (data.msg == '0'){
+                    $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
                 } else {
+                    $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
                 }
                 $('.alert').fadeIn().delay(2500).fadeOut();
@@ -122,8 +125,10 @@ var_dump($ruta_imagen);
         .done(function(data) {
             var msg = $.parseJSON(data);
             if (msg == '0'){
+                $('.box').html('');
             $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
             } else {
+                $('.box').html('');
             $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
@@ -198,7 +203,13 @@ var_dump($ruta_imagen);
 
         <div class="col-md-9 dragscroll" id="prueba">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
-                <img src="<?php echo base_url($ruta_imagen);?>" alt="img" id="callejero">
+            <?php
+                echo "<img class='mapas' id='img_".$img_mapas[0]['id']."' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:100' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+            for ($i = 1 ; $i < count($img_mapas) ; $i++){
+                $img = $img_mapas[$i];
+                echo "<img class='mapas' id='img_".$i."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
+            }
+            ?>
             </div>        
         </div>
         
