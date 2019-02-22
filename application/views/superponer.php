@@ -122,11 +122,14 @@
 </script>
 
 <div class="container-fluid">
-<div class="box"></div>
+<div class="box">
+    <h3 class="d-inline">SUPERPOSICIÓN DE MAPAS</h3>
+    <a href="#" title="Selección de puntos" data-toggle="popover" data-trigger="focus" data-content="PARA SELECCIONAR EL PUNTO DE REFERENCIA, HAZ DOBLE CLICK EN LA IMAGEN DEL MAPA"><span class="far fa-question-circle"></span></a>
+</div>
     <div class="row no-gutters">
     
     <div class="col-md-3" id="panel_left">
-    <button id="superponer" class="hidden">Previsualizar</button>
+    <button id="superponer" class="hidden btn btn-info">Previsualizar</button>
     
     <!--<button id="toJson" class="hidden">GUARDAR</button>-->
     <?php 

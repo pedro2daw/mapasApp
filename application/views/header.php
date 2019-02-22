@@ -141,7 +141,7 @@
 </head>
 
 <body>
-
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <nav class="nav nav-pills flex-column flex-sm-row">
@@ -189,3 +189,4 @@
             </nav>
         </div>
     </div>
+</div>
