@@ -1,9 +1,9 @@
-# Proyecto de Superposición de Mapas
+#Proyecto de Superposición de Mapas
 
 Realizado por:
-- Pedro López
-- Eduard Voicu
-- Antonio Jiménez
+-Pedro López
+-Eduard Voicu
+-Antonio Jiménez
 
 IES Celia Viñas 2018/2019
 Desarrollo de Aplicaciones Web
