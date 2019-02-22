@@ -9,8 +9,8 @@ var_dump($ruta_imagen);
 */
 ?>
 <script>
-    $(document).ready( function (){
-    $('.alert').fadeIn().delay(4000).fadeOut();
+    $(document).ready( function (){    
+    $('.alert').fadeIn().delay(2500).fadeOut();
     $('.btn-update').prop('disabled', true);
     $('.btn-delete').prop('disabled', true);
 
@@ -45,7 +45,13 @@ var_dump($ruta_imagen);
 
         // using the done promise callback
         .done(function(data) {
-            var msg =  '<?php echo $msg=0;?>';
+            if (data.msg == '0'){
+                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                } else {
+                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+            }
+            $('.alert').fadeIn().delay(2500).fadeOut();
+
             $('#modal_insert').modal('toggle');
             
             $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
@@ -84,6 +90,13 @@ var_dump($ruta_imagen);
             })
             // using the done promise callback
             .done(function(data) {
+                
+                if (data.msg == '0'){
+                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                } else {
+                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+                }
+                $('.alert').fadeIn().delay(2500).fadeOut();
                 $('#modal_update').modal('toggle');
                 $('#calle_'+data.id).html("<td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
             });
@@ -95,7 +108,7 @@ var_dump($ruta_imagen);
     // ENVIO DE DELETE DE CALLES:
     $('.btn-delete').click(function(e){
         var id = $(this).data('id'); 
-        console.log(id);
+        //console.log(id);
 
     $.ajax({
         type     : "POST",
@@ -107,9 +120,14 @@ var_dump($ruta_imagen);
 
         // using the done promise callback
         .done(function(data) {
-            console.log('success');
+            var msg = $.parseJSON(data);
+            if (msg == '0'){
+            $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+            } else {
+            $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+            }
+            $('.alert').fadeIn().delay(2500).fadeOut();
             $('#calle_'+id).html("");
-            
          });
     // stop the form from submitting the normal way and refreshing the page
      e.preventDefault();

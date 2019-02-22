@@ -123,7 +123,7 @@
 
 <div class="container-fluid">
 <div class="box"></div>
-    <div class="row">
+    <div class="row no-gutters">
     
     <div class="col-md-3" id="panel_left">
     <button id="superponer" class="hidden">Previsualizar</button>
