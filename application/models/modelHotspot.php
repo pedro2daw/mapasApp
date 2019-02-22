@@ -12,9 +12,14 @@ class modelHotspot extends CI_Model{
         return $data;
     }
     
-    public function insert($imagen, $titulo, $descripcion, $punto_x, $punto_y, $id_mapa) {        
-        $query = $this->db->query("INSERT INTO hotspots (imagen, titulo, descripcion, punto_x, punto_y, id_mapa) VALUES ('$imagen', '$titulo', '$descripcion', '$punto_x', '$punto_y', '$id_mapa');"); 
-        
+    public function insert($data) {
+        $imagen = $data["imagen"];
+        $titulo = $data["titulo"];
+        $descripcion = $data["descripcion"];
+        $punto_x = $data["pos_x"];
+        $punto_y = $data["pos_y"];
+        $id_mapa = 0;
+        $query = $this->db->query("INSERT INTO hotspots (imagen, titulo, descripcion, punto_x, punto_y, id_mapa) VALUES ('$imagen', '$titulo', '$descripcion', '$punto_x', '$punto_y', '$id_mapa');");
         return $this->db->affected_rows();
     }
     

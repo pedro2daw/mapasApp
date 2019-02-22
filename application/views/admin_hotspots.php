@@ -1,26 +1,18 @@
 <script>
     $(document).ready(function () {
-        $("#insert").on("click", function() {
-                var hotspot = {
-                "imagen" : $("#hiddImg").data("img"),
-                "titulo" : $("#titulo").val(),
-                "descripcion" : $("#descripcion").val(),
-                "punto_x" : $("#posX").val(),
-                "punto_y" : $("#posY").val()
-            }
-
+        $("#submit").submit(function(e) {
+            e.preventDefault();
             // Insercion con ajax de los puntos en la BD
             $.ajax({
-                type: "post",
                 url: "<?php echo base_url(); ?>index.php/Hotspots/insert_hotspot",
-                dataType: 'json',
-                data: hotspot,
-                success: function (data) {
-                    var a = $.parseJSON(data);
-                    console.log('SUCCESS!');
+                type: "post",
+                data: new FormData(this),
+                dataType: "html",
+                success: function(data){
+                    alert(data);
                 },
                 error: function (data) {
-                    console.log('ERROR: ', data);
+                    alert(data);
                 },
             });
         });
@@ -31,7 +23,7 @@
                 $("#" + id_hs).remove();
                 $.ajax({
                 url: "<?php echo base_url(); ?>index.php/Hotspots/delete_hotspot",
-                type: 'get',
+                type: 'post',
                 data: {id : id_hs},
                 success: function () {
                     console.log('SUCCESS!');
@@ -73,7 +65,7 @@
                 <div class="modal-body">
                     <!-- ****************** CUERPO DEL CUADRO MODAL *********************** -->
 
-                    <form>
+                    <form enctype="multipart/form-data" id="submit">
                         <div class='form-group'>
                             <label for='imagen'>Imagen</label>
                             <input type='file' class='form-control' placeholder='Introduce una imagen' name='imagen' id='imagen' required />
@@ -89,15 +81,15 @@
                         </div>
                         <div class='form-group'>
                             <label for='descripcion'>Posicion X</label>
-                            <input type='number' class='form-control' name='descripcion' id='posX' required />
+                            <input type='number' class='form-control' name='posX' id='posX' required />
                         </div>
                         <div class='form-group'>
                             <label for='descripcion'>Posicion Y</label>
-                            <input type='number' class='form-control' name='descripcion' id='posY' required />
+                            <input type='number' class='form-control' name='posY' id='posY' required />
                         </div>
                         <div class='modal-footer'>
                             <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                            <input type='button' class='btn btn-primary' id="insert" value='Insertar Punto' />
+                            <input type='submit' class='btn btn-primary' id="insert" value='Insertar Punto' />
                         </div>
                     </form>
                 </div>
