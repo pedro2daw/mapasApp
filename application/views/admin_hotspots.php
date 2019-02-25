@@ -1,20 +1,23 @@
 <script>
     $(document).ready(function () {
-        $("#submit").submit(function(e) {
+        $("#insert").on("click", function(e) {
             e.preventDefault();
+            var form = $('form')[0];
+            var formData = new FormData(form);
+            
             // Insercion con ajax de los puntos en la BD
             $.ajax({
                 url: "<?php echo base_url(); ?>index.php/Hotspots/insert_hotspot",
-                type: "post",
-                data: new FormData(this),
-                dataType: "html",
+                data: formData,
+                processData: false,
+                cache: false,
+                contentType: false,
+                type: 'POST',
                 success: function(data){
-                    alert(data);
-                },
-                error: function (data) {
-                    alert(data);
-                },
+                    console.log(data);
+                }
             });
+            
         });
         
         $('div').on("contextmenu", ".hot-spot", function (e) {
@@ -80,11 +83,11 @@
                             <textarea type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' required></textarea>
                         </div>
                         <div class='form-group'>
-                            <label for='descripcion'>Posicion X</label>
+                            <label for='posX'>Posicion X</label>
                             <input type='number' class='form-control' name='posX' id='posX' required />
                         </div>
                         <div class='form-group'>
-                            <label for='descripcion'>Posicion Y</label>
+                            <label for='posY'>Posicion Y</label>
                             <input type='number' class='form-control' name='posY' id='posY' required />
                         </div>
                         <div class='modal-footer'>
