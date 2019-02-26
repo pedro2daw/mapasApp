@@ -38,7 +38,7 @@
                 var x_temp = parseInt((e.pageX - offset.left) - 5);
                 var y_temp = (parseInt(e.pageY - offset.top) - 5);
                 $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
-                $("#callejero").after("<div class='hot-spot-1' x='" + x_temp + "'y='" + y_temp + "'style='top:" + y_temp + "px;left:" + x_temp + "px; display:block;'></div>");
+                $("#callejero").after("<div class='hot-spot-1' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp + "px;left:" + x_temp + "px; display:block;'></div>");
             });
             $("#show").click(function() {
                 alert("Las coordenadas del eje x son: " + coords_x);

@@ -241,7 +241,7 @@ var_dump($ruta_imagen);
         <div class="col-md-9 dragscroll" id="prueba">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
             <?php
-                echo "<img class='mapas' id='img_".$img_mapas[0]['id']."' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+                echo "<img class='mapas' id='callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
             for ($i = 1 ; $i < count($img_mapas) ; $i++){
                 $img = $img_mapas[$i];
                 echo "<img class='mapas' id='img_".$i."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
