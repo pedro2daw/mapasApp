@@ -11,6 +11,23 @@ class Hotspots extends Security {
     }
 
     public function insert_hotspot() {
+        $config['upload_path'] = base_url("./assets/img/laminas/");
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('imagen');/* {*/
+        $data = array('upload_data' => $this->upload->data());
+            /*$data1 = array(*/
+        $titulo = $this->input->get_post('titulo');
+        $descripcion = $this->input->get_post('descripcion');
+        $pos_x = $this->input->get_post('posX');
+        $pos_y = $this->input->get_post('posY');
+        $imagen = $data['upload_data']['file_name'];
+        $id_mapa = 0;
+            /*);*/
+        $result = $this->modelHotspot->insert($imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
+        echo "$result";
+        
+        /*
         $imagen = $this->input->get_post('imagen');
         $config['upload_path'] = base_url("/assets/img/laminas/");
         $config['allowed_types'] = 'jpg|png';
@@ -32,13 +49,12 @@ class Hotspots extends Security {
         $titulo = $this->input->get_post('titulo');
         $descripcion = $this->input->get_post('descripcion');
         $punto_x = $this->input->get_post('punto_x');
-        $punto_y = $this->input->get_post('punto_y');
-        $r = $this->modelHotspot->insert($imagen, $titulo, $descripcion, $punto_x, $punto_y, 0);
-       
+        $punto_y = $this->input->get_post('punto_y');*/
+    
     }
     
     public function delete_hotspot() {
-        $id = $this->input->get('id');
+        $id = $this->input->get_post('id');
         $r = $this->modelHotspot->delete($id);
     }
 }
