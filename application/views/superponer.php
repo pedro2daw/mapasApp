@@ -64,7 +64,7 @@
 
                 for(i = 0; i < rutas.length; i++){
                     $("#super").append("<img src='"+rutas[i]+"' class='maps' id='imagen_"+i+"' /> ");
-                $("#toJson").before("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
+                    $("#toJson").before("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
                 }
 
                 $(".maps").css("position","absolute");

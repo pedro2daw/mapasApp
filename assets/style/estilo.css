@@ -22,3 +22,14 @@
 .mapas {
     position: absolute !important;
 }
+
+input[type='search'] {
+   width: 100% !important;
+   margin: 0 !important;
+}
+
+#tabla_calles_filter {
+    width: auto !important;
+    float:left !important;
+    margin: 0 !important;
+}

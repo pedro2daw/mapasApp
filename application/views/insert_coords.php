@@ -7,15 +7,43 @@ var_dump($aFinal);
 var_dump($id_mapa);
 var_dump($ruta_imagen);
 */
-var_dump($img_mapas);
+
 ?>
 <script>
-    $(document).ready( function (){    
+    $(document).ready( function (){
+        // CARGA DE IMAGENES:
+        var rutas = <?php echo json_encode($img_mapas); ?>;
+        for (i = 0 ; i < rutas.length ; i++ ){
+            ruta_img = rutas[i].imagen;
+            
+        $("#ranges").append("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
+        }
+
+        // CARGA DE LA TABLA DE CALLES:
+        $('#tabla_calles').DataTable( {
+        "scrollY":        "275px",
+        "scrollCollapse": true,
+        "paging":         false
+    });
+    $("input[type='search']").attr('placeholder','Buscar Calle');
+    $('label').contents().first().remove();
+    $("input[type='search']").addClass('form-control');
+
+        
+        // CARGA DE LOS TOOLTIP DE BOOTSTRAP:
+        $(function () {
+         $('[data-toggle="tooltip"]').tooltip();
+        });
+        
+        
+        // LOS BOTONES DISABLED POR DEFECTO:
     $('.alert').fadeIn().delay(2500).fadeOut();
     $('.btn-update').prop('disabled', true);
     $('.btn-delete').prop('disabled', true);
 
+
     $(document).on( "click", '.calles',function() {
+        
         var id =  $(this).data('id');
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
@@ -94,7 +122,9 @@ var_dump($img_mapas);
                 
                 if (data.msg == '0'){
                     $('.box').html('');
-                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                    $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                    $('.btn-update').prop('disabled', true);
+                    $('.btn-delete').prop('disabled', true);
                 } else {
                     $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -110,10 +140,13 @@ var_dump($img_mapas);
     
     // ENVIO DE DELETE DE CALLES:
     $('.btn-delete').click(function(e){
+        var calle = $(this).text(); 
+        var next = confirm('Estás seguro que quieres borrar ' + calle);
         var id = $(this).data('id'); 
         //console.log(id);
-
-    $.ajax({
+        
+        if (next){
+            $.ajax({
         type     : "POST",
         cache    : false,
         url      : "<?php echo base_url(); ?>index.php/Streets/delete_street",
@@ -126,19 +159,21 @@ var_dump($img_mapas);
             var msg = $.parseJSON(data);
             if (msg == '0'){
                 $('.box').html('');
-            $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                $('.btn-update').prop('disabled', true);
+                $('.btn-delete').prop('disabled', true);
             } else {
                 $('.box').html('');
-            $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
             $('#calle_'+id).html("");
          });
+        }
+    
     // stop the form from submitting the normal way and refreshing the page
      e.preventDefault();
     });
-
-
 });
 
 </script>
@@ -166,12 +201,12 @@ var_dump($img_mapas);
 
     <div class="row">
         <div class="col-md-12">
-            <?php echo anchor('Streets/view_admin_streets/','Volver al menu', 'class="btn btn-info"')?>
-            <button id="show" class="btn btn-info">Mostrar Coordenadas</button>
+            <?php echo anchor('Streets/view_admin_streets/','Volver al menu', 'class="btn btn-primary" ')?>
+            <button id="show" class="btn btn-primary">Mostrar Coordenadas</button>
             <button id="delCoord" class="btn btn-secondary">Borrar última coordenada</button>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert"> <span class="fas fa-plus-circle"></span> Insertar Calle </button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span>Modificar Calle</button>
-            <button type='button' class="btn btn-info btn-delete" data-id=''><span class='fas fa-trash-alt'></span>Borrar Calle</button>
+            <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <!--<button id="saveCoord" class="btn btn-link">Guardar coordenadas</button>-->
         </div>
     </div>
@@ -182,6 +217,8 @@ var_dump($img_mapas);
                 <table class="table table-hover" id='tabla_calles'>
                     <thead>
                         <tr>
+                            <th class='d-none' scope="col"></th>
+                            <th class='d-none' scope="col"></th>
                             <th scope="col">Nombre</th>
                         </tr>
                     </thead>
@@ -189,7 +226,7 @@ var_dump($img_mapas);
                         <?php 
                             for($i = 0; $i < count($listaCalles);$i++){
                             $calle = $listaCalles[$i];
-                            echo "<tr id=calle_".$calle["id"].">";
+                            echo "<tr id=calle_".$calle["id"]." >";
                             echo "<td id='tipo_".$calle["id"]."' class='d-none'>".$calle["tipo"]."</td>";
                             echo "<td id='nombre_".$calle["id"]."' class='d-none'>".$calle["nombre"]."</td>";
                             echo "<td class='calles' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
@@ -204,7 +241,7 @@ var_dump($img_mapas);
         <div class="col-md-9 dragscroll" id="prueba">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
             <?php
-                echo "<img class='mapas' id='img_".$img_mapas[0]['id']."' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:100' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+                echo "<img class='mapas' id='img_".$img_mapas[0]['id']."' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
             for ($i = 1 ; $i < count($img_mapas) ; $i++){
                 $img = $img_mapas[$i];
                 echo "<img class='mapas' id='img_".$i."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
@@ -214,7 +251,7 @@ var_dump($img_mapas);
         </div>
         
         <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -242,6 +279,10 @@ var_dump($img_mapas);
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <div id='ranges' class="col-md-3">
+
         </div>
     </div>
 
@@ -290,7 +331,7 @@ var_dump($img_mapas);
                 <?php echo form_open('Streets/insert_street',"id='form_insert'");?>
                 <div class='form-group'>
                     <label for='nombre'>Nombre de la calle</label>
-                    <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='nombre' value='test' id='nombre' required/> 
+                    <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='nombre' value='' id='nombre' required/> 
                 </div>
 
                 <div class='form-group'>
