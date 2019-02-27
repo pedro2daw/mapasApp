@@ -10,7 +10,21 @@ var_dump($ruta_imagen);
 
 ?>
 <script>
+function changeOpacity(i){
+
+    
+
+        $(document).on("input","#slider_"+i,function(){
+         var opacity = $(this).val();
+         console.log(opacity);
+         console.log(i);
+         console.log( $(".mapas:eq("+i+")"));
+         $(".mapas:eq("+i+")").css("opacity",opacity);
+        });
+      }
+
     $(document).ready( function (){
+        
         // CARGA DE IMAGENES:
         var rutas = <?php echo json_encode($img_mapas); ?>;
         for (i = 0 ; i < rutas.length ; i++ ){
@@ -18,6 +32,9 @@ var_dump($ruta_imagen);
             
         $("#ranges").append("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
         }
+
+        
+
 
         // CARGA DE LA TABLA DE CALLES:
         $('#tabla_calles').DataTable( {
@@ -43,7 +60,8 @@ var_dump($ruta_imagen);
 
 
     $(document).on( "click", '.calles',function() {
-        
+        calle = $(this).text();
+        console.log(calle);
         var id =  $(this).data('id');
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
@@ -140,8 +158,8 @@ var_dump($ruta_imagen);
     
     // ENVIO DE DELETE DE CALLES:
     $('.btn-delete').click(function(e){
-        var calle = $(this).text(); 
-        var next = confirm('Estás seguro que quieres borrar ' + calle);
+        
+        var next = confirm('¿Estás seguro que quieres borrar ' + calle +'?');
         var id = $(this).data('id'); 
         //console.log(id);
         
@@ -174,6 +192,10 @@ var_dump($ruta_imagen);
     // stop the form from submitting the normal way and refreshing the page
      e.preventDefault();
     });
+
+    // LOS QUE NO TIENEN LOS PUNTOS ESTABLECIDOS:
+    // SELECT * FROM `calles` WHERE id NOT IN (select id_calle from puntos);
+
 });
 
 </script>
@@ -207,6 +229,7 @@ var_dump($ruta_imagen);
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert"> <span class="fas fa-plus-circle"></span> Insertar Calle </button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span>Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
+            <button type='button' class="btn btn-danger btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-trash-alt'></span> Insertar Coordenadas</button>
             <!--<button id="saveCoord" class="btn btn-link">Guardar coordenadas</button>-->
         </div>
     </div>
@@ -287,31 +310,7 @@ var_dump($ruta_imagen);
     </div>
 
     </div>
-            <h3>Coordenadas</h3>
-                <ul id="coord-list">
-
-                </ul>
-        <!--
-            < ?php
-            echo form_open('Streets/insert_street');
-            echo "<input type='hidden' value='$nombre' name='nombre'/>
-                <input type='hidden' value='$tipo' name='tipo'/>
-                <input type='hidden' value='$aInicio' name='aInicio'/>
-                <input type='hidden' value='$aFinal' name='aFinal'/>
-                <input type='hidden' value='$id_mapa' name='idMapa'/>
-                <input type='hidden' value='' name='x_coord' id='x_coord'/>
-                <input type='hidden' value='' name='y_coord' id='y_coord'/>
             
-                    <input type='reset' class='btn btn-secondary' value='Reestablecer formulario'/>
-                    <input type='submit' class='btn btn-info' value='Insertar' id='toJson' />";
-
-            echo form_close();
-        
-                //echo anchor('Streets/insert_street/'.$nombre.'/'.$tipo.'/'.$aInicio.'/'.$aFinal.'/'.$id_mapa, 'Insertar', 'id="btn-insertar" class="btn btn-success"');
-            ?>
-            -->
-
-
     <div class="row">
     <div class="col-md-12">
     <!-- *********************** INSERCIÓN DE UNA CALLE ************************** -->
@@ -417,15 +416,36 @@ var_dump($ruta_imagen);
             </div>
         </div>
     </div>
-    
+    <!--
+    <h3>Coordenadas</h3>
+                <ul id="coord-list">
+
+                </ul>
+        -->
+            <?php
+            echo form_open('Streets/insert_street');
+            echo "
+                <input type='hidden' value='' name='x_coord' id='x_coord'/>
+                <input type='hidden' value='' name='y_coord' id='y_coord'/>
+                <input type='submit' class='btn btn-info' value='Insertar' id='toJson' />";
+
+            echo form_close();
+        
+                //echo anchor('Streets/insert_street/'.$nombre.'/'.$tipo.'/'.$aInicio.'/'.$aFinal.'/'.$id_mapa, 'Insertar', 'id="btn-insertar" class="btn btn-success"');
+            ?>
+        
+
+
             <script>
-                $("#toJson").click(function(){
+                $(".btn-insert-coords").click(function(){
+
+                    console.log(coords_x);
+                    console.log(coords_y);
                     var jsonx = JSON.stringify(coords_x);
                     var jsony = JSON.stringify(coords_y);
 
                     $("#x_coord").val(jsonx);
                     $("#y_coord").val(jsony);
-                    alert( $("#x_coord").val());
                     /*
                     var url = $("#btn-insertar").attr("href") + "/" + jsonx;
                     $("#btn-insertar").attr("href",url);

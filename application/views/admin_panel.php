@@ -191,7 +191,7 @@
                                 <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
                                 <div class="custom-file">
                                     <input type="file" name="img_mapa" class="custom-file-input" id="img"
-                                        lang="es" onchange="openFile(event,'1')">
+                                        lang="es" onchange="openFile(event,'1')" required>
                                     <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                                 </div>
                                 <img id='output' class='img-thumbnail'>
