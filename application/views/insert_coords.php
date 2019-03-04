@@ -33,14 +33,18 @@ function changeOpacity(i){
         $("#ranges").append("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
         }
 
-        
-
-
         // CARGA DE LA TABLA DE CALLES:
         $('#tabla_calles').DataTable( {
-        "scrollY":        "275px",
+        "scrollY":        "210px",
         "scrollCollapse": true,
-        "paging":         false
+        "paging":         false,
+        
+        "language": {
+            "info": "",
+            "infoEmpty":      "",
+            "infoFiltered":   "",
+            "zeroRecords":    "No se han encontrado resultados"
+        }
     });
     $("input[type='search']").attr('placeholder','Buscar Calle');
     $('label').contents().first().remove();
@@ -196,6 +200,80 @@ function changeOpacity(i){
     // LOS QUE NO TIENEN LOS PUNTOS ESTABLECIDOS:
     // SELECT * FROM `calles` WHERE id NOT IN (select id_calle from puntos);
 
+// ESTO ES 
+    $(".btn-insert-coords").on('click', function(){
+    
+
+    $.ajax({
+        type     : "POST",
+        cache    : false,
+        url      : "<?php echo base_url(); ?>index.php/Streets/inert_coords",
+        data     : formData,
+        dataType : 'json'
+        })
+
+        // using the done promise callback
+        .done(function(data) {
+            var msg = $.parseJSON(data);
+            if (msg == '0'){
+                $('.box').html('');
+                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                $('.btn-update').prop('disabled', true);
+                $('.btn-delete').prop('disabled', true);
+            } else {
+                $('.box').html('');
+                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+            }
+            $('.alert').fadeIn().delay(2500).fadeOut();
+            $('#calle_'+id).html("");
+         });
+         // stop the form from submitting the normal way and refreshing the page
+     e.preventDefault();
+        });
+    
+        $(".btn-insert-coords").on('click', function(){
+
+            var selected = [];
+    $('input:checked').each(function() {
+    var mapas = $( ".cb_mapas:checked" ).val();
+    selected.push(mapas);
+    }
+    
+    console.log(selected);
+    var jsonx = JSON.stringify(coords_x);
+    var jsony = JSON.stringify(coords_y);
+    
+    var formData = {
+        'x' : jsonx,
+        'y' : jsony,
+        'id_mapa' : id_mapa,
+        'id_calle' : id_calle
+    };
+        $.ajax({
+        type     : "POST",
+        cache    : false,
+        url      : "<?php echo base_url(); ?>index.php/Streets/delete_street",
+        data     : 'id='+id,
+        dataType : 'text'
+        })
+        .done(function(data) {
+            var msg = $.parseJSON(data);
+            if (msg == '0'){
+                $('.box').html('');
+                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                $('.btn-update').prop('disabled', true);
+                $('.btn-delete').prop('disabled', true);
+            } else {
+                $('.box').html('');
+                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+            }
+            $('.alert').fadeIn().delay(2500).fadeOut();
+            $('#calle_'+id).html("");
+         });
+     e.preventDefault();
+    });
+});
+    
 });
 
 </script>
@@ -226,11 +304,12 @@ function changeOpacity(i){
             <?php echo anchor('Streets/view_admin_streets/','Volver al menu', 'class="btn btn-primary" ')?>
             <button id="show" class="btn btn-primary">Mostrar Coordenadas</button>
             <button id="delCoord" class="btn btn-secondary">Borrar última coordenada</button>
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert"> <span class="fas fa-plus-circle"></span> Insertar Calle </button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert"> <span class="fas fa-plus-circle"></span> Añadir Calle </button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span>Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
-            <button type='button' class="btn btn-danger btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-trash-alt'></span> Insertar Coordenadas</button>
+            <button type='button' class="btn btn-danger btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-trash-alt'></span> Insertar Calle</button>
             <!--<button id="saveCoord" class="btn btn-link">Guardar coordenadas</button>-->
+            
         </div>
     </div>
 
@@ -259,6 +338,28 @@ function changeOpacity(i){
                     </tbody>
                 </table>
             </div>
+
+            <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Mapas</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            for($i = 0; $i < count($listaMapas);$i++){
+                            $mapa = $listaMapas[$i];
+                            echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
+                            echo "<td> <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']." </td>";
+                            echo "<td> <input name='mapa_".$mapa["id"]."' type='checkbox' class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked></td>";
+                            echo "</tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                <div id='ranges'>
+                </div>
         </div>
 
         <div class="col-md-9 dragscroll" id="prueba">
@@ -272,41 +373,8 @@ function changeOpacity(i){
             ?>
             </div>        
         </div>
+    
         
-        <div class="row">
-        <div class="col-md-9">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Mapas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <?php 
-                            for($i = 0; $i < count($listaMapas);$i++){
-                            $mapa = $listaMapas[$i];
-                            echo "<tr>";
-                            echo "<td class='d-none imagenes' data-imagen_".$i."='".$mapa['imagen']."'> </td>";
-                            echo "<td>
-                            <figure>
-                                <img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'>
-                                <figcaption>".$mapa["titulo"]."</figcaption>
-                            </figure>
-                            </td>";
-                            echo "<tr>";
-                            }
-                        ?>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id='ranges' class="col-md-3">
-
-        </div>
     </div>
 
     </div>
@@ -314,8 +382,6 @@ function changeOpacity(i){
     <div class="row">
     <div class="col-md-12">
     <!-- *********************** INSERCIÓN DE UNA CALLE ************************** -->
-    
-
     <div class="modal fade bd-example-modal-xl" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -355,7 +421,7 @@ function changeOpacity(i){
                         </select>
                 </div>
                 </div> <!-- modal body -->
-
+                
                 <div class='modal-footer'>
                     <input type='reset' class='btn btn-secondary' value='Reestablecer formulario'/>
                     <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
@@ -366,8 +432,6 @@ function changeOpacity(i){
     </div>
 
         <!-- *********************** MODIFICAR UNA CALLE ************************** -->
-    
-
         <div class="modal fade bd-example-modal-xl" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -416,43 +480,26 @@ function changeOpacity(i){
             </div>
         </div>
     </div>
+
     <!--
     <h3>Coordenadas</h3>
                 <ul id="coord-list">
 
                 </ul>
-        -->
+    -->
             <?php
-            echo form_open('Streets/insert_street');
+            /*echo form_open('Streets/insert_street');
             echo "
                 <input type='hidden' value='' name='x_coord' id='x_coord'/>
-                <input type='hidden' value='' name='y_coord' id='y_coord'/>
-                <input type='submit' class='btn btn-info' value='Insertar' id='toJson' />";
+                <input type='hidden' value='' name='y_coord' id='y_coord'/>";
+
+                //<input type='submit' class='btn btn-info' value='Insertareee' id='toJson' />";
 
             echo form_close();
-        
+        */
                 //echo anchor('Streets/insert_street/'.$nombre.'/'.$tipo.'/'.$aInicio.'/'.$aFinal.'/'.$id_mapa, 'Insertar', 'id="btn-insertar" class="btn btn-success"');
             ?>
-        
-
-
-            <script>
-                $(".btn-insert-coords").click(function(){
-
-                    console.log(coords_x);
-                    console.log(coords_y);
-                    var jsonx = JSON.stringify(coords_x);
-                    var jsony = JSON.stringify(coords_y);
-
-                    $("#x_coord").val(jsonx);
-                    $("#y_coord").val(jsony);
-                    /*
-                    var url = $("#btn-insertar").attr("href") + "/" + jsonx;
-                    $("#btn-insertar").attr("href",url);
-                    alert($("#btn-insertar").attr("href"));
-                    */
-                });                      
-            </script>
+    
         </div>
     </div>
 </div>
