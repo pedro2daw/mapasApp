@@ -4,6 +4,7 @@ $(document).ready(function () {
     var id = parseInt($(".hot-spot").last().attr("id")) + 1;
     var src;
     var zoom = 1;
+    var actWdth;
 
     // Obtencion de las coordenadas del mapa
     $('.img-responsive').click(function (e) {
@@ -26,7 +27,7 @@ $(document).ready(function () {
 
     // Obtencion del src de la imagen del punto
     $('#imagen').change(function (e) {
-        src = "http://localhost/mapasApp/assets/img/laminas/" + e.target.files[0].name;
+        src = "http://localhost/mapasApp/assets/img/mapas/" + e.target.files[0].name;
     });
     // Insercion de puntos de interes
     $("#insert").click(function () {
@@ -78,15 +79,16 @@ $(document).ready(function () {
 
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
         e.preventDefault();
+        actWdth = $("#slide").width()*zoom;
         if (e.originalEvent.deltaY < 0) {
-            if (zoom < 3) {
+            if (actWdth < 4000) {
                 zoom += 0.04;
             }
             $("#slide").css("transition", "transform 1s");
             $("#slide").css("transform-origin", "top left");
             $("#slide").css("transform", "scale(" + (zoom) + ")");
         } else {
-            if (zoom > 0.28) {
+            if (actWdth > 1100) {
                 zoom -= 0.04;
             }
             $("#slide").css("transition", "transform 1s");
@@ -104,14 +106,7 @@ $(document).ready(function () {
 
     // Resetear la posicion del mapa al inicial
     $("#reset").on("click", function () {
-        zoom = 1;
-        $("#slide").css("transition", "transform 1s");
-        $("#slide").css("transform-origin", "top left");
-        $("#slide").css("transform", "scale(" + (zoom) + ")");
-        coordX = $(this).data("posx");
-        coordY = $(this).data("posy");
-        $(this).removeAttr("style");
-        $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
+        alert(actWdth);
     });
 
 });

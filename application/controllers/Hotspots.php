@@ -11,32 +11,19 @@ class Hotspots extends Security {
     }
 
     public function insert_hotspot() {
-        $config['upload_path'] = base_url("./assets/img/laminas/");
+        $config['upload_path'] = "./assets/img/img_hotspots";
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
         $this->load->library('upload', $config);
-        $this->upload->do_upload('imagen');/* {*/
-        $data = array('upload_data' => $this->upload->data());
-            /*$data1 = array(*/
-        $titulo = $this->input->get_post('titulo');
-        $descripcion = $this->input->get_post('descripcion');
-        $pos_x = $this->input->get_post('posX');
-        $pos_y = $this->input->get_post('posY');
-        $imagen = $data['upload_data']['file_name'];
-        $id_mapa = 0;
-            /*);*/
-        $result = $this->modelHotspot->insert($imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
-        echo "$result";
         
-        /*
-        $imagen = $this->input->get_post('imagen');
-        $config['upload_path'] = base_url("/assets/img/laminas/");
-        $config['allowed_types'] = 'jpg|png';
-        $this->load->library('upload' ,$config);
-        $this->upload->do_upload('imagen');
-        $foto = base_url("/assets/img/laminas/") . $this->upload->data('file_name');
-        if (($this->upload->data('image_width') > 100) && (($this->upload->data('image_heigth') > 70))) {
+        if (!$this->upload->do_upload('imagen')) {
+            echo $this->upload->display_errors();
+        } else {
+            $data = array('upload_data' => $this->upload->data());
+        }
+        
+        if (($data['upload_data']['image_width'] > 100) && (($data['upload_data']['image_height'] > 70))) {
             $config['image_library'] = 'gd2';
-            $config['source_image'] = $foto;
+            $config['source_image'] = base_url("/assets/img/img_hotspots" . $this->input->get_post('imagen'));
             $config['create_thumb'] = FALSE;
             $config['maintain_ratio'] = TRUE;
             $config['width'] = 100;
@@ -48,8 +35,12 @@ class Hotspots extends Security {
         }
         $titulo = $this->input->get_post('titulo');
         $descripcion = $this->input->get_post('descripcion');
-        $punto_x = $this->input->get_post('punto_x');
-        $punto_y = $this->input->get_post('punto_y');*/
+        $pos_x = $this->input->get_post('posX');
+        $pos_y = $this->input->get_post('posY');
+        $imagen = $data['upload_data']['file_name'];
+        $id_mapa = 0;
+        $result = $this->modelHotspot->insert($imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
+        echo "$result";
     
     }
     
