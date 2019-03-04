@@ -199,45 +199,13 @@ function changeOpacity(i){
 
     // LOS QUE NO TIENEN LOS PUNTOS ESTABLECIDOS:
     // SELECT * FROM `calles` WHERE id NOT IN (select id_calle from puntos);
-
-// ESTO ES 
-    $(".btn-insert-coords").on('click', function(){
-    
-
-    $.ajax({
-        type     : "POST",
-        cache    : false,
-        url      : "<?php echo base_url(); ?>index.php/Streets/inert_coords",
-        data     : formData,
-        dataType : 'json'
-        })
-
-        // using the done promise callback
-        .done(function(data) {
-            var msg = $.parseJSON(data);
-            if (msg == '0'){
-                $('.box').html('');
-                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
-                $('.btn-update').prop('disabled', true);
-                $('.btn-delete').prop('disabled', true);
-            } else {
-                $('.box').html('');
-                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
-            }
-            $('.alert').fadeIn().delay(2500).fadeOut();
-            $('#calle_'+id).html("");
-         });
-         // stop the form from submitting the normal way and refreshing the page
-     e.preventDefault();
-        });
-    
         $(".btn-insert-coords").on('click', function(){
 
             var selected = [];
     $('input:checked').each(function() {
     var mapas = $( ".cb_mapas:checked" ).val();
     selected.push(mapas);
-    }
+    });
     
     console.log(selected);
     var jsonx = JSON.stringify(coords_x);
@@ -271,7 +239,7 @@ function changeOpacity(i){
             $('#calle_'+id).html("");
          });
      e.preventDefault();
-    });
+    
 });
     
 });
