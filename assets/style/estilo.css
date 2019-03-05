@@ -34,3 +34,6 @@ input[type='search'] {
     margin: 0 !important;
 }
 
+.cb_hidden {
+    display: none;
+}

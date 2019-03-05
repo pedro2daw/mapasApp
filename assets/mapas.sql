@@ -287,14 +287,6 @@ ALTER TABLE `mapas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `mapas_calles`
---
-ALTER TABLE `mapas_calles`
-  ADD UNIQUE KEY `id_map` (`id_map`),
-  ADD UNIQUE KEY `id_lamina` (`id_lamina`),
-  ADD UNIQUE KEY `id_calle` (`id_calle`);
-
---
 -- Indices de la tabla `paquetes`
 --
 ALTER TABLE `paquetes`

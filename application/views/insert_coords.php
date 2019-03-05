@@ -65,8 +65,9 @@ function changeOpacity(i){
 
     $(document).on( "click", '.calles',function() {
         calle = $(this).text();
-        console.log(calle);
-        var id =  $(this).data('id');
+        
+        id =  $(this).data('id');
+        console.log(id);
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
         $('.btn-update').prop('disabled', false);
@@ -129,6 +130,8 @@ function changeOpacity(i){
             'nombre' : $("#upd_nombre_calle").val(),
             'via' : $("#upd_tipo_calle").val()
             };
+
+            console.log(formData);
     
     // UPDATE MEDIANTE AJAX:
         $.ajax({
@@ -199,30 +202,42 @@ function changeOpacity(i){
 
     // LOS QUE NO TIENEN LOS PUNTOS ESTABLECIDOS:
     // SELECT * FROM `calles` WHERE id NOT IN (select id_calle from puntos);
-        $(".btn-insert-coords").on('click', function(){
-
-            var selected = [];
-    $('input:checked').each(function() {
-    var mapas = $( ".cb_mapas:checked" ).val();
-    selected.push(mapas);
+    $(document).on('change','.cb_mapas', function() {
+        var id =  $(this).data('id');
+        $('#cb_hidden_'+id).toggle(function(){
+            $('.renamed_calle').val('');
+        });
     });
+
+    $(".btn-insert-coords").on('click', function(){
+    var mapas_selected = [];
+    $('.cb_mapas:checked').each(function() {
+    var id = $( this ).val();
+    mapas_selected.push(id);
+    });
+    console.log('Mapas seleccionados ' + mapas_selected);
+    console.log('Calle seleccionada ' + id);
     
-    console.log(selected);
-    var jsonx = JSON.stringify(coords_x);
-    var jsony = JSON.stringify(coords_y);
-    
+    var id_calle = JSON.stringify(id);
+    var mapas_selected1 = JSON.stringify(mapas_selected);
+    var jsonx = JSON.stringify(coords_x[0]);
+    var jsony = JSON.stringify(coords_y[0]);
+    console.log('x' + jsonx + 'y' + jsony);
     var formData = {
         'x' : jsonx,
         'y' : jsony,
-        'id_mapa' : id_mapa,
+        'id_mapas' : mapas_selected1,
         'id_calle' : id_calle
     };
-        $.ajax({
+    console.log(formData);
+
+    $.ajax({
         type     : "POST",
         cache    : false,
-        url      : "<?php echo base_url(); ?>index.php/Streets/delete_street",
-        data     : 'id='+id,
-        dataType : 'text'
+        url      : "<?php echo base_url(); ?>index.php/Streets/insert_coords",
+        data     : formData,
+        dataType : 'json',
+        encode : true
         })
         .done(function(data) {
             var msg = $.parseJSON(data);
@@ -236,12 +251,10 @@ function changeOpacity(i){
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
-            $('#calle_'+id).html("");
-         });
-     e.preventDefault();
-    
-});
-    
+            
+        });
+     
+    });
 });
 
 </script>
@@ -250,8 +263,6 @@ function changeOpacity(i){
             <div class="col-md-12">
             <div class='box'>
             <?php
-
-
             if (isset($msg)){
                 switch ($msg) {
                     case 0:
@@ -319,10 +330,10 @@ function changeOpacity(i){
                             for($i = 0; $i < count($listaMapas);$i++){
                             $mapa = $listaMapas[$i];
                             echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
-                            echo "<td> <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']." </td>";
-                            echo "<td> <input name='mapa_".$mapa["id"]."' type='checkbox' class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked></td>";
+                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
+                            echo "<td>  <input name='mapa_".$mapa["id"]."' type='checkbox' data-id=".$mapa['id']." class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked> </td>";
                             echo "</tr>";
-                            }
+                            }                            
                         ?>
                     </tbody>
                 </table>

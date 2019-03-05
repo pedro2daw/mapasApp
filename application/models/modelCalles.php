@@ -57,12 +57,11 @@ class modelCalles extends CI_Model {
         return $query->result_array()[0];
     }
 
-    public function insert_coords($xCoord,$yCoord,$next_id_street){
-        $length_array = count($xCoord);
-
-        for($i = 0;$i < $length_array;$i++){
-            $this->db->query("INSERT INTO puntos 
-            VALUES(null,$xCoord[$i],$yCoord[$i],$next_id_street)");
+    public function insert_coords($x,$y,$id_calle,$listaMapas){
+        $this->db->query("INSERT INTO puntos VALUES(null,$x,$y,$id_calle)");
+        for($i = 0; $i < count($listaMapas) ; $i++){
+            $mapa = $listaMapas[$i];
+            $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null, '$id_calle');");
         }
         return $this->db->affected_rows();
     }
@@ -72,6 +71,7 @@ class modelCalles extends CI_Model {
         $next_auto_increment = $get_status->result_array()[0]['Auto_increment'];
         return $next_auto_increment;
     }
+
 
 
     public function get_maps_img(){
