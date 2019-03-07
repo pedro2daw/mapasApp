@@ -27,7 +27,7 @@ $(document).ready(function () {
 
     // Obtencion del src de la imagen del punto
     $('#imagen').change(function (e) {
-        src = "http://localhost/mapasApp/assets/img/mapas/" + e.target.files[0].name;
+        src = "http://localhost/mapasApp/assets/img/img_hotspots/" + e.target.files[0].name;
     });
     // Insercion de puntos de interes
     $("#insert").click(function () {

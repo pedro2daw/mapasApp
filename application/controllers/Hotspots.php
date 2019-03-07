@@ -15,13 +15,14 @@ class Hotspots extends Security {
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
         $this->load->library('upload', $config);
         
-        if (!$this->upload->do_upload('imagen')) {
-            echo $this->upload->display_errors();
-        } else {
+        //if (!$this->upload->do_upload('imagen')) {
+        //    echo $this->upload->display_errors();
+        //} else {
+            $this->upload->do_upload('imagen');
             $data = array('upload_data' => $this->upload->data());
-        }
+        //}
         
-        if (($data['upload_data']['image_width'] > 100) && (($data['upload_data']['image_height'] > 70))) {
+        /*if (($data['upload_data']['image_width'] > 100) && (($data['upload_data']['image_height'] > 70))) {
             $config['image_library'] = 'gd2';
             $config['source_image'] = base_url("/assets/img/img_hotspots" . $this->input->get_post('imagen'));
             $config['create_thumb'] = FALSE;
@@ -32,7 +33,7 @@ class Hotspots extends Security {
             $this->load->library('image_lib', $config);
 
             $this->image_lib->resize();  
-        }
+        }*/
         $titulo = $this->input->get_post('titulo');
         $descripcion = $this->input->get_post('descripcion');
         $pos_x = $this->input->get_post('posX');

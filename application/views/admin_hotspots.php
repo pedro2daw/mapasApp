@@ -105,7 +105,7 @@
     <!-- ENTORNO DONDE SE CREA EL PUNTO -->
     <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
-        <img src="<?php echo base_url("/assets/img/mapas/mediano.png"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
+        <img src="<?php echo base_url("/assets/img/mapas/23_almeria.png"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
 
         <?php 
         foreach ($ListaHotspots as $hotspot) {
