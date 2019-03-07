@@ -280,7 +280,6 @@
                                 <img id='upd_imagen' class='img-thumbnail' src=''>
                             </div>
 
-
                             <div class='modal-footer'>
                                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
                                 <?php echo form_submit('submit', 'Modificar Mapa',"class='btn btn-primary'"); ?>
@@ -289,5 +288,4 @@
                         </div>
                     </div>
                 </div>
-
             </div>

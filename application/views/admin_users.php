@@ -1,24 +1,21 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <?php
-        if (isset($msg)){
-            switch ($msg) {
-                case 0:
-                    echo "<h4 class='success' style='color:red;'> SE HA REALIZADO LA OPERACION CON EXITO </h4>";
-                    break;
-                case 1:
-                    echo "<h4 class='error'> SE HA PRODUCIDO UN ERROR </h4>";
-                    break;
-                case 2:
-                    echo "<h4 class='error'>NO PUEDES BORRAR EL USUARIO QUE SE ESTA USANDO ACTUALMENTE</h4>";
-                    break;
-            }
-        }
-            
-        ?>
-        </div>
-    </div>
+    <div class='box'>
+                <?php
+                if (isset($msg)){
+                    switch ($msg) {
+                        case 0:
+                            echo "<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>";
+                            break;
+                        case 1:
+                            echo "<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>";  
+                            break;
+                        case 2:
+                            echo "<div class='alert alert-danger' role='alert'> No puedes borrar el usuario que se está usando actualmente.  </div>";  
+                            break;
+                    }
+                }
+                ?>
+            </div> <!-- final del div .box -->
 
     <button type="button" id="boton_usuario" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
         Insertar Usuario

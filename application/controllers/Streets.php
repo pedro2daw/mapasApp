@@ -86,6 +86,7 @@ include_once('Security.php');
             $y = $this->input->post('y');
             $mapas = json_decode($this->input->post('id_mapas'));
             $id_calle = $this->input->post('id_calle');
+            
             var_dump($x);
             var_dump($y);
             var_dump($mapas);
