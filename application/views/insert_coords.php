@@ -1,39 +1,28 @@
-<?php
-/*
-var_dump($nombre);
-var_dump($tipo);
-var_dump($aInicio);
-var_dump($aFinal);
-var_dump($id_mapa);
-var_dump($ruta_imagen);
-*/
 
-?>
 <script>
+
+// LOS QUE NO TIENEN LOS PUNTOS ESTABLECIDOS:
+// SELECT * FROM `calles` WHERE id NOT IN (select id_calle from puntos);
+
+/*
+    function changeOpacity(i) : Cambia la opacidad de la imagen con el id  (i) pasado por parámetro.
+    Parametros: i = el id de la imagen.
+*/
 function changeOpacity(i){
-
-    
-
         $(document).on("input","#slider_"+i,function(){
          var opacity = $(this).val();
-         console.log(opacity);
-         console.log(i);
-         console.log( $(".mapas:eq("+i+")"));
          $(".mapas:eq("+i+")").css("opacity",opacity);
         });
       }
 
     $(document).ready( function (){
-        
-        // CARGA DE IMAGENES:
+        // Creación dinámica de los input type range que permiten cambiar la opacidad.
         var rutas = <?php echo json_encode($img_mapas); ?>;
         for (i = 0 ; i < rutas.length ; i++ ){
-            ruta_img = rutas[i].imagen;
-            
         $("#ranges").append("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
         }
 
-        // CARGA DE LA TABLA DE CALLES:
+        // Carga la tabla de calles el plug-in de DataTables.
         $('#tabla_calles').DataTable( {
         "scrollY":        "210px",
         "scrollCollapse": true,
@@ -46,30 +35,28 @@ function changeOpacity(i){
             "zeroRecords":    "No se han encontrado resultados"
         }
     });
-    $("input[type='search']").attr('placeholder','Buscar Calle');
-    $('label').contents().first().remove();
-    $("input[type='search']").addClass('form-control');
-
-        
-        // CARGA DE LOS TOOLTIP DE BOOTSTRAP:
+        // Establecemos un placeholder para el buscador de calles.
+        $("input[type='search']").attr('placeholder','Buscar Calle');
+        // Eliminamos la etiqueta del input de buscador de calles.
+        $('label').contents().first().remove();
+        // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
+        $("input[type='search']").addClass('form-control');
+        // Cargamos los tooltip de bootstrap:
         $(function () {
          $('[data-toggle="tooltip"]').tooltip();
         });
-        
-        
-        // LOS BOTONES DISABLED POR DEFECTO:
-    
-    $('.btn-update').prop('disabled', true);
-    $('.btn-delete').prop('disabled', true);
+        // Los botones Update y Delete estarán deshabilitados hasta que se seleccione una calle del listado de calles.
+        $('.btn-update').prop('disabled', true);
+        $('.btn-delete').prop('disabled', true);
 
-
-    $(document).on( "click", '.calles',function() {
+        // Selecciona una calle.
+    $(document).on( "click", ".calles",function() {
         id =  $(this).data('id');
         calle = $(this).text();
         nombre = $('#nombre_'+id).text(); 
         tipo = $('#tipo_'+id).text();
         
-        console.log(id);
+        console.log("Calle seleccionada " + id);
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
         $('.btn-update').prop('disabled', false);
@@ -78,15 +65,14 @@ function changeOpacity(i){
         $('.btn-delete').data('id',id);
     });
 
-    // ENVIO DE INSERCION DE CALLES:
+    // Inserción de una calle mediante Ajax:
     $('#form_insert').on('submit',function(e){
-    var datos_calle_nueva = [{'nombre' : $("#nombre").val(),
-    'via' : $("#tipo").val()}];
+    var datos_calle_nueva = [{
+                                'nombre' : $("#nombre").val(),
+                                'via' : $("#tipo").val()
+                            }];
     var formData = { 'calle_nueva' : datos_calle_nueva };
-    
-   
-    
-    // INSERCIÓN MEDIANTE AJAX:
+
     $.ajax({
         type     : "POST",
         cache    : false,
@@ -96,7 +82,7 @@ function changeOpacity(i){
         encode : true
         })
 
-        // using the done promise callback
+        // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
         .done(function(data) {
             if (data.msg == '0'){
                 $('.box').html('');
@@ -107,32 +93,26 @@ function changeOpacity(i){
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
             $('#modal_insert').modal('toggle');
-            
             $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
      });
-    // stop the form from submitting the normal way and refreshing the page
-     e.preventDefault();
+
+    // Previene al formulario ejecutarse de manera tradicional y que se refresque la página.
+    e.preventDefault();
     });
 
-// MODIFICAR CALLE:
+    // Modificación de una calle mediante Ajax:
     $('.btn-update').click(function () {
-        var id = $(this).data('id');    //  #############                                     borrar para hacer puede hacer global en el click
-        console.log(id , nombre , tipo);
-
         $('#upd_nombre_calle').val(nombre);
         $('#upd_tipo_calle').val(tipo);
         $('#upd_id_calle').val(id);
         $('#form_update').on('submit',function(e){
     
-            var formData = {
+        var formData = {
             'id' : $("#upd_id_calle").val(),
             'nombre' : $("#upd_nombre_calle").val(),
             'via' : $("#upd_tipo_calle").val()
-            };
+        };
 
-            console.log(formData);
-    
-    // UPDATE MEDIANTE AJAX:
         $.ajax({
             type     : "POST",
             cache    : false,
@@ -141,9 +121,9 @@ function changeOpacity(i){
             dataType : 'json',
             encode : true
             })
-            // using the done promise callback
+
+            // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
             .done(function(data) {
-                
                 if (data.msg == '0'){
                     $('.box').html('');
                     $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
@@ -157,12 +137,13 @@ function changeOpacity(i){
                 $('#modal_update').modal('toggle');
                 $('#calle_'+data.id).html("<td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
             });
-            // stop the form from submitting the normal way and refreshing the page
-            e.preventDefault();
+
+    // Previene al formulario ejecutarse de manera tradicional y que se refresque la página.
+    e.preventDefault();
         });
     });
     
-    // ENVIO DE DELETE DE CALLES:
+    // Borrar una calle mediante ajax:
     $('.btn-delete').click(function(e){
         
         var next = confirm('¿Estás seguro que quieres borrar ' + calle +'?');
@@ -178,7 +159,7 @@ function changeOpacity(i){
         dataType : 'text'
         })
 
-        // using the done promise callback
+        // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
         .done(function(data) {
             var msg = $.parseJSON(data);
             if (msg == '0'){
@@ -195,12 +176,11 @@ function changeOpacity(i){
          });
         }
     
-    // stop the form from submitting the normal way and refreshing the page
-     e.preventDefault();
+    // Previene al formulario ejecutarse de manera tradicional y que se refresque la página.
+    e.preventDefault();
     });
 
-    // LOS QUE NO TIENEN LOS PUNTOS ESTABLECIDOS:
-    // SELECT * FROM `calles` WHERE id NOT IN (select id_calle from puntos);
+    
     $(document).on('change','.cb_mapas', function() {
         var id =  $(this).data('id');
         $('#cb_hidden_'+id).toggle(function(){
@@ -213,7 +193,6 @@ function changeOpacity(i){
     var mapas_unselected = [];
     var nuevos_nombres = [];
 
-    
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
         var id_mapa = $(this).val();
 
@@ -223,22 +202,18 @@ function changeOpacity(i){
             nuevos_nombres.push({'nombre' : nombre_nuevo , 'via' : tipo });
             mapas_unselected.push(id_mapa);
         }
-    // console.log('Nuevos Nombres' + nuevos_nombres);
     });
 
-    
     $('.cb_mapas:checked').each(function() {
     var id = $( this ).val();
     mapas_selected.push(id);
     });
-
-    // console.log('Mapas seleccionados ' + mapas_selected);
-    // console.log('Calle seleccionada ' + id);
+    console.log('Mapas seleccionados ' + mapas_selected);
+    console.log('Calle seleccionada ' + id);
 
     var id_calle = JSON.stringify(id);
     var json_mapas_selected = JSON.stringify(mapas_selected);
     var json_mapas_unselected = JSON.stringify(mapas_unselected);
-
     var json_x = JSON.stringify(coords_x[0]);
     var json_y = JSON.stringify(coords_y[0]);
 
@@ -278,22 +253,20 @@ function changeOpacity(i){
 
 </script>
 <div class="container-fluid">
-    
-            <div class='box'>
-                <?php
-                if (isset($msg)){
-                    switch ($msg) {
-                        case 0:
-                            echo "<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>";
-                            break;
-                        case 1:
-                            echo "<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>";  
-                            break;
+    <div class='box'>
+        <?php
+            if (isset($msg)){
+                switch ($msg) {
+                    case 0:
+                        echo "<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>";
+                        break;
+                    case 1:
+                        echo "<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>";  
+                        break;
                     }
                 }
-                ?>
-            </div> <!-- final del div .box -->
-        
+        ?>
+    </div> <!-- final del div .box -->
 
     <div class="row">
         <div class="col-md-12">
@@ -303,8 +276,6 @@ function changeOpacity(i){
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span>Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <button type='button' class="btn btn-info btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-trash-alt'></span> Insertar Calle</button>
-            <!--<button id="saveCoord" class="btn btn-link">Guardar coordenadas</button>-->
-            
         </div>
     </div>
 
@@ -332,7 +303,7 @@ function changeOpacity(i){
                         ?>
                     </tbody>
                 </table>
-            </div>
+            </div> <!-- fin table-responsive -->
 
             <table class="table table-hover">
                     <thead>
@@ -352,10 +323,10 @@ function changeOpacity(i){
                             }                            
                         ?>
                     </tbody>
-                </table>
-                <div id='ranges'>
-                </div>
-        </div>
+            </table>
+            <div id='ranges'>
+            </div>
+        </div> <!-- fin col md-3 -->
 
         <div class="col-md-9 dragscroll" id="prueba">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
@@ -367,86 +338,85 @@ function changeOpacity(i){
             }
             ?>
             </div>        
-        </div>
-    
-        
-    </div>
+        </div> <!-- fin col md-9 -->
+    </div> <!-- fin row -->
 
-    </div>
-            
+    <!-- </div> -->
+    <!--  Cuadro modal de inserción de una calle  -->
     <div class="row">
-    <div class="col-md-12">
-    <!-- *********************** INSERCIÓN DE UNA CALLE ************************** -->
-    <div class="modal fade bd-example-modal-xl" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Insertar calle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                <!-- ****************** CUERPO DEL CUADRO MODAL STREET *********************** --> 
-                <?php echo form_open('Streets/insert_street',"id='form_insert'");?>
-                <div class='form-group'>
-                    <label for='nombre'>Nombre de la calle</label>
-                    <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='nombre' value='' id='nombre' required/> 
-                </div>
-
-                <div class='form-group'>
-                    <label for='tipo'>Tipo de vía</label>
-                        <select id='tipo' name='tipo' class='form-control'>
-                                <option value='Avenida'>Avenida</option>
-                                <option value='Calle'>Calle</option>
-                                <option value='Callejon'>Callejón</option>
-                                <option value='Camino'>Camino</option>
-                                <option value='Carretera'>Carretera</option>
-                                <option value='Glorieta'>Glorieta</option>
-                                <option value='Pasaje'>Pasaje</option>
-                                <option value='Paseo'>Paseo</option>
-                                <option value='Plaza'>Plaza</option>
-                                <option value='Poligono'>Poligono</option>
-                                <option value='Rambla'>Rambla</option>
-                                <option value='Residencia'>Residencia</option>
-                                <option value='Ronda'>Ronda</option>
-                                <option value='Travesia'>Travesía</option>
-                                <option value='Urbanizacion'>Urbanización</option>
-                                <option value='Via'>Via</option>
-                        </select>
-                </div>
-                </div> <!-- modal body -->
-                
-                <div class='modal-footer'>
-                    <input type='reset' class='btn btn-secondary' value='Reestablecer formulario'/>
-                    <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
-                    <?php echo form_close();?>
+        <div class="col-md-12">
+            <div class="modal fade bd-example-modal-xl" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Insertar calle</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                        <!-- Cuerpo del cuadro modal: Formulario de Inserción -->
+                            <?php echo form_open('Streets/insert_street',"id='form_insert'");?>
+                            <div class='form-group'>
+                                <label for='nombre'>Nombre de la calle</label>
+                                <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='nombre' value='' id='nombre' required/> 
+                            </div>
+                            <div class='form-group'>
+                                <label for='tipo'>Tipo de vía</label>
+                                    <select id='tipo' name='tipo' class='form-control'>
+                                        <option value='Avenida'>Avenida</option>
+                                        <option value='Calle'>Calle</option>
+                                        <option value='Callejon'>Callejón</option>
+                                        <option value='Camino'>Camino</option>
+                                        <option value='Carretera'>Carretera</option>
+                                        <option value='Glorieta'>Glorieta</option>
+                                        <option value='Pasaje'>Pasaje</option>
+                                        <option value='Paseo'>Paseo</option>
+                                        <option value='Plaza'>Plaza</option>
+                                        <option value='Poligono'>Poligono</option>
+                                        <option value='Rambla'>Rambla</option>
+                                        <option value='Residencia'>Residencia</option>
+                                        <option value='Ronda'>Ronda</option>
+                                        <option value='Travesia'>Travesía</option>
+                                        <option value='Urbanizacion'>Urbanización</option>
+                                        <option value='Via'>Via</option>
+                                    </select>
+                            </div>
+                        </div> <!-- modal body -->
+                            
+                        <div class='modal-footer'>
+                                <input type='reset' class='btn btn-secondary' value='Reestablecer formulario'/>
+                                <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
+                                <?php echo form_close();?>
+                        </div> <!-- fin modal footer -->
+                    </div> <!-- fin modal content -->
                 </div>
             </div>
-        </div>
-    </div>
+        </div> <!-- fin col md-12 -->
+    </div> <!-- fin row -->
+    
 
-        <!-- *********************** MODIFICAR UNA CALLE ************************** -->
-        <div class="modal fade bd-example-modal-xl" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+    <!--  Cuadro modal de modificación de una calle  -->
+    <div class="modal fade bd-example-modal-xl" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalCenterTitle">Modificar calle</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
+                </div> 
+                <!-- Cuerpo del cuadro modal: Formulario de Modificación -->
                 <div class="modal-body">
-                <!-- ****************** CUERPO DEL CUADRO MODAL STREET *********************** --> 
-                <?php echo form_open('Streets/update_street',"id='form_update'");?>
-                <div class='form-group'>
-                    <label for='nombre'>Nombre de la calle</label>
-                    <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='upd_nombre_calle' value='test' id='upd_nombre_calle' required/> 
-                </div>
+                    <?php echo form_open('Streets/update_street',"id='form_update'");?>
+                    <div class='form-group'>
+                        <label for='nombre'>Nombre de la calle</label>
+                        <input type='text' class='form-control' placeholder='Introduce el nombre de la calle' name='upd_nombre_calle' value='test' id='upd_nombre_calle' required/> 
+                    </div>
                     <input type='hidden' name='upd_id_calle' value='' id='upd_id_calle'/>
-                <div class='form-group'>
-                    <label for='upd_tipo_calle'>Tipo de vía</label>
-                        <select id='upd_tipo_calle' name='upd_tipo_calle' class='form-control'>
+                    <div class='form-group'>
+                        <label for='upd_tipo_calle'>Tipo de vía</label>
+                            <select id='upd_tipo_calle' name='upd_tipo_calle' class='form-control'>
                                 <option value='Avenida'>Avenida</option>
                                 <option value='Calle'>Calle</option>
                                 <option value='Callejon'>Callejón</option>
@@ -463,41 +433,18 @@ function changeOpacity(i){
                                 <option value='Travesia'>Travesía</option>
                                 <option value='Urbanizacion'>Urbanización</option>
                                 <option value='Via'>Via</option>
-                        </select>
-                </div>
-                </div> <!-- modal body -->
-
+                            </select>
+                    </div>
+                </div> <!-- fin modal body -->
                 <div class='modal-footer'>
                     <input type='reset' class='btn btn-secondary' value='Reestablecer formulario'/>
                     <?php echo form_submit('submit', 'Aplicar cambios',"class='btn btn-primary'"); ?>
                     <?php echo form_close();?>
-                </div>
-            </div>
+                </div> <!-- fin modal footer -->
+            </div> <!-- fin modal content -->
         </div>
     </div>
-
-    <!--
-    <h3>Coordenadas</h3>
-                <ul id="coord-list">
-
-                </ul>
-    -->
-            <?php
-            /*echo form_open('Streets/insert_street');
-            echo "
-                <input type='hidden' value='' name='x_coord' id='x_coord'/>
-                <input type='hidden' value='' name='y_coord' id='y_coord'/>";
-
-                //<input type='submit' class='btn btn-info' value='Insertareee' id='toJson' />";
-
-            echo form_close();
-        */
-                //echo anchor('Streets/insert_street/'.$nombre.'/'.$tipo.'/'.$aInicio.'/'.$aFinal.'/'.$id_mapa, 'Insertar', 'id="btn-insertar" class="btn btn-success"');
-            ?>
-    
-        </div>
-    </div>
-</div>
+</div> <!-- fin container fluid -->
 
 
 
