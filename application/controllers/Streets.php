@@ -32,10 +32,10 @@ include_once('Security.php');
 
         // este es la funcion del formulario de la clase modal, que nos manda a la insercion de las coordenadas //
         public function insert_street(){
-            $nombre= $this->input->post('nombre');
-            $tipo = $this->input->post('via');
+            
+            $tipo = $this->input->post('calle_nueva');
 
-            $r = $this->modelCalles->insert_street($nombre,$tipo);
+            $r = $this->modelCalles->insert_street($tipo);
             if ($r == 0){
                 $data["msg"] = "1";
                 $data["listaMapas"] = $this->modelMapas->get_all();
@@ -84,15 +84,14 @@ include_once('Security.php');
         public function insert_coords() {
             $x = $this->input->post('x');
             $y = $this->input->post('y');
-            $mapas = json_decode($this->input->post('id_mapas'));
+            $mapas_selected = json_decode($this->input->post('id_mapas_selected'));
+            $mapas_unselected = json_decode($this->input->post('id_mapas_unselected'));
+            $calles_nuevas = $this->input->post('nuevos_nombres');
             $id_calle = $this->input->post('id_calle');
-            
-            var_dump($x);
-            var_dump($y);
-            var_dump($mapas);
-            var_dump($id_calle);
-            $r = $this->modelCalles->insert_coords($x,$y,$id_calle,$mapas);
-            
+
+            $r = $this->modelCalles->insert_street($calles_nuevas);
+            $r = $this->modelCalles->insert_coords($x,$y,$id_calle,$mapas_selected, $mapas_unselected);
+
             if ($r == 0){
                 $data["msg"] = "1";
                 $data["listaMapas"] = $this->modelMapas->get_all();

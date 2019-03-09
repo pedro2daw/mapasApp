@@ -64,9 +64,11 @@ function changeOpacity(i){
 
 
     $(document).on( "click", '.calles',function() {
-        calle = $(this).text();
-        
         id =  $(this).data('id');
+        calle = $(this).text();
+        nombre = $('#nombre_'+id).text(); 
+        tipo = $('#tipo_'+id).text();
+        
         console.log(id);
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
@@ -78,11 +80,11 @@ function changeOpacity(i){
 
     // ENVIO DE INSERCION DE CALLES:
     $('#form_insert').on('submit',function(e){
+    var datos_calle_nueva = [{'nombre' : $("#nombre").val(),
+    'via' : $("#tipo").val()}];
+    var formData = { 'calle_nueva' : datos_calle_nueva };
     
-    var formData = {
-    'nombre' : $("#nombre").val(),
-    'via' : $("#tipo").val()
-    };
+   
     
     // INSERCIÓN MEDIANTE AJAX:
     $.ajax({
@@ -114,10 +116,7 @@ function changeOpacity(i){
 
 // MODIFICAR CALLE:
     $('.btn-update').click(function () {
-        var id = $(this).data('id'); 
-        
-        var nombre = $('#nombre_'+id).text(); 
-        var tipo = $('#tipo_'+id).text();
+        var id = $(this).data('id');    //  #############                                     borrar para hacer puede hacer global en el click
         console.log(id , nombre , tipo);
 
         $('#upd_nombre_calle').val(nombre);
@@ -211,58 +210,45 @@ function changeOpacity(i){
 
     $(".btn-insert-coords").on('click', function(){
     var mapas_selected = [];
+    var mapas_unselected = [];
     var nuevos_nombres = [];
-    // opr aqui me quede
+
+    
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
         var id_mapa = $(this).val();
+
         var nombre_nuevo = $('#rename_calle_en_mapa_'+id_mapa).val();
         if (nombre_nuevo != null){
-            nuevos_nombres.push({'id_calle' : id , 'nombre_nuevo' : nombre_nuevo , 'mapa' : id_mapa });
+            
+            nuevos_nombres.push({'nombre' : nombre_nuevo , 'via' : tipo });
+            mapas_unselected.push(id_mapa);
         }
-        console.log(nuevos_nombres);
-        $.ajax({
-        type     : "POST",
-        cache    : false,
-        url      : "<?php echo base_url(); ?>index.php/Streets/insert_coords",
-        data     : nuevos_nombres,
-        dataType : 'json',
-        encode : true
-        })
-        .done(function(data) {
-            var msg = $.parseJSON(data);
-            if (msg == '0'){
-                $('.box').html('');
-                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
-                $('.btn-update').prop('disabled', true);
-                $('.btn-delete').prop('disabled', true);
-            } else {
-                $('.box').html('');
-                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
-            }
-            $('.alert').fadeIn().delay(2500).fadeOut();
-        });
+    // console.log('Nuevos Nombres' + nuevos_nombres);
     });
 
-    console.log(nuevos_nombres);
     
     $('.cb_mapas:checked').each(function() {
     var id = $( this ).val();
     mapas_selected.push(id);
     });
 
-    console.log('Mapas seleccionados ' + mapas_selected);
-    console.log('Calle seleccionada ' + id);
-    
+    // console.log('Mapas seleccionados ' + mapas_selected);
+    // console.log('Calle seleccionada ' + id);
+
     var id_calle = JSON.stringify(id);
-    var mapas_selected1 = JSON.stringify(mapas_selected);
-    var jsonx = JSON.stringify(coords_x[0]);
-    var jsony = JSON.stringify(coords_y[0]);
-    console.log('x' + jsonx + 'y' + jsony);
+    var json_mapas_selected = JSON.stringify(mapas_selected);
+    var json_mapas_unselected = JSON.stringify(mapas_unselected);
+
+    var json_x = JSON.stringify(coords_x[0]);
+    var json_y = JSON.stringify(coords_y[0]);
+
     var formData = {
-        'x' : jsonx,
-        'y' : jsony,
-        'id_mapas' : mapas_selected1,
-        'id_calle' : id_calle
+        'x' : json_x,
+        'y' : json_y,
+        'id_mapas_selected' : json_mapas_selected,
+        'id_mapas_unselected' : json_mapas_unselected,
+        'id_calle' : id_calle,
+        'nuevos_nombres' : nuevos_nombres
     };
     console.log(formData);
 
@@ -360,7 +346,7 @@ function changeOpacity(i){
                             for($i = 0; $i < count($listaMapas);$i++){
                             $mapa = $listaMapas[$i];
                             echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
-                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id=rename_calle_en_mapa_'".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
+                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
                             echo "<td>  <input name='mapa_".$mapa["id"]."' type='checkbox' data-id=".$mapa['id']." class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked> </td>";
                             echo "</tr>";
                             }                            

@@ -138,22 +138,22 @@
                             <div class='form-group'>
                                 <label for='titulo'>Título</label>
                                 <input type='text' class='form-control' placeholder='Introduce un título' name='titulo'
-                                    id='titulo' value='1' required />
+                                    id='titulo' value='Almeria' required />
                             </div>
                             <div class='form-group'>
                                 <label for='descripcion'>Descripción</label>
                                 <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion'
-                                    id='descripcion' value='1' required />
+                                    id='descripcion' value='borrar campo' required />
                             </div>
                             <div class='form-group'>
                                 <label for='ciudad'>Ciudad</label>
                                 <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad'
-                                    id='ciudad' value='1' required />
+                                    id='ciudad' value='Almeria' />
                             </div>
                             <div class='form-group'>
                                 <label for='fecha'>Fecha</label>
                                 <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha'
-                                    id='fecha' value='1' required />
+                                    id='fecha' value='1900' required />
                             </div>
                             <!-- 
                             <div class='form-group'>
