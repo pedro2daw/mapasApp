@@ -188,26 +188,38 @@ function changeOpacity(i){
         });
     });
 
+    /*
+    Botón de inserción de un punto para las calles.
+    Seleccionamos una calle del listado de calles.
+    Indicamos un punto en el mapa con doble click.
+    Indicamos en qué mapas está esa calle con los checkbox.
+    Si des-seleccionamos un checkbox podemos indicar que no existe en ese mapa o que ha sido renombrada.
+    Si no existe no realizará ninguna acción.
+    Si ha sido renombrada, se realizará la inserción de esa nueva calle en el mismo punto.
+    */
+
     $(".btn-insert-coords").on('click', function(){
     var mapas_selected = [];
     var mapas_unselected = [];
     var nuevos_nombres = [];
 
+    /* Recorremos todos los checkbox que NO están chequeados */
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
         var id_mapa = $(this).val();
-
         var nombre_nuevo = $('#rename_calle_en_mapa_'+id_mapa).val();
-        if (nombre_nuevo != null){
-            
+        if (nombre_nuevo != ''){
             nuevos_nombres.push({'nombre' : nombre_nuevo , 'via' : tipo });
             mapas_unselected.push(id_mapa);
+
         }
     });
-
+    /* Recorremos todos los checkbox que SI están chequeados */
     $('.cb_mapas:checked').each(function() {
     var id = $( this ).val();
     mapas_selected.push(id);
     });
+
+    // Envío de datos mediante ajax:
     console.log('Mapas seleccionados ' + mapas_selected);
     console.log('Calle seleccionada ' + id);
 
