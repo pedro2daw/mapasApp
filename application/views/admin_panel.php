@@ -49,31 +49,30 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-        <div class='box'>
-        <?php
-        if (isset($msg)){
-            switch ($msg) {
-                case 0:
-                    echo "<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>";
-                    break;
-                case 1:
-                    echo "<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>";  
-                    break;
+            <div class='box'>
+            <?php
+            if (isset($msg)){
+                switch ($msg) {
+                    case 0:
+                        echo "<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>";
+                        break;
+                    case 1:
+                        echo "<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>";  
+                        break;
+                }
             }
-        }
-        ?>
-        </div> <!-- final del div .box -->
+            ?>
+            </div> <!-- final del div .box -->
         </div>
     </div>
 
-    
+    <div class="row">
+        <div class="col-md-12 botones">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> Insertar Mapa </button>
+            <?php echo anchor('Streets/get_maps/','Superponer Mapas','class="btn btn-primary"');?>
+        </div>
+    </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
-                Insertar Mapa
-    </button>
-    
-    <?php echo anchor('Streets/get_maps/','Superponer Mapas','class="btn btn-primary"');?>
-    
     <div class="row">
         <div class="col-md-12">
             <table class="table table-hover">
@@ -82,9 +81,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Imagen</th>
                         <th scope="col">Titulo</th>
-                        <th scope="col">Ciudad</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Descripción</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -96,20 +93,17 @@
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
                     echo ("<td>".$mapa["id"]."</td>");
-                    echo ("<td class='d-none' id=id_paquete_".$mapa["id"]." data-id-p='".$mapa['id_paquete']."'></td>");
                     echo ("<td class='d-none' id='imagen_".$mapa["id"]."' data-id-imagen='".$mapa['imagen']."'></td>");
                     echo ("<td class='d-none' id=ancho_".$mapa["id"]." data-ancho='".$mapa['ancho']."'></td>");
                     echo ("<td class='d-none' id='alto_".$mapa["id"]."' data-alto='".$mapa['alto']."'></td>");
                     echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
-                    echo ("<td id=ciudad_".$mapa["id"].">".$mapa["ciudad"]."</td>");
                     echo ("<td id=fecha_".$mapa["id"].">".$mapa["fecha"]."</td>");
-                    echo ("<td id=descripcion_".$mapa["id"].">".$mapa["descripcion"]."</td>");
                     echo("<td>");
-                            echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
+                    echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
                     echo("</td>");  
                     echo("<td>");
-                            echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
+                    echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
                     echo("</td>");
                     echo("</tr>");
                 }
@@ -140,18 +134,9 @@
                                 <input type='text' class='form-control' placeholder='Introduce un título' name='titulo'
                                     id='titulo' value='Almeria' required />
                             </div>
+                            
                             <div class='form-group'>
-                                <label for='descripcion'>Descripción</label>
-                                <input type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion'
-                                    id='descripcion' value='borrar campo' required />
-                            </div>
-                            <div class='form-group'>
-                                <label for='ciudad'>Ciudad</label>
-                                <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='ciudad'
-                                    id='ciudad' value='Almeria' />
-                            </div>
-                            <div class='form-group'>
-                                <label for='fecha'>Fecha</label>
+                                <label for='fecha'>Año</label>
                                 <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha'
                                     id='fecha' value='1900' required />
                             </div>
@@ -161,12 +146,14 @@
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
                                     value='1' required />
                             </div>
-                            -->
+                            
                             <label for='paquete'>Paquete</label>
                             <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
                             <br/>
+                            
                             <button id='btn_crearpaquete' type='button' class='btn btn-secondary'>Crear paquete nuevo</button>
                             <button id='btn_selectpaquete' type='button' class='btn btn-secondary'>Seleccionar un paquete existente</button>
+                            
                             
                             <div id='crear_paquete' class='form-group'>
                                 <label for='nombre_paquete'>Nombre del Paquete Nuevo:</label>
@@ -182,9 +169,9 @@
 
                             <div id='seleccionar_paquete' class='form-group'>
                                 <label for='select_paquetes'>Selecciona un paquete:</label>
-                            <?php echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control"'); ?>
+                            < ?php echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control"'); ?>
                              </div>
-                            
+                            -->
                             <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
 
@@ -235,12 +222,13 @@
                                 <input type='text' class='form-control' placeholder='Introduce una descripción' name='upd_descripcion'
                                     id='upd_descripcion' value='1' required />
                             </div>
-                            -->
+                            
                             <div class='form-group'>
                                 <label for='ciudad'>Ciudad</label>
                                 <input type='text' class='form-control' placeholder='Introduce una Ciudad' name='upd_ciudad'
                                     id='upd_ciudad' value='1' required />
                             </div>
+                            -->
                             <div class='form-group'>
                                 <label for='fecha'>Fecha</label>
                                 <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='upd_fecha'
@@ -252,16 +240,17 @@
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='upd_nivel'
                                     value='1' required />
                             </div>
-                            -->
+                            
                             <label for='paquete'>Paquete</label>
                             <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover"><span class="far fa-question-circle"></span></a>
                             <br/>
                             <div id='seleccionar_paquete' class='form-group'>
                                 <label for='select_paquetes'>Selecciona un paquete:</label>
-                            <?php 
+                            < ?php 
                                 echo form_dropdown('upd_paquete',$ListaPaquetes ,"",'id="upd_paquete" class="form-control"');
                             ?>
                              </div>
+                            -->
                             
                             <!-- CAMPOS HIDDEN -->
                              <input type='hidden' name='id_update' id='id_update' value=''/>
