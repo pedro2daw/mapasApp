@@ -75,9 +75,9 @@
             margin-top: 2%;
         }
 
-        #prueba {
+        #visor_de_mapas {
+            height: 700px;
             overflow: auto;
-            height: 550px;
             cursor: crosshair;
         }
 

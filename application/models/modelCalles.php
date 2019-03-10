@@ -31,6 +31,7 @@ class modelCalles extends CI_Model {
     }
 
     public function insert_street($calle_nueva){
+        var_dump($calle_nueva);
         for($i = 0; $i < count($calle_nueva) ; $i++){
             $nombre = $calle_nueva[$i]['nombre'];
             $tipo = $calle_nueva[$i]['via'];
@@ -71,8 +72,10 @@ class modelCalles extends CI_Model {
             $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null, '$id_calle');");
         }
         $this->db->query("INSERT INTO puntos VALUES (null,$x,$y,$id_calle)");
-    }
-    // si no es null:
+         return $this->db->affected_rows();
+        }
+
+        // si no es null:
         if (isset($mapas_unselected)){
             $length = count($mapas_unselected);
             $query = $this->db->query("SELECT * FROM (SELECT * from calles order by id desc limit $length) alias order by id asc;");
@@ -82,17 +85,15 @@ class modelCalles extends CI_Model {
                     $id_calles_renombradas[] = $row;
                 }
             }
-    
             for($i = 0; $i < count($mapas_unselected) ; $i++){
                 $mapa = $mapas_unselected[$i];
                 var_dump($mapa);
                 $id_calle = $id_calles_renombradas[$i]['id'];
                 $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null, '$id_calle');");
                 $this->db->query("INSERT INTO puntos VALUES(null,$x,$y,$id_calle)");
-    
+                return $this->db->affected_rows();
             }
         }
-        
         return $this->db->affected_rows();
     }
 

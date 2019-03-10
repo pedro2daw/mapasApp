@@ -89,7 +89,10 @@ include_once('Security.php');
             $calles_nuevas = $this->input->post('nuevos_nombres');
             $id_calle = $this->input->post('id_calle');
 
-            $r = $this->modelCalles->insert_street($calles_nuevas);
+            if (isset($calles_nuevas)){
+            $r1 = $this->modelCalles->insert_street($calles_nuevas);
+            }
+            
             $r = $this->modelCalles->insert_coords($x,$y,$id_calle,$mapas_selected, $mapas_unselected);
 
             if ($r == 0){
@@ -99,6 +102,8 @@ include_once('Security.php');
                 
             } else {
                 $data['msg'] = '0';
+                $data["listaCalles"] = $this->modelCalles->get_all();
+
                 echo json_encode($data['msg']);
             }   
         }

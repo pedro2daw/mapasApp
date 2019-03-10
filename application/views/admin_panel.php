@@ -69,7 +69,7 @@
     <div class="row">
         <div class="col-md-12 botones">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> Insertar Mapa </button>
-            <?php echo anchor('Streets/get_maps/','Superponer Mapas','class="btn btn-primary"');?>
+            <?php echo anchor('Streets/get_maps/','Superponer Mapas','class="btn btn-success"');?>
         </div>
     </div>
 
