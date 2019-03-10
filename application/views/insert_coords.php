@@ -43,9 +43,13 @@ function changeOpacity(i){
         $('label').contents().first().remove();
         // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
         $("input[type='search']").addClass('form-control');
+        /*
+        
         $("input[type='search']").click( function () {
             $(this).val('');
             });
+
+            */
         // Cargamos los tooltip de bootstrap:
         $(function () {
          $('[data-toggle="tooltip"]').tooltip();
