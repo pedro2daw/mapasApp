@@ -281,7 +281,7 @@ function changeOpacity(i){
     </div> <!-- final del div .box -->
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 botones">
             <button id="show" class="btn btn-primary">Mostrar Coordenadas</button>
             <button id="delCoord" class="btn btn-secondary">Borrar última coordenada</button>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_insert"> <span class="fas fa-plus-circle"></span> Añadir Calle </button>

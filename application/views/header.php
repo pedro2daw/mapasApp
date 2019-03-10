@@ -57,7 +57,9 @@
 
     </script>
     <style>
-       
+       .botones {
+           margin-bottom: 30px;
+       }
         #slide {
             display: flex;
             min-height: 0;

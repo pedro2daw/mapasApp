@@ -16,10 +16,11 @@
                 }
                 ?>
             </div> <!-- final del div .box -->
-
-    <button type="button" id="boton_usuario" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert">
-        Insertar Usuario
-    </button>
+    <div class="row">
+        <div class="col-md-12 botones">
+            <button type="button" id="boton_usuario" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> Insertar Usuario </button>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
