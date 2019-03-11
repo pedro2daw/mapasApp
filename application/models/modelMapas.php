@@ -3,7 +3,7 @@ class modelMapas extends CI_Model {
     // $titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto
 
     function get_all(){
-        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.descripcion, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto', paquetes.nombre, mapas.id_paquete as 'id_paquete', paquetes.id as 'id_tpaquetes' from mapas INNER JOIN paquetes ON mapas.id_paquete = paquetes.id"); 
+        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto' from mapas "); 
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){
@@ -12,16 +12,15 @@ class modelMapas extends CI_Model {
             }
         return $data;
     }
-
+/*
     function get_paquete($id){
         $query = $this->db->query("SELECT paquetes.nombre, paquetes.id FROM mapas INNER JOIN paquetes ON mapas.id_paquete = paquetes.id"); 
         $data = $query->result_array();
         return array_column($data,'nombre','id');
     }
-
-
-    function insert ($titulo, $descripcion, $ciudad, $fecha, $ruta, $id_paquete){
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, descripcion, ciudad, fecha, imagen, id_paquete,fecha_de_subida) VALUES (null,'$titulo','$descripcion','$ciudad','$fecha','$ruta','$id_paquete',NOW());"); 
+*/
+    function insert ($titulo, $fecha, $ruta){
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida) VALUES (null,'$titulo','$fecha','$ruta',NOW());"); 
         return $this->db->affected_rows();
     }
 
@@ -37,7 +36,7 @@ class modelMapas extends CI_Model {
     }
 
     
-    function update($id, $titulo, $ciudad, $fecha, $ruta, $id_paquete,$ancho, $alto, $opc){
+    function update($id, $titulo, $fecha, $ruta, $ancho, $alto, $opc){
         // SI HAY IMAGEN TIENE QUE BORRAR:
         if ($opc == true){
             $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
@@ -47,7 +46,7 @@ class modelMapas extends CI_Model {
 
         $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
 
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, ciudad, fecha, imagen, id_paquete, fecha_de_subida, ancho, altura) VALUES ($id,'$titulo','$ciudad',$fecha,'$ruta','$id_paquete',NOW(),'$ancho','$alto');"); 
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida, ancho, altura) VALUES ($id,'$titulo',$fecha,'$ruta',NOW(),'$ancho','$alto');"); 
         return $this->db->affected_rows();
     }
 

@@ -6,25 +6,26 @@ class Maps extends Security {
 
     public function index(){
         $data['ListaMapas'] = $this->modelMapas->get_all();
-        $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+       // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
         $data["viewName"] = "admin_panel";
         $this->load->view('template',$data);
     }
 
     public function insert(){
         $titulo = $this->input->get_post('titulo');
-        $descripcion = $this->input->get_post('descripcion');
-        $ciudad =$this->input->get_post('ciudad');
+        // $descripcion = $this->input->get_post('descripcion');
+        $ciudad = 'Almeria';
         $fecha = $this->input->get_post('fecha');
-        $nivel = $this->input->get_post('nivel');
+        // $nivel = $this->input->get_post('nivel');
         // Obtenemos el ultimo id para cambiar el nombre del archivo subido:
         $ultimoId = $this->modelMapas->get_next_id();
         var_dump($ultimoId);
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
         $ciudad_format = $this->modelMapas->format($ciudad);
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
-        $ruta = "assets/img/mapas/".$img_name; 
+        $ruta = "assets/img/mapas/".$img_name;
 
+        /*
         $paquete_seleccionado = $this->input->get_post('select_paquetes');
         $nombre_paquete_nuevo = $this->input->get_post('nombre_paquete');
        
@@ -44,11 +45,14 @@ class Maps extends Security {
                 $r = $this->modelMapas->insert($titulo, $descripcion, $ciudad, $fecha, $ruta, $paquete_nuevo);
             }
         }
+        */
+
+        $r = $this->modelMapas->insert($titulo, $fecha, $ruta);
 
        if ($r == 0) {
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
-                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
         } else {
@@ -59,13 +63,13 @@ class Maps extends Security {
             if ($r2 == 0){
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
-                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             } else {
                 $data["msg"] = "0";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
-                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             }
@@ -77,7 +81,7 @@ class Maps extends Security {
         $titulo = $this->input->get_post('upd_titulo');
         $ciudad = $this->input->get_post('upd_ciudad');
         $fecha = $this->input->get_post('upd_fecha');
-        $paquete = $this->input->get_post('upd_paquete');
+        // $paquete = $this->input->get_post('upd_paquete');
         $ruta_original = $this->input->get_post('ruta_original');
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
         $ciudad_format = $this->modelMapas->format($ciudad);
@@ -93,56 +97,46 @@ class Maps extends Security {
             $img_name = $this->modelMapas->checkImgDefault();
             $ruta = $ruta_original;
             $opc = false;
-            $r = $this->modelMapas->update($id, $titulo, $ciudad, $fecha, $ruta, $paquete, $ancho, $alto,$opc);
+            $r = $this->modelMapas->update($id, $titulo, $fecha, $ruta, $ancho, $alto, $opc);
             if ($r == 0){
                 // ERROR
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
-                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             } else {
                 $data["msg"] = "0";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
-                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
-        
                 $this->load->view('template',$data);
             }
         } else {
             $opc = true;
-            $r = $this->modelMapas->update($id, $titulo, $ciudad, $fecha, $ruta, $paquete, $ancho, $alto,$opc);
+            $r = $this->modelMapas->update($id, $titulo, $fecha, $ruta, $ancho, $alto, $opc);
 
             if ($r == 0){
                 // ERROR
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all();
-                $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             } else {
                 $data['img_size'] = $this->modelMapas->get_img_size($ruta);
-                
                 $ancho = $data['img_size'][0];
                 $alto = $data['img_size'][1];
-                
                 $r2 = $this->modelMapas->insert_size($ancho,$alto,$id);
 
                 if ($r2 == 0){
                     // ERROR 
                     $data["msg"] = "1";
-                    
                     $data['ListaMapas'] = $this->modelMapas->get_all();
-                    $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                     $data["viewName"] = "admin_panel";
-        
                     $this->load->view('template',$data);
                 } else {
                     $data["msg"] = "0";
                     $data['ListaMapas'] = $this->modelMapas->get_all();
                     $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                     $data["viewName"] = "admin_panel";
-        
                     $this->load->view('template',$data);
                 }
             }

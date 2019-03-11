@@ -29,6 +29,7 @@
         coords_x = [];
         coords_y = [];
         $(document).ready(function() {
+            $('.alert').fadeIn().delay(2500).fadeOut();
             $('#callejero').dblclick(function(e) {
                 var offset = $(this).offset();
                 coords_x.push(parseInt(e.pageX - offset.left));
@@ -56,9 +57,9 @@
 
     </script>
     <style>
-        #boton_usuario {
-            margin: 3%;
-        }
+       .botones {
+           margin-bottom: 30px;
+       }
         #slide {
             display: flex;
             min-height: 0;
@@ -74,9 +75,9 @@
             margin-top: 2%;
         }
 
-        #prueba {
+        #visor_de_mapas {
+            height: 700px;
             overflow: auto;
-            height: 550px;
             cursor: crosshair;
         }
 
@@ -149,7 +150,7 @@
                                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                                echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Users/view_users/','Admin Usuarios','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt fa-2x active"');
                             }
                             else if ($nivel == 1) {
@@ -165,7 +166,7 @@
                             echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
-                            echo anchor('Users/view_users/','Configuración','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Users/view_users/','Admin Usuarios','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt fa-2x active"');
                         }
                         else if ($nivel == 1) {

@@ -30,9 +30,16 @@ class modelCalles extends CI_Model {
         return $ruta->result_array()[0];
     }
 
-    public function insert_street($nombre,$tipo){
-        $this->db->query("INSERT INTO calles (id,nombre,tipo)
+    public function insert_street($calle_nueva){
+        var_dump($calle_nueva);
+        for($i = 0; $i < count($calle_nueva) ; $i++){
+            $nombre = $calle_nueva[$i]['nombre'];
+            $tipo = $calle_nueva[$i]['via'];
+
+            $this->db->query("INSERT INTO calles (id,nombre,tipo)
                         VALUES (null,'$nombre','$tipo');");
+        }
+        
         return $this->db->affected_rows();
     }
 
@@ -57,11 +64,35 @@ class modelCalles extends CI_Model {
         return $query->result_array()[0];
     }
 
-    public function insert_coords($x,$y,$id_calle,$listaMapas){
-        $this->db->query("INSERT INTO puntos VALUES(null,$x,$y,$id_calle)");
-        for($i = 0; $i < count($listaMapas) ; $i++){
-            $mapa = $listaMapas[$i];
+    public function insert_coords($x,$y,$id_calle,$mapas_selected,$mapas_unselected){
+        // si no es null:
+        if (isset($mapas_selected)){
+        for($i = 0; $i < count($mapas_selected) ; $i++){
+            $mapa = $mapas_selected[$i];
             $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null, '$id_calle');");
+        }
+        $this->db->query("INSERT INTO puntos VALUES (null,$x,$y,$id_calle)");
+         return $this->db->affected_rows();
+        }
+
+        // si no es null:
+        if (isset($mapas_unselected)){
+            $length = count($mapas_unselected);
+            $query = $this->db->query("SELECT * FROM (SELECT * from calles order by id desc limit $length) alias order by id asc;");
+            $id_calles_renombradas = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $id_calles_renombradas[] = $row;
+                }
+            }
+            for($i = 0; $i < count($mapas_unselected) ; $i++){
+                $mapa = $mapas_unselected[$i];
+                var_dump($mapa);
+                $id_calle = $id_calles_renombradas[$i]['id'];
+                $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null, '$id_calle');");
+                $this->db->query("INSERT INTO puntos VALUES(null,$x,$y,$id_calle)");
+                return $this->db->affected_rows();
+            }
         }
         return $this->db->affected_rows();
     }
