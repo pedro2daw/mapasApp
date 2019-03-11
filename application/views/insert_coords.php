@@ -11,7 +11,8 @@
 function changeOpacity(i){
         $(document).on("input","#slider_"+i,function(){
          var opacity = $(this).val();
-         $(".mapas:eq("+i+")").css("opacity",opacity);
+
+         $("#img_"+i).css("opacity",opacity);
 
          console.log(opacity);
         });
@@ -19,7 +20,7 @@ function changeOpacity(i){
 
     $(document).ready( function (){
         /* Creación dinámica de los input type range que permiten cambiar la opacidad.
-        var rutas = <?php echo json_encode($img_mapas); ?>;
+        var rutas = < ?php echo json_encode($img_mapas); ?>;
         for (i = 0 ; i < rutas.length ; i++ ){
         $("#ranges").append("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
         }
@@ -338,7 +339,7 @@ function changeOpacity(i){
                             for($i = 0; $i < count($listaMapas);$i++){
                             $mapa = $listaMapas[$i];
                             echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
-                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_".$i."' oninput='changeOpacity(".$i.")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
+                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
                             echo "<td>  <input name='mapa_".$mapa["id"]."' type='checkbox' data-id=".$mapa['id']." class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked> </td>";
                             echo "</tr>";
                             
@@ -356,11 +357,14 @@ function changeOpacity(i){
         <div class="col-md-9 dragscroll" id="visor_de_mapas">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
             <?php
-                echo "<img class='mapas' id='callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
-            for ($i = 1 ; $i < count($img_mapas) ; $i++){
+                for ($i = 0 ; $i < count($img_mapas) ; $i++){
                 $img = $img_mapas[$i];
-                echo "<img class='mapas' id='img_".$i."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
-            }
+                if ($i == 0){
+                    echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+                }else {
+                    echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
+                }
+                }
             ?>
             </div>        
         </div> <!-- fin col md-9 -->
