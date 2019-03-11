@@ -76,7 +76,7 @@
         }
 
         #visor_de_mapas {
-            height: 700px;
+            height: 600px;
             overflow: auto;
             cursor: crosshair;
         }
