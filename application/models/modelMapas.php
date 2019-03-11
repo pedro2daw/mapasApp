@@ -3,7 +3,7 @@ class modelMapas extends CI_Model {
     // $titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto
 
     function get_all(){
-        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto' from mapas "); 
+        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto', mapas.desviacion_x as desviacion_x, mapas.desviacion_y as desviacion_y from mapas "); 
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){
@@ -36,8 +36,8 @@ class modelMapas extends CI_Model {
     }
 
     
-    function update($id, $titulo, $fecha, $ruta, $ancho, $alto, $opc){
-        // SI HAY IMAGEN TIENE QUE BORRAR:
+    function update($id, $titulo, $fecha, $ruta, $ancho, $alto, $x , $y, $opc){
+        // SI HAY IMAGEN TIENE QUE BORRAR la antigua:
         if ($opc == true){
             $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
             $fileToDelete = implode($query2->result_array()[0]);
@@ -45,7 +45,7 @@ class modelMapas extends CI_Model {
         } 
 
         $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
-
+// AQUI INSERTAR DESV X DESV Y #################################################################################
         $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida, ancho, altura) VALUES ($id,'$titulo',$fecha,'$ruta',NOW(),'$ancho','$alto');"); 
         return $this->db->affected_rows();
     }

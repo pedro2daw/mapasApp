@@ -15,6 +15,8 @@
         var id_paquete = $("#id_paquete_"+id).data('id-p');   
         var ancho = $('#ancho_'+id).data('ancho');
         var alto = $('#alto_'+id).data('alto'); 
+        var desv_x = $('#desviacion_x_'+id).data('x');
+        var desv_y = $('#desviacion_y_'+id).data('y'); 
 
         $('#upd_paquete').val(id_paquete);
         $('#upd_titulo').val(titulo);
@@ -23,14 +25,18 @@
         $('#upd_ciudad').val(ciudad);
         $('#upd_fecha').val(fecha);
         $('#upd_imagen').attr('src',img_src);
+        
         //campos hidden:
         $('#id_update').val(id);
         $('#ruta_original').val(img);
+        $('#upd_desv_x').val(desv_x);
+        $('#upd_desv_y').val(desv_y);
+
         /*
         
                 $.ajax({
                         type: "post",
-                        url: "<?php echo base_url(); ?>index.php/Maps/form_update_map",       
+                        url: "< ?php echo base_url(); ?>index.php/Maps/form_update_map",       
                         dataType: 'text',
                         data: "id="+id,                        
                         success: function(data) {
@@ -89,6 +95,8 @@
                 <tbody>
 
                 <?php
+                var_dump ($ListaMapas);
+
                 for($i = 0; $i < count($ListaMapas);$i++){
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
@@ -96,6 +104,8 @@
                     echo ("<td class='d-none' id='imagen_".$mapa["id"]."' data-id-imagen='".$mapa['imagen']."'></td>");
                     echo ("<td class='d-none' id=ancho_".$mapa["id"]." data-ancho='".$mapa['ancho']."'></td>");
                     echo ("<td class='d-none' id='alto_".$mapa["id"]."' data-alto='".$mapa['alto']."'></td>");
+                    echo ("<td class='d-none' id=desviacion_x_".$mapa["id"]." data-x='".$mapa['desviacion_x']."'></td>");
+                    echo ("<td class='d-none' id='desviacion_y_".$mapa["id"]."' data-y='".$mapa['desviacion_y']."'></td>");
                     echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
                     echo ("<td id=fecha_".$mapa["id"].">".$mapa["fecha"]."</td>");
@@ -257,6 +267,8 @@
                              <input type='hidden' name='ruta_original' id='ruta_original' value=''/>
                              <input type='hidden' name='upd_ancho' id='upd_ancho' value=''/>
                              <input type='hidden' name='upd_alto' id='upd_alto' value=''/>
+                             <input type='hidden' name='upd_desv_x' id='upd_desv_x' value=''/>
+                             <input type='hidden' name='upd_desv_y' id='upd_desv_y' value=''/>
                             <div class='form-group'>
                                 <label for='mapa_img'>Subir un Mapa</label>
 

@@ -81,6 +81,8 @@ class Maps extends Security {
         $titulo = $this->input->get_post('upd_titulo');
         $ciudad = $this->input->get_post('upd_ciudad');
         $fecha = $this->input->get_post('upd_fecha');
+        $x = $this->input->get_post('upd_desv_x');
+        $y = $this->input->get_post('upd_desv_y');
         // $paquete = $this->input->get_post('upd_paquete');
         $ruta_original = $this->input->get_post('ruta_original');
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
