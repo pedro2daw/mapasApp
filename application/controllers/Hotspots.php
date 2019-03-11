@@ -19,7 +19,6 @@ class Hotspots extends Security {
         //    echo $this->upload->display_errors();
         //} else {
             $this->upload->do_upload('imagen');
-            $data = array('upload_data' => $this->upload->data());
         //}
         
         /*if (($data['upload_data']['image_width'] > 100) && (($data['upload_data']['image_height'] > 70))) {
@@ -38,11 +37,9 @@ class Hotspots extends Security {
         $descripcion = $this->input->get_post('descripcion');
         $pos_x = $this->input->get_post('posX');
         $pos_y = $this->input->get_post('posY');
-        $imagen = $data['upload_data']['file_name'];
+        $imagen = $this->upload->data('file_name');
         $id_mapa = 0;
-        $result = $this->modelHotspot->insert($imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
-        echo "$result";
-    
+        $this->modelHotspot->insert($imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
     }
     
     public function delete_hotspot() {
