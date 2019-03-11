@@ -12,13 +12,7 @@
                 processData: false,
                 cache: false,
                 contentType: false,
-                type: 'POST',
-                error: function(data){
-                    console.log(data);
-                },
-                success: function(data){
-                    console.log(data);
-                }
+                type: 'POST'
             });
             
         });
@@ -123,9 +117,4 @@
         
         ?>
 
-    </div>
-    <div id="botonHotspots">
-        <button id="mas">+</button>
-        <button id="menos">-</button>
-        <button id="reset">Reset</button>
     </div>
