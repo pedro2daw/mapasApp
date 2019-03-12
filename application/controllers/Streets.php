@@ -19,7 +19,8 @@ include_once('Security.php');
             }
             */
             $data["img_mapas"] = $this->modelCalles->get_maps_img();
-            $data["listaMapas"] = $this->modelMapas->get_all();
+            $data["lista_calles_no_insertadas"] = $this->modelCalles->get_not_inserted();
+            $data["listaMapas"] = $this->modelMapas->get_all_ordenados();
             $data["listaCalles"] = $this->modelCalles->get_all();
             $data["viewName"] = "insert_coords";
             $this->load->view('template', $data);
@@ -33,9 +34,9 @@ include_once('Security.php');
         // este es la funcion del formulario de la clase modal, que nos manda a la insercion de las coordenadas //
         public function insert_street(){
             
-            $tipo = $this->input->post('calle_nueva');
+            $calle = $this->input->post('calle_nueva');
 
-            $r = $this->modelCalles->insert_street($tipo);
+            $r = $this->modelCalles->insert_street($calle);
             if ($r == 0){
                 $data["msg"] = "1";
                 $data["listaMapas"] = $this->modelMapas->get_all();

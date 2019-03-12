@@ -4,33 +4,35 @@
 
     $(document).ready( function (){
         $('.alert').fadeIn().delay(4000).fadeOut();
+        $('.warning').css({'background-color' : 'orange'
+        });
 
-    $('.btn-update').click(function () {
-        var id = $(this).data('id'); 
-        var img_src = $('#src_imagen_'+id).attr('src');
-        var img = $('#imagen_'+id).data('id-imagen');
-        var titulo = $('#titulo_'+id).text();
-        var ciudad = $('#ciudad_'+id).text();
-        var fecha = $('#fecha_'+id).text();
-        var id_paquete = $("#id_paquete_"+id).data('id-p');   
-        var ancho = $('#ancho_'+id).data('ancho');
-        var alto = $('#alto_'+id).data('alto'); 
-        var desv_x = $('#desviacion_x_'+id).data('x');
-        var desv_y = $('#desviacion_y_'+id).data('y'); 
+        $('.btn-update').click(function () {
+            var id = $(this).data('id'); 
+            var img_src = $('#src_imagen_'+id).attr('src');
+            var img = $('#imagen_'+id).data('id-imagen');
+            var titulo = $('#titulo_'+id).text();
+            var ciudad = $('#ciudad_'+id).text();
+            var fecha = $('#fecha_'+id).text();
+            var id_paquete = $("#id_paquete_"+id).data('id-p');   
+            var ancho = $('#ancho_'+id).data('ancho');
+            var alto = $('#alto_'+id).data('alto'); 
+            var desv_x = $('#desviacion_x_'+id).data('x');
+            var desv_y = $('#desviacion_y_'+id).data('y'); 
 
-        $('#upd_paquete').val(id_paquete);
-        $('#upd_titulo').val(titulo);
-        $('#upd_ancho').val(ancho);
-        $('#upd_alto').val(alto);
-        $('#upd_ciudad').val(ciudad);
-        $('#upd_fecha').val(fecha);
-        $('#upd_imagen').attr('src',img_src);
-        
-        //campos hidden:
-        $('#id_update').val(id);
-        $('#ruta_original').val(img);
-        $('#upd_desv_x').val(desv_x);
-        $('#upd_desv_y').val(desv_y);
+            $('#upd_paquete').val(id_paquete);
+            $('#upd_titulo').val(titulo);
+            $('#upd_ancho').val(ancho);
+            $('#upd_alto').val(alto);
+            $('#upd_ciudad').val(ciudad);
+            $('#upd_fecha').val(fecha);
+            $('#upd_imagen').attr('src',img_src);
+            
+            //campos hidden:
+            $('#id_update').val(id);
+            $('#ruta_original').val(img);
+            $('#upd_desv_x').val(desv_x);
+            $('#upd_desv_y').val(desv_y);
 
         /*
         
@@ -95,12 +97,18 @@
                 <tbody>
 
                 <?php
-                var_dump ($ListaMapas);
 
                 for($i = 0; $i < count($ListaMapas);$i++){
+                    
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
-                    echo ("<td>".$mapa["id"]."</td>");
+                    if (($i > 0)&&($mapa['desviacion_x'] == null || $mapa['desviacion_y'] == null)){
+                    echo ("<td class='ids warning'>".$mapa["id"]." 
+                    <a tabindex='0' class='btn btn-md btn-danger' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes superponer los mapas de nuevo'><span class='fas fa-exclamation-triangle'></span></a>
+                     </td>");
+                    } else {
+                    echo ("<td class='ids' >".$mapa["id"]."</td>");
+                    }
                     echo ("<td class='d-none' id='imagen_".$mapa["id"]."' data-id-imagen='".$mapa['imagen']."'></td>");
                     echo ("<td class='d-none' id=ancho_".$mapa["id"]." data-ancho='".$mapa['ancho']."'></td>");
                     echo ("<td class='d-none' id='alto_".$mapa["id"]."' data-alto='".$mapa['alto']."'></td>");

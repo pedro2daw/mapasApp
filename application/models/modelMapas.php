@@ -12,6 +12,17 @@ class modelMapas extends CI_Model {
             }
         return $data;
     }
+
+    function get_all_ordenados(){
+        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto', mapas.desviacion_x as desviacion_x, mapas.desviacion_y as desviacion_y from mapas ORDER BY ancho DESC ,altura;"); 
+        $data = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $data[] = $row;
+                }
+            }
+        return $data;
+    }
 /*
     function get_paquete($id){
         $query = $this->db->query("SELECT paquetes.nombre, paquetes.id FROM mapas INNER JOIN paquetes ON mapas.id_paquete = paquetes.id"); 
@@ -37,16 +48,17 @@ class modelMapas extends CI_Model {
 
     
     function update($id, $titulo, $fecha, $ruta, $ancho, $alto, $x , $y, $opc){
-        // SI HAY IMAGEN TIENE QUE BORRAR la antigua:
+        // SI HAY IMAGEN nueva TIENE QUE BORRAR la antigua:
         if ($opc == true){
             $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
             $fileToDelete = implode($query2->result_array()[0]);
             unlink($fileToDelete);
+            $x = 'null';
+            $y = 'null';
         } 
 
         $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
-// AQUI INSERTAR DESV X DESV Y #################################################################################
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida, ancho, altura) VALUES ($id,'$titulo',$fecha,'$ruta',NOW(),'$ancho','$alto');"); 
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida, ancho, altura, desviacion_x, desviacion_y) VALUES ($id,'$titulo',$fecha,'$ruta',NOW(),'$ancho','$alto',$x,$y);"); 
         return $this->db->affected_rows();
     }
 

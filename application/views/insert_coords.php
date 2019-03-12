@@ -13,13 +13,18 @@ function changeOpacity(i){
          var opacity = $(this).val();
 
          $("#img_"+i).css("opacity",opacity);
-
-         console.log(opacity);
         });
       }
 
     $(document).ready( function (){
-        /* Creación dinámica de los input type range que permiten cambiar la opacidad.
+
+        $(document).on("input","#slider_callejero",function(){
+         var opacity = $(this).val();
+
+         $("#img_callejero").css("opacity",opacity);
+        });
+
+/* Creación dinámica de los input type range que permiten cambiar la opacidad.
         var rutas = < ?php echo json_encode($img_mapas); ?>;
         for (i = 0 ; i < rutas.length ; i++ ){
         $("#ranges").append("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
@@ -61,18 +66,37 @@ function changeOpacity(i){
 
         // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
+        $(".hot-spot-1:last").remove();
         id =  $(this).data('id');
         calle = $(this).text();
         nombre = $('#nombre_'+id).text(); 
         tipo = $('#tipo_'+id).text();
+        x = $('#punto_'+id).data('x');
+        y = $('#punto_'+id).data('y');
         
-        console.log("Calle seleccionada " + id);
+        if (x == null || y == null){
+            $(this).css({'background-color':'orange'});
+           } else {
+            $('#img_callejero').after("<div class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + x + "px;left:" + y + "px; display:block;'></div>");
+        
+            
+        }
+        
+
+        console.log("Calle seleccionada: " + id);
+        console.log('Punto X: ' + x);
+        console.log('Punto Y: ' + y);
+
+        
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
         $('.btn-update').prop('disabled', false);
         $('.btn-update').data('id',id);
         $('.btn-delete').prop('disabled', false);
         $('.btn-delete').data('id',id);
+
+        
+ 
     });
 
     // Inserción de una calle mediante Ajax:
@@ -94,7 +118,8 @@ function changeOpacity(i){
 
         // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
         .done(function(data) {
-            if (data.msg == '0'){
+            if (data.msg == '0'){                
+                
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
                 } else {
@@ -102,8 +127,10 @@ function changeOpacity(i){
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
+            $('#nombre').val(' ');
             $('#modal_insert').modal('toggle');
-            $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
+            $('#tabla_calles').append("<tr class='warning' id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td  id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
+            $('.warning').css({'background-color' : 'orange'});
      });
 
     // Previene al formulario ejecutarse de manera tradicional y que se refresque la página.
@@ -261,6 +288,7 @@ function changeOpacity(i){
             console.log('DATA: ' + data);
             var msg = $.parseJSON(data);
             if (msg == '0'){
+                $('calle_'+id).removeClass('warning');
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
                 $('.btn-update').prop('disabled', true);
@@ -307,6 +335,8 @@ function changeOpacity(i){
                 <table class="table table-hover" id='tabla_calles'>
                     <thead>
                         <tr>
+                            
+                            <th class='d-none' scope="col"></th>
                             <th class='d-none' scope="col"></th>
                             <th class='d-none' scope="col"></th>
                             <th scope="col">Nombre</th>
@@ -319,7 +349,13 @@ function changeOpacity(i){
                             echo "<tr id=calle_".$calle["id"]." >";
                             echo "<td id='tipo_".$calle["id"]."' class='d-none'>".$calle["tipo"]."</td>";
                             echo "<td id='nombre_".$calle["id"]."' class='d-none'>".$calle["nombre"]."</td>";
-                            echo "<td class='calles' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
+                            if (isset($calle["id_punto"])){
+                                echo "<td id='punto_".$calle["id"]."' class='d-none' data-x='".$calle['x']."' data-y='".$calle['y']."'></td>";
+                                echo "<td class='calles' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
+                            } else {
+                                echo "<td id='punto_".$calle["id"]."' class='d-none' data-x='null' data-y='null'>".$calle["nombre"]."</td>";
+                                echo "<td id='calle_".$calle["id"]."' class='calles warning' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
+                            }
                             echo "</tr>";
                             }
                         ?>
@@ -339,7 +375,11 @@ function changeOpacity(i){
                             for($i = 0; $i < count($listaMapas);$i++){
                             $mapa = $listaMapas[$i];
                             echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
+                            if ($i == 0){
+                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";    
+                            }else {
                             echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
+                            }
                             echo "<td>  <input name='mapa_".$mapa["id"]."' type='checkbox' data-id=".$mapa['id']." class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked> </td>";
                             echo "</tr>";
                             
@@ -354,13 +394,13 @@ function changeOpacity(i){
 
         </div> <!-- fin col md-3 -->
 
-        <div class="col-md-9 dragscroll" id="visor_de_mapas">
+        <div class="col-md-9 dragscroll" id="prueba">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
             <?php
                 for ($i = 0 ; $i < count($img_mapas) ; $i++){
                 $img = $img_mapas[$i];
                 if ($i == 0){
-                    echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+                    echo "<img class='mapas' id='img_callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
                 }else {
                     echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
                 }

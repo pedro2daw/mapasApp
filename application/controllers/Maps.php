@@ -5,7 +5,7 @@ include_once('Security.php');
 class Maps extends Security {
 
     public function index(){
-        $data['ListaMapas'] = $this->modelMapas->get_all();
+        $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
        // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
         $data["viewName"] = "admin_panel";
         $this->load->view('template',$data);
@@ -94,12 +94,12 @@ class Maps extends Security {
         $img_name = $this->modelMapas->update_img($id,$ciudad_format);
         $ruta = "assets/img/mapas/".$img_name; 
 
-        // Si no hay una imagen seleccionada, se inserta una nueva.
+        // Si no hay una imagen seleccionada, se inserta la original.
         if (!$img_name){
             $img_name = $this->modelMapas->checkImgDefault();
             $ruta = $ruta_original;
             $opc = false;
-            $r = $this->modelMapas->update($id, $titulo, $fecha, $ruta, $ancho, $alto, $opc);
+            $r = $this->modelMapas->update($id, $titulo, $fecha, $ruta, $ancho, $alto, $x , $y, $opc);
             if ($r == 0){
                 // ERROR
                 $data["msg"] = "1";
@@ -114,7 +114,7 @@ class Maps extends Security {
             }
         } else {
             $opc = true;
-            $r = $this->modelMapas->update($id, $titulo, $fecha, $ruta, $ancho, $alto, $opc);
+            $r = $this->modelMapas->update($id, $titulo, $fecha, $ruta, $ancho, $alto, $x , $y, $opc);
 
             if ($r == 0){
                 // ERROR

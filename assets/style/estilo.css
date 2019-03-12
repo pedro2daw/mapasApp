@@ -37,3 +37,17 @@ input[type='search'] {
 .cb_hidden {
     display: none;
 }
+
+/* Alineación de los id en la tabla de mapas */
+.ids {
+    text-align:center;
+}
+
+.warning {
+    background-color: orange !important;
+}
+
+.popover {
+   content: attr(data-content);
+   font-size: 1.5em;
+}

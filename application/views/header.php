@@ -30,7 +30,7 @@
         coords_y = [];
         $(document).ready(function() {
             $('.alert').fadeIn().delay(2500).fadeOut();
-            $('#callejero').dblclick(function(e) {
+            $('#img_callejero').dblclick(function(e) {
                 var offset = $(this).offset();
                 coords_x.push(parseInt(e.pageX - offset.left));
                 coords_y.push(parseInt(e.pageY - offset.top));
@@ -39,7 +39,7 @@
                 var x_temp = parseInt((e.pageX - offset.left) - 5);
                 var y_temp = (parseInt(e.pageY - offset.top) - 5);
                 $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
-                $("#callejero").after("<div class='hot-spot-1' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp + "px;left:" + x_temp + "px; display:block;'></div>");
+                $(this).after("<div class='hot-spot-1' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp + "px;left:" + x_temp + "px; display:block;'></div>");
             });
             $("#show").click(function() {
                 alert("Las coordenadas del eje x son: " + coords_x);
@@ -75,7 +75,7 @@
             margin-top: 2%;
         }
 
-        #visor_de_mapas {
+        #prueba {
             height: 600px;
             overflow: auto;
             cursor: crosshair;
