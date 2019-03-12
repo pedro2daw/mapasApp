@@ -100,7 +100,7 @@ class modelCalles extends CI_Model {
 
     public function insert_coords($x,$y,$id_calle,$mapas_selected,$mapas_unselected){
         // si no es null:
-        $status = '1';
+        /*$status = '1';
         $this->db->trans_start();
                      
             if ($this->db->trans_status() === FALSE) {
@@ -112,7 +112,7 @@ class modelCalles extends CI_Model {
         $this->db->trans_complete();
         return $status;
 
-
+*/
 
 
         if (isset($mapas_selected)){
