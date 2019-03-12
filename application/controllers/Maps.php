@@ -36,7 +36,7 @@ class Maps extends Security {
             $r = $this->modelPaquetes->insert($nombre_paquete_nuevo, $descripcion_paquete);
             if ($r == 0) {
                 $data["msg"] = "1";
-                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
@@ -51,7 +51,7 @@ class Maps extends Security {
 
        if ($r == 0) {
                 $data["msg"] = "1";
-                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
@@ -62,13 +62,13 @@ class Maps extends Security {
                 $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
             if ($r2 == 0){
                 $data["msg"] = "1";
-                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             } else {
                 $data["msg"] = "0";
-                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
@@ -103,12 +103,12 @@ class Maps extends Security {
             if ($r == 0){
                 // ERROR
                 $data["msg"] = "1";
-                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             } else {
                 $data["msg"] = "0";
-                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             }
@@ -119,7 +119,7 @@ class Maps extends Security {
             if ($r == 0){
                 // ERROR
                 $data["msg"] = "1";
-                $data['ListaMapas'] = $this->modelMapas->get_all();
+                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             } else {
@@ -131,12 +131,12 @@ class Maps extends Security {
                 if ($r2 == 0){
                     // ERROR 
                     $data["msg"] = "1";
-                    $data['ListaMapas'] = $this->modelMapas->get_all();
+                    $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                     $data["viewName"] = "admin_panel";
                     $this->load->view('template',$data);
                 } else {
                     $data["msg"] = "0";
-                    $data['ListaMapas'] = $this->modelMapas->get_all();
+                    $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                     $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                     $data["viewName"] = "admin_panel";
                     $this->load->view('template',$data);
@@ -151,14 +151,14 @@ class Maps extends Security {
         if ($r == 0){
             // ERROR 
             $data["msg"] = "1";
-            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $data["viewName"] = "admin_panel";
 
             $this->load->view('template',$data);
         } else {
             $data["msg"] = "0";
-            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $data["viewName"] = "admin_panel";
 
@@ -180,7 +180,7 @@ class Maps extends Security {
         if ($r == 0){
             // ERROR 
             $data["msg"] = "1";
-            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $data["viewName"] = "admin_panel";
 
@@ -188,7 +188,7 @@ class Maps extends Security {
 
         }else {
             $data["msg"] = "0";
-            $data['ListaMapas'] = $this->modelMapas->get_all();
+            $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $data["viewName"] = "admin_panel";
 

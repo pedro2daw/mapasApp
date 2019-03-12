@@ -94,27 +94,11 @@ class modelCalles extends CI_Model {
     }
 
     public function get($id){       
-        $query = $this->db->query("SELECT * FROM calles WHERE id = '$id';");
+        $query = $this->db->query("SELECT calles.id as id,calles.nombre as nombre,calles.tipo as tipo, puntos.punto_x as x, puntos.punto_y as y FROM calles INNER JOIN mapas_calles on calles.id = mapas_calles.id_calle inner join puntos on calles.id = puntos.id_calle where calles.id = '$id';");
         return $query->result_array()[0];
     }
 
     public function insert_coords($x,$y,$id_calle,$mapas_selected,$mapas_unselected){
-        // si no es null:
-        /*$status = '1';
-        $this->db->trans_start();
-                     
-            if ($this->db->trans_status() === FALSE) {
-            // generate an error... or use the log_message() function to log your error
-            var_dump('error en la(s) consulta(s)');
-            $status = '0';
-            } 
-        
-        $this->db->trans_complete();
-        return $status;
-
-*/
-
-
         if (isset($mapas_selected)){
         for($i = 0; $i < count($mapas_selected) ; $i++){
             $mapa = $mapas_selected[$i];

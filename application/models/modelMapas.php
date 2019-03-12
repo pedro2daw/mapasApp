@@ -48,18 +48,23 @@ class modelMapas extends CI_Model {
 
     
     function update($id, $titulo, $fecha, $ruta, $ancho, $alto, $x , $y, $opc){
-        // SI HAY IMAGEN nueva TIENE QUE BORRAR la antigua:
+        // SI HAY IMAGEN nueva TIENE QUE BORRAR la antigua y las desviaciones:
+        $status = 1;
+        $this->db->trans_start();
         if ($opc == true){
             $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
             $fileToDelete = implode($query2->result_array()[0]);
             unlink($fileToDelete);
             $x = 'null';
             $y = 'null';
-        } 
-
+        }
         $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
         $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida, ancho, altura, desviacion_x, desviacion_y) VALUES ($id,'$titulo',$fecha,'$ruta',NOW(),'$ancho','$alto',$x,$y);"); 
-        return $this->db->affected_rows();
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE){
+        $status = 0;
+        }
+        return $status;
     }
 
     function delete($id){
