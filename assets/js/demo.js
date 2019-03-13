@@ -16,6 +16,10 @@ $(document).ready(function () {
         y_coords.push(parseInt(e.pageY - offset.top));
         $("#posX").val(parseInt(x_coords[0]/zoom));
         $("#posY").val(parseInt(y_coords[0]/zoom));
+        if (isNaN(id)) {
+            id = 1;
+        }
+        $("#hsId").val(id);
         posX = x_coords[0];
         posY = y_coords[0];
     });
@@ -34,7 +38,7 @@ $(document).ready(function () {
         var titulo = $("#titulo").val();
         var contenido = $("#descripcion").val();
         if (isNaN(id)) {
-            id = 0;
+            id = 1;
         }
 
         $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posX / zoom + "' data-posy='" + posY / zoom + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img id='insImg' src='" + src + "' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
