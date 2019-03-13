@@ -20,6 +20,16 @@
             var desv_x = $('#desviacion_x_'+id).data('x');
             var desv_y = $('#desviacion_y_'+id).data('y'); 
 
+            if (desv_x == ''|| desv_y == ''){
+            $('#upd_desv_x').val('null');
+            $('#upd_desv_y').val('null');
+            } else {
+            $('#upd_desv_x').val(desv_x);
+            $('#upd_desv_y').val(desv_y);
+            }
+            
+            console.log('eeeo ' + $('#upd_desv_y').val());
+
             $('#upd_paquete').val(id_paquete);
             $('#upd_titulo').val(titulo);
             $('#upd_ancho').val(ancho);
@@ -31,8 +41,7 @@
             //campos hidden:
             $('#id_update').val(id);
             $('#ruta_original').val(img);
-            $('#upd_desv_x').val(desv_x);
-            $('#upd_desv_y').val(desv_y);
+            
 
         /*
         

@@ -47,6 +47,7 @@ input[type='search'] {
     background-color: orange !important;
 }
 
+
 .popover {
    content: attr(data-content);
    font-size: 1.5em;
