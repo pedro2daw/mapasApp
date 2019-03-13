@@ -36,7 +36,6 @@ class modelCalles extends CI_Model {
         return $data;
     }
 
-   
     public function get_maps(){
         $query = $this->db->query("SELECT id AS id_mapa,titulo FROM mapas");
 
@@ -103,7 +102,9 @@ class modelCalles extends CI_Model {
         $this->db->trans_start();
 
         $this->db->query("DELETE FROM calles WHERE id = '$id';");
-        
+        $this->db->query("DELETE FROM puntos WHERE id_calle = '$id';");
+        $this->db->query("DELETE FROM mapas_calles WHERE id_calle = '$id';");
+
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE)
@@ -135,7 +136,7 @@ class modelCalles extends CI_Model {
         
         // mas uno para que me traiga la que he añadido mediante el botón también.
         
-        for ($i = 0; $i < $length + 1 ; $i++){
+        for ($i = 0; $i < $length ; $i++){
             $query = $this->db->query("SELECT calles.id as id,calles.nombre as nombre, calles.tipo as tipo, puntos.punto_x as x, puntos.punto_y as y, puntos.id as id_punto FROM calles inner join puntos on calles.id = id_calle order by calles.id desc limit $length ");
         } 
         $id_calles_renombradas = array();

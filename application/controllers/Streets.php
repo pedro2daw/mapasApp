@@ -101,7 +101,7 @@ include_once('Security.php');
                 $data["listaCalles"] = $this->modelCalles->get_all();
                 
             } else {
-                $data = $this->modelCalles->last_inserted_calles($length);
+                $data = $this->modelCalles->last_inserted_calles($length +1);
                 $data['msg'] = '0';
                 echo json_encode($data);
             }   

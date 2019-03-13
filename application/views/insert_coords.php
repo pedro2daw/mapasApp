@@ -63,10 +63,15 @@ function changeOpacity(i){
         // Los botones Update y Delete estarán deshabilitados hasta que se seleccione una calle del listado de calles.
         $('.btn-update').prop('disabled', true);
         $('.btn-delete').prop('disabled', true);
+        $('.btn-insert-coords').prop('disabled', true);
+         $('.cb_mapas').prop('disabled', true);
+
+        
 
         // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
-        $(".hot-spot-1:last").remove();
+        // Borra el punto en el mapa:
+        $(".hot-spot-1").remove();
         id =  $(this).data('id');
         calle = $(this).text();
         nombre = $('#nombre_'+id).text(); 
@@ -77,7 +82,7 @@ function changeOpacity(i){
         if (x == null || y == null){
         console.log('Debes insertar un punto');
            } else {
-            $('#img_callejero').after("<div class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + x + "px;left:" + y + "px; display:block;'></div>");
+            $('#img_callejero').after("<div class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
         
             
         }
@@ -90,10 +95,18 @@ function changeOpacity(i){
         $('.btn-update').data('id',id);
         $('.btn-delete').prop('disabled', false);
         $('.btn-delete').data('id',id);
+        $('.btn-insert-coords').prop('disabled', false);
+        $('.cb_mapas').prop('disabled', false);
+
+    });
+
+    $('.btn-anadir').on('click',function(){
+        $(".hot-spot-1").remove();
     });
 
     // Inserción de una calle mediante Ajax:
     $('#form_insert').on('submit',function(e){
+
     var datos_calle_nueva = [{
                                 'nombre' : $("#nombre").val(),
                                 'via' : $("#tipo").val()
@@ -162,7 +175,10 @@ function changeOpacity(i){
                     $('.btn-update').prop('disabled', true);
                     $('.btn-delete').prop('disabled', true);
                     $('#calle_'+data.id).html("<td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
-
+                    if (x != null){
+                        $('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
+                    }
+                    
                 } else {
                     $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -178,6 +194,7 @@ function changeOpacity(i){
     
     // Borrar una calle mediante ajax:
     $('.btn-delete').click(function(e){
+        
         
         var next = confirm('¿Estás seguro que quieres borrar ' + calle +'?');
         var id = $(this).data('id'); 
@@ -201,6 +218,7 @@ function changeOpacity(i){
                 $('.btn-update').prop('disabled', true);
                 $('.btn-delete').prop('disabled', true);
                 $('#calle_'+id).html("");
+                $(".hot-spot-1").remove();
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -296,7 +314,7 @@ function changeOpacity(i){
                 var y = data[0].y;
                 console.log(x);
                 console.log(y);
-                for (i = 0; i < count -1 ; i++){ 
+                for (i = 0; i < count -2 ; i++){ 
                     $('#tabla_calles').append("<tr id='calle_"+data[i].id+"'> <td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='punto_"+data[i].id+"' class='d-none' data-x='"+data[i].x+"' data-y='"+data[i].y+"'> <td class='calles' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td> </tr> ");
                 }
                 $('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
@@ -305,6 +323,10 @@ function changeOpacity(i){
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
                 $('.btn-update').prop('disabled', true);
                 $('.btn-delete').prop('disabled', true);
+
+                // VACIAMOS EL ARRAY DE COORDENADAS:
+                coords_x = [];
+                coords_y = [];
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -336,7 +358,7 @@ e.preventDefault();
 
     <div class="row">
         <div class="col-md-12 botones">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Añadir Calle</button>
+            <button type="button" class="btn btn-primary btn-anadir" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Añadir Calle</button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <button type='button' class="btn btn-success btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-map-marked-alt'></span> Insertar Coordenadas</button>
