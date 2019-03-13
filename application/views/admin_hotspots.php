@@ -31,7 +31,7 @@
                 type: 'post',
                 data: {id : id_hs},
                 success: function () {
-                    console.log('SUCCESS!');
+                    minID();
                 },
                 error: function () {
                     console.log('ERROR!');
@@ -74,7 +74,7 @@
                         <div class='form-group'>
                             <label for='imagen'>Imagen</label>
                             <input type='file' class='form-control' placeholder='Introduce una imagen' name='imagen' id='imagen' required />
-                            <input type="hidden" id="hiddImg" />
+                            <input type="hidden" name="hsId" id="hsId" value=""/>
                         </div>
                         <div class='form-group'>
                             <label for='titulo'>Titulo</label>

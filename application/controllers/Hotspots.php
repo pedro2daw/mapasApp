@@ -33,13 +33,14 @@ class Hotspots extends Security {
 
             $this->image_lib->resize();  
         }*/
+        $id = $this->input->get_post('hsId');
         $titulo = $this->input->get_post('titulo');
         $descripcion = $this->input->get_post('descripcion');
         $pos_x = $this->input->get_post('posX');
         $pos_y = $this->input->get_post('posY');
         $imagen = $this->upload->data('file_name');
         $id_mapa = 0;
-        $this->modelHotspot->insert($imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
+        $this->modelHotspot->insert($id, $imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
     }
     
     public function delete_hotspot() {
