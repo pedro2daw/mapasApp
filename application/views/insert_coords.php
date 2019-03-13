@@ -285,13 +285,22 @@ function changeOpacity(i){
             console.log('llega al done');
             var msg = data.msg;
             console.log(data);
-
-
+            console.log(msg);
+ 
             if (msg == '0'){
                 $("#id_calle_warning_"+id).removeClass('warning');
-                for (i = 0; i < data.length -1 ; i++){
-                    $('#tabla_calles').append("<tr id='calle_"+data[i].id+"'> <td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='id_calle_warning_"+data[i].id+"' class='calles warning' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td> </tr>");
+                var count = Object.keys(data).length;
+                console.log('el count: ' + count);
+                                
+                var x = data[0].x;
+                var y = data[0].y;
+                console.log(x);
+                console.log(y);
+                for (i = 0; i < count -1 ; i++){ 
+                    $('#tabla_calles').append("<tr id='calle_"+data[i].id+"'> <td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='punto_"+data[i].id+"' class='d-none' data-x='"+data[i].x+"' data-y='"+data[i].y+"'> <td class='calles' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td> </tr> ");
                 }
+                $('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
+
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
                 $('.btn-update').prop('disabled', true);
