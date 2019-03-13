@@ -40,7 +40,7 @@ function changeOpacity(i){
             "info": "",
             "infoEmpty":      "",
             "infoFiltered":   "",
-            "zeroRecords":    "No se han encontrado resultados"
+            "zeroRecords":    " "     /* No hay data disponible */
         }
     });
         // Establecemos un placeholder para el buscador de calles.
@@ -75,28 +75,21 @@ function changeOpacity(i){
         y = $('#punto_'+id).data('y');
         
         if (x == null || y == null){
-    console.log('inserteloooo');
+        console.log('Debes insertar un punto');
            } else {
             $('#img_callejero').after("<div class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + x + "px;left:" + y + "px; display:block;'></div>");
         
             
         }
-        
-
         console.log("Calle seleccionada: " + id);
         console.log('Punto X: ' + x);
         console.log('Punto Y: ' + y);
-
-        
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
         $('.btn-update').prop('disabled', false);
         $('.btn-update').data('id',id);
         $('.btn-delete').prop('disabled', false);
         $('.btn-delete').data('id',id);
-
-        
- 
     });
 
     // Inserción de una calle mediante Ajax:
@@ -123,6 +116,7 @@ function changeOpacity(i){
                 $("#id_calle_warning_"+data.id).addClass('warning');
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td  id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td id='id_calle_warning_"+data.id+"' class='calles warning' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
                 } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -130,7 +124,6 @@ function changeOpacity(i){
             $('.alert').fadeIn().delay(2500).fadeOut();
             $('#nombre').val(' ');
             $('#modal_insert').modal('toggle');
-            $('#tabla_calles').append("<tr id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td  id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td id='id_calle_warning_"+data.id+"' class='calles warning' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
             
      });
 
@@ -162,12 +155,12 @@ function changeOpacity(i){
 
             // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
             .done(function(data) {
+                console.log('si llega al done');
                 if (data.msg == '0'){
                     $('.box').html('');
                     $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
                     $('.btn-update').prop('disabled', true);
                     $('.btn-delete').prop('disabled', true);
-                    
                     $('#calle_'+data.id).html("<td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
 
                 } else {
@@ -239,7 +232,7 @@ function changeOpacity(i){
     Si ha sido renombrada, se realizará la inserción de esa nueva calle en el mismo punto.
     */
 
-    $(".btn-insert-coords").on('click', function(){
+    $(".btn-insert-coords").on('click', function(e){
     var mapas_selected = [];
     var mapas_unselected = [];
     var nuevos_nombres = [];
@@ -278,7 +271,7 @@ function changeOpacity(i){
         'id_calle' : id_calle,
         'nuevos_nombres' : nuevos_nombres
     };
-    console.log(formData);
+    // console.log(formData);
 
     $.ajax({
         type     : "POST",
@@ -289,13 +282,18 @@ function changeOpacity(i){
         encode : true
         })
         .done(function(data) {
-            console.log('DATA: ' + data);
-            var msg = $.parseJSON(data);
-            if (msg == '0'){
-                                $("#id_calle_warning_"+id).removeClass('warning');
+            console.log('llega al done');
+            var msg = data.msg;
+            console.log(data);
 
+
+            if (msg == '0'){
+                $("#id_calle_warning_"+id).removeClass('warning');
+                for (i = 0; i < data.length -1 ; i++){
+                    $('#tabla_calles').append("<tr id='calle_"+data[i].id+"'> <td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='id_calle_warning_"+data[i].id+"' class='calles warning' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td> </tr>");
+                }
                 $('.box').html('');
-                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
                 $('.btn-update').prop('disabled', true);
                 $('.btn-delete').prop('disabled', true);
             } else {
@@ -303,8 +301,11 @@ function changeOpacity(i){
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
-        });
+});
+e.preventDefault();
+
     });
+
 });
 
 </script>

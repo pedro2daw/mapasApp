@@ -94,18 +94,37 @@ class modelCalles extends CI_Model {
     }
 
     public function get($id){       
-        $query = $this->db->query("SELECT calles.id as id,calles.nombre as nombre,calles.tipo as tipo, puntos.punto_x as x, puntos.punto_y as y FROM calles INNER JOIN mapas_calles on calles.id = mapas_calles.id_calle inner join puntos on calles.id = puntos.id_calle where calles.id = '$id';");
+        $query = $this->db->query("SELECT calles.id as id,calles.nombre as nombre,calles.tipo as tipo, puntos.punto_x as x, puntos.punto_y as y FROM calles LEFT JOIN mapas_calles on calles.id = mapas_calles.id_calle LEFT join puntos on calles.id = puntos.id_calle where calles.id = '$id';");
         return $query->result_array()[0];
     }
 
+    public function last_inserted_calles($length){
+        
+        // mas uno para que me traiga la que he añadido mediante el botón también.
+        
+        for ($i = 0; $i < $length ; $i++){
+            $query = $this->db->query("SELECT calles.id as id,calles.nombre as nombre, calles.tipo as tipo, puntos.punto_x as x, puntos.punto_y as y, puntos.id as id_punto FROM calles inner join puntos on calles.id = id_calle order by calles.id desc limit $length ");
+        } 
+        $id_calles_renombradas = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $id_calles_renombradas[] = $row;
+                }
+            }
+
+        return $id_calles_renombradas;
+            
+    }
+
     public function insert_coords($x,$y,$id_calle,$mapas_selected,$mapas_unselected){
+        $this->db->trans_start();
         if (isset($mapas_selected)){
         for($i = 0; $i < count($mapas_selected) ; $i++){
             $mapa = $mapas_selected[$i];
             $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null, '$id_calle');");
         }
         $this->db->query("INSERT INTO puntos VALUES (null,$x,$y,$id_calle)");
-         return $this->db->affected_rows();
+         // return $this->db->affected_rows();
         }
 
         // si no es null:
@@ -120,14 +139,26 @@ class modelCalles extends CI_Model {
             }
             for($i = 0; $i < count($mapas_unselected) ; $i++){
                 $mapa = $mapas_unselected[$i];
-                var_dump($mapa);
                 $id_calle = $id_calles_renombradas[$i]['id'];
-                $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null, '$id_calle');");
+                $this->db->query("INSERT INTO mapas_calles VALUES($mapa,null,'$id_calle');");
                 $this->db->query("INSERT INTO puntos VALUES(null,$x,$y,$id_calle)");
-                return $this->db->affected_rows();
             }
         }
-        return $this->db->affected_rows();
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            var_dump('error en la(s) consulta(s)');
+
+            $this->db->trans_rollback();
+            $status = 0;
+            return $status;
+        } else {
+            $this->db->trans_commit();
+            $status = 1;
+            return $status;
+        }
+        
     }
 
     public function get_next_id(){

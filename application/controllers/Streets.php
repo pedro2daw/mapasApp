@@ -87,25 +87,23 @@ include_once('Security.php');
             $y = $this->input->post('y');
             $mapas_selected = json_decode($this->input->post('id_mapas_selected'));
             $mapas_unselected = json_decode($this->input->post('id_mapas_unselected'));
+            $length = count($mapas_unselected);
             $calles_nuevas = $this->input->post('nuevos_nombres');
             $id_calle = $this->input->post('id_calle');
 
             if (isset($calles_nuevas)){
             $r1 = $this->modelCalles->insert_street($calles_nuevas);
-            }
-            
+            } 
             $r = $this->modelCalles->insert_coords($x,$y,$id_calle,$mapas_selected, $mapas_unselected);
-
             if ($r == 0){
                 $data["msg"] = "1";
                 $data["listaMapas"] = $this->modelMapas->get_all();
                 $data["listaCalles"] = $this->modelCalles->get_all();
                 
             } else {
+                $data = $this->modelCalles->last_inserted_calles($length);
                 $data['msg'] = '0';
-                $data["listaCalles"] = $this->modelCalles->get_all();
-
-                echo json_encode($data['msg']);
+                echo json_encode($data);
             }   
         }
         

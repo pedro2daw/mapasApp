@@ -25,7 +25,7 @@
                 
                 if(cont == 0){
                 
-                    alert("Has seleccionado el punto " + x_def + " / " + y_def);
+                    //alert("Has seleccionado el punto " + x_def + " / " + y_def);
                     next =  confirm("¿Estás seguro que quieres seleccionar ese punto");
                     if(next == true){
                     desviacion_x[0] = (parseInt(e.pageX - offset.left));
@@ -36,7 +36,7 @@
                     }                
                 }else{
                     
-                alert("Has seleccionado el punto " + x_def + " / " + y_def);
+                //alert("Has seleccionado el punto " + x_def + " / " + y_def);
                 next =  confirm("¿Estás seguro que quieres seleccionar ese punto");
                         if (next == true){
                             desviacion_x.push(desviacion_x[0]-(parseInt(e.pageX - offset.left)));
@@ -83,15 +83,12 @@
             $("#superponer").addClass("hidden");
             $("#toJson").removeClass("hidden");
 
-            alert("X antes de splice" + desviacion_x);
-            alert("Y antes de splice" + desviacion_y);
+            // alert("X antes de splice" + desviacion_x);
+            // alert("Y antes de splice" + desviacion_y);
             desviacion_x.splice(0,1);
             desviacion_y.splice(0,1);
             });
-                $("#coord").click(function(){
-                    alert(desviacion_x);
-                    alert(desviacion_y);
-                });
+                
 
             $("#toJson").click(function(){
 
