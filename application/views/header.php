@@ -13,10 +13,10 @@
     <!-- LOS ICONOS FONTAWESOME -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <!-- DATATABLES: -->
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>    
-    
-	
-   
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+
+
     <!-- ESTILOS PROPIOS:-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
@@ -57,14 +57,22 @@
 
     </script>
     <style>
-       .botones {
-           margin-bottom: 30px;
-       }
+        #titulo-selec-mapa {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+        .botones {
+            margin-bottom: 30px;
+        }
+
         #slide {
             display: flex;
             min-height: 0;
             min-width: 0;
         }
+
         #hotspotImg {
             overflow: auto;
             display: grid;
@@ -107,8 +115,10 @@
             width: 30px;
             color: #0056b3;
         }
+
         /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
-        #mapa,#super{
+        #mapa,
+        #super {
             overflow: auto;
             /*width: 1000px;*/
             height: 550px;
@@ -122,23 +132,26 @@
             /*margin-right: 20px;*/
         }
 
-        #mapa:active:hover,#super:active:hover {
+        #mapa:active:hover,
+        #super:active:hover {
             cursor: grabbing;
         }
 
-        .hidden{
+        .hidden {
             display: none !important;
         }
+
         /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
+
     </style>
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="nav nav-pills flex-column flex-sm-row">
-                <?php
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="nav nav-pills flex-column flex-sm-row">
+                    <?php
                 if (isset($this->session->userdata["id"])) {
                     $id = $this->session->userdata["id"];
                     $nivel = $this->modelUser->getNivel($id);
@@ -148,14 +161,14 @@
                         else {
                             if ($nivel == 2) {
                                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Hotspots/select_maps/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Users/view_users/','Admin Usuarios','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt fa-2x active"');
                             }
                             else if ($nivel == 1) {
                                 echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                                echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Hotspots/select_maps/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt fa-2x active"');
                             }
@@ -164,14 +177,14 @@
                     else {
                         if ($nivel == 2) {
                             echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                            echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Hotspots/select_maps/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Users/view_users/','Admin Usuarios','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt fa-2x active"');
                         }
                         else if ($nivel == 1) {
                             echo anchor('Maps/index/','Mapas','class="flex-sm-fill text-sm-center nav-link"');
-                            echo anchor('Hotspots/view_hotspots/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Hotspots/select_maps/','Puntos de Interés','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Streets/view_admin_streets/','Calles','class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Login/logout',' ','class="flex-sm-fill text-sm-center nav-link fas fa-sign-out-alt fa-2x active"');
                         }
@@ -179,7 +192,7 @@
                 }
                 
                 ?>
-            </nav>
+                </nav>
+            </div>
         </div>
     </div>
-</div>

@@ -1,8 +1,19 @@
 <?php
 class modelHotspot extends CI_Model {
     
-    public function get_all() {
-        $query = $this->db->query("SELECT * FROM hotspots;"); 
+    public function get_all($id_mapa) {
+        $query = $this->db->query("SELECT * FROM hotspots WHERE id_mapa = $id_mapa;"); 
+        $data = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $data[] = $row;
+                }
+            }
+        return $data;
+    }
+    
+    public function get_mapas() {
+        $query = $this->db->query("SELECT id, titulo, imagen FROM mapas;");
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){
@@ -17,8 +28,8 @@ class modelHotspot extends CI_Model {
         return $this->db->affected_rows();
     }
     
-    public function delete($id) {
-        $query = $this->db->query("DELETE FROM hotspots WHERE id = $id;");
+    public function delete($id, $id_mapa) {
+        $query = $this->db->query("DELETE FROM hotspots WHERE id = $id AND id_mapa = $id_mapa;");
         return $this->db->affected_rows();
     }
     

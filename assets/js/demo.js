@@ -4,7 +4,8 @@ $(document).ready(function () {
     var id = parseInt($(".hot-spot").last().attr("id")) + 1;
     var src;
     var zoom = 1;
-    var actWdth;
+    var actWdth,
+        id_mapa;
 
     // Obtencion de las coordenadas del mapa
     $('.img-responsive').click(function (e) {
@@ -20,6 +21,8 @@ $(document).ready(function () {
             id = 1;
         }
         $("#hsId").val(id);
+        id_mapa = $("#slide").data("id-mapa");
+        $("#mapId").val(id_mapa);
         posX = x_coords[0];
         posY = y_coords[0];
     });
@@ -29,7 +32,7 @@ $(document).ready(function () {
         $('#myModal').modal('toggle');
     });
 
-    // Obtencion del src de la imagen del punto
+    // Obtencion del src de la imagen del punto (cuidado con URL absoluta)
     $('#imagen').change(function (e) {
         src = "http://localhost/mapasApp/assets/img/img_hotspots/" + e.target.files[0].name;
     });
