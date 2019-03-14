@@ -19,7 +19,7 @@ class Maps extends Security {
         // $nivel = $this->input->get_post('nivel');
         // Obtenemos el ultimo id para cambiar el nombre del archivo subido:
         $ultimoId = $this->modelMapas->get_next_id();
-        var_dump($ultimoId);
+        
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
         $ciudad_format = $this->modelMapas->format($ciudad);
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);

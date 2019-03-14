@@ -65,7 +65,7 @@ class modelCalles extends CI_Model {
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE)
         {
-            var_dump('error en la(s) consulta(s)');
+            // var_dump('error en la(s) consulta(s)');
 
             $this->db->trans_rollback();
             $status = 0;
@@ -86,7 +86,7 @@ class modelCalles extends CI_Model {
 
         if ($this->db->trans_status() === FALSE)
         {
-            var_dump('error en la(s) consulta(s)');
+            // var_dump('error en la(s) consulta(s)');
 
             $this->db->trans_rollback();
             $status = 0;
@@ -109,7 +109,7 @@ class modelCalles extends CI_Model {
 
         if ($this->db->trans_status() === FALSE)
         {
-            var_dump('error en la(s) consulta(s)');
+            // var_dump('error en la(s) consulta(s)');
 
             $this->db->trans_rollback();
             $status = 0;
@@ -182,7 +182,7 @@ class modelCalles extends CI_Model {
 
         if ($this->db->trans_status() === FALSE)
         {
-            var_dump('error en la(s) consulta(s)');
+            // var_dump('error en la(s) consulta(s)');
 
             $this->db->trans_rollback();
             $status = 0;
