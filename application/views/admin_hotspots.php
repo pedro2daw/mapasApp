@@ -24,12 +24,14 @@
         
         $('div').on("contextmenu", ".hot-spot", function (e) {
             var id_hs = this.id;
+            var id_mapa = $("#slide").data("id-mapa");
             if (confirm("¿Seguro que quieres borrar el punto?")) {
                 $("#" + id_hs).remove();
                 $.ajax({
                 url: "<?php echo base_url(); ?>index.php/Hotspots/delete_hotspot",
                 type: 'post',
-                data: {id : id_hs},
+                data: {id : id_hs,
+                       id_mapa : id_mapa},
                 success: function () {
                     minID();
                 },
@@ -75,6 +77,7 @@
                             <label for='imagen'>Imagen</label>
                             <input type='file' class='form-control' placeholder='Introduce una imagen' name='imagen' id='imagen' required />
                             <input type="hidden" name="hsId" id="hsId" value=""/>
+                            <input type="hidden" name="mapId" id="mapId" value=""/>
                         </div>
                         <div class='form-group'>
                             <label for='titulo'>Titulo</label>
@@ -104,7 +107,7 @@
     <!-- ENTORNO DONDE SE CREA EL PUNTO -->
     <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
-        <img src="<?php echo base_url("/assets/img/mapas/1.jpg"); ?>" id="slide" class="img-responsive span4 proj-div" data-target="#myModal">
+        <img src="<?php echo base_url("$urlImg"); ?>" id="slide" data-id-mapa="<?php echo "$id_mapa" ?>" class="img-responsive span4 proj-div" data-target="#myModal">
 
         <?php 
         foreach ($ListaHotspots as $hotspot) {
