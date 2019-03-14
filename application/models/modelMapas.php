@@ -114,7 +114,7 @@ class modelMapas extends CI_Model {
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('img_mapa')){
-            echo $this->upload->display_errors();
+            // echo $this->upload->display_errors();
             $img_name = false;
         }else{
             $img_name = $this->upload->data('file_name'); 
@@ -133,7 +133,7 @@ class modelMapas extends CI_Model {
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('upd_img')){
-            echo $this->upload->display_errors();
+            // echo $this->upload->display_errors();
             $img_name = false;
         }else{
             $img_name = $this->upload->data('file_name'); 
@@ -152,7 +152,7 @@ class modelMapas extends CI_Model {
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('upd_img')){
-            echo $this->upload->display_errors();
+            // echo $this->upload->display_errors();
             $img_name = false;
         }else{
             $img_name = $this->upload->data('file_name'); 
