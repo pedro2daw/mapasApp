@@ -36,7 +36,6 @@ class modelCalles extends CI_Model {
         return $data;
     }
 
-   
     public function get_maps(){
         $query = $this->db->query("SELECT id AS id_mapa,titulo FROM mapas");
 
@@ -57,34 +56,69 @@ class modelCalles extends CI_Model {
     }
 
     public function insert_street($calle_nueva){
-        // 0 sería error.
-        $status = '1';
         $this->db->trans_start();
         for($i = 0; $i < count($calle_nueva) ; $i++){
             $nombre = $calle_nueva[$i]['nombre'];
             $tipo = $calle_nueva[$i]['via'];
-
-            $this->db->query("INSERT INTO calles (id,nombre,tipo)
-                        VALUES (null,'$nombre','$tipo');");
-                        
-            if ($this->db->trans_status() === FALSE) {
-            // generate an error... or use the log_message() function to log your error
-            var_dump('error en la(s) consulta(s)');
-            $status = '0';
-            } 
+            $this->db->query("INSERT INTO calles (id,nombre,tipo) VALUES (null,'$nombre','$tipo');");
         }
         $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE)
+        {
+            var_dump('error en la(s) consulta(s)');
+
+            $this->db->trans_rollback();
+            $status = 0;
+            return $status;
+        } else {
+            $this->db->trans_commit();
+            $status = 1;
+            return $status;
+        }
         return $status;
     }
 
     public function update_street($id,$nombre,$tipo){
-        $this->db->query("DELETE FROM calles WHERE id = '$id';");
-        $this->db->query("INSERT INTO calles (id,nombre,tipo) VALUES ('$id','$nombre','$tipo');");
-        return $this->db->affected_rows();
+        $this->db->trans_start();
+            $this->db->query("DELETE FROM calles WHERE id = '$id';");
+            $this->db->query("INSERT INTO calles (id,nombre,tipo) VALUES ('$id','$nombre','$tipo');");
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            var_dump('error en la(s) consulta(s)');
+
+            $this->db->trans_rollback();
+            $status = 0;
+            return $status;
+        } else {
+            $this->db->trans_commit();
+            $status = 1;
+            return $status;
+        }
+       
     }
     public function delete_street($id){
+        $this->db->trans_start();
+
         $this->db->query("DELETE FROM calles WHERE id = '$id';");
-        return $this->db->affected_rows();
+        $this->db->query("DELETE FROM puntos WHERE id_calle = '$id';");
+        $this->db->query("DELETE FROM mapas_calles WHERE id_calle = '$id';");
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE)
+        {
+            var_dump('error en la(s) consulta(s)');
+
+            $this->db->trans_rollback();
+            $status = 0;
+            return $status;
+        } else {
+            $this->db->trans_commit();
+            $status = 1;
+            return $status;
+        }
     }
 
 
