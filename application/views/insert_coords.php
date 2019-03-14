@@ -50,12 +50,10 @@ function changeOpacity(i){
         // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
         $("input[type='search']").addClass('form-control');
         /*
-        
         $("input[type='search']").click( function () {
-            $(this).val('');
-            });
-
-            */
+            $(this).val('').change();           
+             });
+             */
         // Cargamos los tooltip de bootstrap:
         $(function () {
          $('[data-toggle="tooltip"]').tooltip();
@@ -64,7 +62,7 @@ function changeOpacity(i){
         $('.btn-update').prop('disabled', true);
         $('.btn-delete').prop('disabled', true);
         $('.btn-insert-coords').prop('disabled', true);
-         $('.cb_mapas').prop('disabled', true);
+        $('.cb_mapas').prop('disabled', true);
 
         
 
@@ -73,6 +71,7 @@ function changeOpacity(i){
         // Borra el punto en el mapa:
         $(".hot-spot-1").remove();
         id =  $(this).data('id');
+        console.log('id: ' + id);
         calle = $(this).text();
         nombre = $('#nombre_'+id).text(); 
         tipo = $('#tipo_'+id).text();
@@ -83,9 +82,8 @@ function changeOpacity(i){
         console.log('Debes insertar un punto');
            } else {
             $('#img_callejero').after("<div class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
-        
-            
         }
+
         console.log("Calle seleccionada: " + id);
         console.log('Punto X: ' + x);
         console.log('Punto Y: ' + y);
@@ -171,7 +169,7 @@ function changeOpacity(i){
                 console.log('si llega al done');
                 if (data.msg == '0'){
                     $('.box').html('');
-                    $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                    $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
                     $('.btn-update').prop('disabled', true);
                     $('.btn-delete').prop('disabled', true);
                     $('#calle_'+data.id).html("<td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
@@ -180,7 +178,7 @@ function changeOpacity(i){
                     }
                     
                 } else {
-                    $('.box').html('');
+                $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
                 }
                 $('.alert').fadeIn().delay(2500).fadeOut();
@@ -253,8 +251,9 @@ function changeOpacity(i){
     $(".btn-insert-coords").on('click', function(e){
     var mapas_selected = [];
     var mapas_unselected = [];
+    var checkboxes_unselected = [];
     var nuevos_nombres = [];
-
+    
     /* Recorremos todos los checkbox que NO están chequeados */
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
         var id_mapa = $(this).val();
@@ -262,15 +261,29 @@ function changeOpacity(i){
         if (nombre_nuevo != ''){
             nuevos_nombres.push({'nombre' : nombre_nuevo , 'via' : tipo });
             mapas_unselected.push(id_mapa);
-
+            var cont = cont + 1;
         }
+        checkboxes_unselected.push(cont);
     });
     /* Recorremos todos los checkbox que SI están chequeados */
     $('.cb_mapas:checked').each(function() {
     var id = $( this ).val();
     mapas_selected.push(id);
     });
-
+    
+    // Comprobación para la inserción de coordenadas:
+    // Si el número total de checkboxes es igual al número de checkboxes no seleccionados y tampoco se han insertado nuevos nombres en los inputs se realizará la condición if.
+    if( $('.cb_mapas').length == checkboxes_unselected.length && nuevos_nombres.length == 0 ){
+        alert('Seleccione al menos un mapa.');
+    } else {
+    if (! $('#id_calle_warning_'+id).hasClass('warning')){
+        alert('La calle seleccionada ya tiene las coordenadas establecidas, seleccione una en color naranja.');
+    } else {
+    if (coords_x.length  == 0){
+        alert('Debes indicar la localización de esta calle en mapa haciendo doble click.');
+    } else {
+    var next = confirm('Vas a establecer coordenadas para ' + tipo +" "+ nombre +'.');
+    if (next){
     // Envío de datos mediante ajax:
     console.log('Mapas seleccionados ' + mapas_selected);
     console.log('Calle seleccionada ' + id);
@@ -300,7 +313,6 @@ function changeOpacity(i){
         encode : true
         })
         .done(function(data) {
-            console.log('llega al done');
             var msg = data.msg;
             console.log(data);
             console.log(msg);
@@ -308,22 +320,28 @@ function changeOpacity(i){
             if (msg == '0'){
                 $("#id_calle_warning_"+id).removeClass('warning');
                 var count = Object.keys(data).length;
-                console.log('el count: ' + count);
-                                
+           
                 var x = data[0].x;
                 var y = data[0].y;
                 console.log(x);
                 console.log(y);
+
                 for (i = 0; i < count -2 ; i++){ 
                     $('#tabla_calles').append("<tr id='calle_"+data[i].id+"'> <td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='punto_"+data[i].id+"' class='d-none' data-x='"+data[i].x+"' data-y='"+data[i].y+"'> <td class='calles' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td> </tr> ");
                 }
-                $('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
 
+                // Si la calle se añade y se inserta sin refrescar:
+                if ($('#punto_'+id) == null){
+                $('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
+                } else {
+                // Si la calle se añade, se refresca y se inserta posteriormente:
+                // No se realiza el append y tiene que updatear una row punto_id
+                $('#calle_'+id).html("<td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='punto_"+data[i].id+"' class='d-none' data-x='"+data[i].x+"' data-y='"+data[i].y+"'> <td class='calles' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td>");
+                }
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
                 $('.btn-update').prop('disabled', true);
                 $('.btn-delete').prop('disabled', true);
-
                 // VACIAMOS EL ARRAY DE COORDENADAS:
                 coords_x = [];
                 coords_y = [];
@@ -333,6 +351,10 @@ function changeOpacity(i){
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
 });
+}// fin if mapas
+}// fin if warning
+}// fin confirm
+}// fin if puntos
 e.preventDefault();
 
     });
@@ -390,7 +412,7 @@ e.preventDefault();
                                 echo "<td id='punto_".$calle["id"]."' class='d-none' data-x='".$calle['x']."' data-y='".$calle['y']."'></td>";
                                 echo "<td class='calles' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
                             } else {
-                                echo "<td id='punto_".$calle["id"]."' class='d-none' data-x='null' data-y='null'>".$calle["nombre"]."</td>";
+                                echo "<td id='punto_".$calle["id"]."' class='d-none warning_puntos' data-x='null' data-y='null'></td>";
                                 echo "<td id=id_calle_warning_".$calle["id"]." class='calles warning' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
                             }
                             echo "</tr>";
