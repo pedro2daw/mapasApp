@@ -64,11 +64,60 @@ function changeOpacity(i){
         $('.btn-insert-coords').prop('disabled', true);
         $('.cb_mapas').prop('disabled', true);
 
-        
+        $(document).on( "mouseover", ".hot-spot-1",function(e) {
+            $('.hot-spot-1').css('cursor', 'pointer');
+
+        });
+
+        $(document).on( "click", ".hot-spot-1",function(e) {
+            $('#lista_puntos').html('');
+            var x = $(this).attr('x');
+            var y = $(this).attr('y');
+            
+            console.log(x + " "+ y);
+
+    var formData = {
+        'x' : x,
+        'y' : y
+        };
+    // console.log(formData);
+
+    $.ajax({
+        type     : "POST",
+        cache    : false,
+        url      : "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
+        data     : formData,
+        dataType : 'json',
+        encode : true
+        })
+        .done(function(data) {
+            var msg = data.msg;
+            console.log(data);
+            var count = Object.keys(data).length;
+            $('#modal_puntos').modal('toggle');
+
+            if (msg == '0'){
+                for (i = 0; i < count -1 ; i++){
+                    $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
+                }
+            } else {
+                }
+            
+});
+e.preventDefault();
+
+});
+
+
 
         // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
         // Borra el punto en el mapa:
+        var top = $('#prueba').scrollTop();
+        var left = $('#prueba').scrollLeft();
+        console.log(" ******************* ");
+        console.log("top y left "+ top + " " +left );
+
         $(".hot-spot-1").remove();
         id =  $(this).data('id');
         console.log('id: ' + id);
@@ -80,9 +129,16 @@ function changeOpacity(i){
         
         if (x == null || y == null){
         console.log('Debes insertar un punto');
-           } else {
-            $('#img_callejero').after("<div class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
+        } else {
+            $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
         }
+        var offset = $(this).offset();
+
+        
+        $('#prueba').scrollTop(y - ($('#prueba').height() /2) ); 
+        $('#prueba').scrollLeft(x - ($('#prueba').width() /2)); 
+        console.log(offset);
+
 
         console.log("Calle seleccionada: " + id);
         console.log('Punto X: ' + x);
@@ -576,6 +632,29 @@ e.preventDefault();
             </div> <!-- fin modal content -->
         </div>
     </div>
+
+
+        <!-- Modal puntos -->
+    <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nombres de esta calle en los mapas:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul id='lista_puntos'>
+                    <ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div> <!-- fin container fluid -->
 
 

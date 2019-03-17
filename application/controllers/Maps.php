@@ -76,6 +76,10 @@ class Maps extends Security {
         }
     }     
 
+    public function get_streets_associated_to_coord(){
+        
+    }
+
     public function update() {
         $id = $this->input->get_post('id_update');
         $titulo = $this->input->get_post('upd_titulo');

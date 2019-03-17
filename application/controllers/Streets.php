@@ -67,6 +67,20 @@ include_once('Security.php');
             }
         }
 
+        public function get_streets_associated_to_coord(){
+            $y = $this->input->post('y');
+            $x = $this->input->post('x');
+            $data = $this->modelCalles->get_streets_associated_to_coord($x,$y);
+            if ($data == 0){
+                $data["msg"] = "1";
+                $data["listaMapas"] = $this->modelMapas->get_all();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+            } else {
+                $data['msg'] = '0';
+                echo json_encode($data);
+            }   
+        }
+
         public function delete_street() {
             $id = $this->input->post('id');
             
