@@ -15,8 +15,8 @@ $(document).ready(function () {
         var offset = $(this).offset();
         x_coords.push(parseInt(e.pageX - offset.left));
         y_coords.push(parseInt(e.pageY - offset.top));
-        $("#posX").val(parseInt(x_coords[0]/zoom));
-        $("#posY").val(parseInt(y_coords[0]/zoom));
+        $("#posX").val(parseInt(x_coords[0] / zoom));
+        $("#posY").val(parseInt(y_coords[0] / zoom));
         if (isNaN(id)) {
             id = 1;
         }
@@ -46,9 +46,9 @@ $(document).ready(function () {
 
         $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posX / zoom + "' data-posy='" + posY / zoom + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img id='insImg' src='" + src + "' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
         $(this).attr("data-dismiss", "modal");
-        
+
         $("#hiddImg").data("img", src);
-        
+
         $('#hotspotImg').hotSpot({
 
             mainselector: '#hotspotImg',
@@ -79,14 +79,14 @@ $(document).ready(function () {
         $("#nivelMod").val(niv);
     });
 
-    // Aumentar tamaño del mapa manteniendo la posicion de los puntos
+    // Aumentar tamaño del mapa de los puntos de interes manteniendo la posicion de los puntos
     $("#slide").on("wheel", function (e) {
         var e0 = e.originalEvent,
             delta = e0.wheelDelta || -e0.detail;
 
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
         e.preventDefault();
-        actWdth = $("#slide").width()*zoom;
+        actWdth = $("#slide").width() * zoom;
         if (e.originalEvent.deltaY < 0) {
             if (actWdth < 4000) {
                 zoom += 0.04;
@@ -109,6 +109,31 @@ $(document).ready(function () {
             $(this).removeAttr("style");
             $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
         });
+    });
+
+    //Aumentar el tamaña del mapa con las calles manteniendo los puntos
+    $("#hotspotImg-1").on("wheel", function (e) {
+        var e0 = e.originalEvent,
+            delta = e0.wheelDelta || -e0.detail;
+
+        this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+        e.preventDefault();
+        actWdth = $("#hotspotImg-1").width() * zoom;
+        if (e.originalEvent.deltaY < 0) {
+            if (actWdth < 4000) {
+                zoom += 0.04;
+            }
+            $("#hotspotImg-1").css("transition", "transform 1s");
+            $("#hotspotImg-1").css("transform-origin", "top left");
+            $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
+        } else {
+            if (actWdth > 1100) {
+                zoom -= 0.04;
+            }
+            $("#hotspotImg-1").css("transition", "transform 1s");
+            $("#hotspotImg-1").css("transform-origin", "top left");
+            $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
+        }
     });
 
     // Resetear la posicion del mapa al inicial
