@@ -39,7 +39,9 @@
                 var x_temp = parseInt((e.pageX - offset.left) - 5);
                 var y_temp = (parseInt(e.pageY - offset.top) - 5);
                 $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
-                $(this).after("<div class='hot-spot-1' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp + "px;left:" + x_temp + "px; display:block;'></div>");
+                            console.log('la x y la y del hotspot: ' + x_temp + " " +y_temp + " zoom: " +zoom);
+
+                $(this).after("<div class='hot-spot-1' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp  / zoom  + "px;left:" + x_temp  / zoom + "px; display:block;'></div>");
             });
             $("#show").click(function() {
                 alert("Las coordenadas del eje x son: " + coords_x);
