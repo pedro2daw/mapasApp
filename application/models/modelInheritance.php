@@ -23,4 +23,8 @@ class modelInheritance extends CI_Model{
         return $data;
     }
     
+    public function insert_streets() {
+        
+    }
+    
 } // cierra class modelUser

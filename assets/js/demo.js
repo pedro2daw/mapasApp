@@ -136,11 +136,22 @@ $(document).ready(function () {
         }
     });
 
-    //
-    $("#tipoHerencia").val($(".herenciaOculto").data("tipo"));
-    $(".checkNombre").on("change", function() {
-        $(".herenciaNombre").prop("disabled", false);
-        $("#tipoHerencia").prop("disabled", false);
+    //Formulario de herencia
+    $(".idHerencia").each(function() {
+        var id = $(this).val();
+        var nombre = $("#herenciaNombre" + id).val();
+        $("#tipoHerencia" + id).val($("#herenciaOculto" + id).data("tipo"));
+        $("#checkNombre" + id).on("change", function() {
+            if (!$("#checkNombre" + id).is(":checked")) {
+                $("#herenciaNombre" + id).prop("disabled", false);
+                $("#herenciaNombre" + id).val("");
+                $("#tipoHerencia" + id).prop("disabled", false);
+            } else {
+                $("#herenciaNombre" + id).prop("disabled", true);
+                $("#herenciaNombre" + id).val(nombre);
+                $("#tipoHerencia" + id).prop("disabled", true);
+            }
+        });
     });
     
 });

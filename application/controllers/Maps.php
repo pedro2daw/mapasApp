@@ -53,6 +53,10 @@ class Maps extends Security {
         $r = $this->modelMapas->insert($titulo, $fecha, $ruta);
         
         if ($heredar != "") {
+            $data['img_size'] = $this->modelMapas->get_img_size($ruta);
+            $ancho = $data['img_size'][0];
+            $alto = $data['img_size'][1];
+            $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
             $data["listaCalles"] = $this->modelInheritance->get_calles_mapa($heredar);
             $data["viewName"] = "admin_inheritance";
             $this->load->view('template',$data);

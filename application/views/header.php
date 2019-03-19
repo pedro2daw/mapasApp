@@ -58,7 +58,7 @@
         });
 
     </script>
-    <style>
+    <style>        
         #tablaHerencia {
             margin: 1%;
             margin-top: 3%;
