@@ -17,7 +17,8 @@ function changeOpacity(i){
       }
 
     $(document).ready( function (){
-
+        $("#check_mapas").modal('toggle');
+        
         $(document).on("input","#slider_callejero",function(){
          var opacity = $(this).val();
 
@@ -144,14 +145,10 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
         if (x == null || y == null){
         console.log('Debes insertar un punto');
         } else {
-            $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x / zoom + "'y='" + y / zoom + "'style='z-index:1000 ; top:" + y+ "px;left:" + x+ "px; display:block;'></div>");
-            if (zoom > 1.30){
-                $('#prueba').scrollTop(y * (top -5 )); 
-                $('#prueba').scrollLeft(x * (left -5 ));
-            } else {
+            $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
+            
                 $('#prueba').scrollTop(y - ($('#prueba').height() /2) -5 ); 
                 $('#prueba').scrollLeft(x - ($('#prueba').width() /2) -5 );
-            }
             
         }
         
@@ -276,7 +273,7 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
                        //$('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
                     } else {
                         $(rowNode).find('td').eq(2).attr({'id': 'punto_'+data.id , 'data-x' : null, 'data-y' : null });
-                        $(rowNode).find('td').eq(3).attr({'data-id': data.id}).addClass('calles warning').text(data.tipo + " " + data.nombre );
+                        $(rowNode).find('td').eq(3).attr({'id': 'id_calle_warning_'+data.id , 'data-id': data.id}).addClass('calles warning').text(data.tipo + " " + data.nombre );
                     // $('#calle_'+data.id).html("<td id='tipo_"+id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td id='id_calle_warning_"+id+"' class='calles warning' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
                     }
 
@@ -463,6 +460,8 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
                 // VACIAMOS EL ARRAY DE COORDENADAS:
                 coords_x = [];
                 coords_y = [];
+                $(".hot-spot-1").remove();
+
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -477,15 +476,15 @@ e.preventDefault();
 
     });
 
-
+/*
     
-    $(".btn-link-street##############################-to-point").on('click', function(e){
+    $(".btn-link-street-to-point").on('click', function(e){
     var mapas_selected = [];
     var mapas_unselected = [];
     var checkboxes_unselected = [];
     var nuevos_nombres = [];
     
-    /* Recorremos todos los checkbox que NO están chequeados */
+    // Recorremos todos los checkbox que NO están chequeados 
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
         var id_mapa = $(this).val();
         var nombre_nuevo = $('#rename_calle_en_mapa_'+id_mapa).val();
@@ -496,7 +495,7 @@ e.preventDefault();
         }
         checkboxes_unselected.push(cont);
     });
-    /* Recorremos todos los checkbox que SI están chequeados */
+    // Recorremos todos los checkbox que SI están chequeados 
     $('.cb_mapas:checked').each(function() {
     var id = $( this ).val();
     mapas_selected.push(id);
@@ -508,7 +507,7 @@ e.preventDefault();
         alert('Seleccione al menos un mapa.');
     } else {
     if (coords_x.length  == 0 && x == null){
-        alert('Debes indicar la localización de esta calle en mapa haciendo doble click.');
+        alert('Debes seleccionar la calle que quieres renombrar.');
     }else {
     if (! $('#id_calle_warning_'+id).hasClass('warning')){
         alert('Vas a renombrar esta calle.');
@@ -531,11 +530,10 @@ e.preventDefault();
     var json_y = JSON.stringify(coords_y[0]) / zoom -5;
 
     var formData = {
-        'x' : json_x,
-        'y' : json_y,
+        'x' : x,
+        'y' : y,
         'id_mapas_selected' : json_mapas_selected,
         'id_mapas_unselected' : json_mapas_unselected,
-        'id_calle' : id_calle,
         'nuevos_nombres' : nuevos_nombres
     };
     // console.log(formData);
@@ -543,7 +541,7 @@ e.preventDefault();
     $.ajax({
         type     : "POST",
         cache    : false,
-        url      : "<?php echo base_url(); ?>index.php/Streets/insert_coords",
+        url      : "<?php echo base_url(); ?>index.php/Streets/link_coords",
         data     : formData,
         dataType : 'json',
         encode : true
@@ -605,12 +603,16 @@ e.preventDefault();
 e.preventDefault();
 
     });
-
+*/
 
 });
 
 </script>
+
+
 <div class="container-fluid">
+<?php if( count($listaMapas) > 0 ){ ?>
+
     <div class='box'>
         <?php
             if (isset($msg)){
@@ -623,7 +625,10 @@ e.preventDefault();
                         break;
                     }
                 }
+
         ?>
+
+    
     </div> <!-- final del div .box -->
 
     <div class="row">
@@ -832,7 +837,7 @@ e.preventDefault();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nombres de esta calle en los mapas:</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Historial de calles en este punto:</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -848,6 +853,31 @@ e.preventDefault();
             </div>
         </div>
     </div>
+
+<?php } else { ?>
+    <!-- Modal -->
+<div class="modal fade" id="check_mapas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Advertencia</h5>
+        
+        </button>
+      </div>
+      <div class="modal-body">
+      <span id='error' class="fas fa-exclamation-circle"></span>
+        <h6 class='modal_mensaje_error'> Debes insertar un mapa. </h6>
+      </div>
+      <div class="modal-footer">
+      <?php
+      echo anchor('Maps/index/','Insertar un mapa','type="button" class="btn btn-primary"');
+        ?>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php } // fin del if de comprobacion si hay mapas insertados. ?>  
 
 </div> <!-- fin container fluid -->
 

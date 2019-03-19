@@ -52,3 +52,16 @@ input[type='search'] {
    content: attr(data-content);
    font-size: 1.5em;
 }
+.modal_mensaje_error {
+    display: block;
+    text-align: center !important;
+    margin: 20px;
+
+}
+
+#error {
+    display: block;
+    text-align: center !important;
+    color: red;
+    font-size: 100px !important;
+}

@@ -111,8 +111,8 @@
                         <th scope="col">Imagen</th>
                         <th scope="col">Titulo</th>
                         <th scope="col">Fecha</th>
-                        <th></th>
-                        <th></th>
+                        <th scope="col">Modificar</th>
+                        <th scope="col">Borrar</th>
                     </tr>
                 </thead>
                 <tbody>

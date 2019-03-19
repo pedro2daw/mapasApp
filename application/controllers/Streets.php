@@ -120,6 +120,28 @@ include_once('Security.php');
                 echo json_encode($data);
             }   
         }
+
+        public function link_coords() {
+            $x = $this->input->post('x');
+            $y = $this->input->post('y');
+            $mapas_selected = json_decode($this->input->post('id_mapas_selected'));
+            $mapas_unselected = json_decode($this->input->post('id_mapas_unselected'));
+            $length = count($mapas_unselected);
+            $calles_nuevas = $this->input->post('nuevos_nombres');
+        
+            $r1 = $this->modelCalles->insert_street($calles_nuevas);
+            
+            $r = $this->modelCalles->insert_coords($x,$y,$mapas_selected, $mapas_unselected);
+            if ($r == 0 && $r == 0){
+                $data["msg"] = "1";
+                $data["listaMapas"] = $this->modelMapas->get_all();
+                $data["listaCalles"] = $this->modelCalles->get_all();
+            } else {
+                $data = $this->modelCalles->last_inserted_calles($length +1);
+                $data['msg'] = '0';
+                echo json_encode($data);
+            }   
+        }
         
         
         // esta es la funcion que inserta la calle y los puntos de la calle
