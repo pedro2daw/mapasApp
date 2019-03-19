@@ -1,5 +1,6 @@
 <div id="tablaHerencia" class="row">
     <div class="col-md-12">
+        <form enctype="multipart/form-data" method="post" acion="">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -11,8 +12,8 @@
             </thead>
             <tbody>
 
+                
                 <?php
-                echo form_open("Inheritance/inherit_streets");
                 foreach ($listaCalles as $calles) {
                     echo ("<tr>");
                     echo ("<td>" . $calles["id"] . "</td>");

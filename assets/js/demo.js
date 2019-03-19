@@ -140,7 +140,6 @@ $(document).ready(function () {
         }
     });
 
-<<<<<<< HEAD
     //Formulario de herencia
     $(".idHerencia").each(function() {
         var id = $(this).val();
@@ -157,11 +156,6 @@ $(document).ready(function () {
                 $("#tipoHerencia" + id).prop("disabled", true);
             }
         });
-=======
-    // Resetear la posicion del mapa al inicial
-    $("#reset").on("click", function () {
-        alert(actWdth);
->>>>>>> d75fa8fa25e0929706b342c95e39d8f130200ed4
     });
 
 });
