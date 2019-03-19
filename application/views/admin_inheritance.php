@@ -1,5 +1,6 @@
 <div id="tablaHerencia" class="row">
     <div class="col-md-12">
+        <form enctype="multipart/form-data" method="post" action="">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -11,14 +12,15 @@
             </thead>
             <tbody>
 
-                <?php
                 
+                <?php
                 foreach ($listaCalles as $calles) {
                     echo ("<tr>");
                     echo ("<td>" . $calles["id"] . "</td>");
-                    echo "<input type='hidden' class='herenciaOculto' data-tipo='" . $calles["tipo"] . "'/>";
+                    echo "<input type='hidden' id='idHerencia' class='idHerencia' value='" . $calles["id"] . "'/>";
+                    echo "<input type='hidden' id='herenciaOculto" . $calles["id"] . "' data-tipo='" . $calles["tipo"] . "'/>";
                     echo ("<td>
-                            <select id='tipoHerencia' name='tipoHerencia' class='form-control' disabled>
+                            <select id='tipoHerencia" . $calles["id"] . "' name='tipoHerencia' class='form-control' disabled>
                                 <option value='Avenida'>Avenida</option>
                                 <option value='Calle'>Calle</option>
                                 <option value='Callejon'>Callejón</option>
@@ -37,12 +39,15 @@
                                 <option value='Via'>Via</option>
                             </select>
                         </td>");
-                    echo ("<td><input class='herenciaNombre' type='text' value='" . $calles["nombre"] . "' disabled /></td>");
-                    echo ("<td><input class='checkNombre' type='checkbox' checked /></td>");
+                    echo ("<td><input id='herenciaNombre" . $calles["id"] . "' type='text' value='" . $calles["nombre"] . "' disabled /></td>");
+                    echo ("<td><input id='checkNombre" . $calles["id"] . "' type='checkbox' checked /></td>");
                     echo("</tr>");
                 }
                 ?>
+
             </tbody>
         </table>
+        <input type="submit" id="submitHerencia" class="btn btn-primary" />
+        </form>
     </div>
 </div>
