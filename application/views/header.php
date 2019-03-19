@@ -147,16 +147,16 @@
         #mapa,
         #super {
             overflow: auto;
-            /*width: 1000px;*/
-            height: 550px;
+            width: 1000px !important;
+            height: 550px !important;
             cursor: crosshair;
             border: 1px solid black;
+            display:grid;
             /*margin: 0 auto;*/
             /*margin-bottom: 10px;
             margin-top: 15px;*/
-            /*position: relative;*/
+            position: relative !important;
             /*float: right;*/
-            /*margin-right: 20px;*/
         }
 
         #mapa:active:hover,
