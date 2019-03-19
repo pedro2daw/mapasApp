@@ -113,21 +113,26 @@ $(document).ready(function () {
 
     //Aumentar el tamaña del mapa con las calles manteniendo los puntos
     $("#hotspotImg-1").on("wheel", function (e) {
+        var width = $("#hotspotImg-1").width();
+        var height = $("#hotspotImg-1").height();
+        console.log(actWdth + " " + width);
+
         var e0 = e.originalEvent,
             delta = e0.wheelDelta || -e0.detail;
 
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
         e.preventDefault();
-        actWdth = $("#hotspotImg-1").width() * zoom;
+        actWdth = $("#hotspotImg-1 img").width() * zoom;
         if (e.originalEvent.deltaY < 0) {
-            if (actWdth < 4000) {
+            if (actWdth < height + 200) {
                 zoom += 0.04;
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
         } else {
-            if (actWdth > 1100) {
+            
+            if (actWdth > width + 200) {
                 zoom -= 0.04;
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
