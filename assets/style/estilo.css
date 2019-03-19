@@ -15,8 +15,8 @@
 /* ESTILO MENU DE ADMINISTRACION CALLES */
 
 .selected {
-    color: white;
-    background-color:#17A2B8;
+    color: white !important;
+    background-color:#17A2B8 !important;
 }
 
 .mapas {

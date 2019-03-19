@@ -3,7 +3,7 @@ $(document).ready(function () {
         posY;
     var id = parseInt($(".hot-spot").last().attr("id")) + 1;
     var src;
-    var zoom = 1;
+    zoom = 1;
     var actWdth,
         id_mapa;
 
