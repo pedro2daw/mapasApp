@@ -158,7 +158,7 @@ $(document).ready(function () {
                                 "lastName": "Smith",
                                 "age": 32
                             }
-                  ]
+                  ]}
                         $("#tipoHerencia" + id).val($("#herenciaOculto" + id).data("tipo"));
                         $("#checkNombre" + id).on("change", function () {
                             if (!$("#checkNombre" + id).is(":checked")) {
