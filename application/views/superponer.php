@@ -5,6 +5,11 @@
 
 
 ?>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    
+</script>
+
 
 <script>
             desviacion_x = [];
@@ -28,10 +33,16 @@
                     //alert("Has seleccionado el punto " + x_def + " / " + y_def);
                     next =  confirm("¿Estás seguro que quieres seleccionar ese punto");
                     if(next == true){
-                    desviacion_x[0] = (parseInt(e.pageX - offset.left));
-                    desviacion_y[0] = (parseInt(e.pageY - offset.top));
+                    desviacion_x[0] = (parseInt(e.pageX - offset.left) / zoom);
+                    desviacion_y[0] = (parseInt(e.pageY - offset.top) / zoom);
+
+                    console.log(desviacion_x[0]);
+                    console.log(desviacion_y[0]);
+                    console.log(" zoom : " + zoom);
                     cont++;
-                    $("#foto").attr("src",dominio+rutas[cont]["imagen"]);
+                    //$("#foto").attr("src",dominio+rutas[cont]["imagen"]);
+                    // cargo otra imagen dejando siempre la grande
+                    $("#foto").after("<img src='"+dominio+rutas[cont+1]["imagen"]+"'/>");
                     $("#mapa").scrollTop(0);
                     }                
                 }else{
@@ -39,8 +50,10 @@
                 //alert("Has seleccionado el punto " + x_def + " / " + y_def);
                 next =  confirm("¿Estás seguro que quieres seleccionar ese punto");
                         if (next == true){
-                            desviacion_x.push(desviacion_x[0]-(parseInt(e.pageX - offset.left)));
-                            desviacion_y.push(desviacion_y[0]-(parseInt(e.pageY - offset.top)));
+                            desviacion_x.push(desviacion_x[0]-(parseInt(e.pageX - offset.left)) / zoom);
+                            desviacion_y.push(desviacion_y[0]-(parseInt(e.pageY - offset.top)) / zoom);
+                            console.log(desviacion_x.push(desviacion_x[0]-(parseInt(e.pageX - offset.left)) / zoom));
+                            console.log(desviacion_x.push(desviacion_y[0]-(parseInt(e.pageX - offset.left)) / zoom));
                             cont++;
                             if (cont < rutas.length){
                             $("#foto").attr("src",dominio+rutas[cont]["imagen"]);
@@ -142,8 +155,10 @@ echo("
 ?>
     </div>
     <div id="mapa" class="dragscroll col-md-9">
+        <div id="hotspotImg-1" class="responsive-hotspot-wrap">
             <img src="" alt="mapa" id="foto">
         </div>
+    </div>
     <div id="super" class="dragscroll hidden col-md-9">
     </div>
     
