@@ -24,7 +24,10 @@ class Maps extends Security {
         $ciudad_format = $this->modelMapas->format($ciudad);
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
         $ruta = "assets/img/mapas/".$img_name;
-
+        
+        //Obtenemos el mapa del que hereda el mapa insertado (o nada en caso de no elegir ninguno)
+        $heredar = $fecha = $this->input->get_post('herencia');
+        
         /*
         $paquete_seleccionado = $this->input->get_post('select_paquetes');
         $nombre_paquete_nuevo = $this->input->get_post('nombre_paquete');
@@ -48,33 +51,41 @@ class Maps extends Security {
         */
 
         $r = $this->modelMapas->insert($titulo, $fecha, $ruta);
-
-       if ($r == 0) {
-                $data["msg"] = "1";
-                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-                // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-                $data["viewName"] = "admin_panel";
-                $this->load->view('template',$data);
+        
+        if ($heredar != "") {
+            $data["listaCalles"] = $this->modelInheritance->get_calles_mapa($heredar);
+            $data["viewName"] = "admin_inheritance";
+            $this->load->view('template',$data);
         } else {
-                $data['img_size'] = $this->modelMapas->get_img_size($ruta);
-                $ancho = $data['img_size'][0];
-                $alto = $data['img_size'][1];
-                $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
-            if ($r2 == 0){
+            if ($r == 0) {
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                 $data["viewName"] = "admin_panel";
                 $this->load->view('template',$data);
             } else {
-                $data["msg"] = "0";
-                $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-                // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-                $data["viewName"] = "admin_panel";
-                $this->load->view('template',$data);
+                $data['img_size'] = $this->modelMapas->get_img_size($ruta);
+                $ancho = $data['img_size'][0];
+                $alto = $data['img_size'][1];
+                $r2 = $this->modelMapas->insert_size($ancho,$alto,$ultimoId);
+                if ($r2 == 0){
+                    $data["msg"] = "1";
+                    $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
+                    // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                    $data["viewName"] = "admin_panel";
+                    $this->load->view('template',$data);
+                } else {
+                    $data["msg"] = "0";
+                    $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
+                    // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                    $data["viewName"] = "admin_panel";
+                    $this->load->view('template',$data);
+                }
             }
         }
-    }     
+        
+        
+    }
 
     public function get_streets_associated_to_coord(){
         
@@ -201,4 +212,3 @@ class Maps extends Security {
     }
 
 }
-

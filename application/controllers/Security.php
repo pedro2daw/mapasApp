@@ -7,6 +7,7 @@
                 $this->load->model('modelMapas');
                 $this->load->model('modelCalles');
                 $this->load->model('modelHotspot');
+                $this->load->model('modelInheritance');
                 
                 if (isset($this->session->userdata['loguedIn'])) {
                     

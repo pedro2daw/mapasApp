@@ -103,7 +103,7 @@ $(document).ready(function () {
             $("#slide").css("transform", "scale(" + (zoom) + ")");
         }
 
-        $(".hot-spot").each(function () {
+       $(".hot-spot").each(function () {
             coordX = $(this).data("posx");
             coordY = $(this).data("posy");
             $(this).removeAttr("style");
@@ -136,9 +136,11 @@ $(document).ready(function () {
         }
     });
 
-    // Resetear la posicion del mapa al inicial
-    $("#reset").on("click", function () {
-        alert(actWdth);
+    //
+    $("#tipoHerencia").val($(".herenciaOculto").data("tipo"));
+    $(".checkNombre").on("change", function() {
+        $(".herenciaNombre").prop("disabled", false);
+        $("#tipoHerencia").prop("disabled", false);
     });
-
+    
 });

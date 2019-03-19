@@ -105,24 +105,24 @@
         </div>
     </div>
     <!-- ENTORNO DONDE SE CREA EL PUNTO -->
-    <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
+        <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
-        <img src="<?php echo base_url("$urlImg"); ?>" id="slide" data-id-mapa="<?php echo "$id_mapa" ?>" class="img-responsive span4 proj-div" data-target="#myModal">
+            <img src="<?php echo base_url("$urlImg"); ?>" id="slide" data-id-mapa="<?php echo "$id_mapa" ?>" class="img-responsive span4 proj-div" data-target="#myModal">
 
-        <?php 
-        foreach ($ListaHotspots as $hotspot) {
-            echo "<div id='" .$hotspot["id"]. "' class='hot-spot' data-posx='" .$hotspot["punto_x"]. "' data-posy='" .$hotspot["punto_y"]. "' style='top: " .$hotspot["punto_y"]. "px; left: " .$hotspot["punto_x"]. "px; display: block;'>
-                <div class='circle'></div>
-                <div class='tooltip' style='margin-left: -135px; display: none;'>
-                    <div class='img-row'><img src='" .base_url("/assets/img/img_hotspots/".$hotspot["imagen"]). "' width='100'></div>
-                    <div class='text-row'>
-                        <h4>" .$hotspot["titulo"]. "</h4>
-                        <p>" .$hotspot["descripcion"]. "</p>
+            <?php 
+            foreach ($ListaHotspots as $hotspot) {
+                echo "<div id='" .$hotspot["id"]. "' class='hot-spot' data-posx='" .$hotspot["punto_x"]. "' data-posy='" .$hotspot["punto_y"]. "' style='top: " .$hotspot["punto_y"]. "px; left: " .$hotspot["punto_x"]. "px; display: block;'>
+                    <div class='circle'></div>
+                    <div class='tooltip' style='margin-left: -135px; display: none;'>
+                        <div class='img-row'><img src='" .base_url("/assets/img/img_hotspots/".$hotspot["imagen"]). "' width='100'></div>
+                        <div class='text-row'>
+                            <h4>" .$hotspot["titulo"]. "</h4>
+                            <p>" .$hotspot["descripcion"]. "</p>
+                        </div>
                     </div>
-                </div>
-            </div>";
-        }
-        
-        ?>
+                </div>";
+            }
 
-    </div>
+            ?>
+
+        </div>

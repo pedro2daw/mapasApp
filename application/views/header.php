@@ -57,16 +57,18 @@
 
     </script>
     <style>
+        #tablaHerencia {
+            margin: 1%;
+            margin-top: 3%;
+        }
+        
         #titulo-selec-mapa {
             margin-top: 20px;
             margin-bottom: 10px;
             margin-left: 20px;
             font-weight: 600;
         }
-        .botones {
-            margin-bottom: 30px;
-        }
-
+        
         #slide {
             display: flex;
             min-height: 0;

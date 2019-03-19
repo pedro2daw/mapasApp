@@ -1,33 +1,31 @@
-
-
 <script language="javascript">
-
-    $(document).ready( function (){
+    $(document).ready(function() {
         $('.alert').fadeIn().delay(4000).fadeOut();
-        $('.warning').css({'background-color' : 'orange'
+        $('.warning').css({
+            'background-color': 'orange'
         });
 
-        $('.btn-update').click(function () {
-            var id = $(this).data('id'); 
-            var img_src = $('#src_imagen_'+id).attr('src');
-            var img = $('#imagen_'+id).data('id-imagen');
-            var titulo = $('#titulo_'+id).text();
-            var ciudad = $('#ciudad_'+id).text();
-            var fecha = $('#fecha_'+id).text();
-            var id_paquete = $("#id_paquete_"+id).data('id-p');   
-            var ancho = $('#ancho_'+id).data('ancho');
-            var alto = $('#alto_'+id).data('alto'); 
-            var desv_x = $('#desviacion_x_'+id).data('x');
-            var desv_y = $('#desviacion_y_'+id).data('y'); 
+        $('.btn-update').click(function() {
+            var id = $(this).data('id');
+            var img_src = $('#src_imagen_' + id).attr('src');
+            var img = $('#imagen_' + id).data('id-imagen');
+            var titulo = $('#titulo_' + id).text();
+            var ciudad = $('#ciudad_' + id).text();
+            var fecha = $('#fecha_' + id).text();
+            var id_paquete = $("#id_paquete_" + id).data('id-p');
+            var ancho = $('#ancho_' + id).data('ancho');
+            var alto = $('#alto_' + id).data('alto');
+            var desv_x = $('#desviacion_x_' + id).data('x');
+            var desv_y = $('#desviacion_y_' + id).data('y');
 
-            if (desv_x == ''|| desv_y == ''){
-            $('#upd_desv_x').val('null');
-            $('#upd_desv_y').val('null');
+            if (desv_x == '' || desv_y == '') {
+                $('#upd_desv_x').val('null');
+                $('#upd_desv_y').val('null');
             } else {
-            $('#upd_desv_x').val(desv_x);
-            $('#upd_desv_y').val(desv_y);
+                $('#upd_desv_x').val(desv_x);
+                $('#upd_desv_y').val(desv_y);
             }
-            
+
             console.log('eeeo ' + $('#upd_desv_y').val());
 
             $('#upd_paquete').val(id_paquete);
@@ -36,14 +34,14 @@
             $('#upd_alto').val(alto);
             $('#upd_ciudad').val(ciudad);
             $('#upd_fecha').val(fecha);
-            $('#upd_imagen').attr('src',img_src);
-            
+            $('#upd_imagen').attr('src', img_src);
+
             //campos hidden:
             $('#id_update').val(id);
             $('#ruta_original').val(img);
-            
 
-        /*
+
+            /*
         
                 $.ajax({
                         type: "post",
@@ -59,15 +57,29 @@
                         },
                     });
         */
+            $.ajax({
+                type: "post",
+                url: "< ?php echo base_url(); ?>index.php/Maps/form_update_map",
+                dataType: 'text',
+                data: "id=" + id,
+                success: function(data) {
+                    var a = $.parseJSON(data);
+                    console.log('SUCCESS: ', a);
+                },
+                error: function(data) {
+                    console.log('ERROR: ', data);
+                },
+            });
+        });
     });
-});
+
 </script>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class='box'>
-            <?php
+                <?php
             if (isset($msg)){
                 switch ($msg) {
                     case 0:
@@ -105,7 +117,7 @@
                 </thead>
                 <tbody>
 
-                <?php
+                    <?php
 
                 for($i = 0; $i < count($ListaMapas);$i++){
                     
@@ -140,34 +152,50 @@
         </div>
     </div>
 
-                        <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
-            <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Insertar un mapa</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+    <!-- *********************** INSERCIÓN DE UN MAPA ************************** -->
+    <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Insertar un mapa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
+                    <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
+
+                    <div class='form-group'>
+                        <label for='titulo'>Título</label>
+                        <input type='text' class='form-control' placeholder='Introduce un título' name='titulo' id='titulo' value='Almeria' required />
+                    </div>
+
+                    <div class='form-group'>
+                        <label for='fecha'>Año</label>
+                        <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha' id='fecha' value='1900' required />
+                    </div>
+
+                    <div class='form-group'>
+                        <label for='herencia'>Herencia</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Hereda de</label>
+                            </div>
+                            <select class="custom-select" id="herencia" name="herencia">
+                                <option value="" selected></option>
+                                <?php
+                                    for($i = 0; $i < count($ListaMapas);$i++){                      
+                                        $mapa = $ListaMapas[$i];
+                                        echo "<option value='" . $mapa["titulo"] . "'> " . $mapa["titulo"] . " </option>";
+                                    }
+                                ?>
+                            </select>
                         </div>
-                        <div class="modal-body">
+                    </div>
 
-                            <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** --> 
-                            <?php echo form_open_multipart('Maps/insert','class="ui-filterable"'); ?>
-
-                            <div class='form-group'>
-                                <label for='titulo'>Título</label>
-                                <input type='text' class='form-control' placeholder='Introduce un título' name='titulo'
-                                    id='titulo' value='Almeria' required />
-                            </div>
-                            
-                            <div class='form-group'>
-                                <label for='fecha'>Año</label>
-                                <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='fecha'
-                                    id='fecha' value='1900' required />
-                            </div>
-                            <!-- 
+                    <!-- 
                             <div class='form-group'>
                                 <label for='fecha'>Nivel</label>
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='nivel'
@@ -199,51 +227,48 @@
                             < ?php echo form_dropdown('select_paquetes',$ListaPaquetes ,"1" ,'id="select_paquetes" class="form-control"'); ?>
                              </div>
                             -->
-                            <div class='form-group'>
-                                <label for='mapa_img'>Subir un Mapa</label>
+                    <div class='form-group'>
+                        <label for='mapa_img'>Subir un Mapa</label>
 
-                                <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
-                                <div class="custom-file">
-                                    <input type="file" name="img_mapa" class="custom-file-input" id="img"
-                                        lang="es" onchange="openFile(event,'1')" required>
-                                    <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                                </div>
-                                <img id='output' class='img-thumbnail'>
-                            </div>
+                        <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
+                        <div class="custom-file">
+                            <input type="file" name="img_mapa" class="custom-file-input" id="img" lang="es" onchange="openFile(event,'1')" required>
+                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                        </div>
+                        <img id='output' class='img-thumbnail'>
+                    </div>
 
-                            <div class='modal-footer'>
-                                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                                <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
-                            </div>
-                            <?php 
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
+                        <?php echo form_submit('submit', 'Insertar Mapa',"class='btn btn-primary'"); ?>
+                    </div>
+                    <?php 
                             echo form_close(); 
                             ?>
+                </div>
+            </div> <!-- cierra el modal body -->
+        </div>
+    </div> <!-- modal_insert -->
+
+    <!-- MODAL DEL UPDATE MAPS : -->
+    <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modificar un mapa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- ****************** CUERPO DEL CUADRO MODAL UPDATE *********************** -->
+                    <?php echo form_open_multipart('Maps/update'); ?>
+                    <div class='form-group'>
+                        <label for='titulo'>Título</label>
+                        <input type='text' class='form-control' placeholder='Introduce un título' name='upd_titulo' id='upd_titulo' value='1' required />
                     </div>
-                </div> <!-- cierra el modal body --> 
-            </div>
-        </div> <!-- modal_insert -->
-
-            <!-- MODAL DEL UPDATE MAPS : -->
-            <div class="modal fade" id="modal_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Modificar un mapa</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                            <!-- ****************** CUERPO DEL CUADRO MODAL UPDATE *********************** --> 
-                            <?php echo form_open_multipart('Maps/update'); ?>
-                            <div class='form-group'>
-                                <label for='titulo'>Título</label>
-                                <input type='text' class='form-control' placeholder='Introduce un título' name='upd_titulo'
-                                    id='upd_titulo' value='1' required />
-                            </div>
-                            <!--
+                    <!--
                             <div class='form-group'>
                                 <label for='descripcion'>Descripción</label>
                                 <input type='text' class='form-control' placeholder='Introduce una descripción' name='upd_descripcion'
@@ -256,12 +281,11 @@
                                     id='upd_ciudad' value='1' required />
                             </div>
                             -->
-                            <div class='form-group'>
-                                <label for='fecha'>Fecha</label>
-                                <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='upd_fecha'
-                                    id='upd_fecha' value='1' required />
-                            </div>
-                            <!--
+                    <div class='form-group'>
+                        <label for='fecha'>Fecha</label>
+                        <input type='number' class='form-control' placeholder='Fecha (año)' min='0' name='upd_fecha' id='upd_fecha' value='1' required />
+                    </div>
+                    <!--
                             <div class='form-group'>
                                 <label for='fecha'>Nivel</label>
                                 <input type='number' class='form-control' placeholder='Nivel' min='0' name='nivel' id='upd_nivel'
@@ -278,32 +302,31 @@
                             ?>
                              </div>
                             -->
-                            
-                            <!-- CAMPOS HIDDEN -->
-                             <input type='hidden' name='id_update' id='id_update' value=''/>
-                             <input type='hidden' name='ruta_original' id='ruta_original' value=''/>
-                             <input type='hidden' name='upd_ancho' id='upd_ancho' value=''/>
-                             <input type='hidden' name='upd_alto' id='upd_alto' value=''/>
-                             <input type='hidden' name='upd_desv_x' id='upd_desv_x' value=''/>
-                             <input type='hidden' name='upd_desv_y' id='upd_desv_y' value=''/>
-                            <div class='form-group'>
-                                <label for='mapa_img'>Subir un Mapa</label>
 
-                                <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
-                                <div class="custom-file">
-                                    <input type="file" name="upd_img" class="custom-file-input" id="upd_img"
-                                        lang="es" onchange="openFile(event,'2')">
-                                    <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-                                </div>
-                                <img id='upd_imagen' class='img-thumbnail' src=''>
-                            </div>
+                    <!-- CAMPOS HIDDEN -->
+                    <input type='hidden' name='id_update' id='id_update' value='' />
+                    <input type='hidden' name='ruta_original' id='ruta_original' value='' />
+                    <input type='hidden' name='upd_ancho' id='upd_ancho' value='' />
+                    <input type='hidden' name='upd_alto' id='upd_alto' value='' />
+                    <input type='hidden' name='upd_desv_x' id='upd_desv_x' value='' />
+                    <input type='hidden' name='upd_desv_y' id='upd_desv_y' value='' />
+                    <div class='form-group'>
+                        <label for='mapa_img'>Subir un Mapa</label>
 
-                            <div class='modal-footer'>
-                                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                                <?php echo form_submit('submit', 'Modificar Mapa',"class='btn btn-primary'"); ?>
-                            </div>
-                            <?php echo form_close(); ?>
+                        <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
+                        <div class="custom-file">
+                            <input type="file" name="upd_img" class="custom-file-input" id="upd_img" lang="es" onchange="openFile(event,'2')">
+                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
                         </div>
+                        <img id='upd_imagen' class='img-thumbnail' src=''>
                     </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
+                        <?php echo form_submit('submit', 'Modificar Mapa',"class='btn btn-primary'"); ?>
+                    </div>
+                    <?php echo form_close(); ?>
                 </div>
             </div>
+        </div>
+    </div>
