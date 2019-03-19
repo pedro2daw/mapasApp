@@ -1,6 +1,5 @@
 <div id="tablaHerencia" class="row">
-    <div class="col-md-12">
-        <form enctype="multipart/form-data" method="post" action="">
+    <div class="col-md-12">  
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -14,6 +13,8 @@
 
                 
                 <?php
+                echo "<input type='hidden' id='baseUrl' data-base-url='" . base_url() . "'/>";
+                echo "<input type='hidden' id='idMapaOculto' data-id-mapa='" . $id_mapa . "'/>";
                 foreach ($listaCalles as $calles) {
                     echo ("<tr>");
                     echo ("<td>" . $calles["id"] . "</td>");
@@ -47,7 +48,9 @@
 
             </tbody>
         </table>
-        <input type="submit" id="submitHerencia" class="btn btn-primary" />
+        <form enctype="multipart/form-data" method="post" id="submitHerencia1" action="<?php echo base_url()?>index.php/Inheritance/inherit_streets">
+            <input type="hidden" id="jsonOculto" value="tres" />
+            <input type="submit" id="submitHerencia" value="Enviar" class="btn btn-primary" />
         </form>
     </div>
 </div>
