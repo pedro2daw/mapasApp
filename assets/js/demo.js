@@ -103,7 +103,7 @@ $(document).ready(function () {
             $("#slide").css("transform", "scale(" + (zoom) + ")");
         }
 
-       $(".hot-spot").each(function () {
+        $(".hot-spot").each(function () {
             coordX = $(this).data("posx");
             coordY = $(this).data("posy");
             $(this).removeAttr("style");
@@ -113,8 +113,7 @@ $(document).ready(function () {
 
     //Aumentar el tamaña del mapa con las calles manteniendo los puntos
     $("#hotspotImg-1").on("wheel", function (e) {
-        var width = $("#hotspotImg-1").width();
-        var height = $("#hotspotImg-1").height();
+        var width = $("#hotspotImg-1").first().width();
         console.log(actWdth + " " + width);
 
         var e0 = e.originalEvent,
@@ -124,7 +123,7 @@ $(document).ready(function () {
         e.preventDefault();
         actWdth = $("#hotspotImg-1 img").width() * zoom;
         if (e.originalEvent.deltaY < 0) {
-            if (actWdth < height + 200) {
+            if (actWdth < width *2) {
                 zoom += 0.04;
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
@@ -141,11 +140,9 @@ $(document).ready(function () {
         }
     });
 
-    //
-    $("#tipoHerencia").val($(".herenciaOculto").data("tipo"));
-    $(".checkNombre").on("change", function() {
-        $(".herenciaNombre").prop("disabled", false);
-        $("#tipoHerencia").prop("disabled", false);
+    // Resetear la posicion del mapa al inicial
+    $("#reset").on("click", function () {
+        alert(actWdth);
     });
-    
+
 });
