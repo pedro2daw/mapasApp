@@ -1,6 +1,6 @@
 <div id="tablaHerencia" class="row">
     <div class="col-md-12">
-        <form enctype="multipart/form-data" method="post" acion="">
+        <form enctype="multipart/form-data" method="post" action="">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -17,7 +17,7 @@
                 foreach ($listaCalles as $calles) {
                     echo ("<tr>");
                     echo ("<td>" . $calles["id"] . "</td>");
-                    echo "<input type='hidden' class='idHerencia' value='" . $calles["id"] . "'/>";
+                    echo "<input type='hidden' id='idHerencia' class='idHerencia' value='" . $calles["id"] . "'/>";
                     echo "<input type='hidden' id='herenciaOculto" . $calles["id"] . "' data-tipo='" . $calles["tipo"] . "'/>";
                     echo ("<td>
                             <select id='tipoHerencia" . $calles["id"] . "' name='tipoHerencia' class='form-control' disabled>
