@@ -124,7 +124,6 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
    row = table.row( this ).index();
 } );
 
-
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
         // Borra el punto en el mapa:
@@ -636,9 +635,8 @@ e.preventDefault();
             <button type="button" class="btn btn-primary btn-anadir" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Añadir Calle</button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
-            <button type='button' class="btn btn-info btn-link-street-to-point"> <span class="fas fa-link"></span> Enlazar a un punto </button>
             <button type='button' class="btn btn-success btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-map-marked-alt'></span> Insertar Coordenadas</button>
-            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-broom"></span> Borrar último punto</button>
+            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-broom"></span> Limpiar mapa </button>
         </div>
     </div>
 
@@ -676,30 +674,32 @@ e.preventDefault();
                 </table>
             </div> <!-- fin table-responsive -->
 
-            <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Mapas</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                            for($i = 0; $i < count($listaMapas);$i++){
-                            $mapa = $listaMapas[$i];
-                            echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
-                            if ($i == 0){
-                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";    
-                            }else {
-                            echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
-                            }
-                            echo "<td>  <input name='mapa_".$mapa["id"]."' type='checkbox' data-id=".$mapa['id']." class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked> </td>";
-                            echo "</tr>";
-                            
-                            }                            
-                        ?>
-                    </tbody>
-            </table>
+            <div id='table_mapas'>
+                <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mapas</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                                for($i = 0; $i < count($listaMapas);$i++){
+                                $mapa = $listaMapas[$i];
+                                echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
+                                if ($i == 0){
+                                echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";    
+                                }else {
+                                echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
+                                }
+                                echo "<td>  <input name='mapa_".$mapa["id"]."' type='checkbox' data-id=".$mapa['id']." class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked> </td>";
+                                echo "</tr>";
+                                
+                                }                            
+                            ?>
+                        </tbody>
+                </table>
+            </div>
 
             <!-- <div id='ranges'>
             

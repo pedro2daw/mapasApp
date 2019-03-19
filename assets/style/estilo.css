@@ -47,6 +47,15 @@ input[type='search'] {
     background-color: orange !important;
 }
 
+.btn {
+    margin-bottom: 30px;
+}
+#table_mapas {
+    
+    height:400px;
+    overflow:auto;
+}
+
 
 .popover {
    content: attr(data-content);

@@ -61,12 +61,17 @@ class modelCalles extends CI_Model {
             $nombre = $calle_nueva[$i]['nombre'];
             $tipo = $calle_nueva[$i]['via'];
             $this->db->query("INSERT INTO calles (id,nombre,tipo) VALUES (null,'$nombre','$tipo');");
+            $error = $this->db->error();
+    
         }
         $this->db->trans_complete();
+        
         if ($this->db->trans_status() === FALSE)
         {
+            var_dump($error);
+            
+            
             // var_dump('error en la(s) consulta(s)');
-
             $this->db->trans_rollback();
             $status = 0;
             return $status;
