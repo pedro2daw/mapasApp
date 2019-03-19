@@ -103,7 +103,7 @@ $(document).ready(function () {
             $("#slide").css("transform", "scale(" + (zoom) + ")");
         }
 
-       $(".hot-spot").each(function () {
+        $(".hot-spot").each(function () {
             coordX = $(this).data("posx");
             coordY = $(this).data("posy");
             $(this).removeAttr("style");
@@ -113,21 +113,25 @@ $(document).ready(function () {
 
     //Aumentar el tamaña del mapa con las calles manteniendo los puntos
     $("#hotspotImg-1").on("wheel", function (e) {
+        var width = $("#hotspotImg-1").first().width();
+        console.log(actWdth + " " + width);
+
         var e0 = e.originalEvent,
             delta = e0.wheelDelta || -e0.detail;
 
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
         e.preventDefault();
-        actWdth = $("#hotspotImg-1").width() * zoom;
+        actWdth = $("#hotspotImg-1 img").width() * zoom;
         if (e.originalEvent.deltaY < 0) {
-            if (actWdth < 4000) {
+            if (actWdth < width *2) {
                 zoom += 0.04;
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
         } else {
-            if (actWdth > 1100) {
+            
+            if (actWdth > width + 200) {
                 zoom -= 0.04;
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
@@ -136,6 +140,7 @@ $(document).ready(function () {
         }
     });
 
+<<<<<<< HEAD
     //Formulario de herencia
     $(".idHerencia").each(function() {
         var id = $(this).val();
@@ -152,6 +157,11 @@ $(document).ready(function () {
                 $("#tipoHerencia" + id).prop("disabled", true);
             }
         });
+=======
+    // Resetear la posicion del mapa al inicial
+    $("#reset").on("click", function () {
+        alert(actWdth);
+>>>>>>> d75fa8fa25e0929706b342c95e39d8f130200ed4
     });
-    
+
 });
