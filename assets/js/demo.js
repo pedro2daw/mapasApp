@@ -157,40 +157,45 @@ $(document).ready(function () {
                 $("#herenciaNombre" + id_calle).prop("disabled", true);
                 $("#herenciaNombre" + id_calle).val(nombre);
                 $("#tipoHerencia" + id_calle).prop("disabled", true);
+                $("#tipoHerencia" + id_calle).val($("#herenciaOculto" + id_calle).data("tipo"));
             }
         });
     });
 
-   /* $("#submitHerencia1").submit(function () {
+   $("#submitHerencia1").submit(function () {
         calles = [];
         $(".idHerencia").each(function () {
             var id_calle = $(this).val();
             var nombre = $("#herenciaNombre" + id_calle).val();
-            var tipo = $("#herenciaOculto" + id_calle).data("tipo");
+            var tipo = $("#tipoHerencia" + id_calle).val();
             var id_mapa = $("#idMapaOculto").data("id-mapa");
-
+            var caso;
+            
+            if ($("#checkNombre" + id_calle).is(":checked")) {
+                caso = 1;
+            }
+            
+            if ((!$("#checkNombre" + id_calle).is(":checked")) && (nombre != "")) {
+                caso = 2;
+            }
+                
+            if (nombre == "") {
+                caso = 3;
+            }
+            
             item = {};
             item["id"] = id_calle;
             item["tipo"] = tipo;
             item["nombre"] = nombre;
             item["id_mapa"] = id_mapa;
+            item["caso"] = caso;
 
             calles.push(item);
         });
         data = JSON.stringify(calles);
         alert(data);
-        //$("#jsonOculto").val(data);
+        $("#jsonOculto").val(data);
         return true;
     });
-    */
-    
-    /*var base_url = $("#baseUrl").data("base-url");
-    $.ajax({
-        url: base_url + "index.php/Inheritance/inherit_streets",
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(calles),
-        dataType: 'json'
-    })*/
 
 });

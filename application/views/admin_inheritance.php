@@ -49,7 +49,7 @@
             </tbody>
         </table>
         <form enctype="multipart/form-data" method="post" id="submitHerencia1" action="<?php echo base_url()?>index.php/Inheritance/inherit_streets">
-            <input type="hidden" id="jsonOculto" value="tres" />
+            <input type="hidden" id="jsonOculto" name="jsonOculto" />
             <input type="submit" id="submitHerencia" value="Enviar" class="btn btn-primary" />
         </form>
     </div>
