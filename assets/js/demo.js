@@ -121,14 +121,16 @@ $(document).ready(function () {
         e.preventDefault();
         actWdth = $("#hotspotImg-1 img").width() * zoom;
         if (e.originalEvent.deltaY < 0) {
-            if (actWdth < width * 2) {
+
+            // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
+            if (actWdth  < width *10) {
                 zoom += 0.04;
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
         } else {
-
+        // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
             if (actWdth > width + 200) {
                 zoom -= 0.04;
             }
