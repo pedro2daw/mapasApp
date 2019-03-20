@@ -20,6 +20,18 @@ class Users extends Security {
         }
     }
     
+    public function check_user($usuario) {
+        $r = $this->modelUser->check_user($usuario);
+        $data;
+        
+        if ($r == 0) {
+            $data = "0";
+        }
+        else $data = "1";
+        
+        echo $data;
+    }
+    
     public function insert_user(){
         $usuario = $this->input->get_post('usuarioIns');
         $contrasena = $this->input->get_post('contrasenaIns');

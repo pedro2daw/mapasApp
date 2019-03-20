@@ -19,6 +19,12 @@ class modelUser extends CI_Model{
     }
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
     
+    public function check_user($usuario) {
+        $query = $this->db->query("SELECT username FROM usuarios WHERE username = '$usuario';");
+        
+        return $this->db->affected_rows();
+    }
+    
     public function get_all() {
         $query = $this->db->query("SELECT id, username, nivel FROM usuarios;"); 
         $data = array();
