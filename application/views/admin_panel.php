@@ -1,5 +1,6 @@
 <script language="javascript">
     $(document).ready(function() {
+        $('#enlace_mapas').toggleClass('active');
         $('.alert').fadeIn().delay(4000).fadeOut();
         $('.warning').css({
             'background-color': 'orange'

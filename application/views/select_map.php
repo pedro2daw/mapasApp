@@ -1,3 +1,9 @@
+<script>
+$(document).ready(function () {
+        $('#enlace_hotspots').toggleClass('active');
+});
+</script>
+
 <h2 id="titulo-selec-mapa">Elige el mapa para insertar los puntos</h2>
 
     <div class="row">

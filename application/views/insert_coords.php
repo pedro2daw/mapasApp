@@ -17,6 +17,17 @@ function changeOpacity(i){
       }
 
     $(document).ready( function (){
+        $('#enlace_calles').toggleClass('active');
+        imagenes_cargadas = 0;
+    $('img.mapas').on('load', function() {
+    imagenes_cargadas += 1;
+    var n_mapas = $('.mapas').length;
+    $('#hotspotImg-1').css({"background":"url(../assets/img/icono/loading.gif') no-repeat  center center"});
+    if (imagenes_cargadas == n_mapas ){
+    $('#hotspotImg-1').css({"background":"none"});
+    }
+    });
+        
         $("#check_mapas").modal('toggle');
         
         $(document).on("input","#slider_callejero",function(){

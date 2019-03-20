@@ -1,5 +1,6 @@
     <script>
         $(document).ready(function() {
+            $('#enlace_usuarios').toggleClass('active');
             $("#usuarioIns").on("keyup", function() {
                 var usu = $("#usuarioIns").val();
                 $.ajax({
