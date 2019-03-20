@@ -4,6 +4,7 @@
             e.preventDefault();
             var form = $('form')[0];
             var formData = new FormData(form);
+            var src = "<?php echo base_url(); ?>assets/img/img_hotspots/"
             
             // Insercion con ajax de los puntos en la BD
             $.ajax({
@@ -13,9 +14,8 @@
                 cache: false,
                 contentType: false,
                 type: 'POST',
-                success: function() {
-                    var bk = $("#insImg").attr("src");
-                    $("#insImg").attr("src", "");
+                success: function(data) {
+                    var bk = src + "" + data;
                     $("#insImg").attr("src", bk);
                 }
             });
