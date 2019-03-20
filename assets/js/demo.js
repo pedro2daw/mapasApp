@@ -193,7 +193,6 @@ $(document).ready(function () {
             calles.push(item);
         });
         data = JSON.stringify(calles);
-        alert(data);
         $("#jsonOculto").val(data);
         return true;
     });
