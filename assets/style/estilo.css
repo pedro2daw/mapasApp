@@ -1,7 +1,12 @@
 /* ESTILOS DEL MENU DE ADMINISTRACIÓN */
 .thumbnail_mapa{
+    
     max-width: 50% !important;
     transform: none !important;
+}
+
+.img-thumbnail, .thumbnail_mapa {
+    background: url('../img/icono/loading.gif') no-repeat  center center;
 }
 
 .box {
