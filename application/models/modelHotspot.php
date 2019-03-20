@@ -29,8 +29,21 @@ class modelHotspot extends CI_Model {
     }
     
     public function delete($id, $id_mapa) {
+        $query2 = $this->db->query("SELECT imagen FROM hotspots WHERE id = '$id' AND id_mapa = '$id_mapa';");    
+        
+        $fileToDelete = implode($query2->result_array()[0]);
+        unlink("./assets/img/img_hotspots/" . $fileToDelete);
+        
         $query = $this->db->query("DELETE FROM hotspots WHERE id = $id AND id_mapa = $id_mapa;");
+        
         return $this->db->affected_rows();
+    }
+    
+    public function get_nombre_mapa($id) {
+        $query = $this->db->query("SELECT titulo FROM mapas WHERE id = '$id';");
+        $row = $query->last_row();
+        
+        return $row->titulo;
     }
     
 } // cierra class modelUser

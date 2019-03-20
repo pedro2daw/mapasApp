@@ -33,11 +33,7 @@ $(document).ready(function () {
     $('#slide').dblclick(function () {
         $('#myModal').modal('toggle');
     });
-
-    // Obtencion del src de la imagen del punto (cuidado con URL absoluta)
-    $('#imagen').change(function (e) {
-        src = "http://localhost/mapasApp/assets/img/img_hotspots/" + e.target.files[0].name;
-    });
+    
     // Insercion de puntos de interes
     $("#insert").click(function () {
         var titulo = $("#titulo").val();
@@ -46,7 +42,7 @@ $(document).ready(function () {
             id = 1;
         }
 
-        $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posX / zoom + "' data-posy='" + posY / zoom + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img id='insImg' src='" + src + "' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
+        $("#slide").after("<div id='" + id + "' class='hot-spot' data-posx='" + posX / zoom + "' data-posy='" + posY / zoom + "' style='top:" + posY + "px;left:" + posX + "px'><div class='circle'></div><div class='tooltip'><div class='img-row'><img id='insImg' src='' width='100'></div><div class='text-row'><h4> " + titulo + " </h4><p>" + contenido + "</p></div></div></div>");
         $(this).attr("data-dismiss", "modal");
 
         $("#hiddImg").data("img", src);
@@ -157,40 +153,44 @@ $(document).ready(function () {
                 $("#herenciaNombre" + id_calle).prop("disabled", true);
                 $("#herenciaNombre" + id_calle).val(nombre);
                 $("#tipoHerencia" + id_calle).prop("disabled", true);
+                $("#tipoHerencia" + id_calle).val($("#herenciaOculto" + id_calle).data("tipo"));
             }
         });
     });
 
-   /* $("#submitHerencia1").submit(function () {
+   $("#submitHerencia1").submit(function () {
         calles = [];
         $(".idHerencia").each(function () {
             var id_calle = $(this).val();
             var nombre = $("#herenciaNombre" + id_calle).val();
-            var tipo = $("#herenciaOculto" + id_calle).data("tipo");
+            var tipo = $("#tipoHerencia" + id_calle).val();
             var id_mapa = $("#idMapaOculto").data("id-mapa");
-
+            var caso;
+            
+            if ($("#checkNombre" + id_calle).is(":checked")) {
+                caso = 1;
+            }
+            
+            if ((!$("#checkNombre" + id_calle).is(":checked")) && (nombre != "")) {
+                caso = 2;
+            }
+                
+            if (nombre == "") {
+                caso = 3;
+            }
+            
             item = {};
             item["id"] = id_calle;
             item["tipo"] = tipo;
             item["nombre"] = nombre;
             item["id_mapa"] = id_mapa;
+            item["caso"] = caso;
 
             calles.push(item);
         });
         data = JSON.stringify(calles);
-        alert(data);
-        //$("#jsonOculto").val(data);
+        $("#jsonOculto").val(data);
         return true;
     });
-    */
-    
-    /*var base_url = $("#baseUrl").data("base-url");
-    $.ajax({
-        url: base_url + "index.php/Inheritance/inherit_streets",
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(calles),
-        dataType: 'json'
-    })*/
 
 });

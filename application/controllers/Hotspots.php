@@ -22,6 +22,12 @@ class Hotspots extends Security {
     public function insert_hotspot() {
         $config['upload_path'] = "./assets/img/img_hotspots";
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
+
+        $id_mapa = $this->input->get_post('mapId');
+        $titulo = $this->modelHotspot->get_nombre_mapa($id_mapa);
+        
+            
+        $config["file_name"] = $id_mapa . "_" . $titulo;
         $this->load->library('upload', $config);
         
         $this->upload->do_upload('imagen');
@@ -50,8 +56,9 @@ class Hotspots extends Security {
         $pos_x = $this->input->get_post('posX');
         $pos_y = $this->input->get_post('posY');
         $imagen = $this->upload->data('file_name');
-        $id_mapa = $this->input->get_post('mapId');
         $this->modelHotspot->insert($id, $imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
+        
+        echo $imagen;
     }
     
     public function delete_hotspot() {
