@@ -19,15 +19,20 @@ function changeOpacity(i){
     $(document).ready( function (){
         $('#enlace_calles').toggleClass('active');
         imagenes_cargadas = 0;
-    $('img.mapas').on('load', function() {
-    imagenes_cargadas += 1;
-    var n_mapas = $('.mapas').length;
-    $('#hotspotImg-1').css({"background":"url(../assets/img/icono/loading.gif') no-repeat  center center"});
-    if (imagenes_cargadas == n_mapas ){
-    $('#hotspotImg-1').css({"background":"none"});
-    }
-    });
         
+        //$('#spinner').css('background', 'url("<?php echo base_url(); ?> ../../assets/img/icono/loading.gif") no-repeat  center center');
+/*
+        $('img.mapas').on('load', function() {
+        var n_mapas = $('.mapas').length;
+        imagenes_cargadas += 1;
+        
+        if (imagenes_cargadas == n_mapas ){
+            console.log('cargadas');
+            //$('#spinner').css('background', 'url("<?php echo base_url(); ?> ") no-repeat  center center');
+
+        }
+        });
+      */  
         $("#check_mapas").modal('toggle');
         
         $(document).on("input","#slider_callejero",function(){
@@ -720,6 +725,8 @@ e.preventDefault();
 
         <div class="col-md-9 dragscroll" id="prueba">
             <div id="hotspotImg-1" class="responsive-hotspot-wrap">
+            <div id='spinner'>
+
             <?php
                 for ($i = 0 ; $i < count($img_mapas) ; $i++){
                 $img = $img_mapas[$i];
@@ -730,7 +737,8 @@ e.preventDefault();
                 }
                 }
             ?>
-            </div>        
+            </div> 
+                 </div>  
         </div> <!-- fin col md-9 -->
     </div> <!-- fin row -->
 
