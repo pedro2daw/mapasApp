@@ -88,9 +88,10 @@
         }
 
         #prueba {
-            height: 600px;
+            height: 600px !important;
             overflow: auto;
             cursor: crosshair;
+            display:grid !important;
         }
 
         #hotspotImg-1 {
@@ -144,20 +145,20 @@
         }
 
         /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
-        #mapa,
+        /*#mapa,
         #super {
             overflow: auto;
             width: 1000px !important;
             height: 550px !important;
             cursor: crosshair;
             border: 1px solid black;
-            display:grid;
+            display:grid !important;
             /*margin: 0 auto;*/
             /*margin-bottom: 10px;
             margin-top: 15px;*/
             position: relative !important;
-            /*float: right;*/
-        }
+            /*float: right;
+        }*/
 
         #mapa:active:hover,
         #super:active:hover {
