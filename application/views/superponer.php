@@ -20,6 +20,7 @@
                 x:0,
                 y:0
             }
+            var zoom
             // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
 
             // FUNCION PARA MOVER UN MAPA ENCIMA DEL MAPA PRINCIPAL DE FORMA LIBRE
@@ -97,16 +98,18 @@
                     var aux_x_def = parseInt(e.pageX - aux_offset.left);
                     var aux_y_def = parseInt(e.pageY - aux_offset.top);
 
+                        aux_x_def = aux_x_def/zoom;
+                        aux_y_def = aux_y_def/zoom; 
                     alert("Has seleccionado el punto " + aux_x_def + " / " + aux_y_def); // quitar este alert
                     aux_next =  confirm("¿Estás seguro que quieres seleccionar ese punto");
 
                     if(aux_next == true){
-                        desviacion_x[cont] = (x_def - aux_x_def) / zoom;
-                        desviacion_y[cont] = (y_def - aux_y_def) / zoom;
+                        desviacion_x[cont] = (x_def - aux_x_def);
+                        desviacion_y[cont] = (y_def - aux_y_def);
 
                             console.log(desviacion_x[cont]); // quitar esta linea cuando funcione
                             console.log(desviacion_y[cont]); // quitar esta linea cuando funcione
-                            console.log(" zoom : " + zoom); // quitar esta linea cuando funcione
+                            console.log(" zoom_alt : " + zoom); // quitar esta linea cuando funcione
                     cont++;
                     }
                     // CARGO LA SIGUIENTE IMAGEN DEL ARRAY RUTAS Y LA MUESTRO PARA SELECCIONAR EL PUNTO DE REFERENCIA
@@ -167,7 +170,17 @@
                     $("#toJson").removeClass("hidden");
             });
 
-
+                // COMPRUEBA CUANDO ES SCROLL HACIA ARRIBA O HACIA ABAJO //
+                $('#prueba').bind('mousewheel', function(e){ 
+                    if(e.originalEvent.wheelDelta /120 > 0) {
+                        console.log('scrolling up !');
+                    }
+                    else{
+                    console.log('scrolling down !');
+                     }
+                     });
+                // COMPRUEBA CUANDO ES SCROLL HACIA ARRIBA O HACIA ABAJO //
+                alert(zoom);
         });// este cierra el document ready, antes de este poner todo los demas para que cierre bien del todo
                 
                
@@ -201,7 +214,7 @@ echo("
 ?>
     </div>
     <div id="prueba" class="col-md-9">
-        <div id="hotspotImg-1" class="responsive-hotspot-wrap">
+        <div id="hotspotImg-1" class="responsive-hotspot-wrap" style="transition: transform 1s ease 0s; transform-origin: left top; transform: scale(0.44);">
             <img src="" alt="mapa_main" id="mapa_main" style="position:absolute;">
             <img src="" alt="mapa" id="mapa_alt" class="free_move" style="display:none; position:absolute; z-index:1000;">
         </div>
