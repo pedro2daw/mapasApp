@@ -189,7 +189,7 @@
                                 <?php
                                     for($i = 0; $i < count($ListaMapas);$i++){                      
                                         $mapa = $ListaMapas[$i];
-                                        echo "<option value='" . $mapa["titulo"] . "'> " . $mapa["titulo"] . " </option>";
+                                        echo "<option value='" . $mapa["id"] . "'> " . $mapa["titulo"] . " </option>";
                                     }
                                 ?>
                             </select>

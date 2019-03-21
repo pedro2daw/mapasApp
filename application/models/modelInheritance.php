@@ -1,9 +1,7 @@
 <?php 
 class modelInheritance extends CI_Model{
 
-    public function get_calles_mapa($nombre_mapa) {
-        $id_mapa = $this->db->select("id")->from("mapas")->where("titulo", $nombre_mapa)->order_by("id","desc")->limit(1)->get()->row("id");
-        
+    public function get_calles_mapa($id_mapa) {        
         $query = $this->db->query("SELECT id_calle FROM mapas_calles WHERE id_map = '$id_mapa';");
         $id_calles = array();
         if ($query->num_rows() > 0){
