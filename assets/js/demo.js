@@ -104,7 +104,6 @@ $(document).ready(function () {
         $(".hot-spot").each(function () {
             coordX = $(this).data("posx");
             coordY = $(this).data("posy");
-            $(this).removeAttr("style");
             $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
         });
     });
