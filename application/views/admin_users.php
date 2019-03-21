@@ -1,7 +1,7 @@
     <script>
         $(document).ready(function() {
             $('#enlace_usuarios').toggleClass('active');
-            $("#usuarioIns").on("keyup", function() {
+            $("#usuarioIns").on("change", function() {
                 var usu = $("#usuarioIns").val();
                 $.ajax({
                     type: "post",
@@ -10,13 +10,14 @@
                         if (r == 0) {
                             $("#submitUsuIns").prop("disabled", false);
                         } else {
+                            
                             $("#submitUsuIns").prop("disabled", true);
                         }
                     }
                 })
             });
             
-            $("#usuarioMod").on("keyup", function() {
+            $("#usuarioMod").on("change", function() {
                 var usu = $("#usuarioMod").val();
                 $.ajax({
                     type: "post",
