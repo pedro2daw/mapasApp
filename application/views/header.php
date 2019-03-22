@@ -88,13 +88,14 @@
         }
 
         #prueba {
+            width: 1000px !important;
             height: 600px !important;
             overflow: auto;
             cursor: crosshair;
             display:grid !important;
         }
 
-        #hotspotImg-1 {
+        #hotspotImg-1,#hotspotImg-2 {
             background-color: #ededed;
             background-size: cover;
             background-position: center center;
