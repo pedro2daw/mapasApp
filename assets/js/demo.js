@@ -8,7 +8,7 @@ $(document).ready(function () {
         id_mapa;
     var calles = [];
     var data;
-
+    zoom_aux = 1;
     // Obtencion de las coordenadas del mapa
     $('.img-responsive').click(function (e) {
         x_coords = [];
@@ -139,6 +139,55 @@ $(document).ready(function () {
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
         }
     });
+
+    // ZOOM PERSONALIZADO PARA LA SUPERPOSICION DE MAPAS
+        $("#hotspotImg-2").on("wheel", function (e) {
+        var width = $("#hotspotImg-2").first().width();
+        
+
+        var e0 = e.originalEvent,
+            delta = e0.wheelDelta || -e0.detail;
+
+        this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+        e.preventDefault();
+        actWdth = $("#hotspotImg-2 img").width() * zoom_aux;
+        if (e.originalEvent.deltaY < 0) {
+
+            // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
+            if (actWdth  < width *10) {
+                zoom_aux += 0.04;
+                if(zoom_aux > 1){zoom_aux = 1;}
+            }
+            if(zoom_aux >= 0.44 && zoom_aux < 1){
+                    $("#hotspotImg-2").css("transition", "transform 1s");
+                    $("#hotspotImg-2").css("transform-origin", "top left");
+                    $("#hotspotImg-2").css("transform", "scale(" + (zoom_aux) + ")");
+                    console.log('zoom_aux ' + zoom_aux);
+                }
+        } else {
+        // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
+            if (actWdth > width + 200) {
+                zoom_aux -= 0.04;
+                if(zoom_aux < 0.44){zoom_aux = 0.44;}
+                console.log('zoom_aux ' + zoom_aux);
+            }
+			
+            if(zoom > 0.44 && zoom_aux < 1){
+                    $("#hotspotImg-2").css("transition", "transform 1s");
+                    $("#hotspotImg-2").css("transform-origin", "top left");
+                    $("#hotspotImg-2").css("transform", "scale(" + (zoom_aux) + ")");
+                    }
+        }
+    });
+    // ZOOM PERSONALIZADO PARA LA SUPERPOSICION DE MAPAS
+
+
+
+
+
+
+
+
 
     //Formulario de herencia
     $(".idHerencia").each(function () {
