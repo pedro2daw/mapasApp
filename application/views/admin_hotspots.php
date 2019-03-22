@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function () {
+        $('#enlace_hotspots').toggleClass('active');
         $("#insert").on("click", function(e) {
             e.preventDefault();
             var form = $('form')[0];

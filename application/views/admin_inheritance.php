@@ -1,3 +1,9 @@
+<script>
+    $(document).ready(function() {
+        $('#enlace_mapas').toggleClass('active');
+    });
+</script>
+
 <div id="tablaHerencia" class="row">
     <div class="col-md-12">  
         <table class="table table-hover">

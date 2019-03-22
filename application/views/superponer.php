@@ -6,7 +6,6 @@
 
 ?>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script>
            // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
            desviacion_x = [];
@@ -26,6 +25,7 @@
 
             // FUNCION PARA MOVER UN MAPA ENCIMA DEL MAPA PRINCIPAL DE FORMA LIBRE
             $(document).ready(function() {
+                $('#enlace_mapas').toggleClass('active');
                 $(function() {
                     $("#mapa_alt").draggable({
                         start: function(event) {
