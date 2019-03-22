@@ -12,7 +12,7 @@
             desviacion_y = [];
             var dominio = "<?php echo base_url();?>";
            var rutas = <?php echo json_encode($mapas); ?>;
-            var cont = 0;
+            var cont = 1;
             var next = false;
             var aux_next = false;
             var click = {
@@ -54,13 +54,14 @@
 
 
             // CARGO LA IMAGEN DEL PLANO PRINCIPAL(Y SECUNDARIOS) Y EL CSS NECESARIO
-                $("#mapa_main").attr("src",dominio+rutas[cont]["imagen"]);
+                $("#mapa_main").attr("src",dominio+rutas[cont-1]["imagen"]);
                 $("#mapa_main").css("z-index","999");
-                $("#mapa_alt").attr("src",dominio+rutas[cont+1]["imagen"])
-                $("#mapa_alt").css({"position":"absolute","top":"0px","left":"0px"});
+                $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"])
+                $("#mapa_alt").css({"position":"absolute","top":"0px","left":"0px","opacity":"0.5"});
             // CARGO LA IMAGEN DEL PLANO PRINCIPAL(Y SECUNDARIOS) Y EL CSS NECESARIO
 
             // FUNCION QUE CAPTURA EL PUNTO DE REFERENCIA Y LO ALMACENA
+            /*
             $('#mapa_main').dblclick(function(e) {
                 if (cont == 0){
                 var offset = $(this).offset();
@@ -93,10 +94,12 @@
                 }else{
                     alert("Ya has seleccionado un punto de referencia en este mapa");
                 }
-            });
+            });*/
 
             // FUNCION QUE CAPTURA EL PUNTO DE REFERENCIA Y LO ALMACENA EN EL MAPA ALTERNATIVO
             $('#mapa_alt').dblclick(function(e){
+                $("#plano_anterior").removeAttr("disabled");
+                $("#plano_siguiente").removeAttr("disabled");
                 var top = $("#mapa_alt").css("top");
                     var left = $("#mapa_alt").css("left");
                         tops.push(top);
@@ -124,30 +127,32 @@
                     if (cont < rutas.length){
                         $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
                         $("#prueba").scrollTop(0);
+                        $("#mapa_alt").css({"top":"0px","left":"0px"});
 
-                        alert("llega aqui"); // quitar esta linea cuando funcione
-                        alert("el contador vale " + cont); // quitar esta linea cuando funcione
                         } else {
-                            alert ("ya no hay mas imagenes") // quitar esta linea cuando funcione
-                        }
+                             if(cont == rutas.length){
+                                alert("contar igual a length");
+                                $("#previsualizar").removeClass("d-none");
+                                $("#plano_anterior").prop("disabled",true);
+                                }
+                            }
                     alert(cont);
                     alert(rutas.length);
 
-                    if(cont == rutas.length){
+                    /*if(cont == rutas.length){
                     alert("contar igual a length");
                     $("#previsualizar").removeClass("hidden");
-                }
+                    }*/
                 
             });       
             // FUNCION QUE CAPTURA EL PUNTO DE REFERENCIA Y LO ALMACENA EN EL MAPA ALTERNATIVO
             
-            $("#rutas").click(function(){
-                alert(desviacion_x);
-                alert(desviacion_y);
-            });
 
             // PREVISUALIZACION ANTES DE INSERTAR LAS DESVIACIONES EN LA BASE DE DATOS
             $("#previsualizar").click(function(){
+                $(".info").addClass("d-none");
+                $("#plano_anterior").addClass("d-none");
+                $("#repetir_proceso").removeClass("d-none");
                var div_prev = $("#hotspotImg-2");
                var id_map = "";
                     div_prev.empty();
@@ -173,17 +178,54 @@
                            }
                     }
 
-                    $("#previsualizar").addClass("hidden");
-                    $("#toJson").removeClass("hidden");
+                    $("#previsualizar").addClass("d-none");
+                    $("#toJson").removeClass("d-none");
             });
-                $("#top_left").click(function(){
-                    var top = $("#mapa_alt").css("top");
-                    var left = $("#mapa_alt").css("left");
-                        tops.push(top);
-                        lefts.push(left);    
-                });
-                // COMPRUEBA CUANDO ES SCROLL HACIA ARRIBA O HACIA ABAJO //
-                // COMPRUEBA CUANDO ES SCROLL HACIA ARRIBA O HACIA ABAJO //
+               // volver al plano anterior
+               $("#plano_anterior").click(function(){
+                   alert("tops y lefts antes de splice" + tops + " /// " + lefts);
+                tops.splice(-1,1);
+                lefts.splice(-1,1);
+                alert("tops y lefts despues de splice" + tops + " /// " + lefts);
+                cont--;
+                $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
+                $("#mapa_alt").css({"top":"0px","left":"0px;"});
+                alert("contador = " + cont);
+                if(cont == 1){
+                    alert("entra aqui inside");
+                    $("#plano_anterior").prop("disabled",true);
+                    $("#plano_siguiente").prop("disabled",true);
+                }
+               }); 
+
+               $("#repetir_proceso").click(function(){
+                next =  confirm("¿Estás seguro que quieres repetir el proceso?");
+                if (next == true){
+                    alert("es true");
+                    location.href = "<?php  echo site_url('Streets/get_maps'); ?>";
+                }else{
+                    alert("es false");
+                }
+                
+               });
+                
+               // volver al plano anterior 
+// cambiar para que coja los tops lefts en vez de desviacion
+                $("#toJson").click(function(){
+
+var jsonX = JSON.stringify(desviacion_x);
+var jsonY = JSON.stringify(desviacion_y);
+
+$("#x").val(jsonX);
+$("#y").val(jsonY);
+
+rutas.splice(0,1);
+
+var jsonRutas = JSON.stringify(rutas);
+
+$("#array_rutas").val(jsonRutas);
+
+});
         });// este cierra el document ready, antes de este poner todo los demas para que cierre bien del todo
                 
                
@@ -193,16 +235,18 @@
 <div class="container-fluid">
 <div class="box">
     <h3 class="d-inline">SUPERPOSICIÓN DE MAPAS</h3>
-    <a href="#" title="Selección de puntos" data-toggle="popover" data-trigger="focus" data-content="PARA SELECCIONAR EL PUNTO DE REFERENCIA, HAZ DOBLE CLICK EN LA IMAGEN DEL MAPA"><span class="far fa-question-circle"></span></a>
+    <a href="#" title="Selección de puntos" data-toggle="popover" data-trigger="focus" data-content="Alinea el mapa con el plano principal y haz doble click para alinear el mapa"><span class="far fa-question-circle"></span></a>
 </div>
     <div class="row no-gutters">
     
     <div class="col-md-3" id="panel_left">
-    <h4>Cambiar opacidad del plano superior</h4>
-    <input style='float:left; margin-bottom:10px; width:90%;' type='range' id='opacity_changer' value='0' name='points' min='0' max='1' step='0.1'/>
-    <button id="previsualizar" class="hidden btn btn-info">Previsualizar</button>
-    <button id="rutas" class="btn btn-info">coordenadas</button>
-    <button id="top_left" class="btn btn-info">top_left</button>
+    <h4 class="info">Cambiar opacidad del plano superior</h4>
+    <input style='float:left; margin-bottom:10px; width:90%;' type='range' id='opacity_changer' class="info" value='0.5' name='points' min='0' max='1' step='0.1'/>
+    <button id="plano_anterior" class="btn btn-danger" disabled>Alinear plano anterior</button>
+    <br><br>
+    <button id="previsualizar" class="d-none btn btn-info">Previsualizar</button>
+    <!--<button id="rutas" class="btn btn-info">coordenadas</button>
+    <button id="top_left" class="btn btn-info">top_left</button>-->
     
     <!--<button id="toJson" class="hidden">GUARDAR</button>-->
     <?php 
@@ -211,16 +255,17 @@ echo("
     <input type='hidden' value='' name='x_coord' id='x'/>
     <input type='hidden' value='' name='y_coord' id='y'/>
     <input type='hidden' value='' name='array_rutas' id='array_rutas'/>
-            <input type='submit' class='btn btn-success hidden' value='SUPERPONER' id='toJson' />
+            <input type='submit' class='btn btn-success d-none' value='Alinear' id='toJson' />
         </form> 
         ");
 
 ?>
+    <button id="repetir_proceso" class="d-none btn btn-warning">Repetir proceso de alineación</button>
     </div>
-    <div id="prueba" class="col-md-9">
+    <div id="prueba" class="col-md-9" >
         <div id="hotspotImg-2" class="responsive-hotspot-wrap zoom_aux" >
             <img src="" alt="mapa_main" id="mapa_main" style="position:absolute;">
-            <img src="" alt="mapa" id="mapa_alt" class="free_move" style="position:absolute; z-index:998;">
+            <img src="" alt="mapa" id="mapa_alt" class="free_move" style="position:absolute; z-index:1000;">
         </div>
     </div>
     <!--<div id="super" class="hidden col-md-9">

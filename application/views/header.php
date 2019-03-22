@@ -161,13 +161,19 @@
             /*float: right;
         }*/
 
-        #mapa:active:hover,
+        /*#mapa:active:hover,
         #super:active:hover {
             cursor: grabbing;
-        }
+        }*/
 
         .hidden {
             display: none !important;
+        }
+        #mapa_alt:hover{
+            cursor:grab;
+        }
+        #mapa_alt:active:hover{
+            cursor: grabbing;
         }
 
         /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
