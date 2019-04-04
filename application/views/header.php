@@ -91,7 +91,7 @@
             width: 1000px !important;
             height: 600px !important;
             overflow: auto;
-            cursor: crosshair;
+            /*cursor: crosshair;*/
             display:grid !important;
         }
 

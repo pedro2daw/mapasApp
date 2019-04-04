@@ -8,10 +8,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
            // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
-           desviacion_x = [];
+            desviacion_x = [];
             desviacion_y = [];
             var dominio = "<?php echo base_url();?>";
-           var rutas = <?php echo json_encode($mapas); ?>;
+            var rutas = <?php echo json_encode($mapas); ?>;
             var cont = 1;
             var next = false;
             var aux_next = false;
@@ -60,70 +60,20 @@
                 $("#mapa_alt").css({"position":"absolute","top":"0px","left":"0px","opacity":"0.5"});
             // CARGO LA IMAGEN DEL PLANO PRINCIPAL(Y SECUNDARIOS) Y EL CSS NECESARIO
 
-            // FUNCION QUE CAPTURA EL PUNTO DE REFERENCIA Y LO ALMACENA
-            /*
-            $('#mapa_main').dblclick(function(e) {
-                if (cont == 0){
-                var offset = $(this).offset();
-
-                x_def = parseInt(e.pageX - offset.left);
-                y_def = parseInt(e.pageY - offset.top);
-                
-                    alert("Has seleccionado el punto " + x_def + " / " + y_def); // quitar este alert
-                    next =  confirm("¿Estás seguro que quieres seleccionar ese punto");
-                    if(next == true){
-                        desviacion_x[0] = (parseInt(e.pageX - offset.left) / zoom_aux);
-                        desviacion_y[0] = (parseInt(e.pageY - offset.top) / zoom_aux);
-
-                            console.log(desviacion_x[0]); // quitar esta linea cuando funcione
-                            console.log(desviacion_y[0]); // quitar esta linea cuando funcione
-                            console.log(" zoom_aux : " + zoom_aux); // quitar esta linea cuando funcione
-                    cont++;
-                // CARGO LA SIGUIENTE IMAGEN DEL ARRAY RUTAS Y LA MUESTRO PARA SELECCIONAR EL PUNTO DE REFERENCIA
-                    console.log("ruta de la imagen " + dominio+rutas[cont]["imagen"]); // quitar esta linea cuando funcione
-
-                    //$("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
-                    $("#mapa_alt").css("z-index","1000");
-                    //$("#mapa_alt").removeClass("d-none");
-                    $("#hotspotImg-2").removeAttr("style");
-                    $("#prueba").scrollTop(0);
-                    zoom_aux = 1;
-                    alert("llega aqui"); // quitar esta linea cuando funcione
-                    alert("el contador vale " + cont); // quitar esta linea cuando funcione
-                    }
-                }else{
-                    alert("Ya has seleccionado un punto de referencia en este mapa");
-                }
-            });*/
-
-            // FUNCION QUE CAPTURA EL PUNTO DE REFERENCIA Y LO ALMACENA EN EL MAPA ALTERNATIVO
+            // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
             $('#mapa_alt').dblclick(function(e){
                 $("#plano_anterior").removeAttr("disabled");
-                $("#plano_siguiente").removeAttr("disabled");
-                var top = $("#mapa_alt").css("top");
+                    var top = $("#mapa_alt").css("top");
                     var left = $("#mapa_alt").css("left");
+                    // realizo un slice para guardar solo el valor numerico y no su unidad (px)//
+                    top = top.slice(0,-2);
+                    left = left.slice(0,-2);
+                        //alert(top + " el valor del top"); 
+                        //alert(left + " el valor del left");
                         tops.push(top);
                         lefts.push(left); 
-                /*
-                    var offset = $(this).offset();
-
-                    var aux_x_def = parseInt(e.pageX - offset.left);
-                    var aux_y_def = parseInt(e.pageY - offset.top);
-
-                    alert("Has seleccionado el punto " + aux_x_def+ " / " + aux_y_def); // quitar este alert
-                    aux_next =  confirm("¿Estás seguro que quieres seleccionar ese punto");
-
-                    if(aux_next == true){
-                        desviacion_x[cont] = ((x_def - parseInt(e.pageX - offset.left)) /zoom_aux);
-                        desviacion_y[cont] = ((y_def - parseInt(e.pageY - offset.top)) /zoom_aux);
-
-                            console.log(desviacion_x[cont]); // quitar esta linea cuando funcione
-                            console.log(desviacion_y[cont]); // quitar esta linea cuando funcione
-                             // quitar esta linea cuando funcione
                     cont++;
-                    }*/
-                    cont++;
-                    // CARGO LA SIGUIENTE IMAGEN DEL ARRAY RUTAS Y LA MUESTRO PARA SELECCIONAR EL PUNTO DE REFERENCIA
+                    // CARGO LA SIGUIENTE IMAGEN DEL ARRAY RUTAS Y LA MUESTRO
                     if (cont < rutas.length){
                         $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
                         $("#prueba").scrollTop(0);
@@ -131,21 +81,17 @@
 
                         } else {
                              if(cont == rutas.length){
-                                alert("contar igual a length");
+                                //alert("contar igual a length");
                                 $("#previsualizar").removeClass("d-none");
-                                $("#plano_anterior").prop("disabled",true);
+                                $(".info").addClass("d-none");
+                                $("#plano_anterior").addClass("d-none");
+                                $("#mapa_alt").addClass("d-none");
                                 }
                             }
                     alert(cont);
                     alert(rutas.length);
-
-                    /*if(cont == rutas.length){
-                    alert("contar igual a length");
-                    $("#previsualizar").removeClass("hidden");
-                    }*/
-                
             });       
-            // FUNCION QUE CAPTURA EL PUNTO DE REFERENCIA Y LO ALMACENA EN EL MAPA ALTERNATIVO
+            // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
             
 
             // PREVISUALIZACION ANTES DE INSERTAR LAS DESVIACIONES EN LA BASE DE DATOS
@@ -153,11 +99,9 @@
                 $(".info").addClass("d-none");
                 $("#plano_anterior").addClass("d-none");
                 $("#repetir_proceso").removeClass("d-none");
-               var div_prev = $("#hotspotImg-2");
-               var id_map = "";
+                var div_prev = $("#hotspotImg-2");
+                var id_map = "";
                     div_prev.empty();
-                        //div_prev.append("<img src='' alt='mapa_main' id='mapa_main' style='position:absolute;'/>");
-                        //$("#mapa_main").attr("src",dominio+rutas[0]["imagen"]);
                     
                     for(i = 0; i< rutas.length;i++){
                         div_prev.append("<img src='' class='maps' id='mapa_alt_"+i+"'/>");
@@ -172,8 +116,8 @@
                         $(".maps:eq("+j+")").css("z-index", j+1);
 
                        if(j > 0){
-                                $(".maps:eq("+j+")").css("left",lefts[j]);
-                                $(".maps:eq("+j+")").css("top",tops[j]);
+                                $(".maps:eq("+j+")").css("left",lefts[j]+"px");
+                                $(".maps:eq("+j+")").css("top",tops[j]+"px");
                                 $(".maps:eq("+j+")").css("opacity","0.5");
                            }
                     }
@@ -181,52 +125,57 @@
                     $("#previsualizar").addClass("d-none");
                     $("#toJson").removeClass("d-none");
             });
-               // volver al plano anterior
-               $("#plano_anterior").click(function(){
-                   alert("tops y lefts antes de splice" + tops + " /// " + lefts);
+
+            // FUNCION PARA ALINEAR EL PLANO ANTERIOR
+            $("#plano_anterior").click(function(){
+                //alert("tops y lefts antes de splice" + tops + " /// " + lefts);
                 tops.splice(-1,1);
                 lefts.splice(-1,1);
-                alert("tops y lefts despues de splice" + tops + " /// " + lefts);
+                //alert("tops y lefts despues de splice" + tops + " /// " + lefts);
                 cont--;
                 $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
                 $("#mapa_alt").css({"top":"0px","left":"0px;"});
-                alert("contador = " + cont);
+                //alert("contador = " + cont);
                 if(cont == 1){
                     alert("entra aqui inside");
                     $("#plano_anterior").prop("disabled",true);
                     $("#plano_siguiente").prop("disabled",true);
                 }
-               }); 
+            }); 
+            // FUNCION PARA ALINEAR EL PLANO ANTERIOR
 
-               $("#repetir_proceso").click(function(){
+            // FUNCION PARA REPETIR EL PROCESO DE ALINEACION
+            $("#repetir_proceso").click(function(){
                 next =  confirm("¿Estás seguro que quieres repetir el proceso?");
                 if (next == true){
-                    alert("es true");
+                    //alert("es true");
                     location.href = "<?php  echo site_url('Streets/get_maps'); ?>";
-                }else{
-                    alert("es false");
                 }
+            });
+            // FUNCION PARA REPETIR EL PROCESO DE ALINEACION    
+
+            // FUNCION PARA INSERTAR LA ALINEACION DE LOS MAPAS
+            $("#toJson").click(function(){
+                rutas.splice(0,1);
+                tops.splice(0,1);
+                lefts.splice(0,1);
                 
-               });
+                var jsonX = JSON.stringify(lefts);
+                var jsonY = JSON.stringify(tops);
                 
-               // volver al plano anterior 
-// cambiar para que coja los tops lefts en vez de desviacion
-                $("#toJson").click(function(){
+                $("#x").val(jsonX);
+                $("#y").val(jsonY);
+                    //alert(jsonX);
+                    //alert(jsonY);
 
-var jsonX = JSON.stringify(desviacion_x);
-var jsonY = JSON.stringify(desviacion_y);
+                var jsonRutas = JSON.stringify(rutas);
+                    //alert(jsonRutas + " valores de las rutas para insertar");
+                $("#array_rutas").val(jsonRutas);
 
-$("#x").val(jsonX);
-$("#y").val(jsonY);
+            });
+            // FUNCION PARA INSERTAR LA ALINEACION DE LOS MAPAS
 
-rutas.splice(0,1);
-
-var jsonRutas = JSON.stringify(rutas);
-
-$("#array_rutas").val(jsonRutas);
-
-});
-        });// este cierra el document ready, antes de este poner todo los demas para que cierre bien del todo
+            });// este cierra el document ready, antes de este poner todo los demas para que cierre bien del todo
                 
                
 
