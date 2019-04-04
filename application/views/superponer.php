@@ -23,6 +23,17 @@
             var lefts = [null];
             // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
 
+            // FUNCION PARA CAMBIAR LA OPACIDAD DE LOS MAPAS DE LA PREVISUALIZACION
+            function changeOpacity(n){
+                $(document).on("input","#slider_"+n,function(){
+                var opacity = $(this).val();
+                $("#mapa_alt_"+n).css("opacity",opacity);
+                });
+            }
+            // FUNCION PARA CAMBIAR LA OPACIDAD DE LOS MAPAS DE LA PREVISUALIZACION
+
+
+
             // FUNCION PARA MOVER UN MAPA ENCIMA DEL MAPA PRINCIPAL DE FORMA LIBRE
             $(document).ready(function() {
                 $('#enlace_mapas').toggleClass('active');
@@ -52,6 +63,7 @@
             });
             // FUNCION PARA CAMBIAR LA OPACIDAD DEL MAPA ALTERNATIVO 
 
+            
 
             // CARGO LA IMAGEN DEL PLANO PRINCIPAL(Y SECUNDARIOS) Y EL CSS NECESARIO
                 $("#mapa_main").attr("src",dominio+rutas[cont-1]["imagen"]);
@@ -62,6 +74,8 @@
 
             // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
             $('#mapa_alt').dblclick(function(e){
+                next = confirm("¿Quieres seleccionar esta alineación?");
+                if(next==true){
                 $("#plano_anterior").removeAttr("disabled");
                     var top = $("#mapa_alt").css("top");
                     var left = $("#mapa_alt").css("left");
@@ -88,8 +102,9 @@
                                 $("#mapa_alt").addClass("d-none");
                                 }
                             }
-                    alert(cont);
-                    alert(rutas.length);
+                }
+                    //alert(cont);
+                    //alert(rutas.length);
             });       
             // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
             
@@ -120,6 +135,10 @@
                                 $(".maps:eq("+j+")").css("top",tops[j]+"px");
                                 $(".maps:eq("+j+")").css("opacity","0.5");
                            }
+                    }
+                    $("#panel_left").append("<h4>Cambiar la opacidad de los planos</h4>");
+                    for (n = 0; n < rutas.length;n++){
+                        $("#panel_left").append("<input style='float:left; width:90%; margin-top:2%;' type='range' id='slider_"+n+"' oninput='changeOpacity("+n+");' name='points' min='0' max='1' step='0.1'/>");
                     }
 
                     $("#previsualizar").addClass("d-none");
@@ -183,7 +202,7 @@
 
 <div class="container-fluid">
 <div class="box">
-    <h3 class="d-inline">SUPERPOSICIÓN DE MAPAS</h3>
+    <h3 class="d-inline">ALINEACIÓN DE MAPAS</h3>
     <a href="#" title="Selección de puntos" data-toggle="popover" data-trigger="focus" data-content="Alinea el mapa con el plano principal y haz doble click para alinear el mapa"><span class="far fa-question-circle"></span></a>
 </div>
     <div class="row no-gutters">
