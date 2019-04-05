@@ -724,9 +724,7 @@ e.preventDefault();
         </div> <!-- fin col md-3 -->
 
         <div class="col-md-9 dragscroll" id="prueba">
-            <div id="hotspotImg-1" class="responsive-hotspot-wrap">
-            <div id='spinner'>
-
+            <div id="hotspotImg-1">
             <?php
                 for ($i = 0 ; $i < count($img_mapas) ; $i++){
                 $img = $img_mapas[$i];
@@ -738,7 +736,6 @@ e.preventDefault();
                 }
             ?>
             </div> 
-                 </div>  
         </div> <!-- fin col md-9 -->
     </div> <!-- fin row -->
 

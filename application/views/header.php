@@ -96,7 +96,6 @@
         }
 
         #hotspotImg-1,#hotspotImg-2 {
-            background-color: #ededed;
             background-size: cover;
             background-position: center center;
             position: relative;
@@ -128,10 +127,7 @@
         }
 
         #hotspotImg-1:hover .hot-spot-1:hover {
-            
             background-color:#99004d;
-         
-            
         }
 
         #botonHotspots {
