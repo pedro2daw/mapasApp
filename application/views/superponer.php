@@ -138,6 +138,7 @@
                     }
                     $("#panel_left").append("<h4>Cambiar la opacidad de los planos</h4>");
                     for (n = 0; n < rutas.length;n++){
+                        $("#panel_left").append("<h4>"+rutas[n]["titulo"]+"</h4>");
                         $("#panel_left").append("<input style='float:left; width:90%; margin-top:2%;' type='range' id='slider_"+n+"' oninput='changeOpacity("+n+");' name='points' min='0' max='1' step='0.1'/>");
                     }
 
