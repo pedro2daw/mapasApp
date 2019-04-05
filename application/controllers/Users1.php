@@ -9,14 +9,12 @@ class Users extends Security {
         $nivel = $this->modelUser->getNivel($id);
         if ($nivel == 1) {
             $data["viewName"] = "error";
+        
             $this->load->view('template', $data);
         } else if ($nivel == 2) {
             $data['ListaUsuarios'] = $this->modelUser->get_all();
             $data["viewName"] = "admin_users";
-            if ($this->session->flashdata('data') != null){
-                $a = $this->session->flashdata('data');
-                $data['msg'] = $a['msg'];
-        }
+        
             $this->load->view('template', $data);   
        
         }
@@ -43,16 +41,15 @@ class Users extends Security {
         $r = $this->modelUser->insert($usuario, $hash, $nivel);
         
         if ($r == 0) {
-            //error
             $data["msg"] = "1";
-            $this->session->set_flashdata('data',$data);
-            redirect('Users/view_users');
+            $data['ListaUsuarios'] = $this->modelUser->get_all();
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
         } else {
-            //bien
             $data["msg"] = "0";
-            $this->session->set_flashdata('data',$data);
-            redirect('Users/view_users');
-
+            $data['ListaUsuarios'] = $this->modelUser->get_all();
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
         }
        
     }
@@ -62,17 +59,20 @@ class Users extends Security {
             $r = $this->modelUser->delete($id);
             if ($r != 0) {
                 $data["msg"] = "0";
-                $this->session->set_flashdata('data',$data);
-                redirect('Users/view_users');
+                $data['ListaUsuarios'] = $this->modelUser->get_all();
+                $data["viewName"] = "admin_users";
+                $this->load->view('template', $data);
             } else {
                 $data["msg"] = "1";
-                $this->session->set_flashdata('data',$data);
-                redirect('Users/view_users');
+                $data['ListaUsuarios'] = $this->modelUser->get_all();
+                $data["viewName"] = "admin_users";
+                $this->load->view('template', $data);
             }
         } else {
             $data["msg"] = "2";
-            $this->session->set_flashdata('data',$data);
-            redirect('Users/view_users');
+            $data['ListaUsuarios'] = $this->modelUser->get_all();
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
         }
     }
     
@@ -87,12 +87,15 @@ class Users extends Security {
         
         if ($r == 0) {
             $data["msg"] = "1";
-            $this->session->set_flashdata('data',$data);
-            redirect('Users/view_users');
+            $data['ListaUsuarios'] = $this->modelUser->get_all();
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
         } else {
             $data["msg"] = "0";
-            $this->session->set_flashdata('data',$data);
-            redirect('Users/view_users');
+            $data['ListaUsuarios'] = $this->modelUser->get_all();
+            $data["viewName"] = "admin_users";
+            $this->load->view('template', $data);
         }
     }
+    
 }

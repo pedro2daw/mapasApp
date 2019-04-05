@@ -3,17 +3,17 @@ class modelUser extends CI_Model{
 
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
     public function checkLogin($name,$pass) {
-        $checkHash = false;
         $query = $this->db->query("SELECT passwd FROM usuarios WHERE username = '$name';"); 
         foreach ($query->result_array() as $row) {
             $hash = $row['passwd'];
         }
         
-            if (isset($hash)) {
-                $checkHash = password_verify($pass, $hash);
-                if ($checkHash == 1){
-                    $checkHash = true;
-            } 
+        if (isset($hash)) {
+            $checkHash = password_verify($pass, $hash);
+        }
+        
+        else {
+            $checkHash = false;
         }
         return $checkHash;
     }
@@ -51,15 +51,9 @@ class modelUser extends CI_Model{
     }
     
     public function update($usuario, $contrasena, $nivel, $id) {
-        if ($contrasena != ""){
-            $query = $this->db->query("UPDATE usuarios SET username = '$usuario', passwd = '$contrasena', nivel = '$nivel' WHERE id = $id;"); 
-            $affected_rows = $this->db->affected_rows();
-        }else {
-            $query = $this->db->query("UPDATE usuarios SET username = '$usuario', nivel = '$nivel' WHERE id = $id;"); 
-            $affected_rows = $this->db->affected_rows();
-        }
-        var_dump($affected_rows);
-        return $affected_rows;
+        $query = $this->db->query("UPDATE usuarios SET username = '$usuario', passwd = '$contrasena', nivel = '$nivel' WHERE id = $id;"); 
+        
+        return $this->db->affected_rows();
     }
     
     public function delete($id) {
@@ -77,15 +71,9 @@ class modelUser extends CI_Model{
         
         return $nivel;
     }
-
-
-
+    
     public function hash_pass($pass) {
-        if ($pass != ''){
-            $pass = password_hash($pass, PASSWORD_DEFAULT);
-        }
-
-        var_dump($pass);
+        $pass = password_hash($pass, PASSWORD_DEFAULT);
         return $pass;
     }
     

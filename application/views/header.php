@@ -31,6 +31,7 @@
         $(document).ready(function() {
             $('.alert').fadeIn().delay(2500).fadeOut();
             $('#img_callejero').dblclick(function(e) {
+                // $('#modal_insert').modal('show');
                 var offset = $(this).offset();
                 coords_x.push(parseInt(e.pageX - offset.left));
                 coords_y.push(parseInt(e.pageY - offset.top));
