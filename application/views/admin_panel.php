@@ -27,8 +27,6 @@
                 $('#upd_desv_y').val(desv_y);
             }
 
-            console.log('eeeo ' + $('#upd_desv_y').val());
-
             $('#upd_paquete').val(id_paquete);
             $('#upd_titulo').val(titulo);
             $('#upd_ancho').val(ancho);
@@ -41,9 +39,7 @@
             $('#id_update').val(id);
             $('#ruta_original').val(img);
 
-
             /*
-        
                 $.ajax({
                         type: "post",
                         url: "< ?php echo base_url(); ?>index.php/Maps/form_update_map",       
@@ -57,7 +53,8 @@
                             console.log('ERROR: ', data);
                         },
                     });
-        */
+            */
+
             $.ajax({
                 type: "post",
                 url: "< ?php echo base_url(); ?>index.php/Maps/form_update_map",

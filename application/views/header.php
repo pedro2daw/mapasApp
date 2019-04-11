@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <!-- DATATABLES: -->
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
 
 
     <!-- ESTILOS PROPIOS:-->
@@ -29,32 +30,69 @@
         coords_x = [];
         coords_y = [];
         $(document).ready(function() {
+            // Click solo una vez.
+            // Mapa ya dibujado el punto.
+            map_already_drawn = false;
             $('.alert').fadeIn().delay(2500).fadeOut();
-            $('#img_callejero').dblclick(function(e) {
-                // $('#modal_insert').modal('show');
-                var offset = $(this).offset();
-                coords_x.push(parseInt(e.pageX - offset.left));
-                coords_y.push(parseInt(e.pageY - offset.top));
-                var x_def = parseInt(e.pageX - offset.left);
-                var y_def = parseInt(e.pageY - offset.top);
-                var x_temp = parseInt((e.pageX - offset.left) - 5);
-                var y_temp = (parseInt(e.pageY - offset.top) - 5);
-                $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
-                            console.log('la x y la y del hotspot: ' + x_temp + " " +y_temp + " zoom: " +zoom);
 
-                $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp  / zoom  + "px;left:" + x_temp  / zoom + "px; display:block;'></div>");
-            });
-            $("#show").click(function() {
-                alert("Las coordenadas del eje x son: " + coords_x);
-                alert("Las coordenadas del eje y son: " + coords_y);
-            });
+            
+            $('#img_callejero').dblclick(function(e) {
+                if (!map_already_drawn){
+                    $("#delCoord").prop('disabled',false);
+                    $("li").eq('0').toggleClass('active',false);
+                    $("li").eq('1').toggleClass('active',false);
+                    $("li").eq('2').toggleClass('active',true);
+                    $("li").eq('3').toggleClass('active',false);
+
+                    var offset = $(this).offset();
+                    coords_x.push(parseInt(e.pageX - offset.left));
+                    coords_y.push(parseInt(e.pageY - offset.top));
+                    var x_def = parseInt(e.pageX - offset.left);
+                    var y_def = parseInt(e.pageY - offset.top);
+                    var x_temp = parseInt((e.pageX - offset.left) - 5);
+                    var y_temp = (parseInt(e.pageY - offset.top) - 5);
+                    $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
+                    console.log('la x y la y del hotspot: ' + x_temp + " " +y_temp + " zoom: " +zoom);
+                    $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp  / zoom  + "px;left:" + x_temp  / zoom + "px; display:block;'></div>");
+                    map_already_drawn = true;
+                    $('.cb_mapas').prop('disabled', false);
+                    $('#tabla_calles').addClass('disabledbutton');
+                    $('.btn-update').prop('disabled', true);
+                    $('.btn-delete').prop('disabled', true);
+                    $('.btn-anadir').prop('disabled', true);
+                    
+                    $('#prueba').addClass('disabledbutton');
+
+                } 
+                });
+            
+
             $("#delCoord").click(function() {
+                $('.cb_hidden').prop('checked',true);
+
+                $('.cb_mapas').prop('disabled', true);
+                $('#tabla_calles').removeClass('disabledbutton');
+                $('#prueba').removeClass('disabledbutton');
+                map_already_drawn = false;
+                $("li").eq('0').toggleClass('active',false);
+                $("li").eq('1').toggleClass('active',true);
+                $("li").eq('2').toggleClass('active',false);
+                $("li").eq('3').toggleClass('active',false);
+                $("li").eq('3').toggleClass('active',false);
+                $(this).prop('disabled',true);
                 $("#coord-list li:last-child").remove();
                 index_x = coords_x.length - 1;
                 index_y = coords_y.length - 1;
                 coords_x.splice(index_x, 1);
                 coords_y.splice(index_y, 1);
                 $(".hot-spot-1:first").remove();
+             
+
+                    $('.btn-update').prop('disabled', false);
+                    $('.btn-delete').prop('disabled', false);
+                    $('.btn-anadir').prop('disabled', false);
+                $('.cb_hidden').hide();
+
             });
         });
 

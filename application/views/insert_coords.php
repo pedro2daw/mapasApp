@@ -8,45 +8,32 @@
     function changeOpacity(i) : Cambia la opacidad de la imagen con el id  (i) pasado por parámetro.
     Parametros: i = el id de la imagen.
 */
-function changeOpacity(i){
+    function changeOpacity(i){
         $(document).on("input","#slider_"+i,function(){
          var opacity = $(this).val();
-
          $("#img_"+i).css("opacity",opacity);
         });
-      }
+    }
 
     $(document).ready( function (){
-        $('#enlace_calles').toggleClass('active');
-        imagenes_cargadas = 0;
         
-        //$('#spinner').css('background', 'url("<?php echo base_url(); ?> ../../assets/img/icono/loading.gif") no-repeat  center center');
-/*
-        $('img.mapas').on('load', function() {
-        var n_mapas = $('.mapas').length;
-        imagenes_cargadas += 1;
-        
-        if (imagenes_cargadas == n_mapas ){
-            console.log('cargadas');
-            //$('#spinner').css('background', 'url("<?php echo base_url(); ?> ") no-repeat  center center');
+        $('.cb_mapas').prop('disabled', true);
+        $("#delCoord").prop('disabled',true);
+        $("li").eq('0').toggleClass('active',true);
+        $("li").eq('1').toggleClass('active',false);
+        $("li").eq('2').toggleClass('active',false);
+        $("li").eq('3').toggleClass('active',false);
 
-        }
-        });
-      */  
-        $("#check_mapas").modal('toggle');
+        $('#enlace_calles').toggleClass('active');
         
+        imagenes_cargadas = 0;
+        $("#check_mapas").modal('toggle');
+
         $(document).on("input","#slider_callejero",function(){
          var opacity = $(this).val();
-
          $("#img_callejero").css("opacity",opacity);
         });
 
-/* Creación dinámica de los input type range que permiten cambiar la opacidad.
-        var rutas = < ?php echo json_encode($img_mapas); ?>;
-        for (i = 0 ; i < rutas.length ; i++ ){
-        $("#ranges").append("<input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_"+i+"' oninput='changeOpacity("+i+")' value='0' name='points' min='0' max='1' step='0.1'/>");
-        }
-    */
         // Carga la tabla de calles el plug-in de DataTables.
         $('#tabla_calles').DataTable( {
         "scrollY":        "210px",
@@ -66,6 +53,7 @@ function changeOpacity(i){
            { "data": "Calle" },
        ]
     });
+
     table = $('#tabla_calles').DataTable();
 
         // Establecemos un placeholder para el buscador de calles.
@@ -80,14 +68,11 @@ function changeOpacity(i){
              });
              */
         // Cargamos los tooltip de bootstrap:
-        $(function () {
-         $('[data-toggle="tooltip"]').tooltip();
-        });
+        
         // Los botones Update y Delete estarán deshabilitados hasta que se seleccione una calle del listado de calles.
         $('.btn-update').prop('disabled', true);
         $('.btn-delete').prop('disabled', true);
         $('.btn-insert-coords').prop('disabled', true);
-        $('.cb_mapas').prop('disabled', true);
 
         $(document).on( "mouseover", ".hot-spot-1",function(e) {
             $('.hot-spot-1').css('cursor', 'pointer');
@@ -95,46 +80,38 @@ function changeOpacity(i){
         });
 
         $(document).on( "click", ".hot-spot-1",function(e) {
-
-            
-
             $('#lista_puntos').html('');
             var x = $(this).attr('x');
             var y = $(this).attr('y');
-            
-            console.log(x + " "+ y);
+            var formData = {
+                'x' : x,
+                'y' : y
+                };
 
-    var formData = {
-        'x' : x,
-        'y' : y
-        };
-    // console.log(formData);
+            $.ajax({
+                    type     : "POST",
+                    cache    : false,
+                    url      : "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
+                    data     : formData,
+                    dataType : 'json',
+                    encode : true
+                    })
+                    .done(function(data) {
+                        var msg = data.msg;
+                        console.log(data);
+                        var count = Object.keys(data).length;
+                        $('#modal_puntos').modal('toggle');
 
-    $.ajax({
-        type     : "POST",
-        cache    : false,
-        url      : "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
-        data     : formData,
-        dataType : 'json',
-        encode : true
-        })
-        .done(function(data) {
-            var msg = data.msg;
-            console.log(data);
-            var count = Object.keys(data).length;
-            $('#modal_puntos').modal('toggle');
-
-            if (msg == '0'){
-                for (i = 0; i < count -1 ; i++){
-                    $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
-                }
-            } else {
-                }
-            
-});
-e.preventDefault();
-
-});
+                        if (msg == '0'){
+                            for (i = 0; i < count -1 ; i++){
+                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
+                            }
+                        } else {
+                            }
+                        
+                });
+        e.preventDefault();
+        });
 
 $('#tabla_calles tbody').on( 'click', 'tr', function () {
    row = table.row( this ).index();
@@ -158,31 +135,38 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
         y = $('#punto_'+id).data('y');
         
         if (x == null || y == null){
-        console.log('Debes insertar un punto');
+        map_already_drawn = false;
+        $("li").eq('0').toggleClass('active',false);
+        $("li").eq('1').toggleClass('active',true);
+        $("li").eq('2').toggleClass('active',false);
+        $("li").eq('3').toggleClass('active',false);
         } else {
-            $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
-            
-                $('#prueba').scrollTop(y - ($('#prueba').height() /2) -5 ); 
-                $('#prueba').scrollLeft(x - ($('#prueba').width() /2) -5 );
-            
+        map_already_drawn = true;
+
+        $("li").eq('0').toggleClass('active',false);
+        $("li").eq('1').toggleClass('active',false);
+        $("li").eq('2').toggleClass('active',false);
+        $("li").eq('3').toggleClass('active',false);
+        $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
+        $('#prueba').scrollTop(y - ($('#prueba').height() /2) -5 ); 
+        $('#prueba').scrollLeft(x - ($('#prueba').width() /2) -5 );
         }
         
         console.log("Calle seleccionada: " + id);
         console.log('Punto X: ' + x);
         console.log('Punto Y: ' + y);
+        $("#delCoord").prop('disabled',true);
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
-        $('.btn-update').prop('disabled', false);
+        
         $('.btn-update').data('id',id);
+        $('.btn-update').prop('disabled', false);
         $('.btn-delete').prop('disabled', false);
         $('.btn-delete').data('id',id);
-        $('.btn-insert-coords').prop('disabled', false);
-        $('.cb_mapas').prop('disabled', false);
 
     });
 
-    $('.btn-anadir').on('click',function(){
-    });
+
 
     // Inserción de una calle mediante Ajax:
     $('#form_insert').on('submit',function(e){
@@ -203,28 +187,35 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
         })
 
         // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
-        .done(function(data) {
-            if (data.msg == '0'){   
-    var rowNode = table.row.add( {
-        "Tipo": "",
-        "Nombre": "",
-        "Punto": "",
-        "Calle": data.nombre
-    } ).draw().node();
-      $(rowNode).attr({id: 'calle_'+data.id});
-      $(rowNode).find('td').eq(0).attr({id: 'tipo_'+data.id}).text(data.tipo);
-      $(rowNode).find('td').eq(1).attr({id: 'nombre_'+data.id}).text(data.nombre);
-      $(rowNode).find('td').eq(2).attr({'id': 'punto_'+data.id , 'data-x' : 'null', 'data-y' : 'null' });
-      $(rowNode).find('td').eq(3).attr({'id': 'id_calle_warning_'+data.id, 'data-id': data.id}).addClass('calles warning').text(data.tipo + " " + data.nombre );
+    .done(function(data) {
+    $('.calles').removeClass('selected');
+
+    if (data.msg == '0'){   
+        var rowNode = table.row.add( {
+            "Tipo": "",
+            "Nombre": "",
+            "Punto": "",
+            "Calle": data.nombre
+        } ).draw().node();
+        $(rowNode).attr({id: 'calle_'+data.id});
+        $(rowNode).find('td').eq(0).attr({id: 'tipo_'+data.id}).text(data.tipo);
+        $(rowNode).find('td').eq(1).attr({id: 'nombre_'+data.id}).text(data.nombre);
+        $(rowNode).find('td').eq(2).attr({'id': 'punto_'+data.id , 'data-x' : 'null', 'data-y' : 'null' });
+        $(rowNode).find('td').eq(3).attr({'id': 'id_calle_warning_'+data.id, 'data-id': data.id}).addClass('calles warning selected').text(data.tipo + " " + data.nombre );
 
 
                 // $("#id_calle_warning_"+data.id).addClass('warning');
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
                 // $('#tabla_calles').append("<tr class='d-none' id='calle_"+data.id+"'> <td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td  id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td id='id_calle_warning_"+data.id+"' class='calles warning' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td> </tr> ");
+               
+                $("li").eq('0').toggleClass('active',false);
+                $("li").eq('1').toggleClass('active',true);
+                $("li").eq('2').toggleClass('active',false);
+                $("li").eq('3').toggleClass('active',false);
                 } else {
                 $('.box').html('');
-                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error. </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
             $('#nombre').val(' ');
@@ -304,7 +295,7 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
     e.preventDefault();
         });
     });
-    
+
     // Borrar una calle mediante ajax:
     $('.btn-delete').click(function(e){
         
@@ -332,6 +323,12 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
                 $('.btn-delete').prop('disabled', true);
                 $('#calle_'+id).html("");
                 $(".hot-spot-1").remove();
+
+        $("li").eq('0').toggleClass('active',true);
+        $("li").eq('1').toggleClass('active',false);
+        $("li").eq('2').toggleClass('active',false);
+        $("li").eq('3').toggleClass('active',false);
+
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -347,10 +344,19 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
 
     
     $(document).on('change','.cb_mapas', function() {
+        
         var id =  $(this).data('id');
+        console.log(id);
         $('#cb_hidden_'+id).toggle(function(){
             $('#rename_calle_en_mapa_'+id).val('');
         });
+
+        $("li").eq('0').toggleClass('active',false);
+        $("li").eq('1').toggleClass('active',false);
+        $("li").eq('2').toggleClass('active',false);
+        $("li").eq('3').toggleClass('active',true);
+
+        $('.btn-insert-coords').prop('disabled', false);
     });
 
     /*
@@ -375,7 +381,10 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
     /* Recorremos todos los checkbox que NO están chequeados */
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
         var id_mapa = $(this).val();
+        console.log('lemapa'+id_mapa);
+
         var nombre_nuevo = $('#rename_calle_en_mapa_'+id_mapa).val();
+        console.log(nombre_nuevo);
         if (nombre_nuevo != ''){
             nuevos_nombres.push({'nombre' : nombre_nuevo , 'via' : tipo });
             mapas_unselected.push(id_mapa);
@@ -475,7 +484,16 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
                 // VACIAMOS EL ARRAY DE COORDENADAS:
                 coords_x = [];
                 coords_y = [];
+                console.log('inserta');
                 $(".hot-spot-1").remove();
+                $('.cb_mapas').prop('disabled', true);
+                $('#tabla_calles').removeClass('disabledbutton');
+                $('#prueba').removeClass('disabledbutton');
+                $('.cb_hidden').hide();
+
+         
+                    $('.btn-anadir').prop('disabled', false);
+
 
             } else {
                 $('.box').html('');
@@ -646,13 +664,59 @@ e.preventDefault();
     
     </div> <!-- final del div .box -->
 
+<!-- Horizontal Steppers -->
+<div class="row">
+  <div class="col-md-12">
+
+    <!-- Stepers Wrapper -->
+    <ul class="stepper stepper-horizontal">
+
+      <!-- First Step -->
+      <li class="">
+        <a href="#!">
+          <span class="circle">1</span>
+          <span class="label">Seleccionar calle</span>
+        </a>
+      </li>
+
+      <!-- Second Step -->
+      <li class="">
+        <a href="#!">
+          <span class="circle">2</span>
+          <span class="label">Establecer punto en el mapa</span>
+        </a>
+      </li>
+
+      <!-- Third Step -->
+      <li class="">
+        <a href="#!">
+          <span class="circle">3</i></span>
+          <span class="label">Indicar en qué mapas está la calle</span>
+        </a>
+      </li>
+
+      <!-- Third Step -->
+      <li class="">
+        <a href="#!">
+          <span class="circle">4</i></span>
+          <span class="label">Insertar Coordenadas</span>
+        </a>
+      </li>
+
+    </ul>
+    <!-- /.Stepers Wrapper -->
+
+  </div>
+</div>
+<!-- /.Horizontal Steppers -->
+
     <div class="row">
         <div class="col-md-12 botones">
             <button type="button" class="btn btn-primary btn-anadir" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Añadir Calle</button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <button type='button' class="btn btn-success btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-map-marked-alt'></span> Insertar Coordenadas</button>
-            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-broom"></span> Limpiar mapa </button>
+            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-broom"></span> Reverir proceso </button>
         </div>
     </div>
 
@@ -699,16 +763,25 @@ e.preventDefault();
                             </tr>
                         </thead>
                         <tbody>
+                
                             <?php 
                                 for($i = 0; $i < count($listaMapas);$i++){
                                 $mapa = $listaMapas[$i];
                                 echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
                                 if ($i == 0){
-                                echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";    
+                                echo "<td>     
+                                <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> 
+                                </td>";    
                                 }else {
-                                echo "<td>  <label for='mapa_".$mapa["id"]."'>".$mapa['titulo']."</label> <input style='float:left; margin-bottom:10px; width:100%;' type='range' id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> </td>";
+                                echo "<td>  <input style='float:left; margin-bottom:10px; width:100%;' type='range' value='1'   id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div>
+                                </td>";
                                 }
-                                echo "<td>  <input name='mapa_".$mapa["id"]."' type='checkbox' data-id=".$mapa['id']." class='cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked> </td>";
+                                echo "<td> 
+                                <div class='custom-control custom-checkbox'>
+                                <input type='checkbox' data-id=".$mapa["id"]." name='mapa_".$mapa["id"]."' class='custom-control-input cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked>
+                                <label class='custom-control-label' for='cb_mapa_".$mapa['id']."'> ".$mapa['titulo']."</label>
+                                </div>
+                                </td>";
                                 echo "</tr>";
                                 
                                 }                            
