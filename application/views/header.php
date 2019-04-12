@@ -6,16 +6,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/style/css_datatables.css">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/style/bootstrap/bootstrap.min.css" crossorigin="anonymous">
     <!-- jQuery -->
-    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/code.jquery.comjquery-3.3.1.js"></script>
     <!-- LOS ICONOS FONTAWESOME -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?php echo base_url()?>assets/style/all.css" crossorigin="anonymous">
+    <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/all.js"></script>
     <!-- DATATABLES: -->
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/css/mdb.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.6/js/mdb.min.js"></script>
+    <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/script_datatables.js"></script>
+    <link href="<?php echo base_url()?>assets/style/mdbootstrap4.7.6cssmdb.min.css" rel="stylesheet">
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/mdbootstrap4.7.6.js"></script>
 
 
     <!-- ESTILOS PROPIOS:-->
@@ -25,7 +26,7 @@
     <script src=<?php echo base_url("assets/js/Mapas.js");?>></script>
     <script src=<?php echo base_url("assets/js/demo.js");?>></script>
     <script src=<?php echo base_url("assets/js/jquery.hotspot.js");?>></script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
     <script>
         coords_x = [];
         coords_y = [];
