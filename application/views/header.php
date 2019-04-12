@@ -36,14 +36,14 @@
             map_already_drawn = false;
             $('.alert').fadeIn().delay(2500).fadeOut();
 
-            
+
             $('#img_callejero').dblclick(function(e) {
-                if (!map_already_drawn){
-                    $("#delCoord").prop('disabled',false);
-                    $("li").eq('0').toggleClass('active',false);
-                    $("li").eq('1').toggleClass('active',false);
-                    $("li").eq('2').toggleClass('active',true);
-                    $("li").eq('3').toggleClass('active',false);
+                if (!map_already_drawn) {
+                    $("#delCoord").prop('disabled', false);
+                    $("li").eq('0').toggleClass('active', false);
+                    $("li").eq('1').toggleClass('active', false);
+                    $("li").eq('2').toggleClass('active', true);
+                    $("li").eq('3').toggleClass('active', false);
 
                     var offset = $(this).offset();
                     coords_x.push(parseInt(e.pageX - offset.left));
@@ -53,64 +53,64 @@
                     var x_temp = parseInt((e.pageX - offset.left) - 5);
                     var y_temp = (parseInt(e.pageY - offset.top) - 5);
                     $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
-                    console.log('la x y la y del hotspot: ' + x_temp + " " +y_temp + " zoom: " +zoom);
-                    $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp  / zoom  + "px;left:" + x_temp  / zoom + "px; display:block;'></div>");
+                    console.log('la x y la y del hotspot: ' + x_temp + " " + y_temp + " zoom: " + zoom);
+                    $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp / zoom + "px;left:" + x_temp / zoom + "px; display:block;'></div>");
                     map_already_drawn = true;
                     $('.cb_mapas').prop('disabled', false);
                     $('#tabla_calles').addClass('disabledbutton');
                     $('.btn-update').prop('disabled', true);
                     $('.btn-delete').prop('disabled', true);
                     $('.btn-anadir').prop('disabled', true);
-                    
+
                     $('#prueba').addClass('disabledbutton');
 
-                } 
-                });
-            
+                }
+            });
+
 
             $("#delCoord").click(function() {
-                $('.cb_hidden').prop('checked',true);
+                $('.cb_hidden').prop('checked', true);
 
                 $('.cb_mapas').prop('disabled', true);
                 $('#tabla_calles').removeClass('disabledbutton');
                 $('#prueba').removeClass('disabledbutton');
                 map_already_drawn = false;
-                $("li").eq('0').toggleClass('active',false);
-                $("li").eq('1').toggleClass('active',true);
-                $("li").eq('2').toggleClass('active',false);
-                $("li").eq('3').toggleClass('active',false);
-                $("li").eq('3').toggleClass('active',false);
-                $(this).prop('disabled',true);
+                $("li").eq('0').toggleClass('active', false);
+                $("li").eq('1').toggleClass('active', true);
+                $("li").eq('2').toggleClass('active', false);
+                $("li").eq('3').toggleClass('active', false);
+                $("li").eq('3').toggleClass('active', false);
+                $(this).prop('disabled', true);
                 $("#coord-list li:last-child").remove();
                 index_x = coords_x.length - 1;
                 index_y = coords_y.length - 1;
                 coords_x.splice(index_x, 1);
                 coords_y.splice(index_y, 1);
                 $(".hot-spot-1:first").remove();
-             
 
-                    $('.btn-update').prop('disabled', false);
-                    $('.btn-delete').prop('disabled', false);
-                    $('.btn-anadir').prop('disabled', false);
+
+                $('.btn-update').prop('disabled', false);
+                $('.btn-delete').prop('disabled', false);
+                $('.btn-anadir').prop('disabled', false);
                 $('.cb_hidden').hide();
 
             });
         });
 
     </script>
-    <style>        
+    <style>
         #tablaHerencia {
             margin: 1%;
             margin-top: 3%;
         }
-        
+
         #titulo-selec-mapa {
             margin-top: 20px;
             margin-bottom: 10px;
             margin-left: 20px;
             font-weight: 600;
         }
-        
+
         #slide {
             display: flex;
             min-height: 0;
@@ -132,28 +132,31 @@
             height: 600px !important;
             overflow: auto;
             /*cursor: crosshair;*/
-            display:grid !important;
+            display: grid !important;
         }
 
-        #hotspotImg-1,#hotspotImg-2 {
+        #hotspotImg-1,
+        #hotspotImg-2 {
             background-size: cover;
             background-position: center center;
             position: relative;
         }
 
-/* La animacion */
-@keyframes pulsacion {
-   
-    0% {
-    transform: scale(1);
-    
-    opacity:0.2;
-    }
-    45% {
-        transform: scale(1.75);
-        opacity:0.9;
-    }
-}
+        /* La animacion */
+        @keyframes pulsacion {
+
+            0% {
+                transform: scale(1);
+
+                opacity: 0.2;
+            }
+
+            45% {
+                transform: scale(1.75);
+                opacity: 0.9;
+            }
+        }
+
         #hotspotImg-1 .hot-spot-1 {
             position: absolute;
             width: 20px;
@@ -163,11 +166,11 @@
             background-color: #d01685;
             border-radius: 100%;
             animation: pulsacion 2s infinite;
-            
+
         }
 
         #hotspotImg-1:hover .hot-spot-1:hover {
-            background-color:#99004d;
+            background-color: #99004d;
         }
 
         #botonHotspots {
@@ -191,10 +194,10 @@
             border: 1px solid black;
             display:grid !important;
             /*margin: 0 auto;*/
-            /*margin-bottom: 10px;
+        /*margin-bottom: 10px;
             margin-top: 15px;*/
-            position: relative !important;
-            /*float: right;
+        position: relative !important;
+        /*float: right;
         }*/
 
         /*#mapa:active:hover,
@@ -205,10 +208,12 @@
         .hidden {
             display: none !important;
         }
-        #mapa_alt:hover{
-            cursor:grab;
+
+        #mapa_alt:hover {
+            cursor: grab;
         }
-        #mapa_alt:active:hover{
+
+        #mapa_alt:active:hover {
             cursor: grabbing;
         }
 
