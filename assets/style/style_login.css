@@ -3,8 +3,11 @@ html, body {
 }
 
 #fondo_form {
+    color: white;
+    text-shadow: 1px 1px rgb(44, 44, 44);
+    
     margin-top: 5%;
-    background-color: rgba(211, 211, 211, 0.719);
+    background-color: rgba(194, 194, 194, 0.719);
     border-radius: 20px;
     padding: 40px;
 }
