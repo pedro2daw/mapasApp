@@ -1,0 +1,15 @@
+html, body {
+    height: 100%;
+}
+
+#fondo_form {
+    background-color: rgba(211, 211, 211, 0.719);
+    border-radius: 20px;
+    padding: 40px;
+}
+
+body {
+    background: url('../img/bg.jpg') no-repeat center center;
+    background-size : cover;
+}
+
