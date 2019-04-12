@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/style_login.css" />
 
 
-<div class="container-fluid" id="login"> 
+<div id="login"> 
     <div class="row">
         <div class="col-md-4"></div> 
             <div class="col-md-4" id='fondo_form'>

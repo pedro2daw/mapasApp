@@ -9,6 +9,28 @@
     background: url('../img/icono/loading.gif') no-repeat  center center;
 }
 
+html, body {
+    height: 100%;
+}
+
+#footer {
+    color: black;
+    background-color: rgba(194, 194, 194, 0.719);
+}
+
+#footer a {
+    color: black;
+    text-shadow: 1px 1px rgb(85, 84, 84);
+}
+
+
+.container-fluid {
+ /* ARREGLAR ESTO!!!
+    border: 2px solid red; */
+    min-height: 90vh;
+}
+
+
 .disabledbutton {
     pointer-events: none;
     opacity: 0.4;
