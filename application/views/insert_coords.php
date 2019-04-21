@@ -716,7 +716,9 @@ e.preventDefault();
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <button type='button' class="btn btn-success btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-map-marked-alt'></span> Insertar Coordenadas</button>
-            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-broom"></span> Reverir proceso </button>
+            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-broom"></span> Revertir proceso </button>
+            <?php echo anchor('Csv/index','CSV',' class="btn btn-warning"'); ?>
+
         </div>
     </div>
 
