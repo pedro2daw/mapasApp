@@ -16,8 +16,6 @@
     <!-- DATATABLES: -->
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/script_datatables.js"></script>
     <link href="<?php echo base_url()?>assets/style/mdbootstrap4.7.6cssmdb.min.css" rel="stylesheet">
-    <script type="text/javascript" src="<?php echo base_url()?>assets/js/mdbootstrap4.7.6.js"></script>
-
 
     <!-- ESTILOS PROPIOS:-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />

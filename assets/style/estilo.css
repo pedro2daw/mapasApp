@@ -13,6 +13,10 @@ html, body {
     height: 100%;
 }
 
+.hot-spot-1:hover {
+ cursor: pointer;
+}
+
 #footer {
     color: black;
     background-color: rgba(194, 194, 194, 0.719);
