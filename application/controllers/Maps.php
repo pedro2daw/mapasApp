@@ -6,7 +6,6 @@ class Maps extends Security {
 
     public function index(){
         $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-       // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
         $data["viewName"] = "admin_panel";
         $this->load->view('template',$data);
     }
@@ -26,7 +25,7 @@ class Maps extends Security {
         $ruta = "assets/img/mapas/".$img_name;
         
         //Obtenemos el mapa del que hereda el mapa insertado (o nada en caso de no elegir ninguno)
-        $heredar = $fecha = $this->input->get_post('herencia');
+        $heredar =  $this->input->get_post('herencia');
         
         /*
         $paquete_seleccionado = $this->input->get_post('select_paquetes');
@@ -89,10 +88,6 @@ class Maps extends Security {
             }
         }
         
-        
-    }
-
-    public function get_streets_associated_to_coord(){
         
     }
 

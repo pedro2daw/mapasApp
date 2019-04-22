@@ -15,11 +15,44 @@
         });
     }
 
+    function lista_mapas_calles () {
+            var x = $(this).attr('x');
+            var y = $(this).attr('y');
+            var formData = {
+                'x' : x,
+                'y' : y
+                };
+
+            $.ajax({
+                    type     : "POST",
+                    cache    : false,
+                    url      : "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
+                    data     : formData,
+                    dataType : 'json',
+                    encode : true
+                    })
+                    .done(function(data) {
+                        var msg = data.msg;
+                        console.log(data);
+                        var count = Object.keys(data).length;
+                        $('#modal_puntos').modal('toggle');
+
+                        if (msg == '0'){
+                            for (i = 0; i < count -1 ; i++){
+                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
+                            }
+                        } else {
+                            }
+                        
+                });
+        }
+
+
     $(document).ready( function (){
         // En enlace calles del menu:
         $('#enlace_calles').toggleClass('active');
         // Botones:
-        $('.cb_mapas').prop('disabled', true);
+        $('.custom-checkbox').addClass('disabledbutton');
         $("#delCoord").prop('disabled',true);
         // El step:
         $("li").eq('0').toggleClass('active',true);
@@ -61,51 +94,23 @@
         $('label').contents().first().remove();
         // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
         $("input[type='search']").addClass('form-control');
-
+        $('.btn-continuar').prop('disabled', true);
         // Cambia la opacidad del mapa principal.
         $(document).on("input","#slider_callejero",function(){
          var opacity = $(this).val();
          $("#img_callejero").css("opacity",opacity);
         });
-       
 
-        $(document).on( "click", ".hot-spot-1",function(e) {
-            $('#lista_puntos').html('');
-            var x = $(this).attr('x');
-            var y = $(this).attr('y');
-            var formData = {
-                'x' : x,
-                'y' : y
-                };
 
-            $.ajax({
-                    type     : "POST",
-                    cache    : false,
-                    url      : "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
-                    data     : formData,
-                    dataType : 'json',
-                    encode : true
-                    })
-                    .done(function(data) {
-                        var msg = data.msg;
-                        console.log(data);
-                        var count = Object.keys(data).length;
-                        $('#modal_puntos').modal('toggle');
-
-                        if (msg == '0'){
-                            for (i = 0; i < count -1 ; i++){
-                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
-                            }
-                        } else {
-                            }
-                        
-                });
-        e.preventDefault();
-        });
-
-$('#tabla_calles tbody').on( 'click', 'tr', function () {
-   row = table.row( this ).index();
-} );
+    $('#tabla_calles tbody').on( 'click', 'tr', function () {
+    row = table.row( this ).index();
+    });
+ 
+    $(document).on("click",".hot-spot-1", function (e){
+            $('#lista_puntos').html("");
+            lista_mapas_calles();
+            e.preventDefault();
+    });
 
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
@@ -114,29 +119,30 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
         var left = $('#prueba').scrollLeft();
         console.log(" ******************************* ");
         console.log("top y left "+ top + " " +left + "zoom" + zoom);
-
         $(".hot-spot-1").remove();
-        id =  $(this).data('id');
-        console.log('id: ' + id);
-        calle = $(this).text();
-        nombre = $('#nombre_'+id).text(); 
-        tipo = $('#tipo_'+id).text();
-        x = $('#punto_'+id).data('x');
-        y = $('#punto_'+id).data('y');
+        
+        get_data();
+        
         
         if (x == null || y == null){
-        map_already_drawn = false;
         $("li").eq('0').toggleClass('active',false);
         $("li").eq('1').toggleClass('active',true);
         $("li").eq('2').toggleClass('active',false);
         $("li").eq('3').toggleClass('active',false);
-        } else {
-        map_already_drawn = true;
 
+        $(document).on( "mouseover", ".hot-spot-1", function (e){
+           $(this).css({'cursor':'cursor'});
+        });
+        } else {           
         $("li").eq('0').toggleClass('active',false);
         $("li").eq('1').toggleClass('active',false);
         $("li").eq('2').toggleClass('active',false);
         $("li").eq('3').toggleClass('active',false);
+        
+        $(document).on( "mouseover", ".hot-spot-1", function (e){
+           $(this).css({'cursor':'pointer'});
+        });
+
         $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
         $('#prueba').scrollTop(y - ($('#prueba').height() /2) -5 ); 
         $('#prueba').scrollLeft(x - ($('#prueba').width() /2) -5 );
@@ -203,6 +209,10 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
                 $("li").eq('1').toggleClass('active',true);
                 $("li").eq('2').toggleClass('active',false);
                 $("li").eq('3').toggleClass('active',false);
+
+                $('.btn-update').prop('disabled', false);
+                $('.btn-delete').prop('disabled', false);
+
                 } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error. </div>");
@@ -219,6 +229,8 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
 
     // Modificación de una calle mediante Ajax:
     $('.btn-update').click(function () {
+        get_data();
+
         $('#upd_nombre_calle').val(nombre);
         $('#upd_tipo_calle').val(tipo);
         $('#upd_id_calle').val(id);
@@ -244,6 +256,7 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
                 console.log('si llega al done');
                 if (data.msg == '0'){
                     console.log(data);
+                    $(".hot-spot-1").remove();
                     $('.box').html('');
                     $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
                     $('.btn-update').prop('disabled', true);
@@ -288,10 +301,8 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
 
     // Borrar una calle mediante ajax:
     $('.btn-delete').click(function(e){
-        
-        
+        get_data();
         var next = confirm('¿Estás seguro que quieres borrar ' + calle +'?');
-        var id = $(this).data('id'); 
         //console.log(id);
         
         if (next){
@@ -334,20 +345,23 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
 
     
     $(document).on('change','.cb_mapas', function() {
-        
         var id =  $(this).data('id');
-        console.log(id);
         $('#cb_hidden_'+id).toggle(function(){
             $('#rename_calle_en_mapa_'+id).val('');
         });
 
+    });
+
+    $(document).on('click','.btn-continuar', function() {
         $("li").eq('0').toggleClass('active',false);
         $("li").eq('1').toggleClass('active',false);
         $("li").eq('2').toggleClass('active',false);
         $("li").eq('3').toggleClass('active',true);
-
         $('.btn-insert-coords').prop('disabled', false);
+        $('.btn-continuar').prop('disabled', true);
+        $('.custom-checkbox').addClass('disabledbutton');
     });
+    
 
     /*
     Botón de inserción de un punto para las calles.
@@ -359,10 +373,22 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
     Si ha sido renombrada, se realizará la inserción de esa nueva calle en el mismo punto.
     */
 
+    function get_data(){
+        id = $(".selected").data("id");
+        nombre = $('#nombre_'+id).text(); 
+        tipo = $('#tipo_'+id).text();
+        x = $('#punto_'+id).data('x');
+        y = $('#punto_'+id).data('y');
+        calle = tipo + " " + nombre;
+        console.log(calle);
+        x = $('#punto_'+id).data('x');
+        y = $('#punto_'+id).data('y');
+    }
    
     
 
     $(".btn-insert-coords").on('click', function(e){
+        get_data();
     var mapas_selected = [];
     var mapas_unselected = [];
     var checkboxes_unselected = [];
@@ -390,22 +416,13 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
     
     // Comprobación para la inserción de coordenadas:
     // Si el número total de checkboxes es igual al número de checkboxes no seleccionados y tampoco se han insertado nuevos nombres en los inputs se realizará la condición if.
-    if( $('.cb_mapas').length == checkboxes_unselected.length && nuevos_nombres.length == 0 ){
-        alert('Seleccione al menos un mapa.');
-    } else {
-    if (coords_x.length  == 0 && x == null){
-        alert('Debes indicar la localización de esta calle en mapa haciendo doble click.');
-    }else {
-    if (! $('#id_calle_warning_'+id).hasClass('warning')){
-        alert('Esta calle ya tiene el punto establecido.');
-    } else {
+     
         var next = confirm("Vas a establecer un punto para la calle" + tipo +" "+ nombre +".");
-    }
+    
     if (next){
     // Envío de datos mediante ajax:
     console.log('Mapas seleccionados ' + mapas_selected);
     console.log('Calle seleccionada ' + id);
-
     var id_calle = JSON.stringify(id);
     var json_mapas_selected = JSON.stringify(mapas_selected);
     var json_mapas_unselected = JSON.stringify(mapas_unselected);
@@ -476,13 +493,10 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
                 coords_y = [];
                 console.log('inserta');
                 $(".hot-spot-1").remove();
-                $('.cb_mapas').prop('disabled', true);
-                $('#tabla_calles').removeClass('disabledbutton');
-                $('#prueba').removeClass('disabledbutton');
+                $('.custom-checkbox').addClass('disabledbutton');
                 $('.cb_hidden').hide();
                 $('.btn-anadir').prop('disabled', false);
                 $('.btn-insert-coords').prop('disabled', true);
-
                 $("li").eq('0').toggleClass('active',true);
                 $("li").eq('1').toggleClass('active',false);
                 $("li").eq('2').toggleClass('active',false);
@@ -493,10 +507,7 @@ $('#tabla_calles tbody').on( 'click', 'tr', function () {
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
 });
-}// fin if mapas
-}// fin if warning
-
-}// fin if puntos
+}
 e.preventDefault();
     });
 });
@@ -577,7 +588,7 @@ e.preventDefault();
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <button type='button' class="btn btn-success btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Coordenadas"><span class='fas fa-map-marked-alt'></span> Insertar Coordenadas</button>
-            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-broom"></span> Revertir proceso </button>
+            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-undo-alt"></span> Revertir proceso </button>
             <?php echo anchor('Csv/index','CSV',' class="btn btn-warning"'); ?>
 
         </div>
@@ -650,12 +661,14 @@ e.preventDefault();
                                 }                            
                             ?>
                         </tbody>
+                        
                 </table>
             </div>
 
             <!-- <div id='ranges'>
             
             </div> -->
+            <button type="button" class="btn btn-primary btn-continuar"> <span class="fas fa-long-arrow-alt-right"></span> Continuar </button>
 
         </div> <!-- fin col md-3 -->
 
@@ -723,7 +736,7 @@ e.preventDefault();
                             
                         <div class='modal-footer'>
                                 <input type='reset' class='btn btn-secondary' value='Reestablecer formulario'/>
-                                <?php echo form_submit('submit', 'Añadir calle',"class='btn btn-primary'"); ?>
+                                <?php echo form_submit('submit', 'Añadir calle',"id='submit-anadir' class='btn btn-primary'"); ?>
                                 <?php echo form_close();?>
                         </div> <!-- fin modal footer -->
                     </div> <!-- fin modal content -->

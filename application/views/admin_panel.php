@@ -1,5 +1,9 @@
 <script language="javascript">
     $(document).ready(function() {
+        $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
         $('#enlace_mapas').toggleClass('active');
         $('.alert').fadeIn().delay(4000).fadeOut();
         $('.warning').css({
@@ -95,8 +99,8 @@
 
     <div class="row">
         <div class="col-md-12 botones">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> Insertar Mapa </button>
-            <?php echo anchor('Streets/get_maps/','Superponer Mapas','class="btn btn-success"');?>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Insertar Mapa </button>
+            <?php echo anchor('Streets/get_maps/','<span class="fas fa-layer-group"></span> Superponer Mapas','class="btn btn-success"');?>
         </div>
     </div>
 
@@ -122,9 +126,8 @@
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
                     if (($i > 0)&&($mapa['desviacion_x'] == null || $mapa['desviacion_y'] == null)){
-                    echo ("<td class='ids warning'>".$mapa["id"]." 
-                    <a tabindex='0' class='btn btn-md btn-danger' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes superponer los mapas de nuevo'><span class='fas fa-exclamation-triangle'></span></a>
-                     </td>");
+                    echo ("<td class='ids warning'>".$mapa["id"].
+                    anchor('Streets/get_maps/',"<span class='fas fa-layer-group'></span>",'class="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Superponer los mapas." ')."</td>");
                     } else {
                     echo ("<td class='ids' >".$mapa["id"]."</td>");
                     }

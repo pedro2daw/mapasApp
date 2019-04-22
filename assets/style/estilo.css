@@ -13,9 +13,10 @@ html, body {
     height: 100%;
 }
 
+/*
 .hot-spot-1:hover {
  cursor: pointer;
-}
+}*/
 
 #footer {
     color: black;
@@ -36,8 +37,8 @@ html, body {
 
 
 .disabledbutton {
-    pointer-events: none;
-    opacity: 0.4;
+    pointer-events: none !important;
+    opacity: 0.4 !important;
 }
 
 .box {

@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/style/css_datatables.css">
     <link rel="stylesheet" href="<?php echo base_url()?>assets/style/bootstrap/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>assets/style/css_datatables.css">
     <!-- jQuery -->
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/code.jquery.comjquery-3.3.1.js"></script>
     <!-- LOS ICONOS FONTAWESOME -->
@@ -21,28 +21,27 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
     <!-- JS PROPIOS: -->
+
     <script src=<?php echo base_url("assets/js/Mapas.js");?>></script>
     <script src=<?php echo base_url("assets/js/demo.js");?>></script>
     <script src=<?php echo base_url("assets/js/jquery.hotspot.js");?>></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
+    
     <script>
         coords_x = [];
         coords_y = [];
         $(document).ready(function() {
             // Click solo una vez.
             // Mapa ya dibujado el punto.
-            map_already_drawn = false;
+           
             $('.alert').fadeIn().delay(2500).fadeOut();
-
-
             $('#img_callejero').dblclick(function(e) {
-                if (!map_already_drawn) {
+                if ($('.hot-spot-1').val() == null && $('.selected').val() != null) {
                     $("#delCoord").prop('disabled', false);
                     $("li").eq('0').toggleClass('active', false);
                     $("li").eq('1').toggleClass('active', false);
                     $("li").eq('2').toggleClass('active', true);
                     $("li").eq('3').toggleClass('active', false);
-
                     var offset = $(this).offset();
                     coords_x.push(parseInt(e.pageX - offset.left));
                     coords_y.push(parseInt(e.pageY - offset.top));
@@ -53,26 +52,21 @@
                     $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
                     console.log('la x y la y del hotspot: ' + x_temp + " " + y_temp + " zoom: " + zoom);
                     $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp / zoom + "px;left:" + x_temp / zoom + "px; display:block;'></div>");
-                    map_already_drawn = true;
-                    $('.cb_mapas').prop('disabled', false);
-                    $('#tabla_calles').addClass('disabledbutton');
+                    $('.custom-checkbox').removeClass('disabledbutton');
+                    $('.btn-continuar').prop('disabled', false);
+
                     $('.btn-update').prop('disabled', true);
                     $('.btn-delete').prop('disabled', true);
                     $('.btn-anadir').prop('disabled', true);
-
-                    $('#prueba').addClass('disabledbutton');
-
                 }
             });
 
 
             $("#delCoord").click(function() {
+                $('.btn-continuar').prop('disabled', true);
                 $('.cb_hidden').prop('checked', true);
-
                 $('.cb_mapas').prop('disabled', true);
-                $('#tabla_calles').removeClass('disabledbutton');
-                $('#prueba').removeClass('disabledbutton');
-                map_already_drawn = false;
+                $('.custom-checkbox').removeClass('disabledbutton');
                 $("li").eq('0').toggleClass('active', false);
                 $("li").eq('1').toggleClass('active', true);
                 $("li").eq('2').toggleClass('active', false);
@@ -221,6 +215,8 @@
 </head>
 
 <body>
+<script type="text/javascript" src="<?php echo base_url()?>assets/js/mdbootstrap4.7.6.js"></script>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
