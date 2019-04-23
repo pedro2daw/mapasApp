@@ -118,10 +118,6 @@
         x_aux = x;
         y_aux = y;
         $("#modal_puntos").modal('toggle');
-
-
-        
-
     });
 
     // Selecciona una calle.
@@ -398,6 +394,12 @@
         $('.cb_hidden').hide();
 
     });
+
+    $(document).on('click','.btn-modificar-punto', function() {
+        $("#modal_puntos").modal('toggle');
+        $(".hot-spot-1").remove();
+    });
+    
     
 
     /*
@@ -423,6 +425,8 @@
         }
         calle = tipo + " " + nombre;
     }
+
+
    
     
 
@@ -872,7 +876,7 @@ e.preventDefault();
                 <div class="modal-footer">
                     
                     <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button>
-                    <button type="button" class="btn btn-info"><span class="fas fa-drafting-compass"></span> Modificar punto</button>
+                    <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"></span> Modificar punto</button>
                 </div>
             </div>
         </div>
