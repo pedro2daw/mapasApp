@@ -49,6 +49,8 @@
 
 
     $(document).ready( function (){
+        x_aux = null;
+        y_aux = null;
         // En enlace calles del menu:
         $('#enlace_calles').toggleClass('active');
         // Botones:
@@ -112,6 +114,16 @@
             e.preventDefault();
     });
 
+    $(".btn-insertar-con-punto").click(function(){
+        x_aux = x;
+        y_aux = y;
+        $("#modal_puntos").modal('toggle');
+
+
+        
+
+    });
+
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
         $(".hot-spot-1").remove();
@@ -121,51 +133,67 @@
         $('.custom-checkbox').addClass('disabledbutton');
         $('.cb_hidden').hide();
         $('.cb_mapas').each(function(){
-                    console.log('entra checkboxxx');
                     $(this).prop('checked',true);    
                 });
         // Borra el punto en el mapa:
         var top = $('#prueba').scrollTop();
         var left = $('#prueba').scrollLeft();
         console.log(" ******************************* ");
-        console.log("top y left "+ top + " " +left + "zoom" + zoom + "X " + x + " Y" + y);
-        
-        if (x == null || y == null){
-        $("li").eq('0').toggleClass('active',false);
-        $("li").eq('1').toggleClass('active',true);
-        $("li").eq('2').toggleClass('active',false);
-        $("li").eq('3').toggleClass('active',false);
+        console.log("top y left "+ top + " " +left + "zoom" + zoom + "X " + x + " Y " + y);
+        if (x_aux != null){
+            console.log(x_aux);
+            x = x_aux;
+            y = y_aux;
+        } 
+            if (x == null || y == null){
+            $("li").eq('0').toggleClass('active',false);
+            $("li").eq('1').toggleClass('active',true);
+            $("li").eq('2').toggleClass('active',false);
+            $("li").eq('3').toggleClass('active',false);
+            $(document).on( "mouseover", ".hot-spot-1", function (e){
+                $(this).css({'cursor':'cursor'  , 'pointer-events': 'none' });
+            });
+            
+            } else {     
+                if (x_aux != null){
+                    $("li").eq('0').toggleClass('active',false);
+                    $("li").eq('1').toggleClass('active',false);
+                    $("li").eq('2').toggleClass('active',true);
+                    $("li").eq('3').toggleClass('active',false);
+                    $('.custom-checkbox').removeClass('disabledbutton');
+                    $('.btn-continuar').prop("disabled",false);
+                    
 
-        $(document).on( "mouseover", ".hot-spot-1", function (e){
-           $(this).css({'cursor':'cursor'  , 'pointer-events': 'none' });
-        });
-        } else {           
-        $("li").eq('0').toggleClass('active',false);
-        $("li").eq('1').toggleClass('active',false);
-        $("li").eq('2').toggleClass('active',false);
-        $("li").eq('3').toggleClass('active',false);
-        
-        $(document).on( "mouseover", ".hot-spot-1", function (e){
-           $(this).css({'cursor':'pointer'  , 'pointer-events': 'auto'});
-        });
+                } else {
+                    $("li").eq('0').toggleClass('active',false);
+                    $("li").eq('1').toggleClass('active',false);
+                    $("li").eq('2').toggleClass('active',false);
+                    $("li").eq('3').toggleClass('active',false);
+                }
+           
+            $(document).on( "mouseover", ".hot-spot-1", function (e){
+            $(this).css({'cursor':'pointer'  , 'pointer-events': 'auto'});
+            });
 
-        $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
-        $('#prueba').scrollTop(y - ($('#prueba').height() /2) -5 ); 
-        $('#prueba').scrollLeft(x - ($('#prueba').width() /2) -5 );
-        }
-        
-        console.log("Calle seleccionada: " + id);
-        console.log('Punto X: ' + x);
-        console.log('Punto Y: ' + y);
-        $("#delCoord").prop('disabled',true);
-        
-        
-        $('.btn-update').data('id',id);
-        $('.btn-insert').prop('disabled', false);
-        $('.btn-update').prop('disabled', false);
-        $('.btn-delete').prop('disabled', false);
-        $('.btn-delete').data('id',id);
+            console.log("Calle seleccionada: " + id);
+            console.log('Punto X: ' + x);
+            console.log('Punto Y: ' + y);
 
+            $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
+            $('#prueba').scrollTop(y - ($('#prueba').height() /2) -5 ); 
+            $('#prueba').scrollLeft(x - ($('#prueba').width() /2) -5 );
+
+
+            }
+
+            $("#delCoord").prop('disabled',true);
+            $('.btn-update').data('id',id);
+            $('.btn-insert').prop('disabled', false);
+            $('.btn-update').prop('disabled', false);
+            $('.btn-delete').prop('disabled', false);
+            $('.btn-delete').data('id',id);
+
+           
     });
 
 
@@ -386,8 +414,13 @@
         id = $(".selected").data("id");
         nombre = $('#nombre_'+id).text(); 
         tipo = $('#tipo_'+id).text();
-        x = $('#punto_'+id).data('x');
-        y = $('#punto_'+id).data('y');
+        if (x_aux == null){
+            x = $('#punto_'+id).data('x');
+            y = $('#punto_'+id).data('y');
+        } else {
+            x = x_aux;
+            y = y_aux;
+        }
         calle = tipo + " " + nombre;
     }
    
@@ -395,10 +428,13 @@
 
     $(".btn-insert-coords").on('click', function(e){
         get_data();
-    var mapas_selected = [];
-    var mapas_unselected = [];
-    var checkboxes_unselected = [];
-    var nuevos_nombres = [];
+        console.log('Punto X: ' + x);
+            console.log('Punto Y: ' + y);
+        
+        var mapas_selected = [];
+        var mapas_unselected = [];
+        var checkboxes_unselected = [];
+        var nuevos_nombres = [];
     
     /* Recorremos todos los checkbox que NO están chequeados */
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
@@ -432,8 +468,15 @@
     var id_calle = JSON.stringify(id);
     var json_mapas_selected = JSON.stringify(mapas_selected);
     var json_mapas_unselected = JSON.stringify(mapas_unselected);
-    var json_x = JSON.stringify(coords_x[0]) /  zoom -5 ;
-    var json_y = JSON.stringify(coords_y[0]) / zoom -5;
+
+    if (coords_x[0] == null){
+        json_x  = JSON.stringify(x) /  zoom;
+        json_y  = JSON.stringify(y) /  zoom;
+    } else {
+        var json_x = JSON.stringify(coords_x[0]) /  zoom -5 ;
+        var json_y = JSON.stringify(coords_y[0]) / zoom -5;
+    }
+    
 
     var formData = {
         'x' : json_x,
@@ -511,9 +554,10 @@
 
                 $('.cb_mapas').each(function(){
                     console.log('entra checkboxxx');
-                    $(this).prop('checked',true);    
                 });
-
+                    $(this).prop('checked',true);    
+                x_aux = null;
+                y_aux = null;
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -827,7 +871,7 @@ e.preventDefault();
                 </div>
                 <div class="modal-footer">
                     
-                    <button type="button" class="btn btn-primary"><span class="fas fa-map-pin"></span>Insertar en este punto</button>
+                    <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button>
                     <button type="button" class="btn btn-info"><span class="fas fa-drafting-compass"></span> Modificar punto</button>
                 </div>
             </div>
