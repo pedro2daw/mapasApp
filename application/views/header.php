@@ -65,7 +65,6 @@
             $("#delCoord").click(function() {
                 $('.btn-continuar').prop('disabled', true);
                 $('.cb_hidden').prop('checked', true);
-                $('.cb_mapas').prop('disabled', true);
                 $('.custom-checkbox').removeClass('disabledbutton');
                 $("li").eq('0').toggleClass('active', false);
                 $("li").eq('1').toggleClass('active', true);
@@ -80,6 +79,11 @@
                 coords_y.splice(index_y, 1);
                 $(".hot-spot-1:first").remove();
 
+                $('.cb_mapas').each(function(){
+                    console.log('entra checkboxxx');
+                    $(this).prop('checked',true);    
+                });
+                $('.cb_hidden').hide();
 
                 $('.btn-update').prop('disabled', false);
                 $('.btn-delete').prop('disabled', false);

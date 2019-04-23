@@ -12,7 +12,26 @@
 html, body {
     height: 100%;
 }
+.selected{
+    text-decoration: underline;
+    text-align: center;
+    font-weight: bold;
+    /*text-shadow: white 0px 0px 10px;*/
+}
 
+#lista_puntos {
+    list-style: none;
+}
+
+.btn-continuar {
+    margin: 0  !important;
+    padding: 9px !important;
+}
+
+
+th {
+    vertical-align:middle !important;
+}
 /*
 .hot-spot-1:hover {
  cursor: pointer;
@@ -53,7 +72,7 @@ html, body {
 
 .selected {
     color: white !important;
-    background-color:#17A2B8 !important;
+    background-color:#33b5e5 !important;
 }
 
 .mapas {
@@ -81,12 +100,12 @@ input[type='search'] {
 }
 
 .warning {
-    background-color: orange !important;
+    background-color: 
+
+    #ffbb33
+ !important;
 }
 
-.btn {
-    margin-bottom: 30px;
-}
 #table_mapas {
     
     height:400px;
@@ -110,4 +129,9 @@ input[type='search'] {
     text-align: center !important;
     color: red;
     font-size: 100px !important;
+}
+
+
+.btn {
+    margin-bottom: 30px;
 }

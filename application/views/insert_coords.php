@@ -114,15 +114,21 @@
 
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
+        $(".hot-spot-1").remove();
+        $('.calles').removeClass('selected');
+        $(this).toggleClass('selected');
+        get_data();
+        $('.custom-checkbox').addClass('disabledbutton');
+        $('.cb_hidden').hide();
+        $('.cb_mapas').each(function(){
+                    console.log('entra checkboxxx');
+                    $(this).prop('checked',true);    
+                });
         // Borra el punto en el mapa:
         var top = $('#prueba').scrollTop();
         var left = $('#prueba').scrollLeft();
         console.log(" ******************************* ");
-        console.log("top y left "+ top + " " +left + "zoom" + zoom);
-        $(".hot-spot-1").remove();
-        
-        get_data();
-        
+        console.log("top y left "+ top + " " +left + "zoom" + zoom + "X " + x + " Y" + y);
         
         if (x == null || y == null){
         $("li").eq('0').toggleClass('active',false);
@@ -131,7 +137,7 @@
         $("li").eq('3').toggleClass('active',false);
 
         $(document).on( "mouseover", ".hot-spot-1", function (e){
-           $(this).css({'cursor':'cursor'});
+           $(this).css({'cursor':'cursor'  , 'pointer-events': 'none' });
         });
         } else {           
         $("li").eq('0').toggleClass('active',false);
@@ -140,7 +146,7 @@
         $("li").eq('3').toggleClass('active',false);
         
         $(document).on( "mouseover", ".hot-spot-1", function (e){
-           $(this).css({'cursor':'pointer'});
+           $(this).css({'cursor':'pointer'  , 'pointer-events': 'auto'});
         });
 
         $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
@@ -152,10 +158,10 @@
         console.log('Punto X: ' + x);
         console.log('Punto Y: ' + y);
         $("#delCoord").prop('disabled',true);
-        $('.calles').removeClass('selected');
-        $(this).toggleClass('selected');
+        
         
         $('.btn-update').data('id',id);
+        $('.btn-insert').prop('disabled', false);
         $('.btn-update').prop('disabled', false);
         $('.btn-delete').prop('disabled', false);
         $('.btn-delete').data('id',id);
@@ -220,6 +226,7 @@
             $('.alert').fadeIn().delay(2500).fadeOut();
             $('#nombre').val(' ');
             $('#modal_insert').modal('toggle');
+            $(".hot-spot-1").remove();
             
      });
 
@@ -256,11 +263,10 @@
                 console.log('si llega al done');
                 if (data.msg == '0'){
                     console.log(data);
-                    $(".hot-spot-1").remove();
                     $('.box').html('');
                     $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
-                    $('.btn-update').prop('disabled', true);
-                    $('.btn-delete').prop('disabled', true);
+                    $('.btn-update').prop('disabled', false);
+                    $('.btn-delete').prop('disabled', false);
                     
                     table.row('#calle_'+id).remove().draw();
                     var rowNode = table.row.add( {
@@ -276,13 +282,13 @@
             
                     if (x != null){
                         $(rowNode).find('td').eq(2).attr({'id': 'punto_'+data.id , 'data-x' : data.x, 'data-y' : data.y });
-                        $(rowNode).find('td').eq(3).attr({'data-id': data.id}).addClass('calles').text(data.tipo + " " + data.nombre );
+                        $(rowNode).find('td').eq(3).attr({'data-id': data.id}).addClass('calles selected').text(data.tipo + " " + data.nombre );
 
                         //$('#calle_'+data.id).html("<td id='tipo_"+data.id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td class='calles' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
                        //$('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
                     } else {
                         $(rowNode).find('td').eq(2).attr({'id': 'punto_'+data.id , 'data-x' : null, 'data-y' : null });
-                        $(rowNode).find('td').eq(3).attr({'id': 'id_calle_warning_'+data.id , 'data-id': data.id}).addClass('calles warning').text(data.tipo + " " + data.nombre );
+                        $(rowNode).find('td').eq(3).attr({'id': 'id_calle_warning_'+data.id , 'data-id': data.id}).addClass('calles warning selected').text(data.tipo + " " + data.nombre );
                     // $('#calle_'+data.id).html("<td id='tipo_"+id+"' class='d-none'>"+data.tipo+"</td><td id='nombre_"+data.id+"' class='d-none'>"+data.nombre+"</td> <td id='id_calle_warning_"+id+"' class='calles warning' data-id="+data.id+">"+data.tipo+" "+data.nombre+"</td>");
                     }
 
@@ -349,8 +355,9 @@
         $('#cb_hidden_'+id).toggle(function(){
             $('#rename_calle_en_mapa_'+id).val('');
         });
-
     });
+
+    
 
     $(document).on('click','.btn-continuar', function() {
         $("li").eq('0').toggleClass('active',false);
@@ -360,6 +367,8 @@
         $('.btn-insert-coords').prop('disabled', false);
         $('.btn-continuar').prop('disabled', true);
         $('.custom-checkbox').addClass('disabledbutton');
+        $('.cb_hidden').hide();
+
     });
     
 
@@ -380,9 +389,6 @@
         x = $('#punto_'+id).data('x');
         y = $('#punto_'+id).data('y');
         calle = tipo + " " + nombre;
-        console.log(calle);
-        x = $('#punto_'+id).data('x');
-        y = $('#punto_'+id).data('y');
     }
    
     
@@ -417,7 +423,7 @@
     // Comprobación para la inserción de coordenadas:
     // Si el número total de checkboxes es igual al número de checkboxes no seleccionados y tampoco se han insertado nuevos nombres en los inputs se realizará la condición if.
      
-        var next = confirm("Vas a establecer un punto para la calle" + tipo +" "+ nombre +".");
+        var next = confirm("Vas a establecer un punto para: " + tipo +" "+ nombre +".");
     
     if (next){
     // Envío de datos mediante ajax:
@@ -495,12 +501,19 @@
                 $(".hot-spot-1").remove();
                 $('.custom-checkbox').addClass('disabledbutton');
                 $('.cb_hidden').hide();
+               
                 $('.btn-anadir').prop('disabled', false);
                 $('.btn-insert-coords').prop('disabled', true);
                 $("li").eq('0').toggleClass('active',true);
                 $("li").eq('1').toggleClass('active',false);
                 $("li").eq('2').toggleClass('active',false);
                 $("li").eq('3').toggleClass('active',false);
+
+                $('.cb_mapas').each(function(){
+                    console.log('entra checkboxxx');
+                    $(this).prop('checked',true);    
+                });
+
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -605,6 +618,7 @@ e.preventDefault();
                             <th class='d-none' scope="col">Nombre</th>
                             <th class='d-none' scope="col">Punto</th>
                             <th scope="col">Calle</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -633,7 +647,7 @@ e.preventDefault();
                         <thead>
                             <tr>
                                 <th scope="col">Mapas</th>
-                                <th scope="col"></th>
+                                <th scope="col"> <button type="button" class="btn btn-primary btn-continuar"> <span class="fas fa-long-arrow-alt-right"></span> Continuar </button></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -668,7 +682,7 @@ e.preventDefault();
             <!-- <div id='ranges'>
             
             </div> -->
-            <button type="button" class="btn btn-primary btn-continuar"> <span class="fas fa-long-arrow-alt-right"></span> Continuar </button>
+            
 
         </div> <!-- fin col md-3 -->
 
@@ -799,7 +813,7 @@ e.preventDefault();
 
         <!-- Modal puntos -->
     <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Historial de calles en este punto:</h5>
@@ -813,7 +827,8 @@ e.preventDefault();
                 </div>
                 <div class="modal-footer">
                     
-                    <!-- <button type="button" class="btn btn-primary btn-select-punto">Seleccionar este punto</button> -->
+                    <button type="button" class="btn btn-primary"><span class="fas fa-map-pin"></span>Insertar en este punto</button>
+                    <button type="button" class="btn btn-info"><span class="fas fa-drafting-compass"></span> Modificar punto</button>
                 </div>
             </div>
         </div>
