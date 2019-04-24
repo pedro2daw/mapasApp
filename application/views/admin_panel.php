@@ -140,7 +140,7 @@
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
                     echo ("<td id=fecha_".$mapa["id"].">".$mapa["fecha"]."</td>");
                     echo("<td>");
-                    echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn-update btn btn-info' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
+                    echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn btn-info btn-update' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
                     echo("</td>");  
                     echo("<td>");
                     echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");

@@ -100,14 +100,10 @@ input[type='search'] {
 }
 
 .warning {
-    background-color: 
-
-    #ffbb33
- !important;
+    background-color:  #ffbb33 !important;
 }
 
 #table_mapas {
-    
     height:400px;
     overflow:auto;
 }

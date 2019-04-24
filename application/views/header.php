@@ -40,7 +40,7 @@
                     $("#delCoord").prop('disabled', false);
                     $("li").eq('0').toggleClass('active', false);
                     $("li").eq('1').toggleClass('active', false);
-                    $("li").eq('2').toggleClass('active', true);
+                   
                     $("li").eq('3').toggleClass('active', false);
                     var offset = $(this).offset();
                     coords_x.push(parseInt(e.pageX - offset.left));
@@ -52,20 +52,37 @@
                     $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
                     console.log('la x y la y del hotspot: ' + x_temp + " " + y_temp + " zoom: " + zoom);
                     $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp / zoom + "px;left:" + x_temp / zoom + "px; display:block;'></div>");
-                    $('.custom-checkbox').removeClass('disabledbutton');
-                    $('.btn-continuar').prop('disabled', false);
-
                     $('.btn-update').prop('disabled', true);
                     $('.btn-delete').prop('disabled', true);
                     $('.btn-anadir').prop('disabled', true);
+                    if (modificar != null){
+                        $('.btn-insert-coords').prop('disabled', false);
+                        $("li").eq('2').toggleClass('active', false);
+                        $("li").eq('3').toggleClass('active', true);
+                    } else {
+                    $('.custom-checkbox').removeClass('disabledbutton');
+                    $('.btn-continuar').prop('disabled', false);
+                    $("li").eq('2').toggleClass('active', true);
+                    }
+                    
                 }
+
             });
 
 
             $("#delCoord").click(function() {
+
+                    if (modificar != null){
+                        $('.btn-insert-coords').prop('disabled', true);
+                    } else {
+                    $('.custom-checkbox').removeClass('disabledbutton');
+                    $('.btn-continuar').prop('disabled', false);
+                    }
+
+
+
                 $('.btn-continuar').prop('disabled', true);
                 $('.cb_hidden').prop('checked', true);
-                $('.custom-checkbox').removeClass('disabledbutton');
                 $("li").eq('0').toggleClass('active', false);
                 $("li").eq('1').toggleClass('active', true);
                 $("li").eq('2').toggleClass('active', false);

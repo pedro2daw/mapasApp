@@ -67,6 +67,24 @@ include_once('Security.php');
             }
         }
 
+        public function update_coords(){
+            $y = $this->input->post('y');
+            $x = $this->input->post('x');
+            $y_aux = $this->input->post('y_aux');
+            $x_aux = $this->input->post('x_aux');
+            
+            
+            $r = $this->modelCalles->update_coord($x, $y, $x_aux, $y_aux);
+
+            if ($r == 0){
+                $data["msg"] = "1";
+                echo json_encode($data);
+            } else {
+                $data['msg'] = '0';
+                echo json_encode($data);
+            }   
+        }
+
         public function get_streets_associated_to_coord(){
             $y = $this->input->post('y');
             $x = $this->input->post('x');

@@ -12,6 +12,11 @@ class modelCalles extends CI_Model {
         return $data;
     }
 
+    public function update_coord($x, $y, $x_old, $y_old){
+        $query = $this->db->query("UPDATE puntos SET punto_x = $x , punto_y = $y WHERE punto_x = $x_old and punto_y = $y_old;");
+
+        return $this->db->affected_rows();
+    }
     // Calles que acaban de ser añadidas y aún no están en ningún mapa ni tienen un punto asignado:
     public function get_not_inserted(){
         $query = $this->db->query("SELECT calles.id as id, calles.nombre as nombre, calles.tipo as tipo FROM calles WHERE id NOT IN (select id_calle from puntos);");
