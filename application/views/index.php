@@ -28,7 +28,7 @@
         .masthead {
             padding: 100px !important;
         }
-        
+
         .navbar {
             background-color: #d33529 !important;
         }
@@ -308,7 +308,20 @@
             </div>
         </div>
     </footer>
-    <br><br>
+
+    <div class="copyright py-4 text-center text-white">
+        <div class="container">
+            <small>Copyright &copy; Your Website 2019</small>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-to-top d-lg-none position-fixed ">
+        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
     <!-- Bootstrap core JavaScript -->
     <script src="<?php echo base_url()?>/assets/vendor/jquery/jquery.min.js"></script>
     <script src="<?php echo base_url()?>/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
