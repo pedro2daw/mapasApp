@@ -227,4 +227,14 @@ class modelCalles extends CI_Model {
         $mapas = $this->db->query("SELECT id, titulo, imagen, desviacion_x, desviacion_y FROM mapas ORDER BY ancho DESC ,altura");
         return $mapas->result_array();
     }
+
+    public function get_maps_aux(){
+        $mapas_aux = $this->db->query("SELECT imagen, titulo FROM mapas WHERE principal = false ORDER BY ancho DESC ,altura");
+        return $mapas_aux->result_array();
+    }
+
+    public function get_mapa_main(){
+        $mapa_main = $this->db->query("SELECT imagen, titulo FROM mapas WHERE principal = true");
+        return $mapa_main->result_array();
+    }
 } // cierra la class modelCalles

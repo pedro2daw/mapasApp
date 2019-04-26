@@ -211,4 +211,12 @@ class Maps extends Security {
         }
     }
 
+    public function update_principal(){
+        $id = $this->input->post();
+
+        $id_principal = $id["id_principal"];
+
+        $this->modelMapas->update_principal($id_principal);
+    }
+
 }
