@@ -2,8 +2,6 @@
 
 //var_dump($mapas);
 
-
-
 ?>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
@@ -11,16 +9,16 @@
             desviacion_x = [];
             desviacion_y = [];
             var dominio = "<?php echo base_url();?>";
-            var rutas = <?php echo json_encode($mapas); ?>;
-            var cont = 1;
+            var rutas = <?php echo json_encode($mapas_aux); ?>;
+            var ruta_main = <?php echo json_encode($mapa_main) ?>;
+            var cont = 0;
             var next = false;
-            var aux_next = false;
             var click = {
                 x:0,
                 y:0
             }
-            var tops = [null];
-            var lefts = [null];
+            var tops = [];
+            var lefts = [];
             // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
 
             // FUNCION PARA CAMBIAR LA OPACIDAD DE LOS MAPAS DE LA PREVISUALIZACION
@@ -31,8 +29,6 @@
                 });
             }
             // FUNCION PARA CAMBIAR LA OPACIDAD DE LOS MAPAS DE LA PREVISUALIZACION
-
-
 
             // FUNCION PARA MOVER UN MAPA ENCIMA DEL MAPA PRINCIPAL DE FORMA LIBRE
             $(document).ready(function() {
@@ -63,16 +59,14 @@
             });
             // FUNCION PARA CAMBIAR LA OPACIDAD DEL MAPA ALTERNATIVO 
 
-            
-
-            // CARGO LA IMAGEN DEL PLANO PRINCIPAL(Y SECUNDARIOS) Y EL CSS NECESARIO
-                $("#mapa_main").attr("src",dominio+rutas[cont-1]["imagen"]);
+            // CARGO LA IMAGEN DEL PLANO PRINCIPAL , EL PIMER PLANO SECUNDARIO Y EL CSS NECESARIO // 
+                $("#mapa_main").attr("src",dominio+ruta_main[0]["imagen"]);
                 $("#mapa_main").css("z-index","999");
                 $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"])
                 $("#mapa_alt").css({"position":"absolute","top":"0px","left":"0px","opacity":"0.5"});
-            // CARGO LA IMAGEN DEL PLANO PRINCIPAL(Y SECUNDARIOS) Y EL CSS NECESARIO
+            // CARGO LA IMAGEN DEL PLANO PRINCIPAL , EL PRIMER PLANO SECUNDARIO Y EL CSS NECESARIO //
 
-            // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
+            // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT //
             $('#mapa_alt').dblclick(function(e){
                 next = confirm("¿Quieres seleccionar esta alineación?");
                 if(next==true){
@@ -82,8 +76,6 @@
                     // realizo un slice para guardar solo el valor numerico y no su unidad (px)//
                     top = top.slice(0,-2);
                     left = left.slice(0,-2);
-                        //alert(top + " el valor del top"); 
-                        //alert(left + " el valor del left");
                         tops.push(top);
                         lefts.push(left); 
                     cont++;
@@ -95,7 +87,6 @@
 
                         } else {
                              if(cont == rutas.length){
-                                //alert("contar igual a length");
                                 $("#previsualizar").removeClass("d-none");
                                 $(".info").addClass("d-none");
                                 $("#plano_anterior").addClass("d-none");
@@ -103,21 +94,23 @@
                                 }
                             }
                 }
-                    //alert(cont);
-                    //alert(rutas.length);
             });       
             // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
             
-
             // PREVISUALIZACION ANTES DE INSERTAR LAS DESVIACIONES EN LA BASE DE DATOS
             $("#previsualizar").click(function(){
-                $(".info").addClass("d-none");
-                $("#plano_anterior").addClass("d-none");
                 $("#repetir_proceso").removeClass("d-none");
                 var div_prev = $("#hotspotImg-2");
                 var id_map = "";
                     div_prev.empty();
-                    
+
+                    // cargo la imagen principal //
+
+                    div_prev.append("<img src='"+dominio+ruta_main[0]["imagen"]+"'id='mapa_main_prev' style='position:absolute; top:0px;left:0px;'/>");
+
+                    // cargo la imagen principal //
+
+                    // cargo las planos secundarios //
                     for(i = 0; i< rutas.length;i++){
                         div_prev.append("<img src='' class='maps' id='mapa_alt_"+i+"'/>");
                         id_map += "#mapa_alt" + i ;
@@ -126,76 +119,66 @@
 
                     $(".maps").css("position","absolute");
                     
+                   
                     for(j = 0; j < rutas.length; j++){
                         $(".maps:eq("+j+")").attr("src",dominio+rutas[j]["imagen"]);
                         $(".maps:eq("+j+")").css("z-index", j+1);
-
-                       if(j > 0){
-                                $(".maps:eq("+j+")").css("left",lefts[j]+"px");
-                                $(".maps:eq("+j+")").css("top",tops[j]+"px");
-                                $(".maps:eq("+j+")").css("opacity","0.5");
-                           }
+                        $(".maps:eq("+j+")").css("left",lefts[j]+"px");
+                        $(".maps:eq("+j+")").css("top",tops[j]+"px");
+                        $(".maps:eq("+j+")").css("opacity","0.5");
+                           
                     }
+                    // cargo los planos secundarios //
+
+                    // cambio los elementos del panel izquierdo //
                     $("#panel_left").append("<h4>Cambiar la opacidad de los planos</h4>");
                     for (n = 0; n < rutas.length;n++){
-                        $("#panel_left").append("<h4>"+rutas[n]["titulo"]+"</h4>");
-                        $("#panel_left").append("<input style='float:left; width:90%; margin-top:2%;' type='range' id='slider_"+n+"' oninput='changeOpacity("+n+");' name='points' min='0' max='1' step='0.1'/>");
+                        $("#panel_left").append("</br><h5>"+rutas[n]["titulo"]+"</h5>");
+                        $("#panel_left").append("<input style='float:left; width:95%; margin-top:2%;' type='range' id='slider_"+n+"' oninput='changeOpacity("+n+");' name='points' min='0' max='1' step='0.1'/>");
                     }
 
                     $("#previsualizar").addClass("d-none");
                     $("#toJson").removeClass("d-none");
+                    // cambio los elementos del panel izquierdo //
             });
 
-            // FUNCION PARA ALINEAR EL PLANO ANTERIOR
+            // FUNCION PARA VOLVER A ALINEAR EL PLANO ANTERIOR //
             $("#plano_anterior").click(function(){
-                //alert("tops y lefts antes de splice" + tops + " /// " + lefts);
                 tops.splice(-1,1);
                 lefts.splice(-1,1);
-                //alert("tops y lefts despues de splice" + tops + " /// " + lefts);
                 cont--;
                 $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
                 $("#mapa_alt").css({"top":"0px","left":"0px;"});
-                //alert("contador = " + cont);
-                if(cont == 1){
-                    alert("entra aqui inside");
-                    $("#plano_anterior").prop("disabled",true);
-                    $("#plano_siguiente").prop("disabled",true);
-                }
+                    if(cont == 0){
+                        $("#plano_anterior").prop("disabled",true);
+                    }
             }); 
             // FUNCION PARA ALINEAR EL PLANO ANTERIOR
 
             // FUNCION PARA REPETIR EL PROCESO DE ALINEACION
             $("#repetir_proceso").click(function(){
                 next =  confirm("¿Estás seguro que quieres repetir el proceso?");
-                if (next == true){
-                    //alert("es true");
-                    location.href = "<?php  echo site_url('Streets/get_maps'); ?>";
-                }
+                    if (next == true){
+                        location.href = "<?php  echo site_url('Streets/get_maps'); ?>";
+                    }
             });
             // FUNCION PARA REPETIR EL PROCESO DE ALINEACION    
 
             // FUNCION PARA INSERTAR LA ALINEACION DE LOS MAPAS
-            $("#toJson").click(function(){
-                rutas.splice(0,1);
-                tops.splice(0,1);
-                lefts.splice(0,1);
-                
+            $("#toJson").click(function(){                
                 var jsonX = JSON.stringify(lefts);
                 var jsonY = JSON.stringify(tops);
                 
                 $("#x").val(jsonX);
                 $("#y").val(jsonY);
-                    //alert(jsonX);
-                    //alert(jsonY);
 
                 var jsonRutas = JSON.stringify(rutas);
-                    //alert(jsonRutas + " valores de las rutas para insertar");
                 $("#array_rutas").val(jsonRutas);
 
             });
             // FUNCION PARA INSERTAR LA ALINEACION DE LOS MAPAS
 
-            });// este cierra el document ready, antes de este poner todo los demas para que cierre bien del todo
+            });// AQUI SE CIERRA EL BLOQUE DEL DOCUEMENT READY //
                 
                
 
@@ -214,10 +197,7 @@
     <button id="plano_anterior" class="btn btn-danger" disabled>Alinear plano anterior</button>
     <br><br>
     <button id="previsualizar" class="d-none btn btn-info">Previsualizar</button>
-    <!--<button id="rutas" class="btn btn-info">coordenadas</button>
-    <button id="top_left" class="btn btn-info">top_left</button>-->
-    
-    <!--<button id="toJson" class="hidden">GUARDAR</button>-->
+
     <?php 
 echo form_open('Maps/superponer');
 echo("
@@ -237,8 +217,6 @@ echo("
             <img src="" alt="mapa" id="mapa_alt" class="free_move" style="position:absolute; z-index:1000;">
         </div>
     </div>
-    <!--<div id="super" class="hidden col-md-9">
-    </div>-->
     
 </div>
 </div>

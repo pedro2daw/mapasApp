@@ -93,7 +93,7 @@
                 }
             }
             ?>
-            </div> <!-- final del div .box -->
+            </div> <!-- final del div .box /-->
         </div>
     </div>
 
@@ -111,6 +111,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Imagen</th>
+                        <th scope="col">Marcar como principal</th>
                         <th scope="col">Titulo</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Modificar</th>
@@ -120,15 +121,22 @@
                 <tbody>
 
                     <?php
-
+                    // compruebo si hay algun mapa marcado como principal //
+                    $check_principal = false;
+                    for ($j = 0; $j < count($ListaMapas); $j++){
+                        $mapa_principal = $ListaMapas[$j];
+                        if($mapa_principal["principal"] == true){ $check_principal = true;}
+                    }
+                    // compruebo si hay algun mapa marcado como principal //
                 for($i = 0; $i < count($ListaMapas);$i++){
                     
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
-                    if (($i > 0)&&($mapa['desviacion_x'] == null || $mapa['desviacion_y'] == null)){
-                    echo ("<td class='ids warning'>".$mapa["id"].
-                    anchor('Streets/get_maps/',"<span class='fas fa-layer-group'></span>",'class="btn btn-md btn-danger" data-toggle="tooltip" data-placement="right" title="Superponer los mapas." ')."</td>");
-                    } else {
+                    if (($mapa['desviacion_x'] == null || $mapa['desviacion_y'] == null)&& $mapa["principal"] == false ){
+                    echo ("<td class='ids warning'>".$mapa["id"]." 
+                    <a tabindex='0'class='btn btn-md btn-danger' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes superponer los mapas de nuevo'><span class='fas fa-exclamation-triangle'></span></a>
+                     </td>");
+                    } else{
                     echo ("<td class='ids' >".$mapa["id"]."</td>");
                     }
                     echo ("<td class='d-none' id='imagen_".$mapa["id"]."' data-id-imagen='".$mapa['imagen']."'></td>");
@@ -137,6 +145,18 @@
                     echo ("<td class='d-none' id=desviacion_x_".$mapa["id"]." data-x='".$mapa['desviacion_x']."'></td>");
                     echo ("<td class='d-none' id='desviacion_y_".$mapa["id"]."' data-y='".$mapa['desviacion_y']."'></td>");
                     echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
+                    if (($check_principal == true && $mapa["principal"] == true)){
+                        echo ("<td style='text-align:center;'><input type='radio' class='radio_principal' name='principal' checked='true' value='".$mapa['id']."'></td>");
+                    }
+                    else if($check_principal==false){
+                        echo ("<td style='text-align:center;'>
+                        <a tabindex='1' class='btn btn-md btn-warning alert_principal' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes seleccionar un mapa como principal'><span class='fas fa-exclamation-triangle'></span></a>
+                        <input type='radio' class='radio_principal' name='principal' value='".$mapa['id']."'></td>");
+                    }
+                    else{
+                       echo("<td style='text-align:center;'><input type='radio' class='radio_principal' name='principal' value='".$mapa['id']."'></td>");
+                    }
+                    
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
                     echo ("<td id=fecha_".$mapa["id"].">".$mapa["fecha"]."</td>");
                     echo("<td>");
