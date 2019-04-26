@@ -93,7 +93,7 @@
                 }
             }
             ?>
-            </div> <!-- final del div .box /-->
+            </div> <!-- final del div .box -->
         </div>
     </div>
 
