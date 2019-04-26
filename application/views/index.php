@@ -25,6 +25,22 @@
     <link href="<?php echo base_url()?>/assets/css/freelancer.min.css" rel="stylesheet">
 
     <style>
+        .copyright {
+            background-color: #800000 !important;
+        }
+        
+        .navbar-toggler {
+            background-color: #cc0000 !important;
+        }
+        
+        .nav-link.active {
+            color:  #cc0000 !important;
+        }
+        
+        .footer {
+            background-color: #d33529 !important;
+        }
+        
         .masthead {
             padding: 100px !important;
         }
