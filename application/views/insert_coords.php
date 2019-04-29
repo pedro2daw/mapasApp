@@ -49,6 +49,8 @@
 
 
     $(document).ready( function (){
+        $('#delCoord').hide();
+
         modificar = null;
         x_aux = null;
         y_aux = null;
@@ -56,7 +58,7 @@
         $('#enlace_calles').toggleClass('active');
         // Botones:
         $('.custom-checkbox').addClass('disabledbutton');
-        $("#delCoord").prop('disabled',true);
+        $("#delCoord").hide();
         // El step:
         $("li").eq('0').toggleClass('active',true);
         $("li").eq('1').toggleClass('active',false);
@@ -66,11 +68,12 @@
         $("#check_mapas").modal('toggle');        
         // Los botones que estarán deshabilitados hasta que se seleccione una calle del listado de calles:
         // UPDATE:
-        $('.btn-update').prop('disabled', true);
+
+        $('.btn-update').hide();
         // DELETE
-        $('.btn-delete').prop('disabled', true);
+        $('.btn-delete').hide();
         // INSERTAR COORDENADAS:
-        $('.btn-insert-coords').prop('disabled', true);
+        $('.btn-insert-coords').hide();
         // Carga la tabla de calles el plug-in de DataTables.
         $('#tabla_calles').DataTable( {
             "scrollY":        "210px",
@@ -97,7 +100,7 @@
         $('label').contents().first().remove();
         // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
         $("input[type='search']").addClass('form-control');
-        $('.btn-continuar').prop('disabled', true);
+        $('.btn-continuar').hide();
         // Cambia la opacidad del mapa principal.
         $(document).on("input","#slider_callejero",function(){
          var opacity = $(this).val();
@@ -119,6 +122,18 @@
         $("#modal_puntos").modal('toggle');
         x_aux = x;
         y_aux = y;
+        $('.btn-update').hide();
+        // DELETE
+        $('.btn-delete').hide();
+        // INSERTAR COORDENADAS:
+        $('.btn-insert-coords').hide();
+        $('.btn-anadir').hide();
+
+                    $("li").eq('0').toggleClass('active',true);
+                    $("li").eq('1').toggleClass('active',false);
+                    $("li").eq('2').toggleClass('active',false);
+                    $("li").eq('3').toggleClass('active',false);
+
     });
 
     $(".btn-modificar-punto").click(function(){
@@ -126,12 +141,22 @@
         modificar = true;
         x_aux = x;
         y_aux = y;
+        $('.btn-update').hide();
+        // DELETE
+        $('.btn-delete').hide();
+        // INSERTAR COORDENADAS:
+        $('.btn-insert-coords').hide();
+    });
+
+    $(".btn-anadir").click(function(){
+        
     });
 
     
-
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
+        $('#table_mapas').removeClass('blue-grey lighten-5 border');
+
         modificar = null;
         $(".hot-spot-1").remove();
         $('.calles').removeClass('selected');
@@ -147,6 +172,16 @@
         var left = $('#prueba').scrollLeft();
         console.log(" ******************************* ");
         console.log("top y left "+ top + " " +left + "zoom" + zoom + "X " + x + " Y " + y);
+
+        $("#delCoord").hide();
+            $('.btn-update').data('id',id);
+            $('.btn-insert').show();
+            $('.btn-update').show();
+            $('.btn-anadir').show();
+            $('.btn-delete').show();
+            $('.btn-delete').data('id',id);  
+
+
         if (x_aux != null){
             console.log(x_aux);
             x = x_aux;
@@ -168,8 +203,15 @@
                     $("li").eq('2').toggleClass('active',true);
                     $("li").eq('3').toggleClass('active',false);
                     $('.custom-checkbox').removeClass('disabledbutton');
-                    $('.btn-continuar').prop("disabled",false);
-                    
+                    $('.btn-continuar').show();
+                    $('.btn-anadir').hide();
+                    $('.btn-update').hide();
+
+
+        // DELETE
+        $('.btn-delete').hide();
+        // INSERTAR COORDENADAS:
+        $('.btn-insert-coords').hide();
 
                 } else {
                     $("li").eq('0').toggleClass('active',false);
@@ -189,16 +231,9 @@
             $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
             $('#prueba').scrollTop(y - ($('#prueba').height() /2) -5 ); 
             $('#prueba').scrollLeft(x - ($('#prueba').width() /2) -5 );
-
-
             }
 
-            $("#delCoord").prop('disabled',true);
-            $('.btn-update').data('id',id);
-            $('.btn-insert').prop('disabled', false);
-            $('.btn-update').prop('disabled', false);
-            $('.btn-delete').prop('disabled', false);
-            $('.btn-delete').data('id',id);  
+            
     });
 
 
@@ -249,21 +284,26 @@
                 $("li").eq('2').toggleClass('active',false);
                 $("li").eq('3').toggleClass('active',false);
 
-                $('.btn-update').prop('disabled', false);
-                $('.btn-delete').prop('disabled', false);
-
+                $('.btn-update').show();
+                $('.btn-delete').show();
+                
                 } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error. </div>");
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
-            $('#nombre').val(' ');
+            
+
             $('#modal_insert').modal('toggle');
             $(".hot-spot-1").remove();
             
      });
 
     // Previene al formulario ejecutarse de manera tradicional y que se refresque la página.
+    var nombre = $('#nombre')[0];
+                $('#nombre').val('');
+                nombre.setCustomValidity("");
+
     e.preventDefault();
     });
 
@@ -298,8 +338,8 @@
                     console.log(data);
                     $('.box').html('');
                     $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
-                    $('.btn-update').prop('disabled', false);
-                    $('.btn-delete').prop('disabled', false);
+                    $('.btn-update').show();
+                    $('.btn-delete').show();
                     
                     table.row('#calle_'+id).remove().draw();
                     var rowNode = table.row.add( {
@@ -359,8 +399,8 @@
             if (msg == '0'){
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
-                $('.btn-update').prop('disabled', true);
-                $('.btn-delete').prop('disabled', true);
+                $('.btn-update').hide();
+                $('.btn-delete').hide();
                 $('#calle_'+id).html("");
                 $(".hot-spot-1").remove();
 
@@ -396,10 +436,12 @@
         $("li").eq('1').toggleClass('active',false);
         $("li").eq('2').toggleClass('active',false);
         $("li").eq('3').toggleClass('active',true);
-        $('.btn-insert-coords').prop('disabled', false);
-        $('.btn-continuar').prop('disabled', true);
+        $('.btn-insert-coords').show();
+        $('.btn-continuar').hide();
         $('.custom-checkbox').addClass('disabledbutton');
         $('.cb_hidden').hide();
+        $('#table_mapas').removeClass('blue-grey lighten-5 border');
+
     });
 
     $(document).on('click','.btn-modificar-punto', function() {
@@ -544,8 +586,8 @@ if (modificar == null) {
                 }
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
-                $('.btn-update').prop('disabled', true);
-                $('.btn-delete').prop('disabled', true);
+                $('.btn-update').hide();
+                $('.btn-delete').hide();
                 // VACIAMOS EL ARRAY DE COORDENADAS:
                 coords_x = [];
                 coords_y = [];
@@ -554,8 +596,8 @@ if (modificar == null) {
                 $('.custom-checkbox').addClass('disabledbutton');
                 $('.cb_hidden').hide();
                
-                $('.btn-anadir').prop('disabled', false);
-                $('.btn-insert-coords').prop('disabled', true);
+                $('.btn-anadir').show();
+                $('.btn-insert-coords').hide();
                 $("li").eq('0').toggleClass('active',true);
                 $("li").eq('1').toggleClass('active',false);
                 $("li").eq('2').toggleClass('active',false);
@@ -617,16 +659,16 @@ console.log('pasa por aki');
 
 
 
-                $('.btn-update').prop('disabled', true);
-                $('.btn-delete').prop('disabled', true);
+                $('.btn-update').hide();
+                $('.btn-delete').hide();
                 // VACIAMOS EL ARRAY DE COORDENADAS:
                 coords_x = [];
                 coords_y = [];
                 $(".hot-spot-1").remove();
                 $('.custom-checkbox').addClass('disabledbutton');
                 $('.cb_hidden').hide();
-                $('.btn-anadir').prop('disabled', false);
-                $('.btn-insert-coords').prop('disabled', true);
+                $('.btn-anadir').show();
+                $('.btn-insert-coords').hide();
                 $("li").eq('0').toggleClass('active',true);
                 $("li").eq('1').toggleClass('active',false);
                 $("li").eq('2').toggleClass('active',false);
@@ -638,17 +680,13 @@ console.log('pasa por aki');
             }
             $('.alert').fadeIn().delay(2500).fadeOut();
 });
-
-
-        
-
-    }
-    
-
+}
 }
 e.preventDefault();
+$("#delCoord").hide();
+
     });
-    
+
 });
 
 </script>
@@ -726,8 +764,9 @@ e.preventDefault();
             <button type="button" class="btn btn-primary btn-anadir" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Añadir Calle</button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
-            <button type='button' class="btn btn-success btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Punto"><span class='fas fa-map-marked-alt'></span> Insertar Punto</button>
-            <button id="delCoord" class="btn btn-secondary"> <span class="fas fa-undo-alt"></span> Revertir proceso </button>
+            <button type='button' class="btn btn-warning btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Punto"><span class='fas fa-map-marked-alt'></span> Confirmar Punto</button>
+            <button type="button" class="btn btn-success btn-continuar"> <span class="fas fa-long-arrow-alt-right"></span> Continuar </button>
+            <button id="delCoord" class="btn bg-white"> <span class="far fa-times-circle"></span> Cancelar </button>
             <?php /*echo anchor('Csv/index','CSV',' class="btn btn-warning"');*/ ?>
 
         </div>
@@ -773,7 +812,7 @@ e.preventDefault();
                         <thead>
                             <tr>
                                 <th scope="col">Mapas</th>
-                                <th scope="col"> <button type="button" class="btn btn-primary btn-continuar"> <span class="fas fa-long-arrow-alt-right"></span> Continuar </button></th>
+                                <th scope="col"> </th>
                             </tr>
                         </thead>
                         <tbody>

@@ -23,9 +23,9 @@ html, body {
     list-style: none;
 }
 
-.btn-continuar {
-    margin: 0  !important;
-    padding: 9px !important;
+.border {
+    border: 2px solid gray !important; 
+    border-style: dashed !important;
 }
 
 

@@ -37,10 +37,9 @@
             $('.alert').fadeIn().delay(2500).fadeOut();
             $('#img_callejero').dblclick(function(e) {
                 if ($('.hot-spot-1').val() == null && $('.selected').val() != null) {
-                    $("#delCoord").prop('disabled', false);
+                    $("#delCoord").show();
                     $("li").eq('0').toggleClass('active', false);
                     $("li").eq('1').toggleClass('active', false);
-                   
                     $("li").eq('3').toggleClass('active', false);
                     var offset = $(this).offset();
                     coords_x.push(parseInt(e.pageX - offset.left));
@@ -52,17 +51,22 @@
                     $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
                     console.log('la x y la y del hotspot: ' + x_temp + " " + y_temp + " zoom: " + zoom);
                     $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp / zoom + "px;left:" + x_temp / zoom + "px; display:block;'></div>");
-                    $('.btn-update').prop('disabled', true);
-                    $('.btn-delete').prop('disabled', true);
-                    $('.btn-anadir').prop('disabled', true);
+                    $('.btn-update').hide();
+                    $('.btn-delete').hide();
+                    $('.btn-anadir').hide();
+                    $('#table_mapas').addClass('blue-grey lighten-5 border');
+
                     if (modificar != null){
-                        $('.btn-insert-coords').prop('disabled', false);
+                        $('.btn-insert-coords').show();
                         $("li").eq('2').toggleClass('active', false);
                         $("li").eq('3').toggleClass('active', true);
                     } else {
                     $('.custom-checkbox').removeClass('disabledbutton');
-                    $('.btn-continuar').prop('disabled', false);
+                    $('.btn-continuar').show();
+                    $('#delCoord').show();
                     $("li").eq('2').toggleClass('active', true);
+                    $('#table_mapas').addClass('blue-grey lighten-5 border border');
+
                     }
                     
                 }
@@ -71,24 +75,26 @@
 
 
             $("#delCoord").click(function() {
+                $('#table_mapas').removeClass('blue-grey lighten-5 border');
 
+                $('#delCoord').hide();
                     if (modificar != null){
-                        $('.btn-insert-coords').prop('disabled', true);
+                        $('.btn-insert-coords').hide();
                     } else {
                     $('.custom-checkbox').removeClass('disabledbutton');
-                    $('.btn-continuar').prop('disabled', false);
+                    $('.btn-continuar').show();
                     }
 
 
 
-                $('.btn-continuar').prop('disabled', true);
+                $('.btn-continuar').hide();
                 $('.cb_hidden').prop('checked', true);
                 $("li").eq('0').toggleClass('active', false);
                 $("li").eq('1').toggleClass('active', true);
                 $("li").eq('2').toggleClass('active', false);
                 $("li").eq('3').toggleClass('active', false);
                 $("li").eq('3').toggleClass('active', false);
-                $(this).prop('disabled', true);
+                $(this).hide();
                 $("#coord-list li:last-child").remove();
                 index_x = coords_x.length - 1;
                 index_y = coords_y.length - 1;
@@ -102,9 +108,9 @@
                 });
                 $('.cb_hidden').hide();
 
-                $('.btn-update').prop('disabled', false);
-                $('.btn-delete').prop('disabled', false);
-                $('.btn-anadir').prop('disabled', false);
+                $('.btn-update').show();
+                $('.btn-delete').show();
+                $('.btn-anadir').show();
                 $('.cb_hidden').hide();
 
             });
