@@ -14,7 +14,7 @@ class modelMapas extends CI_Model {
     }
 
     function get_all_ordenados(){
-        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto', mapas.desviacion_x as desviacion_x, mapas.desviacion_y as desviacion_y , mapas.principal as principal from mapas ORDER BY ancho DESC ,altura;"); 
+        $query = $this->db->query("SELECT mapas.id as id, mapas.titulo, mapas.ciudad, mapas.fecha, mapas.imagen, mapas.ancho as 'ancho', mapas.altura as 'alto', mapas.desviacion_x as desviacion_x, mapas.desviacion_y as desviacion_y from mapas ORDER BY ancho DESC ,altura;"); 
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){
