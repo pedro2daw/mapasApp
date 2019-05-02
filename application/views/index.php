@@ -98,16 +98,13 @@
             border: 1px solid #800000 !important;
         }
 
-        #hotspotImg {
-            overflow: hidden;
-        }
-
         #tabla {
-            overflow: scroll;
+            overflow: auto;
+            display: grid;
             width: 100%;
             height: 450px !important;
         }
-        
+
         #tabla2 {
             overflow: scroll;
             width: 100%;
@@ -116,6 +113,12 @@
 
         #puntosInteres {
             display: none;
+        }
+
+        #slide {
+            display: flex;
+            min-height: 0;
+            min-width: 0;
         }
 
     </style>
@@ -151,21 +154,21 @@
 
             $("#selectMapa").on("change", function() {
                 var srcMapa = $(this).find(':selected').data('src-mapa');
+                var idMapa = $(this).find(':selected').data('id-mapaselect');
                 $("#slide").attr("src", srcMapa);
 
                 $.ajax({
-                    url: "<?php echo base_url(); ?>index.php/Hotspots/",
-                    data: formData,
-                    processData: false,
-                    cache: false,
-                    contentType: false,
-                    type: 'POST',
+                    url: "<?php echo base_url(); ?>index.php/Front/get_all_hotspots/" + idMapa,
+                    type: 'post',
                     success: function(data) {
-                        var bk = src + "" + data;
-                        $("#insImg").attr("src", bk);
-                    }
+                        $(".hot-spot").remove();
+                        var obj = JSON.parse(data.toString());
+                        $.each(obj, function(key, value) {
+                            $("#slide").after("<div id='" + value.id + "' class='hot-spot' data-posx='" + value.punto_x + "' data-posy='" + value.punto_y + "' style='top: " + value.punto_y + "px; left: " + value.punto_x + "px; display: block;'><div class='circle'></div><div class='tooltip' style='margin-left: -135px; display: none;'><div class='img-row'><img src='" + "<?php echo base_url("/assets/img/img_hotspots/") ?>" +  value.imagen + "' width='100'></div><div class='text-row'><h4>" + value.titulo + "</h4><p>" + value.descripcion + "</p></div></div></div>");
+                        });
+                     }
                 });
-            });
+            });     
 
             $("#hotspotImg").on("wheel", function(e) {
                 var width = $("#hotspotImg").first().width();
@@ -281,7 +284,7 @@
                     <div id="hotspotImg-1" class="responsive-hotspot-wrap dragscroll">
 
                         <img src="<?php echo base_url($ListaMapas[0]["imagen"])?>" id="slide-1" data-id-mapa="<?php echo $ListaMapas[0]["id"]?>" class="img-responsive span4 proj-div" />
-                        
+
                     </div>
                 </div>
             </div>

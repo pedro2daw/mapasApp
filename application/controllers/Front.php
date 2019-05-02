@@ -11,8 +11,8 @@ class Front extends CI_Controller{
     }
     
     public function get_all_hotspots($id_mapa) {
-        $data['ListaHotspots'] = $this->modelHotspot->get_all($id_mapa);
-        $data['viewName'] = "admin_hotspots";
-        $this->load->view('template', $data);
+        $this->load->model('modelHotspot');
+        $puntos = $this->modelHotspot->get_all($id_mapa);
+        echo json_encode($puntos);
     }
 }
