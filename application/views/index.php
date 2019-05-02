@@ -165,6 +165,19 @@
                         var obj = JSON.parse(data.toString());
                         $.each(obj, function(key, value) {
                             $("#slide").after("<div id='" + value.id + "' class='hot-spot' data-posx='" + value.punto_x + "' data-posy='" + value.punto_y + "' style='top: " + value.punto_y + "px; left: " + value.punto_x + "px; display: block;'><div class='circle'></div><div class='tooltip' style='margin-left: -135px; display: none;'><div class='img-row'><img src='" + "<?php echo base_url("/assets/img/img_hotspots/") ?>" +  value.imagen + "' width='100'></div><div class='text-row'><h4>" + value.titulo + "</h4><p>" + value.descripcion + "</p></div></div></div>");
+                            
+                        });
+                        $('#hotspotImg').hotSpot({
+                            
+                            // default selectors
+                            mainselector: '#hotspotImg',
+                            selector: '.hot-spot',
+                            imageselector: '.img-resposive',
+                            tooltipselector: '.tooltip',
+                            
+                            // or 'click'
+                            bindselector: 'hover'
+                            
                         });
                      }
                 });
