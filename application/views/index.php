@@ -29,6 +29,7 @@
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/all.js"></script>
 
     <!-- HOTSPOTS -->
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/code.jquery.comjquery-3.3.1.js"></script>
     <script src="<?php echo base_url()?>assets/js/jquery.hotspot.js"></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
@@ -98,15 +99,30 @@
         }
 
         #hotspotImg {
+            overflow: hidden;
+        }
+
+        #tabla {
             overflow: scroll;
             width: 100%;
             height: 450px !important;
+        }
+        
+        #tabla2 {
+            overflow: scroll;
+            width: 100%;
+            height: 450px !important;
+        }
+
+        #puntosInteres {
+            display: none;
         }
 
     </style>
 
     <script>
         $(document).ready(function() {
+            zoom = 1;
             // Carga de los puntos insertados desde la BD
             $('#hotspotImg').hotSpot({
 
@@ -120,15 +136,67 @@
                 bindselector: 'hover'
 
             });
-            
+
             $("#radioCalles").on("click", function() {
                 $("#selectMapa").prop("disabled", true);
+                $("#puntosCalles").css("display", "block");
+                $("#puntosInteres").css("display", "none");
             });
-            
+
             $("#radioPuntos").on("click", function() {
                 $("#selectMapa").prop("disabled", false);
+                $("#puntosInteres").css("display", "block");
+                $("#puntosCalles").css("display", "none");
             });
-            
+
+            $("#selectMapa").on("change", function() {
+                var srcMapa = $(this).find(':selected').data('src-mapa');
+                $("#slide").attr("src", srcMapa);
+
+                $.ajax({
+                    url: "<?php echo base_url(); ?>index.php/Hotspots/",
+                    data: formData,
+                    processData: false,
+                    cache: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function(data) {
+                        var bk = src + "" + data;
+                        $("#insImg").attr("src", bk);
+                    }
+                });
+            });
+
+            $("#hotspotImg").on("wheel", function(e) {
+                var width = $("#hotspotImg").first().width();
+                console.log('zoom ' + zoom);
+
+                var e0 = e.originalEvent,
+                    delta = e0.wheelDelta || -e0.detail;
+
+                this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+                e.preventDefault();
+                actWdth = $("#hotspotImg img").width() * zoom;
+                if (e.originalEvent.deltaY < 0) {
+
+                    // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
+                    if (actWdth < width * 10) {
+                        zoom += 0.04;
+                    }
+                    $("#hotspotImg").css("transition", "transform 1s");
+                    $("#hotspotImg").css("transform-origin", "top left");
+                    $("#hotspotImg").css("transform", "scale(" + (zoom) + ")");
+                } else {
+                    // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
+                    if (actWdth > width + 200) {
+                        zoom -= 0.04;
+                    }
+                    $("#hotspotImg").css("transition", "transform 1s");
+                    $("#hotspotImg").css("transform-origin", "top left");
+                    $("#hotspotImg").css("transform", "scale(" + (zoom) + ")");
+                }
+            });
+
         });
 
     </script>
@@ -177,7 +245,7 @@
             <h2 class="text-center text-uppercase text-secondary mb-0">Mapa</h2>
             <hr class="star-dark mb-5">
             <div class="row">
-                <div id="tabla" class="col-sm">
+                <div class="col-sm-2">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="radioCalles" value="option1" checked>
                         <label class="form-check-label" for="radioCalles">
@@ -185,7 +253,7 @@
                         </label>
                     </div>
                 </div>
-                <div id="tabla" class="col-sm">
+                <div class="col-sm-2">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="exampleRadios" id="radioPuntos" value="option2">
                         <label class="form-check-label" for="radioPuntos">
@@ -193,23 +261,40 @@
                         </label>
                     </div>
                 </div>
-                <div id="tabla" class="col-sm">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <select class="form-control" id="selectMapa" disabled>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <?php
+                            foreach ($ListaMapas as $mapa) {
+                            echo "<option data-src-mapa='" .base_url($mapa["imagen"]). "' data-id-mapaselect='" .$mapa["id"]. "'>" .$mapa["titulo"]. "</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div id="tabla" class="col-sm">
-                    <div id="hotspotImg" class="responsive-hotspot-wrap dragscroll">
 
-                        <img src="http://localhost/mapasApp//assets/img/grande.png" id="slide" data-id-mapa="1" class="img-responsive span4 proj-div" />
+            <!-- INICIO MAPA CALLES -->
+
+            <div id="puntosCalles" class="row">
+                <div id="tabla2" class="col-sm">
+                    <div id="hotspotImg-1" class="responsive-hotspot-wrap dragscroll">
+
+                        <img src="<?php echo base_url($ListaMapas[0]["imagen"])?>" id="slide-1" data-id-mapa="<?php echo $ListaMapas[0]["id"]?>" class="img-responsive span4 proj-div" />
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- FIN MAPA CALLES -->
+
+            <!-- INICIO MAPA PUNTOS DE INTERES -->
+
+            <div id="puntosInteres" class="row">
+                <div id="tabla" class="col-sm dragscroll">
+                    <div id="hotspotImg" class="responsive-hotspot-wrap">
+
+                        <img src="<?php echo base_url($ListaMapas[0]["imagen"])?>" id="slide" data-id-mapa="<?php echo $ListaMapas[0]["id"]?>" class="img-responsive span4 proj-div" />
 
                         <?php 
                             foreach ($ListaHotspots as $hotspot) {
@@ -228,8 +313,11 @@
                         ?>
 
                     </div>
-                </div> <!-- fin col md-3 -->
+                </div>
             </div>
+
+            <!-- FIN MAPA PUNTOS DE INTERES -->
+
         </div>
     </section>
 
@@ -256,7 +344,7 @@
             <hr class="star-dark mb-5">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    Texto de ejemplo
+                    <p>Texto de ejemplo</p>
                 </div>
             </div>
         </div>
