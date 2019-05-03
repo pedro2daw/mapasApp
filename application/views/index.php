@@ -293,20 +293,22 @@
             <!-- INICIO MAPA CALLES -->
 
             <div id="puntosCalles" class="row">
+                <div class="col-md-3">Ejemplo</div>
                 <div id="tabla2" class="col-sm">
-                    <div class="col-md-9 dragscroll" id="prueba">
+                    <div class="col-md-9" id="prueba">
                         <div id="hotspotImg-1">
                         
                             <?php
                             for ($i = 0 ; $i < count($img_mapas) ; $i++){
-                            $img = $img_mapas[$i];
-                            if ($i == 0){
-                                echo "<img class='mapas' id='img_callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999 ; opacity:0.5; ' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
-                            }else {
-                                echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
-                            }
+                                $img = $img_mapas[$i];
+                                if ($i == 0){
+                                    echo "<img class='mapas' id='img_callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999 ; opacity:0.5; ' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+                                }else {
+                                    echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
+                                }
                             }
                             ?>
+                            
                         </div> 
                     </div>
                 </div>
