@@ -294,10 +294,20 @@
 
             <div id="puntosCalles" class="row">
                 <div id="tabla2" class="col-sm">
-                    <div id="hotspotImg-1" class="responsive-hotspot-wrap dragscroll">
-
-                        <img src="<?php echo base_url($ListaMapas[0]["imagen"])?>" id="slide-1" data-id-mapa="<?php echo $ListaMapas[0]["id"]?>" class="img-responsive span4 proj-div" />
-
+                    <div class="col-md-9 dragscroll" id="prueba">
+                        <div id="hotspotImg-1">
+                        
+                            <?php
+                            for ($i = 0 ; $i < count($img_mapas) ; $i++){
+                            $img = $img_mapas[$i];
+                            if ($i == 0){
+                                echo "<img class='mapas' id='img_callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999 ; opacity:0.5; ' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+                            }else {
+                                echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
+                            }
+                            }
+                            ?>
+                        </div> 
                     </div>
                 </div>
             </div>

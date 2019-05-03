@@ -219,4 +219,11 @@ class Maps extends Security {
         $this->modelMapas->update_principal($id_principal);
     }
 
+    public function get_maps(){
+        $data["mapas_aux"] = $this->modelMapas->get_maps_aux();
+        $data["mapa_main"] = $this->modelMapas->get_mapa_main();
+        $data["viewName"] = "superponer";
+        $this->load->view('template', $data);
+    }
+
 }

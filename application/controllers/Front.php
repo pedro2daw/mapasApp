@@ -5,8 +5,9 @@ class Front extends CI_Controller{
     public function index(){
         $this->load->model('modelHotspot');
         $this->load->model('modelMapas');
+        $id =$this->modelMapas->get_id_first_map();
         $data['ListaMapas'] = $this->modelMapas->get_all();
-        $data['ListaHotspots'] = $this->modelHotspot->get_all('9');
+        $data['ListaHotspots'] = $this->modelHotspot->get_all($id);
         $this->load->view("index.php", $data);
     }
     

@@ -90,6 +90,7 @@
                                 $("#previsualizar").removeClass("d-none");
                                 $(".info").addClass("d-none");
                                 $("#plano_anterior").addClass("d-none");
+                                $("#posicion_inicial").addClass("d-none");
                                 $("#mapa_alt").addClass("d-none");
                                 }
                             }
@@ -155,15 +156,23 @@
             }); 
             // FUNCION PARA ALINEAR EL PLANO ANTERIOR
 
+            // FUNCION PARA VOLVER A LA POSISICON INICIAL EL PLANO //
+            $("#posicion_inicial").click(function(){
+                $("#mapa_alt").css("top","0px");
+                $("#mapa_alt").css("left","0px");
+            });
+            // FUNCION PARA VOLVER A LA POSISICON INICIAL EL PLANO //
+
+
             // FUNCION PARA REPETIR EL PROCESO DE ALINEACION
             $("#repetir_proceso").click(function(){
                 next =  confirm("¿Estás seguro que quieres repetir el proceso?");
                     if (next == true){
-                        location.href = "<?php  echo site_url('Streets/get_maps'); ?>";
+                        location.href = "<?php  echo site_url('Maps/get_maps'); ?>";
                     }
             });
             // FUNCION PARA REPETIR EL PROCESO DE ALINEACION    
-
+           
             // FUNCION PARA INSERTAR LA ALINEACION DE LOS MAPAS
             $("#toJson").click(function(){                
                 var jsonX = JSON.stringify(lefts);
@@ -195,6 +204,7 @@
     <h4 class="info">Cambiar opacidad del plano superior</h4>
     <input style='float:left; margin-bottom:10px; width:90%;' type='range' id='opacity_changer' class="info" value='0.5' name='points' min='0' max='1' step='0.1'/>
     <button id="plano_anterior" class="btn btn-danger" disabled>Alinear plano anterior</button>
+    <button id="posicion_inicial" class="btn btn-warning">Revertir a la posicion inicial</button>
     <br><br>
     <button id="previsualizar" class="d-none btn btn-info">Previsualizar</button>
 

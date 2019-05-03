@@ -183,5 +183,21 @@ class modelMapas extends CI_Model {
         $update = $this->db->query("UPDATE mapas SET principal = true, desviacion_x = null, desviacion_y = null WHERE id = $id_principal");
 
     }
+    
+    public function get_id_first_map() {
+        $query = $this->db->query("SELECT id FROM mapas ORDER BY id ASC ");
+        $first = $query->row();
+        return $first->id;
+    }
+    
+    public function get_maps_aux() { 
+        $mapas_aux = $this->db->query("SELECT imagen, titulo FROM mapas WHERE principal = false ORDER BY ancho DESC ,altura");
+        return $mapas_aux->result_array(); 
+    } 
+    
+    public function get_mapa_main() { 
+        $mapa_main = $this->db->query("SELECT imagen, titulo FROM mapas WHERE principal = true"); 
+        return $mapa_main->result_array();    
+    }
 
 }

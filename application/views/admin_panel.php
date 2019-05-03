@@ -100,7 +100,10 @@
     <div class="row">
         <div class="col-md-12 botones">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Insertar Mapa </button>
-            <?php echo anchor('Streets/get_maps/','<span class="fas fa-layer-group"></span> Superponer Mapas','class="btn btn-success"');?>
+            <?php /*echo anchor('Streets/get_maps/','<span class="fas fa-layer-group"></span> Alinear Mapas','class="btn btn-success" id="alinear_button"');*/
+                  echo "<button id='alinear_button' class='btn btn-success'>Alinear mapas</button></td>";
+            ?>
+           
         </div>
     </div>
 
@@ -128,13 +131,23 @@
                         if($mapa_principal["principal"] == true){ $check_principal = true;}
                     }
                     // compruebo si hay algun mapa marcado como principal //
+
+                    // compruebo si hay solo un mapa (o ninguno) insertado para deshabilitar el boton de alinear //
+                    if ( count($ListaMapas) < 2 || $check_principal == false){
+                        echo("
+                            <script>
+                                $('#alinear_button').attr('disabled','true');
+                            </script>
+                        ");
+                    }
+                    // compruebo si hay solo un mapa insertado (o ninguno) para deshabilitar el boton de alinear //
                 for($i = 0; $i < count($ListaMapas);$i++){
                     
                     $mapa = $ListaMapas[$i];
                     echo ("<tr>");
-                    if (($mapa['desviacion_x'] == null || $mapa['desviacion_y'] == null)&& $mapa["principal"] == false ){
+                    if (($mapa['desviacion_x'] == null || $mapa['desviacion_y'] == null)&& $mapa["principal"] == false && count($ListaMapas)>1 ){
                     echo ("<td class='ids warning'>".$mapa["id"]." 
-                    <a tabindex='0'class='btn btn-md btn-danger' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes superponer los mapas de nuevo'><span class='fas fa-exclamation-triangle'></span></a>
+                    <a tabindex='0'class='btn btn-md btn-danger' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes alinear los mapas de nuevo'><span class='fas fa-exclamation-triangle'></span></a>
                      </td>");
                     } else{
                     echo ("<td class='ids' >".$mapa["id"]."</td>");
@@ -146,15 +159,16 @@
                     echo ("<td class='d-none' id='desviacion_y_".$mapa["id"]."' data-y='".$mapa['desviacion_y']."'></td>");
                     echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
                     if (($check_principal == true && $mapa["principal"] == true)){
-                        echo ("<td style='text-align:center;'><input type='radio' class='radio_principal' name='principal' checked='true' value='".$mapa['id']."'></td>");
+                        echo ("<td style='text-align:center;'><button class='main btn btn-success' value='".$mapa['id']."' disabled>Seleccionar</button></td>");
                     }
                     else if($check_principal==false){
                         echo ("<td style='text-align:center;'>
                         <a tabindex='1' class='btn btn-md btn-warning alert_principal' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes seleccionar un mapa como principal'><span class='fas fa-exclamation-triangle'></span></a>
-                        <input type='radio' class='radio_principal' name='principal' value='".$mapa['id']."'></td>");
+                        <button class='main btn btn-success' value='".$mapa['id']."'>Seleccionar</button></td>");
                     }
                     else{
-                       echo("<td style='text-align:center;'><input type='radio' class='radio_principal' name='principal' value='".$mapa['id']."'></td>");
+                       echo("<td style='text-align:center;'>
+                       <button class='main btn btn-success' value='".$mapa['id']."'>Seleccionar</button></td>");
                     }
                     
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
