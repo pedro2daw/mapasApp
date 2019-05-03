@@ -62,6 +62,7 @@
                                     $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
                                 }
                             }
+                            else $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.log("error:" + errorThrown);
