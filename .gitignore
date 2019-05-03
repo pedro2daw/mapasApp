@@ -33,7 +33,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # Git ignore codeigniter
 
 /user_guide
-#/application/config/database.php
-#/application/config/config.php
+/application/config/database.php
+/application/config/config.php
 SyncToy_9e39547d-8f36-46e6-a6a7-3eca5cff7be4.dat
 assets/img/mapas
+assets/img/img_hotspots

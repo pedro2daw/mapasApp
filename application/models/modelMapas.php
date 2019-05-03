@@ -183,5 +183,11 @@ class modelMapas extends CI_Model {
         $update = $this->db->query("UPDATE mapas SET principal = true, desviacion_x = null, desviacion_y = null WHERE id = $id_principal");
 
     }
+    
+    public function get_id_first_map() {
+        $query = $this->db->query("SELECT id FROM mapas ORDER BY id ASC ");
+        $first = $query->row();
+        return $first->id;
+    }
 
 }
