@@ -106,7 +106,8 @@
         }
 
         #tabla2 {
-            overflow: scroll;
+            overflow: auto;
+            display: grid;
             width: 100%;
             height: 450px !important;
         }
@@ -123,6 +124,132 @@
 
     </style>
 
+    <style>
+        #tablaHerencia {
+            margin: 1%;
+            margin-top: 3%;
+        }
+
+        #titulo-selec-mapa {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        #slide {
+            display: flex;
+            min-height: 0;
+            min-width: 0;
+        }
+
+        #hotspotImg {
+            overflow: auto;
+            display: grid;
+            width: 1000px;
+            height: 550px;
+            cursor: crosshair;
+            margin: 0 auto;
+            margin-top: 2%;
+        }
+
+        #prueba {
+            width: 1000px !important;
+            height: 600px !important;
+            overflow: auto;
+            /*cursor: crosshair;*/
+            display: grid !important;
+        }
+        
+        .mapas {
+    position: absolute !important;
+}
+
+        #hotspotImg-1,
+        #hotspotImg-2 {
+            background-size: cover;
+            background-position: center center;
+            position: relative;
+        }
+
+        /* La animacion */
+        @keyframes pulsacion {
+
+            0% {
+                transform: scale(1);
+
+                opacity: 0.2;
+            }
+
+            45% {
+                transform: scale(1.75);
+                opacity: 0.9;
+            }
+        }
+
+        #hotspotImg-1 .hot-spot-1 {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0.85;
+            text-align: center;
+            background-color: #d01685;
+            border-radius: 100%;
+            animation: pulsacion 2s infinite;
+
+        }
+
+        #hotspotImg-1:hover .hot-spot-1:hover {
+            background-color: #99004d;
+        }
+
+        #botonHotspots {
+            width: 150px;
+            margin: 0 auto;
+            margin-top: 2%;
+        }
+
+        .fa-sign-out-alt {
+            width: 30px;
+            color: #0056b3;
+        }
+
+        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
+        /*#mapa,
+        #super {
+            overflow: auto;
+            width: 1000px !important;
+            height: 550px !important;
+            cursor: crosshair;
+            border: 1px solid black;
+            display:grid !important;
+            /*margin: 0 auto;*/
+        /*margin-bottom: 10px;
+            margin-top: 15px;*/
+        position: relative !important;
+        /*float: right;
+        }*/
+
+        /*#mapa:active:hover,
+        #super:active:hover {
+            cursor: grabbing;
+        }*/
+
+        .hidden {
+            display: none !important;
+        }
+
+        #mapa_alt:hover {
+            cursor: grab;
+        }
+
+        #mapa_alt:active:hover {
+            cursor: grabbing;
+        }
+
+        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
+    </style>
+    
     <script>
         $(document).ready(function() {
             zoom = 1;
@@ -293,9 +420,11 @@
             <!-- INICIO MAPA CALLES -->
 
             <div id="puntosCalles" class="row">
-                <div class="col-md-3">Ejemplo</div>
-                <div id="tabla2" class="col-sm">
-                    <div class="col-md-9" id="prueba">
+                <div class="col-md-3">
+                    <p>ejemplo</p>
+                </div>
+                <div id="tabla2" class="col-md-9">
+                    <div class="col-md" id="prueba">
                         <div id="hotspotImg-1">
                         
                             <?php
