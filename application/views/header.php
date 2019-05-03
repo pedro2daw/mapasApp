@@ -26,128 +26,168 @@
     <script src=<?php echo base_url("assets/js/demo.js");?>></script>
     <script src=<?php echo base_url("assets/js/jquery.hotspot.js");?>></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
-    
+
     <script>
         coords_x = [];
         coords_y = [];
-            var principal = false;
+        var principal = false;
         $(document).ready(function() {
-            // Click solo una vez.
-            // Mapa ya dibujado el punto.
-           
-            $('.alert').fadeIn().delay(2500).fadeOut();
-            $('#img_callejero').dblclick(function(e) {
-                if ($('.hot-spot-1').val() == null && $('.selected').val() != null) {
-                    $("#delCoord").show();
-                    $("li").eq('0').toggleClass('active', false);
-                    $("li").eq('1').toggleClass('active', false);
-                    $("li").eq('3').toggleClass('active', false);
-                    var offset = $(this).offset();
-                    coords_x.push(parseInt(e.pageX - offset.left));
-                    coords_y.push(parseInt(e.pageY - offset.top));
-                    var x_def = parseInt(e.pageX - offset.left);
-                    var y_def = parseInt(e.pageY - offset.top);
-                    var x_temp = parseInt((e.pageX - offset.left) - 5);
-                    var y_temp = (parseInt(e.pageY - offset.top) - 5);
-                    $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
-                    console.log('la x y la y del hotspot: ' + x_temp + " " + y_temp + " zoom: " + zoom);
-                    $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp / zoom + "px;left:" + x_temp / zoom + "px; display:block;'></div>");
-                    $('.btn-update').hide();
-                    $('.btn-delete').hide();
-                    $('.btn-anadir').hide();
-                    $('#table_mapas').addClass('blue-grey lighten-5 border');
+                    // Click solo una vez.
+                    // Mapa ya dibujado el punto.
 
-                    if (modificar != null){
-                        $('.btn-insert-coords').show();
-                        $("li").eq('2').toggleClass('active', false);
-                        $("li").eq('3').toggleClass('active', true);
-                    } else {
-                    $('.custom-checkbox').removeClass('disabledbutton');
-                    $('.btn-continuar').show();
-                    $('#delCoord').show();
-                    $("li").eq('2').toggleClass('active', true);
-                    $('#table_mapas').addClass('blue-grey lighten-5 border border');
+                    // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
+                    $(".main").click(function() {
+                        principal = confirm("¿Deseas seleccionar este plano como principal?");
+                        if (principal == true) {
 
-                    }
-                    
-                }
+                            var principal_value = $(this).val();
 
-            });
+                            var num_mapas = $(".thumbnail_mapa").length;
 
-
-            $("#delCoord").click(function() {
-                $('#table_mapas').removeClass('blue-grey lighten-5 border');
-
-                $('#delCoord').hide();
-                    if (modificar != null){
-                        $('.btn-insert-coords').hide();
-                    } else {
-                    $('.custom-checkbox').removeClass('disabledbutton');
-                    $('.btn-continuar').show();
-                    }
-
-
-
-                $('.btn-continuar').hide();
-                $('.cb_hidden').prop('checked', true);
-                $("li").eq('0').toggleClass('active', false);
-                $("li").eq('1').toggleClass('active', true);
-                $("li").eq('2').toggleClass('active', false);
-                $("li").eq('3').toggleClass('active', false);
-                $("li").eq('3').toggleClass('active', false);
-                $(this).hide();
-                $("#coord-list li:last-child").remove();
-                index_x = coords_x.length - 1;
-                index_y = coords_y.length - 1;
-                coords_x.splice(index_x, 1);
-                coords_y.splice(index_y, 1);
-                $(".hot-spot-1:first").remove();
-
-                $('.cb_mapas').each(function(){
-                    console.log('entra checkboxxx');
-                    $(this).prop('checked',true);    
-                });
-                $('.cb_hidden').hide();
-
-                $('.btn-update').show();
-                $('.btn-delete').show();
-                $('.btn-anadir').show();
-                $('.cb_hidden').hide();
-
-            });
-
-            // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
-            $(".radio_principal").change(function(){
-                principal = confirm("¿Deseas seleccionar este plano como principal?");
-                if (principal == true){
-                    var principal_value = $("input[name=principal]:checked").val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo base_url(); ?>index.php/Maps/update_principal/",
-                        data: {
-                            "id_principal": principal_value 
-                        },
-                        success:function(data){
-                            alert("Se ha actualizado el mapa principal");
-                            $(".alert_principal").addClass("d-none");
-                            alert("Debes alinear los planos de nuevo. Se procederá a redirigir al proceso de alineación");
-                            $(location).attr("href","<?php echo base_url('index.php/Streets/get_maps')?>");
-
-                        },error:function(jqXHR, textStatus, errorThrown){
-                            console.log("error:" + errorThrown);
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo base_url(); ?>index.php/Maps/update_principal/",
+                                data: {
+                                    "id_principal": principal_value
+                                },
+                                success: function(data) {
+                                    $(".alert_principal").addClass("d-none");
+                                    alert("Se ha actualizado el mapa principal");
+                                    if (num_mapas > 1) {
+                                        //alert("Debes alinear los planos de nuevo. Se procederá a redirigir al proceso de alineación");
+                                        var redirect = confirm("Debes alinear los planos. ¿Quieres realizar ahora el proceso de alineacion?");
+                                        if (redirect) {
+                                            $(location).attr("href", "<?php echo base_url('index.php/Maps/get_maps')?>");
+                                        } else {
+                                            $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
+                                        }
+                                    }
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log("error:" + errorThrown);
+                                }
+                            });
                         }
-                    });
-                }
                         
-            });
-            // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
-            
-        });
+                        // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
+                        $("#alinear_button").click(function() {
+                            $(location).attr("href", "<?php echo base_url('index.php/Maps/get_maps/')?>");
+                        });
+
+                        $('.alert').fadeIn().delay(2500).fadeOut();
+                        $('#img_callejero').dblclick(function(e) {
+                            if ($('.hot-spot-1').val() == null && $('.selected').val() != null) {
+                                $("#delCoord").show();
+                                $("li").eq('0').toggleClass('active', false);
+                                $("li").eq('1').toggleClass('active', false);
+                                $("li").eq('3').toggleClass('active', false);
+                                var offset = $(this).offset();
+                                coords_x.push(parseInt(e.pageX - offset.left));
+                                coords_y.push(parseInt(e.pageY - offset.top));
+                                var x_def = parseInt(e.pageX - offset.left);
+                                var y_def = parseInt(e.pageY - offset.top);
+                                var x_temp = parseInt((e.pageX - offset.left) - 5);
+                                var y_temp = (parseInt(e.pageY - offset.top) - 5);
+                                $("#coord-list").append("<li class='coords'> X : " + x_def + " / Y : " + y_def + "</li>");
+                                console.log('la x y la y del hotspot: ' + x_temp + " " + y_temp + " zoom: " + zoom);
+                                $(this).after("<div class='hot-spot-1 ' x='" + x_temp + "'y='" + y_temp + "'style='z-index:1000 ; top:" + y_temp / zoom + "px;left:" + x_temp / zoom + "px; display:block;'></div>");
+                                $('.btn-update').hide();
+                                $('.btn-delete').hide();
+                                $('.btn-anadir').hide();
+                                $('#table_mapas').addClass('blue-grey lighten-5 border');
+
+                                if (modificar != null) {
+                                    $('.btn-insert-coords').show();
+                                    $("li").eq('2').toggleClass('active', false);
+                                    $("li").eq('3').toggleClass('active', true);
+                                } else {
+                                    $('.custom-checkbox').removeClass('disabledbutton');
+                                    $('.btn-continuar').show();
+                                    $('#delCoord').show();
+                                    $("li").eq('2').toggleClass('active', true);
+                                    $('#table_mapas').addClass('blue-grey lighten-5 border border');
+
+                                }
+
+                            }
+
+                        });
+
+
+                        $("#delCoord").click(function() {
+                            $('#table_mapas').removeClass('blue-grey lighten-5 border');
+
+                            $('#delCoord').hide();
+                            if (modificar != null) {
+                                $('.btn-insert-coords').hide();
+                            } else {
+                                $('.custom-checkbox').removeClass('disabledbutton');
+                                $('.btn-continuar').show();
+                            }
+
+
+
+                            $('.btn-continuar').hide();
+                            $('.cb_hidden').prop('checked', true);
+                            $("li").eq('0').toggleClass('active', false);
+                            $("li").eq('1').toggleClass('active', true);
+                            $("li").eq('2').toggleClass('active', false);
+                            $("li").eq('3').toggleClass('active', false);
+                            $("li").eq('3').toggleClass('active', false);
+                            $(this).hide();
+                            $("#coord-list li:last-child").remove();
+                            index_x = coords_x.length - 1;
+                            index_y = coords_y.length - 1;
+                            coords_x.splice(index_x, 1);
+                            coords_y.splice(index_y, 1);
+                            $(".hot-spot-1:first").remove();
+
+                            $('.cb_mapas').each(function() {
+                                console.log('entra checkboxxx');
+                                $(this).prop('checked', true);
+                            });
+                            $('.cb_hidden').hide();
+
+                            $('.btn-update').show();
+                            $('.btn-delete').show();
+                            $('.btn-anadir').show();
+                            $('.cb_hidden').hide();
+
+                        });
+
+                        // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
+                        $(".radio_principal").change(function() {
+                            principal = confirm("¿Deseas seleccionar este plano como principal?");
+                            if (principal == true) {
+                                var principal_value = $("input[name=principal]:checked").val();
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "<?php echo base_url(); ?>index.php/Maps/update_principal/",
+                                    data: {
+                                        "id_principal": principal_value
+                                    },
+                                    success: function(data) {
+                                        alert("Se ha actualizado el mapa principal");
+                                        $(".alert_principal").addClass("d-none");
+                                        alert("Debes alinear los planos de nuevo. Se procederá a redirigir al proceso de alineación");
+                                        $(location).attr("href", "<?php echo base_url('index.php/Streets/get_maps')?>");
+
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        console.log("error:" + errorThrown);
+                                    }
+                                });
+                            }
+
+                        });
+                        // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
+
+                    });
 
     </script>
     <script>
-    
+
     </script>
     <style>
         #tablaHerencia {
@@ -274,7 +314,7 @@
 </head>
 
 <body>
-<script type="text/javascript" src="<?php echo base_url()?>assets/js/mdbootstrap4.7.6.js"></script>
+    <script type="text/javascript" src="<?php echo base_url()?>assets/js/mdbootstrap4.7.6.js"></script>
 
     <div class="container-fluid">
         <div class="row">
@@ -324,4 +364,3 @@
                 </nav>
             </div>
         </div>
-  
