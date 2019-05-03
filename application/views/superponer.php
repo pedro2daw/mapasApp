@@ -3,7 +3,7 @@
 //var_dump($mapas);
 
 ?>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="<?php echo base_url()?>assets/js/jquery_ui.js"></script>
 <script>
            // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
             desviacion_x = [];
