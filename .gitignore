@@ -37,3 +37,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #/application/config/config.php
 SyncToy_9e39547d-8f36-46e6-a6a7-3eca5cff7be4.dat
 assets/img/mapas
+application/config/database.php
