@@ -68,6 +68,7 @@
                                 }
                             });
                         }
+                    }
                         
                         // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
                         $("#alinear_button").click(function() {
