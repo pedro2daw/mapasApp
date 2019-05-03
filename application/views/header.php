@@ -155,39 +155,7 @@
                 $('.cb_hidden').hide();
 
             });
-
-            // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
-            $(".radio_principal").change(function() {
-                principal = confirm("¿Deseas seleccionar este plano como principal?");
-                if (principal == true) {
-                    var principal_value = $("input[name=principal]:checked").val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo base_url(); ?>index.php/Maps/update_principal/",
-                        data: {
-                            "id_principal": principal_value
-                        },
-                        success: function(data) {
-                            alert("Se ha actualizado el mapa principal");
-                            $(".alert_principal").addClass("d-none");
-                            alert("Debes alinear los planos de nuevo. Se procederá a redirigir al proceso de alineación");
-                            $(location).attr("href", "<?php echo base_url('index.php/Streets/get_maps')?>");
-
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log("error:" + errorThrown);
-                        }
-                    });
-                }
-
-            });
-            // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
-
         });
-
-    </script>
-    <script>
 
     </script>
     <style>
