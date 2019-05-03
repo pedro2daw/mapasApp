@@ -11,6 +11,10 @@
             var dominio = "<?php echo base_url();?>";
             var rutas = <?php echo json_encode($mapas_aux); ?>;
             var ruta_main = <?php echo json_encode($mapa_main) ?>;
+                if (rutas.length < 1){
+                    alert("Debes de insertar más de unplano para realizar el proceso de alineación");
+                    $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
+                }
             var cont = 0;
             var next = false;
             var click = {
@@ -20,7 +24,7 @@
             var tops = [];
             var lefts = [];
             // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
-
+            
             // FUNCION PARA CAMBIAR LA OPACIDAD DE LOS MAPAS DE LA PREVISUALIZACION
             function changeOpacity(n){
                 $(document).on("input","#slider_"+n,function(){
