@@ -209,12 +209,7 @@ include_once('Security.php');
             }
         }
 */
-        public function get_maps(){
-            $data["mapas_aux"] = $this->modelCalles->get_maps_aux();
-            $data["mapa_main"] = $this->modelCalles->get_mapa_main();
-            $data["viewName"] = "superponer";
-            $this->load->view('template', $data);
-        }
+        
 
         // A PARTIR DE AQUI ES LO DE LA INSERCION DE CALLES. O ALGO ASI:
    } // cierro la class Streets
