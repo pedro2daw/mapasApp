@@ -274,7 +274,7 @@
             cursor: grab;
         }
 
-        #mapa_alt:active:hover {
+        #mapa_alt:active {
             cursor: grabbing;
         }
 
