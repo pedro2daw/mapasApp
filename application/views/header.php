@@ -26,6 +26,7 @@
     <script src=<?php echo base_url("assets/js/demo.js");?>></script>
     <script src=<?php echo base_url("assets/js/jquery.hotspot.js");?>></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
+    <script src=<?php echo base_url("assets/js/back_up.js");?>></script>
 
     <script>
         coords_x = [];
@@ -303,8 +304,10 @@
                                 echo anchor('Hotspots/select_maps/','Puntos de Interés',' id="enlace_hotspots" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Users/view_users/','Admin Usuarios',' id="enlace_usuarios" class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('Security/backup','Backup','id="enlace_back" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Login/logout','Logout',' class="flex-sm-fill text-sm-center nav-link"');
-                                echo anchor('Security/export_database','Backup','class="flex-sm-fill text-sm-center nav-link"');
+                               // echo anchor('Security/export_database','Backup','class="flex-sm-fill text-sm-center nav-link"');
+                               
                             }
                             else if ($nivel == 1) {
                                 echo anchor('Maps/index/','Mapas','id="enlace_mapas" class="flex-sm-fill text-sm-center nav-link "');
@@ -320,8 +323,10 @@
                             echo anchor('Hotspots/select_maps/','Puntos de Interés',' id="enlace_hotspots" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Users/view_users/','Admin Usuarios',' id="enlace_usuarios" class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('Security/backup','Backup','id="enlace_back" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Login/logout','Logout',' class="flex-sm-fill text-sm-center nav-link"');
-                            echo anchor('Security/export_database','Backup','class="flex-sm-fill text-sm-center nav-link"');
+                            //echo anchor('Security/export_database','Backup','class="flex-sm-fill text-sm-center nav-link"');
+                            
                         }
                         else if ($nivel == 1) {
                             echo anchor('Maps/index/','Mapas','id="enlace_mapas" class="flex-sm-fill text-sm-center nav-link "');
