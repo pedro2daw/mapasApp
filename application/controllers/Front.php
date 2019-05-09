@@ -8,6 +8,8 @@ class Front extends CI_Controller{
         $this->load->model('modelCalles');
         $id =$this->modelMapas->get_id_first_map();
         $data["img_mapas"] = $this->modelCalles->get_maps_img();
+        $data["listaCalles"] = $this->modelCalles->get_all();
+        $data['listaMapas'] = $this->modelMapas->get_all();
         $data['ListaMapas'] = $this->modelMapas->get_all();
         $data['ListaHotspots'] = $this->modelHotspot->get_all($id);
         $this->load->view("index.php", $data);
