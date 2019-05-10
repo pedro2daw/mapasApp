@@ -735,6 +735,29 @@
         </div>
     </div>
 
+    <!-- Modal puntos -->
+    <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Historial de calles en este punto:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul id='lista_puntos'>
+                        <ul>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button>
+                    <button type="button" class="btn btn-info btn-modificar-punto"><span class="fas fa-drafting-compass"></span> Modificar punto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-to-top d-lg-none position-fixed ">
         <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
