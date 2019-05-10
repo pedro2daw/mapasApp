@@ -10,6 +10,7 @@ class Front extends CI_Controller{
         $data["img_mapas"] = $this->modelCalles->get_maps_img();
         $data["listaCalles"] = $this->modelCalles->get_all_calles_activadas();
         $data['listaMapas'] = $this->modelMapas->get_all();
+        $data['ListaMapas'] = $this->modelMapas->get_all();
         $data['ListaHotspots'] = $this->modelHotspot->get_all($id);
         $this->load->view("index.php", $data);
     }
@@ -18,5 +19,5 @@ class Front extends CI_Controller{
         $this->load->model('modelHotspot');
         $puntos = $this->modelHotspot->get_all($id_mapa);
         echo json_encode($puntos);
-    }    
+    }
 }

@@ -362,35 +362,112 @@
                 }
             });
 
-        });
-
-        function get_data() {
-            id = $(".selected").data("id");
-            nombre = $('#nombre_' + id).text();
-            tipo = $('#tipo_' + id).text();
-            if (x_aux == null) {
-                x = $('#punto_' + id).data('x');
-                y = $('#punto_' + id).data('y');
-            } else {
-                x = x_aux;
-                y = y_aux;
-            }
-            calle = tipo + " " + nombre;
-        }
-
-        $(document).on("click", ".calles", function() {
-            $('#table_mapas').removeClass('blue-grey lighten-5 border');
-
             modificar = null;
-            $(".hot-spot-1").remove();
-            $('.calles').removeClass('selected');
-            $(this).toggleClass('selected');
-            get_data();
-            $('.custom-checkbox').addClass('disabledbutton');
-            $('.cb_hidden').hide();
-            $('.cb_mapas').each(function() {
-                $(this).prop('checked', true);
+            x_aux = null;
+            y_aux = null;
+
+            function get_data() {
+                id = $(".selected").data("id");
+                nombre = $('#nombre_' + id).text();
+                tipo = $('#tipo_' + id).text();
+                if (x_aux == null) {
+                    x = $('#punto_' + id).data('x');
+                    y = $('#punto_' + id).data('y');
+                } else {
+                    x = x_aux;
+                    y = y_aux;
+                }
+                calle = tipo + " " + nombre;
+            }
+
+            $(document).on("click", ".calles", function() {
+                $('#table_mapas').removeClass('blue-grey lighten-5 border');
+
+                modificar = null;
+                $(".hot-spot-1").remove();
+                $('.calles').removeClass('selected');
+                $(this).toggleClass('selected');
+                get_data();
+                $('.custom-checkbox').addClass('disabledbutton');
+                $('.cb_hidden').hide();
+                $('.cb_mapas').each(function() {
+                    $(this).prop('checked', true);
+                });
+                // Borra el punto en el mapa:
+                var top = $('#prueba').scrollTop();
+                var left = $('#prueba').scrollLeft();
+                console.log(" ******************************* ");
+                console.log("top y left " + top + " " + left + "zoom" + zoom + "X " + x + " Y " + y);
+
+                $("#delCoord").hide();
+                $('.btn-update').data('id', id);
+                $('.btn-insert').show();
+                $('.btn-update').show();
+                $('.btn-anadir').show();
+                $('.btn-delete').show();
+                $('.btn-delete').data('id', id);
+
+
+                if (x_aux != null) {
+                    console.log(x_aux);
+                    x = x_aux;
+                    y = y_aux;
+                }
+                if (x == null || y == null) {
+                    $("li").eq('0').toggleClass('active', false);
+                    $("li").eq('1').toggleClass('active', true);
+                    $("li").eq('2').toggleClass('active', false);
+                    $("li").eq('3').toggleClass('active', false);
+                    $(document).on("mouseover", ".hot-spot-1", function(e) {
+                        $(this).css({
+                            'cursor': 'cursor',
+                            'pointer-events': 'none'
+                        });
+                    });
+
+                } else {
+                    if (x_aux != null) {
+                        $("li").eq('0').toggleClass('active', false);
+                        $("li").eq('1').toggleClass('active', false);
+                        $("li").eq('2').toggleClass('active', true);
+                        $("li").eq('3').toggleClass('active', false);
+                        $('.custom-checkbox').removeClass('disabledbutton');
+                        $('.btn-continuar').show();
+                        $('.btn-anadir').hide();
+                        $('.btn-update').hide();
+
+
+                        // DELETE
+                        $('.btn-delete').hide();
+                        // INSERTAR COORDENADAS:
+                        $('.btn-insert-coords').hide();
+
+                    } else {
+                        $("li").eq('0').toggleClass('active', false);
+                        $("li").eq('1').toggleClass('active', false);
+                        $("li").eq('2').toggleClass('active', false);
+                        $("li").eq('3').toggleClass('active', false);
+                    }
+
+                    $(document).on("mouseover", ".hot-spot-1", function(e) {
+                        $(this).css({
+                            'cursor': 'pointer',
+                            'pointer-events': 'auto'
+                        });
+                    });
+
+                    console.log("Calle seleccionada: " + id);
+                    console.log('Punto X: ' + x);
+                    console.log('Punto Y: ' + y);
+
+                    $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
+                    $('#prueba').scrollTop(y - ($('#prueba').height() / 2) - 5);
+                    $('#prueba').scrollLeft(x - ($('#prueba').width() / 2) - 5);
+                }
+
+
             });
+
         });
 
         function changeOpacity(i) {
@@ -528,7 +605,7 @@
                                 echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
                                 if ($i == 0){
                                 echo "<td><label>".$mapa['titulo']."</label>
-                                <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'></div> 
+                                <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='1' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'></div> 
                                 </td>";    
                                 }else {
                                 echo "<td><label>".$mapa['titulo']."</label><input style='float:left; margin-bottom:10px; width:100%;' type='range' value='1'   id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'></div>
@@ -550,7 +627,7 @@
                             for ($i = 0 ; $i < count($img_mapas) ; $i++){
                                 $img = $img_mapas[$i];
                                 if ($i == 0){
-                                    echo "<img class='mapas' id='img_callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:999 ; opacity:0.5; ' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
+                                    echo "<img class='mapas' id='img_callejero' data-id='".$i."' data-x='".$img_mapas[0]['desviacion_x']."' data-y='".$img_mapas[0]['desviacion_y']."' style=' top:".$img_mapas[0]['desviacion_y']."px ; left:".$img_mapas[0]['desviacion_x']."px ; z-index:0; opacity:1; ' src=".base_url($img_mapas[0]['imagen'])." alt='".$img_mapas[0]['titulo']."'>";
                                 }else {
                                     echo "<img class='mapas' id='img_".$img['id']."' data-id='".$i."' data-x='".$img['desviacion_x']."' data-y='".$img['desviacion_y']."' src=".base_url($img['imagen'])." alt='".$img['titulo']."' style=' top:".$img['desviacion_y']."px ; left:".$img['desviacion_x']."px ; z-index:".$i."'>";
                                 }
