@@ -157,7 +157,7 @@
                     echo ("<td class='d-none' id='alto_".$mapa["id"]."' data-alto='".$mapa['alto']."'></td>");
                     echo ("<td class='d-none' id=desviacion_x_".$mapa["id"]." data-x='".$mapa['desviacion_x']."'></td>");
                     echo ("<td class='d-none' id='desviacion_y_".$mapa["id"]."' data-y='".$mapa['desviacion_y']."'></td>");
-                    echo ("<td><img src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
+                    echo ("<td><img alt ='Modifica el plano e inserta una imagen' src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
                     if (($check_principal == true && $mapa["principal"] == true)){
                         echo ("<td style='text-align:center;'><button class='main btn btn-success' value='".$mapa['id']."' disabled>Seleccionar</button></td>");
                     }
