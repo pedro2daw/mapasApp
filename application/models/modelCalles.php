@@ -227,6 +227,17 @@ class modelCalles extends CI_Model {
         $mapas = $this->db->query("SELECT id, titulo, imagen, desviacion_x, desviacion_y FROM mapas ORDER BY ancho DESC ,altura");
         return $mapas->result_array();
     }
+    
+    public function get_all_calles_activadas(){
+        $query = $this->db->query("SELECT calles.id as id, calles.nombre as nombre, calles.tipo as tipo,  puntos.id as id_punto, puntos.punto_x as x, puntos.punto_y as y FROM calles LEFT OUTER JOIN puntos ON calles.id = id_calle WHERE calles.id = id_calle ORDER BY calles.id ASC");
+        $data = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $data[] = $row;
+                }
+            }
+        return $data;
+    }
 
     
 } // cierra la class modelCalles

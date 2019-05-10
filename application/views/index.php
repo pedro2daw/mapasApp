@@ -135,6 +135,28 @@
             left: 0px;
         }
 
+        #hotspotImg-1 .hot-spot-1 {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0.85;
+            text-align: center;
+            background-color: #d01685;
+            border-radius: 100%;
+            animation: pulsacion 2s infinite;
+
+        }
+
+        #hotspotImg-1:hover .hot-spot-1:hover {
+            background-color: #99004d;
+        }
+
+        #botonHotspots {
+            width: 150px;
+            margin: 0 auto;
+            margin-top: 2%;
+        }
+
     </style>
 
 
@@ -142,6 +164,7 @@
     <script>
         $(document).ready(function() {
             zoom = 1;
+            zoom1 = 1;
             // Carga de los puntos insertados desde la BD
             $('#hotspotImg').hotSpot({
 
@@ -309,6 +332,65 @@
                 $("#img_callejero").css("opacity", opacity);
             });
 
+            $("#hotspotImg-1").on("wheel", function(e) {
+                var width = $("#hotspotImg-1").first().width();
+                console.log('zoom ' + zoom1);
+
+                var e0 = e.originalEvent,
+                    delta = e0.wheelDelta || -e0.detail;
+
+                this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+                e.preventDefault();
+                actWdth = $("#hotspotImg-1 img").width() * zoom1;
+                if (e.originalEvent.deltaY < 0) {
+
+                    // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
+                    if (actWdth < width * 10) {
+                        zoom1 += 0.04;
+                    }
+                    $("#hotspotImg-1").css("transition", "transform 1s");
+                    $("#hotspotImg-1").css("transform-origin", "top left");
+                    $("#hotspotImg-1").css("transform", "scale(" + (zoom1) + ")");
+                } else {
+                    // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
+                    if (actWdth > width + 200) {
+                        zoom1 -= 0.04;
+                    }
+                    $("#hotspotImg-1").css("transition", "transform 1s");
+                    $("#hotspotImg-1").css("transform-origin", "top left");
+                    $("#hotspotImg-1").css("transform", "scale(" + (zoom1) + ")");
+                }
+            });
+
+        });
+
+        function get_data() {
+            id = $(".selected").data("id");
+            nombre = $('#nombre_' + id).text();
+            tipo = $('#tipo_' + id).text();
+            if (x_aux == null) {
+                x = $('#punto_' + id).data('x');
+                y = $('#punto_' + id).data('y');
+            } else {
+                x = x_aux;
+                y = y_aux;
+            }
+            calle = tipo + " " + nombre;
+        }
+
+        $(document).on("click", ".calles", function() {
+            $('#table_mapas').removeClass('blue-grey lighten-5 border');
+
+            modificar = null;
+            $(".hot-spot-1").remove();
+            $('.calles').removeClass('selected');
+            $(this).toggleClass('selected');
+            get_data();
+            $('.custom-checkbox').addClass('disabledbutton');
+            $('.cb_hidden').hide();
+            $('.cb_mapas').each(function() {
+                $(this).prop('checked', true);
+            });
         });
 
         function changeOpacity(i) {
@@ -460,7 +542,7 @@
                     </div>
 
                 </div> <!-- fin col md-3 -->
-                <div id="tabla2" class="col-md-9">
+                <div id="tabla2" class="col-md-9 dragscroll">
                     <div class="col-md" id="prueba">
                         <div id="hotspotImg-1">
 
