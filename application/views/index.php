@@ -32,6 +32,11 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/code.jquery.comjquery-3.3.1.js"></script>
     <script src="<?php echo base_url()?>assets/js/jquery.hotspot.js"></script>
+
+    <!-- DATATABLES: -->
+    <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/script_datatables.js"></script>
+    <link href="<?php echo base_url()?>assets/style/mdbootstrap4.7.6cssmdb.min.css" rel="stylesheet">
+
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
 
     <style>
@@ -122,134 +127,18 @@
             min-width: 0;
         }
 
-    </style>
-
-    <style>
-        #tablaHerencia {
-            margin: 1%;
-            margin-top: 3%;
-        }
-
-        #titulo-selec-mapa {
-            margin-top: 20px;
-            margin-bottom: 10px;
-            margin-left: 20px;
-            font-weight: 600;
-        }
-
-        #slide {
-            display: flex;
-            min-height: 0;
-            min-width: 0;
-        }
-
-        #hotspotImg {
-            overflow: auto;
-            display: grid;
-            width: 1000px;
-            height: 550px;
-            cursor: crosshair;
-            margin: 0 auto;
-            margin-top: 2%;
-        }
-
-        #prueba {
-            width: 1000px !important;
-            height: 600px !important;
-            overflow: auto;
-            /*cursor: crosshair;*/
-            display: grid !important;
-        }
-        
         .mapas {
-    position: absolute !important;
-}
-
-        #hotspotImg-1,
-        #hotspotImg-2 {
-            background-size: cover;
-            background-position: center center;
-            position: relative;
-        }
-
-        /* La animacion */
-        @keyframes pulsacion {
-
-            0% {
-                transform: scale(1);
-
-                opacity: 0.2;
-            }
-
-            45% {
-                transform: scale(1.75);
-                opacity: 0.9;
-            }
-        }
-
-        #hotspotImg-1 .hot-spot-1 {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            opacity: 0.85;
-            text-align: center;
-            background-color: #d01685;
-            border-radius: 100%;
-            animation: pulsacion 2s infinite;
-
         }
 
-        #hotspotImg-1:hover .hot-spot-1:hover {
-            background-color: #99004d;
+        .mapas:first-child {
+            left: 0px;
         }
 
-        #botonHotspots {
-            width: 150px;
-            margin: 0 auto;
-            margin-top: 2%;
-        }
-
-        .fa-sign-out-alt {
-            width: 30px;
-            color: #0056b3;
-        }
-
-        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
-        /*#mapa,
-        #super {
-            overflow: auto;
-            width: 1000px !important;
-            height: 550px !important;
-            cursor: crosshair;
-            border: 1px solid black;
-            display:grid !important;
-            /*margin: 0 auto;*/
-        /*margin-bottom: 10px;
-            margin-top: 15px;*/
-        position: relative !important;
-        /*float: right;
-        }*/
-
-        /*#mapa:active:hover,
-        #super:active:hover {
-            cursor: grabbing;
-        }*/
-
-        .hidden {
-            display: none !important;
-        }
-
-        #mapa_alt:hover {
-            cursor: grab;
-        }
-
-        #mapa_alt:active:hover {
-            cursor: grabbing;
-        }
-
-        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
     </style>
-    
+
+
+
     <script>
         $(document).ready(function() {
             zoom = 1;
@@ -269,7 +158,7 @@
 
             $("#radioCalles").on("click", function() {
                 $("#selectMapa").prop("disabled", true);
-                $("#puntosCalles").css("display", "block");
+                $("#puntosCalles").css("display", "");
                 $("#puntosInteres").css("display", "none");
             });
 
@@ -291,24 +180,27 @@
                         $(".hot-spot").remove();
                         var obj = JSON.parse(data.toString());
                         $.each(obj, function(key, value) {
-                            $("#slide").after("<div id='" + value.id + "' class='hot-spot' data-posx='" + value.punto_x + "' data-posy='" + value.punto_y + "' style='top: " + value.punto_y + "px; left: " + value.punto_x + "px; display: block;'><div class='circle'></div><div class='tooltip' style='margin-left: -135px; display: none;'><div class='img-row'><img src='" + "<?php echo base_url("/assets/img/img_hotspots/") ?>" +  value.imagen + "' width='100'></div><div class='text-row'><h4>" + value.titulo + "</h4><p>" + value.descripcion + "</p></div></div></div>");
-                            
+                            $("#slide").after("<div id='" + value.id + "' class='hot-spot' data-posx='" + value.punto_x + "' data-posy='" + value.punto_y + "' style='top: " + value.punto_y + "px; left: " + value.punto_x + "px; display: block;'><div class='circle'></div><div class='tooltip' style='margin-left: -135px; display: none;'><div class='img-row'><img src='" + "<?php echo base_url("/assets/img/img_hotspots/") ?>" + value.imagen + "' width='100'></div><div class='text-row'><h4>" + value.titulo + "</h4><p>" + value.descripcion + "</p></div></div></div>");
+
                         });
                         $('#hotspotImg').hotSpot({
-                            
+
                             // default selectors
                             mainselector: '#hotspotImg',
                             selector: '.hot-spot',
                             imageselector: '.img-resposive',
                             tooltipselector: '.tooltip',
-                            
+
                             // or 'click'
                             bindselector: 'hover'
-                            
+
                         });
-                     }
+                    }
                 });
-            });     
+
+            });
+
+
 
             $("#hotspotImg").on("wheel", function(e) {
                 var width = $("#hotspotImg").first().width();
@@ -340,7 +232,91 @@
                 }
             });
 
+            //Funciones calles
+
+
+            function lista_mapas_calles() {
+                var x = $(this).attr('x');
+                var y = $(this).attr('y');
+                var formData = {
+                    'x': x,
+                    'y': y
+                };
+
+                $.ajax({
+                        type: "POST",
+                        cache: false,
+                        url: "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
+                        data: formData,
+                        dataType: 'json',
+                        encode: true
+                    })
+                    .done(function(data) {
+                        var msg = data.msg;
+                        console.log(data);
+                        var count = Object.keys(data).length;
+                        $('#modal_puntos').modal('toggle');
+
+                        if (msg == '0') {
+                            for (i = 0; i < count - 1; i++) {
+                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
+                            }
+                        } else {}
+
+                    });
+            }
+
+            // Carga la tabla de calles el plug-in de DataTables.
+            $('#tabla_calles').DataTable({
+                "scrollY": "210px",
+                "scrollCollapse": true,
+                "paging": false,
+
+                "language": {
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
+                    "zeroRecords": "No se encuentran datos" /* No hay data disponible */
+                },
+                "columns": [{
+                        "data": "Tipo",
+                        className: "d-none"
+                    },
+                    {
+                        "data": "Nombre",
+                        className: "d-none"
+                    },
+                    {
+                        "data": "Punto",
+                        className: "d-none"
+                    },
+                    {
+                        "data": "Calle"
+                    },
+                ]
+            });
+            table = $('#tabla_calles').DataTable();
+            // Establecemos un placeholder para el buscador de calles.
+            $("input[type='search']").attr('placeholder', 'Buscar Calle');
+            // Eliminamos la etiqueta del input de buscador de calles.
+            $('#tabla_calles_filter label').contents().first().remove();
+            // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
+            $("input[type='search']").addClass('form-control');
+            $('.btn-continuar').hide();
+            // Cambia la opacidad del mapa principal.
+            $(document).on("input", "#slider_callejero", function() {
+                var opacity = $(this).val();
+                $("#img_callejero").css("opacity", opacity);
+            });
+
         });
+
+        function changeOpacity(i) {
+            $(document).on("input", "#slider_" + i, function() {
+                var opacity = $(this).val();
+                $("#img_" + i).css("opacity", opacity);
+            });
+        }
 
     </script>
 
@@ -421,12 +397,73 @@
 
             <div id="puntosCalles" class="row">
                 <div class="col-md-3">
-                    <p>ejemplo</p>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id='tabla_calles'>
+                            <thead>
+                                <tr>
+
+                                    <th class='d-none' scope="col">Tipo</th>
+                                    <th class='d-none' scope="col">Nombre</th>
+                                    <th class='d-none' scope="col">Punto</th>
+                                    <th scope="col">Calle</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                            for($i = 0; $i < count($listaCalles);$i++){
+                            $calle = $listaCalles[$i];
+                            echo "<tr id=calle_".$calle["id"]." >";
+                            echo "<td id='tipo_".$calle["id"]."' class='d-none'>".$calle["tipo"]."</td>";
+                            echo "<td id='nombre_".$calle["id"]."' class='d-none'>".$calle["nombre"]."</td>";
+                            if (isset($calle["id_punto"])){
+                                echo "<td id='punto_".$calle["id"]."' class='d-none' data-x='".$calle['x']."' data-y='".$calle['y']."'></td>";
+                                echo "<td class='calles' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
+                            } else {
+                                echo "<td id='punto_".$calle["id"]."' class='d-none warning_puntos' data-x='null' data-y='null'></td>";
+                                echo "<td id=id_calle_warning_".$calle["id"]." class='calles warning' data-id=".$calle["id"].">".$calle["tipo"]." ".$calle["nombre"]."</td>";
+                            }
+                            echo "</tr>";
+                            }
+                        ?>
+                            </tbody>
+                        </table>
+                    </div> <!-- fin table-responsive -->
+
+                    <div id='table_mapas'>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mapas</th>
+                                    <th scope="col"> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php 
+                                for($i = 0; $i < count($listaMapas);$i++){
+                                $mapa = $listaMapas[$i];
+                                echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
+                                if ($i == 0){
+                                echo "<td><label>".$mapa['titulo']."</label>
+                                <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'></div> 
+                                </td>";    
+                                }else {
+                                echo "<td><label>".$mapa['titulo']."</label><input style='float:left; margin-bottom:10px; width:100%;' type='range' value='1'   id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'></div>
+                                </td>";
+                                }
+                                }                            
+                            ?>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div> <!-- fin col md-3 -->
                 <div id="tabla2" class="col-md-9">
                     <div class="col-md" id="prueba">
                         <div id="hotspotImg-1">
-                        
+
                             <?php
                             for ($i = 0 ; $i < count($img_mapas) ; $i++){
                                 $img = $img_mapas[$i];
@@ -437,8 +474,8 @@
                                 }
                             }
                             ?>
-                            
-                        </div> 
+
+                        </div>
                     </div>
                 </div>
             </div>
