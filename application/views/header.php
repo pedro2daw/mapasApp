@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
     <!-- JS PROPIOS: -->
-
+    <script src=<?php echo base_url("assets/js/sweetalert.min.js");?>></script>
     <script src=<?php echo base_url("assets/js/Mapas.js");?>></script>
     <script src=<?php echo base_url("assets/js/demo.js");?>></script>
     <script src=<?php echo base_url("assets/js/jquery.hotspot.js");?>></script>
@@ -38,38 +38,54 @@
 
             // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
             $(".main").click(function() {
-                principal = confirm("¿Deseas seleccionar este plano como principal?");
-                if (principal == true) {
+                swal({
+                    title: "Plano ",
+                    text: "¿Deseas seleccionar este plano como principal?",
+                    icon: "info",
+                    buttons: true,
+                    dangerMode: true,
+                    })
+                    .then((principal) => {
+                        if (principal == true) {
+                            var principal_value = $(this).val();
+                            var num_mapas = $(".thumbnail_mapa").length;
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo base_url(); ?>index.php/Maps/update_principal/",
+                                data: {
+                                    "id_principal": principal_value
+                                },
+                                success: function(data) {
+                                    $(".alert_principal").addClass("d-none");
+                                    
+                                    swal("", "Se ha actualizado el mapa principal", "success");
+                                    if (num_mapas > 1) {
+                                        //alert("Debes alinear los planos de nuevo. Se procederá a redirigir al proceso de alineación");
+                                        //var redirect = confirm("Debes alinear los planos. ¿Quieres realizar ahora el proceso de alineacion?");
 
-                    var principal_value = $(this).val();
-
-                    var num_mapas = $(".thumbnail_mapa").length;
-
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo base_url(); ?>index.php/Maps/update_principal/",
-                        data: {
-                            "id_principal": principal_value
-                        },
-                        success: function(data) {
-                            $(".alert_principal").addClass("d-none");
-                            alert("Se ha actualizado el mapa principal");
-                            if (num_mapas > 1) {
-                                //alert("Debes alinear los planos de nuevo. Se procederá a redirigir al proceso de alineación");
-                                var redirect = confirm("Debes alinear los planos. ¿Quieres realizar ahora el proceso de alineacion?");
-                                if (redirect) {
-                                    $(location).attr("href", "<?php echo base_url('index.php/Maps/get_maps')?>");
-                                } else {
-                                    $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
+                                        swal({
+                                            title: "Debes alinear los planos.",
+                                            text: "¿Quieres realizar ahora el proceso de alineacion?",
+                                            icon: "info",
+                                            buttons: true,
+                                            dangerMode: true,
+                                            })
+                                            .then((redirect) => {
+                                                if (redirect) {
+                                                $(location).attr("href", "<?php echo base_url('index.php/Maps/get_maps')?>");
+                                                } else {         
+                                                    $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
+                                                }
+                                        });
+                                    }
+                                    else $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log("error:" + errorThrown);
                                 }
-                            }
-                            else $(location).attr("href", "<?php echo base_url('index.php/Maps/')?>");
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log("error:" + errorThrown);
-                        }
-                    });
-                }
+                            });
+                        }                        
+                });
             });
 
             // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //

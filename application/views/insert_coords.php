@@ -49,6 +49,10 @@
 
 
     $(document).ready( function (){
+
+        
+
+
         $('#delCoord').hide();
 
         modificar = null;
@@ -133,6 +137,10 @@
                     $("li").eq('1').toggleClass('active',false);
                     $("li").eq('2').toggleClass('active',false);
                     $("li").eq('3').toggleClass('active',false);
+
+                    swal("Seleccione en el listado la calle sin punto asignado que quiera enlazar a este punto",{
+                    icon: "info"
+                });
 
     });
 
@@ -381,45 +389,51 @@
     // Borrar una calle mediante ajax:
     $('.btn-delete').click(function(e){
         get_data();
-        var next = confirm('¿Estás seguro que quieres borrar ' + calle +'?');
-        //console.log(id);
-        
-        if (next){
-            $.ajax({
-        type     : "POST",
-        cache    : false,
-        url      : "<?php echo base_url(); ?>index.php/Streets/delete_street",
-        data     : 'id='+id,
-        dataType : 'text'
-        })
+            swal({
+                title: "Precaución",
+                text: "Va a borrar"+ calle +", esta operación es irreversible. ¿Desea continuar?",
+                icon: "warning",
+                buttons: ["Cancelar", "Borrar"],
+                dangerMode: true,
+                })
+                .then((next) => {
+            if (next){
+                $.ajax({
+            type     : "POST",
+            cache    : false,
+            url      : "<?php echo base_url(); ?>index.php/Streets/delete_street",
+            data     : 'id='+id,
+            dataType : 'text'
+            })
 
-        // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
-        .done(function(data) {
-            var msg = $.parseJSON(data);
-            if (msg == '0'){
-                $('.box').html('');
-                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
-                $('.btn-update').hide();
-                $('.btn-delete').hide();
-                $('#calle_'+id).html("");
-                $(".hot-spot-1").remove();
+            // Si la respuesta de ajax ha sido exitosa mostrará un mensaje de éxito, sino, mostrará un mensaje de error.
+            .done(function(data) {
+                var msg = $.parseJSON(data);
+                if (msg == '0'){
+                    $('.box').html('');
+                    $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
+                    $('.btn-update').hide();
+                    $('.btn-delete').hide();
+                    $('#calle_'+id).html("");
+                    $(".hot-spot-1").remove();
 
-        $("li").eq('0').toggleClass('active',true);
-        $("li").eq('1').toggleClass('active',false);
-        $("li").eq('2').toggleClass('active',false);
-        $("li").eq('3').toggleClass('active',false);
+            $("li").eq('0').toggleClass('active',true);
+            $("li").eq('1').toggleClass('active',false);
+            $("li").eq('2').toggleClass('active',false);
+            $("li").eq('3').toggleClass('active',false);
 
-            } else {
-                $('.box').html('');
-                $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+                } else {
+                    $('.box').html('');
+                    $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
+                }
+                $('.alert').fadeIn().delay(2500).fadeOut();
+                
+            });
             }
-            $('.alert').fadeIn().delay(2500).fadeOut();
-            
-         });
-        }
-    
-    // Previene al formulario ejecutarse de manera tradicional y que se refresque la página.
-    e.preventDefault();
+        
+        // Previene al formulario ejecutarse de manera tradicional y que se refresque la página.
+        e.preventDefault();
+        });
     });
 
     
@@ -446,6 +460,13 @@
 
     $(document).on('click','.btn-modificar-punto', function() {
         $("#modal_puntos").modal('toggle');
+
+        if ($(".warning").length == 0){
+            console.log($(".warning").length);
+            $(".btn-insertar-con-punto").prop("disabled",true);
+        } else {
+            $(".btn-insertar-con-punto").prop("disabled",false);
+        }
         $(".hot-spot-1").remove();
     });
     
@@ -508,9 +529,15 @@
     
     // Comprobación para la inserción de coordenadas:
     // Si el número total de checkboxes es igual al número de checkboxes no seleccionados y tampoco se han insertado nuevos nombres en los inputs se realizará la condición if.
-     
-        var next = confirm("Vas a establecer un punto para: " + tipo +" "+ nombre +".");
     
+    swal({
+                title: "Precaución",
+                text: "Va a establecer un punto para: " + tipo +" "+ nombre +". ¿Desea continuar?",
+                icon: "info",
+                buttons: ["Cancelar", "Establecer Punto"],
+                dangerMode: true,
+                })
+                .then((next) => {
     if (next){
     // Envío de datos mediante ajax:
     console.log('Mapas seleccionados ' + mapas_selected);
@@ -610,6 +637,9 @@ if (modificar == null) {
                     */  
                 x_aux = null;
                 y_aux = null;
+                swal("Punto insertado con éxito",{
+                    icon: "success"
+                });
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
@@ -683,6 +713,7 @@ console.log('pasa por aki');
 }
 }
 e.preventDefault();
+});
 $("#delCoord").hide();
 
     });

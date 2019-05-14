@@ -70,33 +70,46 @@
 
             // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT //
             $('#mapa_alt').dblclick(function(e){
-                next = confirm("¿Quieres seleccionar esta alineación?");
-                if(next==true){
-                $("#plano_anterior").removeAttr("disabled");
-                    var top = $("#mapa_alt").css("top");
-                    var left = $("#mapa_alt").css("left");
-                    // realizo un slice para guardar solo el valor numerico y no su unidad (px)//
-                    top = top.slice(0,-2);
-                    left = left.slice(0,-2);
-                        tops.push(top);
-                        lefts.push(left); 
-                    cont++;
-                    // CARGO LA SIGUIENTE IMAGEN DEL ARRAY RUTAS Y LA MUESTRO
-                    if (cont < rutas.length){
-                        $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
-                        $("#prueba").scrollTop(0);
-                        $("#mapa_alt").css({"top":"0px","left":"0px"});
+                //next = confirm("¿Quieres seleccionar esta alineación?");
 
-                        } else {
-                             if(cont == rutas.length){
-                                $("#previsualizar").removeClass("d-none");
-                                $(".info").addClass("d-none");
-                                $("#plano_anterior").addClass("d-none");
-                                $("#posicion_inicial").addClass("d-none");
-                                $("#mapa_alt").addClass("d-none");
-                                }
-                            }
-                }
+                swal({
+                    title: "Alineación de mapas:",
+                    text: "¿Quiere seleccionar esta alineación?",
+                    icon: "info",
+                    buttons: true,
+                    dangerMode: true,
+                    })
+                    .then((next) => {
+                        if(next==true){
+                            $("#plano_anterior").removeAttr("disabled");
+                                var top = $("#mapa_alt").css("top");
+                                var left = $("#mapa_alt").css("left");
+                                // realizo un slice para guardar solo el valor numerico y no su unidad (px)//
+                                top = top.slice(0,-2);
+                                left = left.slice(0,-2);
+                                    tops.push(top);
+                                    lefts.push(left); 
+                                cont++;
+                                // CARGO LA SIGUIENTE IMAGEN DEL ARRAY RUTAS Y LA MUESTRO
+                                if (cont < rutas.length){
+                                    $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
+                                    $("#prueba").scrollTop(0);
+                                    $("#mapa_alt").css({"top":"0px","left":"0px"});
+
+                                    } else {
+                                        if(cont == rutas.length){
+                                            $("#previsualizar").removeClass("d-none");
+                                            $(".info").addClass("d-none");
+                                            $("#plano_anterior").addClass("d-none");
+                                            $("#posicion_inicial").addClass("d-none");
+                                            $("#mapa_alt").addClass("d-none");
+                                            }
+                                        }
+                        }
+                });
+
+
+                
             });       
             // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
             

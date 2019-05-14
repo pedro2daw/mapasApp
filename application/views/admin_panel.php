@@ -10,6 +10,23 @@
             'background-color': 'orange'
         });
 
+        $(document).on("click",".btn-delete",function (e){
+            var id = $(this).data("id");
+            e.preventDefault();
+            swal({
+                title: "Precaución",
+                text: "Va a borrar el mapa seleccionado, esta operación es irreversible. ¿Desea continuar?",
+                icon: "warning",
+                buttons: ["Cancelar", "Borrar Mapa"],
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    location.href='<?php echo site_url();?>/Maps/delete_map/'+id;
+                }
+            });
+        });
+
         $('.btn-update').click(function() {
             var id = $(this).data('id');
             var img_src = $('#src_imagen_' + id).attr('src');
@@ -177,7 +194,7 @@
                     echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn btn-info btn-update' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
                     echo("</td>");  
                     echo("<td>");
-                    echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger'");
+                    echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger btn-delete' data-id='".$mapa['id']."'");
                     echo("</td>");
                     echo("</tr>");
                 }
