@@ -6,8 +6,6 @@
 <script src="<?php echo base_url()?>assets/js/jquery_ui.js"></script>
 <script>
            // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
-            desviacion_x = [];
-            desviacion_y = [];
             var dominio = "<?php echo base_url();?>";
             var rutas = <?php echo json_encode($mapas_aux); ?>;
             var ruta_main = <?php echo json_encode($mapa_main) ?>;

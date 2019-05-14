@@ -55,7 +55,7 @@
 
                 <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
                 <?php
-                echo form_open('Security/export_database');
+                echo form_open('BackUp/export_database');
                 echo("
 
                 <div class='custom-control custom-checkbox'>
@@ -134,7 +134,7 @@
 
                 <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
                 <?php
-                echo form_open_multipart('Security/import_data');
+                echo form_open_multipart('BackUp/import_data');
                 echo("
                 <div class='custom-file'>
                     <input type='file' name='file_sql' class='custom-file-input' id='file_sql' required>
