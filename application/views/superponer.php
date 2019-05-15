@@ -76,7 +76,7 @@
                     title: "Alineación de mapas:",
                     text: "¿Quiere seleccionar esta alineación?",
                     icon: "info",
-                    buttons: true,
+                    buttons: ["No, gracias", "Continuar"],
                     dangerMode: true,
                     })
                     .then((next) => {
@@ -181,10 +181,19 @@
 
             // FUNCION PARA REPETIR EL PROCESO DE ALINEACION
             $("#repetir_proceso").click(function(){
-                next =  confirm("¿Estás seguro que quieres repetir el proceso?");
+
+                swal({
+                title: "Precaución",
+                text: "¿Está seguro de que quiere repetir el proceso?",
+                icon: "warning",
+                buttons: ["No, gracias", "Repetir proceso"],
+                dangerMode: true,
+                })
+                .then((next) => {
                     if (next == true){
                         location.href = "<?php  echo site_url('Maps/get_maps'); ?>";
                     }
+            });     
             });
             // FUNCION PARA REPETIR EL PROCESO DE ALINEACION    
            
@@ -211,7 +220,7 @@
 <div class="container-fluid">
 <div class="box">
     <h3 class="d-inline">ALINEACIÓN DE MAPAS</h3>
-    <a href="#" title="Selección de puntos" data-toggle="popover" data-trigger="focus" data-content="Alinea el mapa con el plano principal y haz doble click para alinear el mapa"><span class="far fa-question-circle"></span></a>
+    <a href="#" title="Selección de puntos" data-toggle="popover" data-trigger="focus" data-content="Arrastre el plano secundario que se muestra en pantalla sobre el mapa principal para alinear los mapas, finalmente haga doble click para terminar el proceso."><span class="far fa-question-circle"></span></a>
 </div>
     <div class="row no-gutters">
     
@@ -229,7 +238,7 @@ echo("
     <input type='hidden' value='' name='x_coord' id='x'/>
     <input type='hidden' value='' name='y_coord' id='y'/>
     <input type='hidden' value='' name='array_rutas' id='array_rutas'/>
-            <input type='submit' class='btn btn-success d-none' value='Alinear' id='toJson' />
+            <input type='submit' class='btn btn-success d-none' value='FINALIZAR' id='toJson' />
         </form> 
         ");
 

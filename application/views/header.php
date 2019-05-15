@@ -39,8 +39,8 @@
             // FUNCION DE EVENTO PARA SELECCIONAR EL PLANO PRINCIPAL //
             $(".main").click(function() {
                 swal({
-                    title: "Plano ",
-                    text: "¿Deseas seleccionar este plano como principal?",
+                    title: "¿Deseas seleccionar este plano como principal?",
+                    text: "El plano principal es el que se toma de referencia al realizar la alineación de los mapas.",
                     icon: "info",
                     buttons: true,
                     dangerMode: true,

@@ -111,7 +111,7 @@ input[type='search'] {
 
 .popover {
    content: attr(data-content);
-   font-size: 1.5em;
+  /*font-size: 1.5em; */
 }
 .modal_mensaje_error {
     display: block;

@@ -1,8 +1,10 @@
 <script language="javascript">
     $(document).ready(function() {
         $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
 })
+$('.msg_seleccionar').attr('title','Este mapa no es el principal. Puede seleccionar este mapa como principal.');
+$('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros planos secundarios.');
 
         $('#enlace_mapas').toggleClass('active');
         $('.alert').fadeIn().delay(4000).fadeOut();
@@ -17,7 +19,7 @@
                 title: "Precaución",
                 text: "Va a borrar el mapa seleccionado, esta operación es irreversible. ¿Desea continuar?",
                 icon: "warning",
-                buttons: ["Cancelar", "Borrar Mapa"],
+                buttons: ["No, gracias", "Borrar Mapa"],
                 dangerMode: true,
                 })
                 .then((willDelete) => {
@@ -92,6 +94,10 @@
         });
     });
 
+   
+
+
+
 </script>
 
 <div class="container-fluid">
@@ -118,7 +124,7 @@
         <div class="col-md-12 botones">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Insertar Mapa </button>
             <?php /*echo anchor('Streets/get_maps/','<span class="fas fa-layer-group"></span> Alinear Mapas','class="btn btn-success" id="alinear_button"');*/
-                  echo "<button id='alinear_button' class='btn btn-success'>Alinear mapas</button></td>";
+                  echo "<span id='msg_alinear' data-toggle='tooltip' data-placement='bottom'> <button id='alinear_button' class='btn btn-success'>Alinear mapas</button> </span>";
             ?>
            
         </div>
@@ -154,6 +160,8 @@
                         echo("
                             <script>
                                 $('#alinear_button').attr('disabled','true');
+                                $('#msg_alinear').attr('title','Debes seleccionar un mapa como principal antes de alinear los planos.');
+                                
                             </script>
                         ");
                     }
@@ -176,16 +184,18 @@
                     echo ("<td class='d-none' id='desviacion_y_".$mapa["id"]."' data-y='".$mapa['desviacion_y']."'></td>");
                     echo ("<td><img alt ='Modifica el plano e inserta una imagen' src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
                     if (($check_principal == true && $mapa["principal"] == true)){
-                        echo ("<td style='text-align:center;'><button class='main btn btn-success' value='".$mapa['id']."' disabled>Seleccionar</button></td>");
+                        echo ("<td style='text-align:center;'> <span id='msg_principal' data-toggle='tooltip' data-placement='bottom'> <button class='main btn btn-success' value='".$mapa['id']."' disabled> PRINCIPAL </button> </span> </td>");
+
                     }
                     else if($check_principal==false){
                         echo ("<td style='text-align:center;'>
                         <a tabindex='1' class='btn btn-md btn-warning alert_principal' role='button' data-toggle='popover' data-trigger='focus' title='Advertencia'  data-content='Debes seleccionar un mapa como principal'><span class='fas fa-exclamation-triangle'></span></a>
-                        <button class='main btn btn-success' value='".$mapa['id']."'>Seleccionar</button></td>");
+                        <span class='msg_seleccionar' data-toggle='tooltip' data-placement='bottom'> <button class='main btn btn-success' value='".$mapa['id']."'>Seleccionar</button> </span></td>");
+                        
                     }
                     else{
                        echo("<td style='text-align:center;'>
-                       <button class='main btn btn-success' value='".$mapa['id']."'>Seleccionar</button></td>");
+                       <span class='msg_seleccionar' data-toggle='tooltip' data-placement='bottom'> <button class='main btn btn-secundary' value='".$mapa['id']."'>Seleccionar</button> </span> </td>");
                     }
                     
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
