@@ -111,7 +111,7 @@ $(document).ready(function () {
     //Aumentar el tamaña del mapa con las calles manteniendo los puntos
     $("#hotspotImg-1").on("wheel", function (e) {
         var width = $("#hotspotImg-1").first().width();
-        console.log('zoom ' + zoom);
+        // console.log('zoom ' + zoom);
 
         var e0 = e.originalEvent,
             delta = e0.wheelDelta || -e0.detail;

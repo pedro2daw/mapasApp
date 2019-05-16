@@ -91,8 +91,8 @@
                 "zeroRecords":    "No se encuentran datos"     /* No hay data disponible */
             },
             "columns": [
-            { "data": "Tipo" , className: "d-none"  },
-            { "data": "Nombre",className: "d-none" },
+            { "data": "Tipo" , className: "d-none", "searchable": true  },
+            { "data": "Nombre",className: "d-none", "searchable": true },
             { "data": "Punto",className: "d-none" },
             { "data": "Calle" },
         ]
@@ -164,7 +164,7 @@
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
         $('#table_mapas').removeClass('blue-grey lighten-5 border');
-
+        var_this = this;
         modificar = null;
         $(".hot-spot-1").remove();
         $('.calles').removeClass('selected');
@@ -270,7 +270,7 @@
     
     if (data.msg == '0'){   
         var rowNode = table.row.add( {
-            "Tipo": "",
+            "Tipo": data.tipo,
             "Nombre": "",
             "Punto": "",
             "Calle": data.nombre
@@ -356,7 +356,7 @@
                             "Punto": "",
                             "Calle": data.nombre
                         } ).draw().node();
-                        $(rowNode).attr({id: 'calle_'+data.id});
+                        $(rowNode).attr({id: 'calle_'+data.id}).addClass(data.x +" "+ data.y);
                         $(rowNode).find('td').eq(0).attr({id: 'tipo_'+data.id}).text(data.tipo);
                         $(rowNode).find('td').eq(1).attr({id: 'nombre_'+data.id}).text(data.nombre);
                         
@@ -414,7 +414,10 @@
                     $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito.  </div>");
                     $('.btn-update').hide();
                     $('.btn-delete').hide();
-                    $('#calle_'+id).html("");
+                    //$('#calle_'+id).html("");
+                    table.row('#calle_'+id).remove().draw();
+                        
+                    
                     $(".hot-spot-1").remove();
 
             $("li").eq('0').toggleClass('active',true);
@@ -494,6 +497,9 @@
             y = y_aux;
         }
         calle = tipo + " " + nombre;
+
+        x_def = $('#punto_'+id).data('x');
+        y_def = $('#punto_'+id).data('y');
     }
 
     $(".btn-insert-coords").on('click', function(e){
@@ -552,6 +558,8 @@
     } else {
         var json_x = JSON.stringify(coords_x[0]) /  zoom -5 ;
         var json_y = JSON.stringify(coords_y[0]) / zoom -5;
+        x_new = parseInt(coords_x[0]/  zoom -5);
+        y_new = parseInt(coords_y[0]/  zoom -5);
     }
     
 if (modificar == null) {
@@ -595,7 +603,7 @@ if (modificar == null) {
                             "Punto": "",
                             "Calle": data[i].nombre
                         } ).draw().node();
-                        $(rowNode).attr({id: 'calle_'+data[i].id});
+                        $(rowNode).attr({id: 'calle_'+data[i].id}).addClass(data.x +" "+ data.y);
                         $(rowNode).find('td').eq(0).attr({id: 'tipo_'+data[i].id}).text(data[i].tipo);
                         $(rowNode).find('td').eq(1).attr({id: 'nombre_'+data[i].id}).text(data[i].nombre);
                         $(rowNode).find('td').eq(2).attr({'id': 'punto_'+data[i].id , 'data-x' : data[i].x, 'data-y' : data[i].y });
@@ -647,7 +655,6 @@ if (modificar == null) {
             $('.alert').fadeIn().delay(2500).fadeOut();
 });
     }else {
-console.log('pasa por aki');
         var formData = {
             'x' : json_x,
             'y' : json_y,
@@ -666,29 +673,56 @@ console.log('pasa por aki');
         })
         .done(function(data) {
             var msg = data.msg;
+            console.log("X "+x);
+            console.log("Y "+y);
+            console.log("X_AUX "+x_aux);
+            console.log("Y_AUX "+y_aux);
+            console.log("X_def "+x_def);
+            console.log("Y_def "+y_def);
+            console.log("X_new "+x_new);
+            console.log("Y_new "+y_new);
             console.log(data);
-            console.log(msg);
  
             if (msg == '0'){
-
-                $('.box').html('');
-                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
-
-                table.row('#calle_'+id).remove().draw();
-                    var rowNode = table.row.add( {
+                var count = Object.keys(data).length;
+                for (var i = 0; i <= count ; i++){
+                    var id_calle = data.calles_relacionadas[i].id_calle;
+                    console.log(id_calle);
+                    var nombre = $('#nombre_'+id_calle).text(); 
+                    var tipo = $('#tipo_'+id_calle).text();
+                    var calle = tipo + " " + nombre;
+                    var x_def = $('#punto_'+id_calle).data('x');
+                    var y_def = $('#punto_'+id_calle).data('y');
+                
+                table.row('#calle_'+id_calle).remove().draw();
+                var rowNode = table.row.add( {
                             "Tipo": "",
                             "Nombre": "",
                             "Punto": "",
                             "Calle": calle
-                        } ).draw().node();
-                        $(rowNode).attr({id: 'calle_'+data.id});
-                        $(rowNode).find('td').eq(0).attr({id: 'tipo_'+id}).text(tipo);
-                        $(rowNode).find('td').eq(1).attr({id: 'nombre_'+id}).text(nombre);
-                        $(rowNode).find('td').eq(2).attr({'id': 'punto_'+id , 'data-x' : x, 'data-y' : y });
-                        $(rowNode).find('td').eq(3).attr({'data-id': id}).addClass('calles selected').text(calle);
-
-
-
+                        }).draw().node();
+                $(rowNode).attr({id: 'calle_'+id_calle}).addClass(x_new, y_new);
+                $(rowNode).find('td').eq(0).attr({id: 'tipo_'+id_calle}).text(tipo);
+                $(rowNode).find('td').eq(1).attr({id: 'nombre_'+id_calle}).text(nombre);
+                $(rowNode).find('td').eq(2).attr({'id': 'punto_'+id_calle , 'data-x' : x_new, 'data-y' : y_new });
+                $(rowNode).find('td').eq(3).attr({'data-id': id_calle}).addClass('calles').text(calle);
+                }
+                $('.box').html('');
+                $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
+                /*
+                table.row('#calle_'+id).remove().draw();
+                var rowNode = table.row.add( {
+                            "Tipo": "",
+                            "Nombre": "",
+                            "Punto": "",
+                            "Calle": calle
+                        }).draw().node();
+                $(rowNode).attr({id: 'calle_'+data.id}).addClass(data.x +" "+ data.y);
+                $(rowNode).find('td').eq(0).attr({id: 'tipo_'+id}).text(tipo);
+                $(rowNode).find('td').eq(1).attr({id: 'nombre_'+id}).text(nombre);
+                $(rowNode).find('td').eq(2).attr({'id': 'punto_'+id , 'data-x' : x, 'data-y' : y });
+                $(rowNode).find('td').eq(3).attr({'data-id': id}).addClass('calles selected').text(calle);
+                */
                 $('.btn-update').hide();
                 $('.btn-delete').hide();
                 // VACIAMOS EL ARRAY DE COORDENADAS:
@@ -708,6 +742,8 @@ console.log('pasa por aki');
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");
             }
+            x_aux = null;
+            y_aux = null;
             $('.alert').fadeIn().delay(2500).fadeOut();
 });
 }
@@ -821,7 +857,11 @@ $("#delCoord").hide();
                         <?php 
                             for($i = 0; $i < count($listaCalles);$i++){
                             $calle = $listaCalles[$i];
-                            echo "<tr id=calle_".$calle["id"]." >";
+                            if (isset($calle["id_punto"])){
+                            echo "<tr id='calle_".$calle["id"]."'class='".$calle['x']." ".$calle['y']."'>";
+                            } else {
+                            echo "<tr id='calle_".$calle["id"]."'>";
+                            }
                             echo "<td id='tipo_".$calle["id"]."' class='d-none'>".$calle["tipo"]."</td>";
                             echo "<td id='nombre_".$calle["id"]."' class='d-none'>".$calle["nombre"]."</td>";
                             if (isset($calle["id_punto"])){

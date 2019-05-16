@@ -75,12 +75,14 @@ include_once('Security.php');
             
             
             $r = $this->modelCalles->update_coord($x, $y, $x_aux, $y_aux);
-
+            
             if ($r == 0){
                 $data["msg"] = "1";
                 echo json_encode($data);
             } else {
+                $data["calles_relacionadas"] = $this->modelCalles->get_id_calles_relacionadas($x,$y);
                 $data['msg'] = '0';
+               
                 echo json_encode($data);
             }   
         }
