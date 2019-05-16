@@ -23,8 +23,8 @@ class inheritance extends Security {
         
         $data["msg"] = "0";
         $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-        $data["viewName"] = "admin_panel";
-        $this->load->view('template',$data);
+        $this->session->set_flashdata('data',$data);
+        redirect('Maps/index');
     }
         
 }

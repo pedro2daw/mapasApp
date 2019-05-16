@@ -7,6 +7,10 @@ class Maps extends Security {
     public function index(){
         $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
         $data["viewName"] = "admin_panel";
+        if ($this->session->flashdata('data') != null){
+            $a = $this->session->flashdata('data');
+            $data['msg'] = $a['msg'];
+        }
         $this->load->view('template',$data);
     }
 
@@ -65,8 +69,8 @@ class Maps extends Security {
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                 // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-                $data["viewName"] = "admin_panel";
-                $this->load->view('template',$data);
+                $this->session->set_flashdata('data',$data);
+                redirect('Maps/index');
             } else {
                 $data['img_size'] = $this->modelMapas->get_img_size($ruta);
                 $ancho = $data['img_size'][0];
@@ -76,14 +80,14 @@ class Maps extends Security {
                     $data["msg"] = "1";
                     $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                     // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-                    $data["viewName"] = "admin_panel";
-                    $this->load->view('template',$data);
+                    $this->session->set_flashdata('data',$data);
+                    redirect('Maps/index');
                 } else {
                     $data["msg"] = "0";
                     $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                     // $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-                    $data["viewName"] = "admin_panel";
-                    $this->load->view('template',$data);
+                    $this->session->set_flashdata('data',$data);
+                    redirect('Maps/index');
                 }
             }
         }
@@ -119,13 +123,13 @@ class Maps extends Security {
                 // ERROR
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-                $data["viewName"] = "admin_panel";
-                $this->load->view('template',$data);
+                $this->session->set_flashdata('data',$data);
+                redirect('Maps/index');
             } else {
                 $data["msg"] = "0";
                 $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-                $data["viewName"] = "admin_panel";
-                $this->load->view('template',$data);
+                $this->session->set_flashdata('data',$data);
+                redirect('Maps/index');
             }
         } else {
             $opc = true;
@@ -135,8 +139,8 @@ class Maps extends Security {
                 // ERROR
                 $data["msg"] = "1";
                 $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-                $data["viewName"] = "admin_panel";
-                $this->load->view('template',$data);
+                $this->session->set_flashdata('data',$data);
+                redirect('Maps/index');
             } else {
                 $data['img_size'] = $this->modelMapas->get_img_size($ruta);
                 $ancho = $data['img_size'][0];
@@ -147,14 +151,14 @@ class Maps extends Security {
                     // ERROR 
                     $data["msg"] = "1";
                     $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-                    $data["viewName"] = "admin_panel";
-                    $this->load->view('template',$data);
+                    $this->session->set_flashdata('data',$data);
+                    redirect('Maps/index');
                 } else {
                     $data["msg"] = "0";
                     $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
                     $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-                    $data["viewName"] = "admin_panel";
-                    $this->load->view('template',$data);
+                    $this->session->set_flashdata('data',$data);
+                    redirect('Maps/index');
                 }
             }
         }   
@@ -168,16 +172,14 @@ class Maps extends Security {
             $data["msg"] = "1";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-            $data["viewName"] = "admin_panel";
-
-            $this->load->view('template',$data);
+            $this->session->set_flashdata('data',$data);
+            redirect('Maps/index');
         } else {
             $data["msg"] = "0";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-            $data["viewName"] = "admin_panel";
-
-            $this->load->view('template',$data);
+            $this->session->set_flashdata('data',$data);
+            redirect('Maps/index');
         }
     }
 
@@ -197,17 +199,15 @@ class Maps extends Security {
             $data["msg"] = "1";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-            $data["viewName"] = "admin_panel";
-
-            $this->load->view('template',$data);
+            $this->session->set_flashdata('data',$data);
+            redirect('Maps/index');
 
         }else {
             $data["msg"] = "0";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-            $data["viewName"] = "admin_panel";
-
-            $this->load->view('template',$data);
+            $this->session->set_flashdata('data',$data);
+            redirect('Maps/index');
         }
     }
 

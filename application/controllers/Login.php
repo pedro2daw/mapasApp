@@ -13,6 +13,12 @@ class Login extends CI_Controller {
         $this->load->model('modelCalles');
         $data["noHeader"] = false;
         $data["viewName"] = "login";
+        if ($this->session->flashdata('data') != null){
+            $a = $this->session->flashdata('data');
+            $data['msg'] = $a['msg'];
+            $data['noHeader'] = $a['noHeader'];
+        }
+
         $this->load->view('template',$data);
     }
     
@@ -42,9 +48,9 @@ class Login extends CI_Controller {
 
         if($r == 0){
             $data["noHeader"] = false;
-            $data["msg"] = "<h5 class='error'>Usuario o contraseña incorrectos</h5>";
-            $data["viewName"] = "login";
-            $this->load->view('template',$data);
+            $data["msg"] = "2";
+            $this->session->set_flashdata('data',$data);
+            redirect('Login/index');
         }
         else{
             $id = $this->modelUser->get_id($name);
@@ -53,8 +59,9 @@ class Login extends CI_Controller {
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
             $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             // var_dump($data['ListaPaquetes']);
-            $data["viewName"] = "admin_panel";
-            $this->load->view('template',$data);
+            $data["msg"] = null;
+            $this->session->set_flashdata('data',$data);
+            redirect('Maps/index');
         }
     }
 // ------- COMPRUEBO EL LOGIN REALIZADO -------------------- //

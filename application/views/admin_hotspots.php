@@ -26,7 +26,16 @@
         $('div').on("contextmenu", ".hot-spot", function (e) {
             var id_hs = this.id;
             var id_mapa = $("#slide").data("id-mapa");
-            if (confirm("¿Seguro que quieres borrar el punto?")) {
+
+            swal({
+                title: "Borrar punto de interés",
+                text: "Va a borrar a borrar este punto de interés, esta operación es irreversible. ¿Desea continuar?",
+                icon: "warning",
+                buttons: ["Cancelar", "Borrar punto de Interés"],
+                dangerMode: true,
+                })
+                .then((next) => {
+            if (next) {
                 $("#" + id_hs).remove();
                 $.ajax({
                 url: "<?php echo base_url(); ?>index.php/Hotspots/delete_hotspot",
@@ -43,6 +52,7 @@
             } else {}
             return false;
         });
+       });
         
         // Carga de los puntos insertados desde la BD
         $('#hotspotImg').hotSpot({

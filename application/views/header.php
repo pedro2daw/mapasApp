@@ -119,33 +119,27 @@
                         $('.btn-insert-coords').show();
                         $("li").eq('2').toggleClass('active', false);
                         $("li").eq('3').toggleClass('active', true);
+                        $('#table_mapas').removeClass('blue-grey lighten-5 border');
                     } else {
                         $('.custom-checkbox').removeClass('disabledbutton');
                         $('.btn-continuar').show();
                         $('#delCoord').show();
                         $("li").eq('2').toggleClass('active', true);
                         $('#table_mapas').addClass('blue-grey lighten-5 border border');
-
                     }
-
                 }
-
             });
-
 
             $("#delCoord").click(function() {
                 $('#table_mapas').removeClass('blue-grey lighten-5 border');
-
                 $('#delCoord').hide();
                 if (modificar != null) {
+                    $('.custom-checkbox').addClass('disabledbutton');
                     $('.btn-insert-coords').hide();
-                } else {
-                    $('.custom-checkbox').removeClass('disabledbutton');
-                    $('.btn-continuar').show();
-                }
+                    
+                } 
 
-
-
+                $('.custom-checkbox').addClass('disabledbutton');
                 $('.btn-continuar').hide();
                 $('.cb_hidden').prop('checked', true);
                 $("li").eq('0').toggleClass('active', false);
@@ -165,7 +159,7 @@
                     console.log('entra checkboxxx');
                     $(this).prop('checked', true);
                 });
-                $('.cb_hidden').hide();
+                
 
                 $('.btn-update').show();
                 $('.btn-delete').show();
