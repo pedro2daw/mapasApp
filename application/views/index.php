@@ -461,8 +461,8 @@
                     console.log('Punto Y: ' + y);
 
                     $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
-                    $('#prueba').scrollTop(y - ($('#prueba').height() / 2) - 5);
-                    $('#prueba').scrollLeft(x - ($('#prueba').width() / 2) - 5);
+                    $('#tabla2').scrollTop(y - ($('#tabla2').height() / 2) - 5);
+                    $('#tabla2').scrollLeft(x - ($('#tabla2').width() / 2) - 5);
                 }
 
 
@@ -732,29 +732,6 @@
     <div class="copyright py-4 text-center text-white">
         <div class="container">
             <small>Copyright &copy; Mapas Developers 2019</small>
-        </div>
-    </div>
-
-    <!-- Modal puntos -->
-    <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg " role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Historial de calles en este punto:</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <ul id='lista_puntos'>
-                        <ul>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button>
-                    <button type="button" class="btn btn-info btn-modificar-punto"><span class="fas fa-drafting-compass"></span> Modificar punto</button>
-                </div>
-            </div>
         </div>
     </div>
 
