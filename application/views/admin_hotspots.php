@@ -24,6 +24,7 @@
         });
         
         $('div').on("contextmenu", ".hot-spot", function (e) {
+            e.preventDefault();
             var id_hs = this.id;
             var id_mapa = $("#slide").data("id-mapa");
 

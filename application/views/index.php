@@ -394,8 +394,8 @@
                     $(this).prop('checked', true);
                 });
                 // Borra el punto en el mapa:
-                var top = $('#prueba').scrollTop();
-                var left = $('#prueba').scrollLeft();
+                var top = $('#tabla2').scrollTop();
+                var left = $('#tabla2').scrollLeft();
                 console.log(" ******************************* ");
                 console.log("top y left " + top + " " + left + "zoom" + zoom + "X " + x + " Y " + y);
 
