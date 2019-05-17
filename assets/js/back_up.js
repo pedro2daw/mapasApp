@@ -49,12 +49,8 @@ $(document).ready(function(){
     
     $("#exportar").click(function(){
         if($("#tablas_export").val() != "todos"){
-
-            alert("antes del json el array es :   " + tables );
             
             var tablesJson = JSON.stringify(tables);
-
-            alert("despues del json el array es :   "+ tablesJson);
 
             $("#tablas_export").val(tablesJson);
         }else{
