@@ -1,6 +1,3 @@
-
-//var table_selected;
-
 var tables = [];
 var cont = 0;
 
@@ -26,11 +23,16 @@ $(document).ready(function(){
             if($(this).val()=="todos"){
                 for (i = 0; i <= $("input[name='check_tables']").length; i++){
                     $("input[name='check_tables']").prop("disabled",true);
+                    $("input[name='check_tables']").prop("checked",false);
                     $(this).prop("disabled",false);
+                    $(this).prop("checked",true);
+                    tables= [];
+                    cont = 1;
                 }
             }
             if (cont > 0){ $("#exportar").prop("disabled",false);}
             tables.push($(this).val());
+            alert(tables);
         }else{
             cont --;
             if($(this).val()=="todos"){
@@ -43,15 +45,13 @@ $(document).ready(function(){
             }
             if (cont == 0){$("#exportar").prop("disabled",true);}
         }
-
     });
-    // cambiar el boton de exportar para ue haga el stringify del JSON y toda la pesca y ver si lo coge en array de php quenn
+    
     $("#exportar").click(function(){
-        
-
         if($("#tablas_export").val() != "todos"){
-            alert("antes del json el array es :   " + tables );
 
+            alert("antes del json el array es :   " + tables );
+            
             var tablesJson = JSON.stringify(tables);
 
             alert("despues del json el array es :   "+ tablesJson);
