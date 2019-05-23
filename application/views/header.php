@@ -131,13 +131,19 @@
             });
 
             $("#delCoord").click(function() {
+                
                 $('#table_mapas').removeClass('blue-grey lighten-5 border');
                 $('#delCoord').hide();
                 if (modificar != null) {
                     $('.custom-checkbox').addClass('disabledbutton');
                     $('.btn-insert-coords').hide();
                     
-                } 
+                } else {
+                    $('.btn-update').show();
+                    $('.btn-delete').show();
+                    $('.btn-anadir').show();
+                    $('.cb_hidden').hide();
+                }
 
                 $('.custom-checkbox').addClass('disabledbutton');
                 $('.btn-continuar').hide();
@@ -161,10 +167,7 @@
                 });
                 
 
-                $('.btn-update').show();
-                $('.btn-delete').show();
-                $('.btn-anadir').show();
-                $('.cb_hidden').hide();
+                
 
             });
 

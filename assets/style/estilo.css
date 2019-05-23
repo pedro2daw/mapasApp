@@ -79,6 +79,9 @@ th {
     position: absolute !important;
 }
 
+.botones {
+    height: 70px;
+}
 input[type='search'] {
    width: 100% !important;
    margin: 0 !important;
@@ -127,7 +130,3 @@ input[type='search'] {
     font-size: 100px !important;
 }
 
-
-.btn {
-    margin-bottom: 30px;
-}

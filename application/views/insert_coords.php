@@ -52,7 +52,9 @@
 
         
 
-
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+})
         $('#delCoord').hide();
 
         modificar = null;
@@ -115,10 +117,18 @@
     $('#tabla_calles tbody').on( 'click', 'tr', function () {
     row = table.row( this ).index();
     });
- 
+ //aqui
     $(document).on("click",".hot-spot-1", function (e){
             $('#lista_puntos').html("");
             lista_mapas_calles();
+            var length = $(".warning").length;
+            if(length == 0){
+                $(".btn-insertar-con-punto").prop("disabled",true);
+                $("#msg_insertar_con_punto").attr('title','Todas las calles insertadas tienen un punto asignado. Añada una calle nueva para asignar este punto.');
+            } else {
+              $(".btn-insertar-con-punto").prop("disabled",false);
+              $("#msg_insertar_con_punto").attr('title','Puede establecer este punto para una calle que no tiene un punto asignado.');  
+            }
             e.preventDefault();
     });
 
@@ -152,8 +162,15 @@
         $('.btn-update').hide();
         // DELETE
         $('.btn-delete').hide();
+        $('.btn-anadir').hide();
         // INSERTAR COORDENADAS:
         $('.btn-insert-coords').hide();
+
+        $("li").eq('0').toggleClass('active',false);
+        $("li").eq('1').toggleClass('active',true);
+        $("li").eq('2').toggleClass('active',false);
+        $("li").eq('3').toggleClass('active',false);
+
     });
 
     $(".btn-anadir").click(function(){
@@ -165,7 +182,6 @@
     $(document).on( "click", ".calles",function() {
         $('#table_mapas').removeClass('blue-grey lighten-5 border');
         var_this = this;
-        modificar = null;
         $(".hot-spot-1").remove();
         $('.calles').removeClass('selected');
         $(this).toggleClass('selected');
@@ -205,7 +221,7 @@
             });
             
             } else {     
-                if (x_aux != null){
+                if (x_aux != null && modificar == null && x_aux == null ){
                     $("li").eq('0').toggleClass('active',false);
                     $("li").eq('1').toggleClass('active',false);
                     $("li").eq('2').toggleClass('active',true);
@@ -553,13 +569,13 @@
     var json_mapas_unselected = JSON.stringify(mapas_unselected);
 
     if (coords_x[0] == null){
-        json_x  = JSON.stringify(x);
-        json_y  = JSON.stringify(y);
+        json_x  = JSON.stringify(Math.round(x));
+        json_y  = JSON.stringify(Math.round(y));
     } else {
-        var json_x = JSON.stringify(coords_x[0]) /  zoom -5 ;
-        var json_y = JSON.stringify(coords_y[0]) / zoom -5;
-        x_new = parseInt(coords_x[0]/  zoom -5);
-        y_new = parseInt(coords_y[0]/  zoom -5);
+        json_x = JSON.stringify(Math.round(coords_x[0]) /  zoom -5) ;
+        json_y = JSON.stringify(Math.round(coords_y[0]) / zoom -5);
+        x_new = Math.round(coords_x[0]/  zoom -5);
+        y_new = Math.round(coords_y[0]/  zoom -5);
     }
     
 if (modificar == null) {
@@ -656,8 +672,8 @@ if (modificar == null) {
 });
     }else {
         var formData = {
-            'x' : json_x,
-            'y' : json_y,
+            'x' : Math.round(json_x),
+            'y' : Math.round(json_y),
             'x_aux' : x_aux,
             'y_aux' : y_aux
         };
@@ -684,8 +700,10 @@ if (modificar == null) {
             console.log(data);
  
             if (msg == '0'){
-                var count = Object.keys(data).length;
-                for (var i = 0; i <= count ; i++){
+                var count = Object.keys(data.calles_relacionadas).length;
+                for (var i = 0; i < count ; i++){
+                    console.log("i" + i);
+                    console.log("count" + count);
                     var id_calle = data.calles_relacionadas[i].id_calle;
                     console.log(id_calle);
                     var nombre = $('#nombre_'+id_calle).text(); 
@@ -745,12 +763,15 @@ if (modificar == null) {
             x_aux = null;
             y_aux = null;
             $('.alert').fadeIn().delay(2500).fadeOut();
+            modificar = null;
+
+            $("#delCoord").hide();
+
 });
 }
 }
 e.preventDefault();
 });
-$("#delCoord").hide();
 
     });
 
@@ -1063,7 +1084,7 @@ $("#delCoord").hide();
                 </div>
                 <div class="modal-footer">
                     
-                    <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button>
+                    <span id='msg_insertar_con_punto' data-toggle='tooltip' data-placement='bottom'> <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button> </span>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"></span> Modificar punto</button>
                 </div>
             </div>
