@@ -322,6 +322,7 @@
                                 echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Users/view_users/','Admin Usuarios',' id="enlace_usuarios" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('BackUp/back_up','Backup','id="enlace_back" class="flex-sm-fill text-sm-center nav-link"');
+                                echo anchor('ListadoCalles/get_listado','Listado de calles','id="enlace_listado" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Login/logout','Logout',' class="flex-sm-fill text-sm-center nav-link"');
                                // echo anchor('Security/export_database','Backup','class="flex-sm-fill text-sm-center nav-link"');
                                
@@ -341,6 +342,7 @@
                             echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Users/view_users/','Admin Usuarios',' id="enlace_usuarios" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('BackUp/back_up','Backup','id="enlace_back" class="flex-sm-fill text-sm-center nav-link"');
+                            echo anchor('ListadoCalles/get_listado','Listado de calles','id="enlace_listado" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Login/logout','Logout',' class="flex-sm-fill text-sm-center nav-link"');
                             //echo anchor('Security/export_database','Backup','class="flex-sm-fill text-sm-center nav-link"');
                             
