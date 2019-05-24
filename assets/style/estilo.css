@@ -68,6 +68,10 @@ th {
     padding: 10px !important;
 }
 
+.swal-text {
+    text-align:center;
+}
+
 /* ESTILO MENU DE ADMINISTRACION CALLES */
 
 .selected {

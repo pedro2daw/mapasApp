@@ -107,11 +107,14 @@ $(document).ready(function () {
             $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
         });
     });
-
+var hotspot_width = 40;
     //Aumentar el tamaña del mapa con las calles manteniendo los puntos
     $("#hotspotImg-1").on("wheel", function (e) {
+        
         var width = $("#hotspotImg-1").first().width();
         // console.log('zoom ' + zoom);
+
+        
 
         var e0 = e.originalEvent,
             delta = e0.wheelDelta || -e0.detail;
@@ -124,19 +127,31 @@ $(document).ready(function () {
             // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
             if (actWdth  < width *10) {
                 zoom += 0.04;
+                hotspot_width -= 5;
+                
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
+            $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            
         } else {
         // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
             if (actWdth > width + 200) {
                 zoom -= 0.04;
+                hotspot_width += 5;
+
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
+            $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            
+                           
+
         }
+
+        
     });
 
     // ZOOM PERSONALIZADO PARA LA SUPERPOSICION DE MAPAS
