@@ -131,14 +131,19 @@
             });
 
             $("#delCoord").click(function() {
+                // Si estamos añadiendo al historial de calles existentes:
+                if (x_aux != null){
+                    x_aux = null;
+                    y_aux = null;
+                    insertar_con_punto = false;
+                }
                 
                 $('#table_mapas').removeClass('blue-grey lighten-5 border');
                 $('#delCoord').hide();
                 if (modificar != null) {
-                    $('.custom-checkbox').addClass('disabledbutton');
-                    $('.btn-insert-coords').hide();
-                    
-                } else {
+                    x_aux = null;
+                    y_aux = null;
+                    modificar = null;
                     $('.btn-update').show();
                     $('.btn-delete').show();
                     $('.btn-anadir').show();
@@ -167,8 +172,7 @@
                 });
                 
 
-                
-
+               $('.btn-insert-coords').hide(); 
             });
 
             $('.thumbnail_mapa').on("error", function () {

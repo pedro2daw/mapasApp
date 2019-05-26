@@ -131,8 +131,9 @@ $(function () {
             }
             e.preventDefault();
     });
-
+insertar_con_punto = false;
     $(".btn-insertar-con-punto").click(function(){
+        insertar_con_punto = true;
         $("#modal_puntos").modal('toggle');
         x_aux = x;
         y_aux = y;
@@ -180,6 +181,8 @@ $(function () {
     
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
+
+        
         $('#table_mapas').removeClass('blue-grey lighten-5 border');
         var_this = this;
         $(".hot-spot-1").remove();
@@ -209,6 +212,7 @@ $(function () {
             $('.btn-delete').data('id',id);  
 
 
+
         if (x_aux != null){
             console.log(x_aux);
             x = x_aux;
@@ -223,8 +227,9 @@ $(function () {
                 $(this).css({'cursor':'cursor'  , 'pointer-events': 'none' });
             });
             
-            } else {     
-                if (x_aux != null && modificar == null && x_aux == null ){
+            } else {
+                // Si existe x_aux y la clase es warning se esta utilizando el punto. Se esta añadiendo esta calle al historial de calles.
+                if (x_aux != null && $(this).hasClass("warning") && insertar_con_punto ){
                     $("li").eq('0').toggleClass('active',false);
                     $("li").eq('1').toggleClass('active',false);
                     $("li").eq('2').toggleClass('active',true);
@@ -233,24 +238,40 @@ $(function () {
                     $('.btn-continuar').show();
                     $('.btn-anadir').hide();
                     $('.btn-update').hide();
-
-
-        // DELETE
-        $('.btn-delete').hide();
-        // INSERTAR COORDENADAS:
-        $('.btn-insert-coords').hide();
+                    // DELETE
+                    $('.btn-delete').hide();
+                    // INSERTAR COORDENADAS:
+                    $('.btn-insert-coords').hide();
+                    $("#delCoord").show();
 
                 } else {
+                    // Sino, es una calle con coordenadas ya insertadas.
+                    // Si la x auxiliar está inicializada y la clase no es warning ha seleccionado una calle con los puntos ya establecidos y se notificará al usuario.
+                    if (x_aux != null && !$(this).hasClass("warning") && insertar_con_punto){
+                        swal({
+                            title: "Precaución",
+                            text: "Seleccione una calle SIN puntos establecidos, por favor. (Una calle en naranja o añada una ahora).",
+                            icon: "warning"
+                            });
+                    $('.btn-continuar').hide();
+                    }
+                    // Se está modificando el punto y se ha seleeccionado otra calle. Notificación de cancelación del proceso.
+                    
+
                     $("li").eq('0').toggleClass('active',false);
                     $("li").eq('1').toggleClass('active',false);
                     $("li").eq('2').toggleClass('active',false);
                     $("li").eq('3').toggleClass('active',false);
                 }
+
+                
+                   
            
             $(document).on( "mouseover", ".hot-spot-1", function (e){
             $(this).css({'cursor':'pointer'  , 'pointer-events': 'auto'});
             });
 
+           
             console.log("Calle seleccionada: " + id);
             console.log('Punto X: ' + x);
             console.log('Punto Y: ' + y);
@@ -273,6 +294,17 @@ $(function () {
             /*
             */
             }
+ if (x_aux != null  && !insertar_con_punto){
+  
+                        swal({
+                            title: "Precaución",
+                            text: "Ha cancelado el proceso de modificación del punto al seleccionar otra calle.",
+                            icon: "warning"
+                            });
+                     $('.btn-insert-coords').hide();
+                     x_aux = null;
+                     y_aux = null;
+                }
 
             
     });
@@ -784,9 +816,11 @@ if (modificar == null) {
 
             $("#delCoord").hide();
 
+
 });
 }
 }
+insertar_con_punto = false;
 e.preventDefault();
 });
 
