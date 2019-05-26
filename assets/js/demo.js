@@ -107,6 +107,76 @@ $(document).ready(function () {
             $(this).attr("style", "top: " + (coordY * zoom) + "px; left: " + (coordX * zoom) + "px; display: block;");
         });
     });
+
+    /*
+
+    var offset = $('#hotspotImg-1').offset();
+var size = {w:$('#hotspotImg-1').width(),h:$('#hotspotImg-1').height()}
+    //Aumentar el tamaña del mapa con las calles manteniendo los puntos
+    $("#hotspotImg-1").on("wheel", function (e) {
+        
+		zoom_point_x = e.pageX - offset.left
+		zoom_point_y = e.pageY - offset.top
+        var width = $("#hotspotImg-1").first().width();
+        // console.log('zoom ' + zoom);
+        zoom_target_x = (zoom_point_x - mouse_x)/zoom
+	    zoom_target_y = (zoom_point_y - mouse_y)/zoom
+        var mouse_x = e.clientX;
+        var mouse_y = e.clientY;
+        console.log("X coords: " + mouse_x + ", Y coords: " + mouse_y);
+        // calculate x and y based on zoom
+	    mouse_x = -zoom_target_x * zoom + zoom_point_x
+	    mouse_y = -zoom_target_y * zoom + zoom_point_y
+        
+        var e0 = e.originalEvent,
+            delta = e0.wheelDelta || -e0.detail;
+
+// Make sure the slide stays in its container area when zooming out
+	    if(mouse_x>0)
+	        mouse_x = 0
+	    if(mouse_x+size.w*zoom<size.w)
+	    	mouse_x = -size.w*(zoom-1)
+	    if(mouse_y>0)
+	        mouse_y = 0
+	     if(mouse_y+size.h*zoom<size.h)
+	    	mouse_y = -size.h*(zoom-1)
+
+            
+        this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+        e.preventDefault();
+        actWdth = $("#hotspotImg-1 img").width() * zoom;
+        if (e.originalEvent.deltaY < 0) {
+
+            // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
+            if (actWdth  < width *10) {
+                zoom += 0.04;
+                hotspot_width -= 5;
+                
+            }
+            
+            
+        } else {
+        // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
+            if (actWdth > width + 200) {
+                zoom -= 0.04;
+                hotspot_width += 5;
+
+            }
+           
+               
+
+        }
+$("#hotspotImg-1").css("transition", "transform 1s");
+            $("#hotspotImg-1").css("transform-origin", mouse_x + "px " +mouse_y + "px"); 
+            
+            $("#hotspotImg-1").css('translate('+(mouse_x)+'px,'+(mouse_y)+'px)');
+
+            $("#hotspotImg-1").css("transform", "scale("+zoom+","+zoom+")");
+            $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+        
+    });
+
+    */
 var hotspot_width = 40;
     //Aumentar el tamaña del mapa con las calles manteniendo los puntos
     $("#hotspotImg-1").on("wheel", function (e) {
