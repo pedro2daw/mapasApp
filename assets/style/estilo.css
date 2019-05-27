@@ -28,6 +28,13 @@ html, body {
     border-style: dashed !important;
 }
 
+#celia_portada{
+    width: 20%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
 
 th {
     vertical-align:middle !important;

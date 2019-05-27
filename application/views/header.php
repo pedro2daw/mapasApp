@@ -16,7 +16,7 @@
     <!-- DATATABLES: -->
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/script_datatables.js"></script>
     <link href="<?php echo base_url()?>assets/style/mdbootstrap4.7.6cssmdb.min.css" rel="stylesheet">
-
+    <link rel='shortcut icon' type='image/png' href='<?php echo base_url()?>/assets/img/icono/i2.png'/>
     <!-- ESTILOS PROPIOS:-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
@@ -313,9 +313,12 @@
             <div class="col-md-12">
                 <nav class="nav nav-pills flex-column flex-sm-row">
                     <?php
+                    $path =  "<img src='".base_url("/assets/img/icono/i2.png")."' id='favicon'>";
+                    
                 if (isset($this->session->userdata["id"])) {
                     $id = $this->session->userdata["id"];
                     $nivel = $this->modelUser->getNivel($id);
+                    
                     if (isset($noHeader)) {
                         if ($noHeader == false) {
                         }
