@@ -311,7 +311,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <nav class="nav nav-pills flex-column flex-sm-row">
+                <nav class="nav nav-pills flex-column flex-sm-row menu">
                     <?php
                     $path =  "<img src='".base_url("/assets/img/icono/i2.png")."' id='favicon'>";
                     
@@ -324,6 +324,7 @@
                         }
                         else {
                             if ($nivel == 2) {
+                                echo anchor('Maps/index/',$path,' class="flex-sm-fill text-sm-center nav-link "');
                                 echo anchor('Maps/index/','Mapas','id="enlace_mapas" class="flex-sm-fill text-sm-center nav-link "');
                                 echo anchor('Hotspots/select_maps/','Puntos de Interés',' id="enlace_hotspots" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
@@ -335,6 +336,7 @@
                                
                             }
                             else if ($nivel == 1) {
+                                echo anchor('Maps/index/',$path,' class="flex-sm-fill text-sm-center nav-link "');
                                 echo anchor('Maps/index/','Mapas','id="enlace_mapas" class="flex-sm-fill text-sm-center nav-link "');
                                 echo anchor('Hotspots/select_maps/','Puntos de Interés',' id="enlace_hotspots" class="flex-sm-fill text-sm-center nav-link"');
                                 echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
@@ -344,6 +346,7 @@
                     }
                     else {
                         if ($nivel == 2) {
+                            echo anchor('Maps/index/',$path,'class="flex-sm-fill text-sm-center nav-link "');
                             echo anchor('Maps/index/','Mapas','id="enlace_mapas" class="flex-sm-fill text-sm-center nav-link "');
                             echo anchor('Hotspots/select_maps/','Puntos de Interés',' id="enlace_hotspots" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
@@ -355,6 +358,7 @@
                             
                         }
                         else if ($nivel == 1) {
+                            echo anchor('Maps/index/',$path,' class="flex-sm-fill text-sm-center nav-link "');
                             echo anchor('Maps/index/','Mapas','id="enlace_mapas" class="flex-sm-fill text-sm-center nav-link "');
                             echo anchor('Hotspots/select_maps/','Puntos de Interés',' id="enlace_hotspots" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');

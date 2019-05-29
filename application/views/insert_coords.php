@@ -49,12 +49,10 @@
 
 
     $(document).ready( function (){
-
-        
-
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
-})
+});
+
         $('#delCoord').hide();
 
         modificar = null;
@@ -906,6 +904,8 @@ e.preventDefault();
             <button type='button' class="btn btn-warning btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Punto"><span class='fas fa-map-marked-alt'></span> Confirmar Punto</button>
             <button type="button" class="btn btn-success btn-continuar"> <span class="fas fa-long-arrow-alt-right"></span> Continuar </button>
             <button id="delCoord" class="btn bg-white"> <span class="far fa-times-circle"></span> Cancelar </button>
+            <button type="button" class="btn btn-ayuda-calles" data-toggle="modal" data-target="#modal_leyenda"> <span class="fas fa-question-circle"></span></button>
+            
             <?php /*echo anchor('Csv/index','CSV',' class="btn btn-warning"');*/ ?>
 
         </div>
@@ -965,11 +965,11 @@ e.preventDefault();
                                 $mapa = $listaMapas[$i];
                                 echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
                                 if ($i == 0){
-                                echo "<td>     
+                                echo "<td>  
                                 <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> 
                                 </td>";    
                                 }else {
-                                echo "<td>  <input style='float:left; margin-bottom:10px; width:100%;' type='range' value='1'   id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div>
+                                echo "<td><input style='float:left; margin-bottom:10px; width:100%;' type='range' value='1'   id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div>
                                 </td>";
                                 }
                                 echo "<td> 
@@ -1118,6 +1118,28 @@ e.preventDefault();
         </div>
     </div>
 
+    <div class="modal fade bd-example-modal-xl" id="modal_leyenda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Leyenda</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <!-- Cuerpo del cuadro modal: Formulario de Modificación -->
+                <div class="modal-body">
+                    <ul>
+                        <li> Calle naranja: No tiene un punto asignado </li>
+                        <li> Calle azul: Tiene un punto asignado </li>
+                    </ul>
+                </div> <!-- fin modal body -->
+                <div class='modal-footer'>
+                </div> <!-- fin modal footer -->
+            </div> <!-- fin modal content -->
+        </div>
+    </div>
+
 
         <!-- Modal puntos -->
     <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1153,7 +1175,7 @@ e.preventDefault();
         </button>
       </div>
       <div class="modal-body">
-      <span id='error' class="fas fa-exclamation-circle"></span>
+      <span id='error' class="fas fa-exclamation-circle"> </span>
         <h6 class='modal_mensaje_error'> Debes insertar un mapa. </h6>
       </div>
       <div class="modal-footer">
