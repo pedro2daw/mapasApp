@@ -3,6 +3,7 @@
         <div class="col-md-12">
             <div class='box'>
                 <?php
+                
             if (isset($msg)){
                 switch ($msg) {
                     case 2:

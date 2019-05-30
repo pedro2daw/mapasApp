@@ -102,6 +102,7 @@
     <body>
 
         <?php
+        
         ini_set("display_errors", 0);
        
       if (isset($_REQUEST["host"])) {
@@ -212,50 +213,7 @@
 
 			$db->query("ALTER TABLE `usuarios` MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;");
-            
 
-            $db->query("CREATE TABLE `pisos` (
-				`piso` int(1) NOT NULL,
-				`url_img` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-				`punto_inicial` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-				`titulo_piso` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-				`escena_inicial` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-				`top_zona` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
-				`left_zona` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL
-			  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;");
-            $db->query("ALTER TABLE `pisos`
-                        ADD PRIMARY KEY (`piso`),
-                        ADD KEY `piso` (`piso`);");
-
-            $db->query("CREATE TABLE `puntos_mapa` (
-                            `id_punto_mapa` int(11) NOT NULL,
-                            `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-                            `left_mapa` double NOT NULL,
-                            `top_mapa` double NOT NULL,
-                            `id_escena` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-                            `piso` int(1) NOT NULL
-                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;");
-            $db->query("ALTER TABLE `puntos_mapa`
-                        ADD PRIMARY KEY (`id_punto_mapa`),
-						ADD KEY `piso` (`piso`);");
-
-			$db->query("ALTER TABLE `puntos_mapa` MODIFY COLUMN `id_punto_mapa` INT(11) AUTO_INCREMENT;");
-           
-
-            $db->query("CREATE TABLE `usuarios` (
-                            `id_usuario` int(11) NOT NULL,
-                            `nombre_usuario` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-                            `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-                            `apellido` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-                            `password` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-                            `email` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-                            `tipo_usuario` int(255) NOT NULL
-                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;");
-            $db->query("ALTER TABLE `usuarios`
-						ADD PRIMARY KEY (`id_usuario`);");
-
-			$db->query("ALTER TABLE `usuarios` MODIFY COLUMN `id_usuario` INT(11) AUTO_INCREMENT;");
-            
             // Creamos el archivo de configuración
             $nombre_archivo = ".env.development";
 
@@ -281,104 +239,26 @@ COMMIT;");
         								DB_DATABASE='" . $nombredb . "<br> 
         								BASE_URL='" . $baseurl . "'<br>
         								SESSION_DIR='/tmp'<br><br><br>
-                                                                        Cuando haya creado el archivo puede visitar <a href='$baseurl/usuario'>$baseurl/usuario</a> para comenzar a administrar su visita virtual. Pida ayuda a su administrador de sistemas si no sabe cómo hacer todo esto.";
+                Cuando haya creado el archivo puede visitar <a href='$baseurl/usuario'>$baseurl/usuario</a> para comenzar a administrar su visita virtual. Pida ayuda a su administrador de sistemas si no sabe cómo hacer todo esto.";
             }
 
             fclose($archivo);
 
 			//creación de directorios 
 			
-			if (!file_exists('assets/audio')) {
-                mkdir('assets/audio');
+			if (!file_exists('assets/img')) {
+                mkdir('assets/img');
             }
 
-            if (!file_exists('assets/biblio')) {
-                mkdir('assets/biblio');
+            if (!file_exists('assets/img/icono')) {
+                mkdir('assets/img/icono');
             }
 
-            if (!file_exists('assets/imagenes')) {
-                mkdir('assets/imagenes');
+            if (!file_exists('assets/img/mapas')) {
+                mkdir('assets/img/mapas');
             }
 
-            if (!file_exists('assets/imagenes/biblioteca')) {
-                mkdir('assets/imagenes/destacados');
-            }
-
-            if (!file_exists('assets/imagenes/destacados')) {
-                mkdir('assets/imagenes/destacados');
-            }
-
-            if (!file_exists('assets/imagenes/escenas')) {
-                mkdir('assets/imagenes/escenas');
-            }
-
-            if (!file_exists('assets/imagenes/generales')) {
-                mkdir('assets/imagenes/generales');
-            }
-
-            if (!file_exists('assets/imagenes/iconos')) {
-                mkdir('assets/imagenes/iconos');
-            }
-
-            if (!file_exists('assets/imagenes/imagenes-hotspots')) {
-                mkdir('assets/imagenes/imagenes-hotspots');
-            }
-
-            if (!file_exists('assets/imagenes/portada')) {
-                mkdir('assets/imagenes/portada');
-            }
-
-            if (!file_exists('assets/imagenes/mapa')) {
-                mkdir('assets/imagenes/mapa');
-            }
-
-            if (!file_exists('assets/imagenes/previews')) {
-                mkdir('assets/imagenes/previews');
-            }
-
-            if (!file_exists('assets/imagenes/previews-guiada')) {
-                mkdir('assets/imagenes/previews-guiada');
-            }
-
-            if (!file_exists('assets/imagenes/svg')) {
-                mkdir('assets/imagenes/svg');
-			}
-			
-			if (!file_exists('assets/imagenes/panoramasSecundarios')) {
-                mkdir('assets/imagenes/panoramasSecundarios');
-            }
-
-            if (!file_exists('assets/bibliocss')) {
-                mkdir('assets/bibliocss');
-            }
-
-            if (!file_exists('assets/css')) {
-                mkdir('assets/css');
-            }
-
-            if (!file_exists('assets/documentos-panel')) {
-                mkdir('assets/documentos-panel');
-            }
-
-            if (!file_exists('assets/extras')) {
-                mkdir('assets/extras');
-            }
-
-            if (!file_exists('assets/fonts')) {
-                mkdir('assets/fonts');
-            }
-
-            if (!file_exists('assets/js')) {
-                mkdir('assets/js');
-            }
-
-            if (!file_exists('assets/lib')) {
-                mkdir('assets/lib');
-            }
-
-            if (!file_exists('assets/php')) {
-                mkdir('assets/php');
-			}
+            
 			
             echo "<br><br><span class='text-white'>La instalación ha finalizado. <strong>IMPORTANTE: elimine ahora el archivo de instalación (install.php) del servidor para evitar posibles ataques a su base de datos.</strong>.<br>"
             . "Visite <a href='$baseurl/usuario'>$baseurl/usuario</a> para comenzar a introducir los datos de su visita virtual.</span><br>";
