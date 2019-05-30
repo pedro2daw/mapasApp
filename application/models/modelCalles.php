@@ -249,6 +249,18 @@ class modelCalles extends CI_Model {
             }
         return $data;
     }
-
+    
+    public function get_mapas_calles() {
+        $query = $this->db->query("SELECT calles.id as idCalle, calles.nombre as nombre, calles.tipo as tipo, mapas.id as idMapa, mapas.titulo as titulo, mapas_calles.id_map as idMap, mapas_calles.id_calle as idCall, puntos.id as id_punto, puntos.id_calle as idCallePunto FROM mapas INNER JOIN mapas_calles ON mapas.id = mapas_calles.id_map INNER JOIN calles ON calles.id = mapas_calles.id_calle INNER JOIN puntos ON puntos.id_calle = calles.id");
+        
+        $data = array();
+            if ($query->num_rows() > 0){
+                foreach ($query->result_array() as $row){
+                    $data[] = $row;
+                }
+            }
+        
+        return $data;
+    }
     
 } // cierra la class modelCalles
