@@ -5,6 +5,6 @@
 	RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
 
-php_value upload_max_filesize 7M
-php_value post_max_size 8M
+php_value upload_max_filesize 80M
+php_value post_max_size 81M
 php_value max_file_uploads 400
