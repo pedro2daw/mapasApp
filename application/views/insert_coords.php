@@ -216,7 +216,8 @@ insertar_con_punto = false;
             x = x_aux;
             y = y_aux;
         } 
-            if (x == null || y == null){
+        // Si añado un punto en el mapa para una calle sin punto asignado y selecciono otra calle (con punto) del listado. El mapa debe resetearse y ocutarse el boton de continuar.
+            if ((x == null || y == null) && $(this).hasClass("warning")){
             $("li").eq('0').toggleClass('active',false);
             $("li").eq('1').toggleClass('active',true);
             $("li").eq('2').toggleClass('active',false);
@@ -226,6 +227,10 @@ insertar_con_punto = false;
             });
             
             } else {
+                // Si añado un punto en el mapa para una calle sin punto asignado y selecciono otra calle (con punto) del listado. El mapa debe resetearse y ocutarse el boton de continuar.
+                $('.btn-continuar').hide();
+
+
                 // Si existe x_aux y la clase es warning se esta utilizando el punto. Se esta añadiendo esta calle al historial de calles.
                 if (x_aux != null && $(this).hasClass("warning") && insertar_con_punto ){
                     $("li").eq('0').toggleClass('active',false);
