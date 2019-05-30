@@ -31,8 +31,20 @@ class modelMapas extends CI_Model {
     }
 */
     function insert ($titulo, $fecha, $ruta){
+        // 0 ES ERROR
+        $valid = 0;
+        $this->db->trans_start();
         $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida) VALUES (null,'$titulo','$fecha','$ruta',NOW());"); 
-        return $this->db->affected_rows();
+
+        if ($this->db->trans_status() === FALSE || $ruta == false){
+            $this->db->trans_rollback();
+        } else {
+            $valid = 1;
+            $this->db->trans_commit();
+        }
+        $this->db->trans_complete();
+
+        return $valid;
     }
 
     /*
@@ -48,8 +60,9 @@ class modelMapas extends CI_Model {
 
     
     function update($id, $titulo, $fecha, $ruta, $ancho, $alto, $x , $y, $opc){
+        
         // SI HAY IMAGEN nueva TIENE QUE BORRAR la antigua y las desviaciones:
-        $status = 1;
+        $status = 0;
         $this->db->trans_start();
         if ($opc == true){
             $query2 = $this->db->query("SELECT imagen from mapas WHERE id = '$id';");
@@ -59,10 +72,12 @@ class modelMapas extends CI_Model {
             $y = 'null';
         }
         $query = $this->db->query("DELETE FROM mapas WHERE id = '$id';"); 
-        $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida, ancho, altura, desviacion_x, desviacion_y) VALUES ($id,'$titulo',$fecha,'$ruta',NOW(),'$ancho','$alto',$x,$y);"); 
+        $query = $this->db->query("INSERT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida, ancho, altura, desviacion_x, desviacion_y) VALUES ($id,'$titulo','$fecha','$ruta',NOW(),'$ancho','$alto',$x,$y);"); 
         $this->db->trans_complete();
         if ($this->db->trans_status() === FALSE){
-        $status = 0;
+            $this->db->trans_rollback();
+        } else {
+            $status = 1 ;
         }
         return $status;
     }
@@ -133,7 +148,7 @@ class modelMapas extends CI_Model {
         $this->load->library('upload', $config);
 
         if(!$this->upload->do_upload('upd_img')){
-            // echo $this->upload->display_errors();
+            echo $this->upload->display_errors();
             $img_name = false;
         }else{
             $img_name = $this->upload->data('file_name'); 

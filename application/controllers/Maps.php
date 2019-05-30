@@ -26,8 +26,12 @@ class Maps extends Security {
         // Formateamos la ciudad para que sea minuscula y elimine las tildes:
         $ciudad_format = $this->modelMapas->format($ciudad);
         $img_name = $this->modelMapas->checkImg($ultimoId,$ciudad_format);
-        $ruta = "assets/img/mapas/".$img_name;
-        
+        if (!$img_name){
+            $ruta = false;
+        }else{
+            $ruta = "assets/img/mapas/".$img_name;
+        }
+
         //Obtenemos el mapa del que hereda el mapa insertado (o nada en caso de no elegir ninguno)
         $heredar =  $this->input->get_post('herencia');
         
