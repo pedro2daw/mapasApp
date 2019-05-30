@@ -282,8 +282,8 @@ insertar_con_punto = false;
             $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
             
             if (zoom == 1){
-                $('#prueba').scrollTop((y - ($('#prueba').height() /2)  -5 )  * zoom ); 
-                $('#prueba').scrollLeft((x - ($('#prueba').width() /2) -5  )  * zoom );
+                $('#prueba').scrollTop((y - ($('#prueba').height() /2) -5 )  * zoom ); 
+                $('#prueba').scrollLeft((x - ($('#prueba').width() /2) -5 )  * zoom );
             } else if ( zoom > 1){
                 // Se acerca:
                 $('#prueba').scrollTop((y - ($('#prueba').height() /2)  -5  + 110)  * zoom ); 

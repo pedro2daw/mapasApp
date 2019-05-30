@@ -9,10 +9,10 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tipo de via</th>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Tipo de vía</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Check</th>
+                    <th scope="col">Se encuentra en el mapa insertado / Tiene otro nombre</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +23,7 @@
                 echo "<input type='hidden' id='idMapaOculto' data-id-mapa='" . $id_mapa . "'/>";
                 foreach ($listaCalles as $calles) {
                     echo ("<tr>");
-                    echo ("<td>" . $calles["id"] . "</td>");
+                    /* echo ("<td>" . $calles["id"] . "</td>"); */
                     echo "<input type='hidden' id='idHerencia' class='idHerencia' value='" . $calles["id"] . "'/>";
                     echo "<input type='hidden' id='herenciaOculto" . $calles["id"] . "' data-tipo='" . $calles["tipo"] . "'/>";
                     echo ("<td>
@@ -46,8 +46,20 @@
                                 <option value='Via'>Via</option>
                             </select>
                         </td>");
-                    echo ("<td><input id='herenciaNombre" . $calles["id"] . "' type='text' value='" . $calles["nombre"] . "' disabled /></td>");
-                    echo ("<td><input id='checkNombre" . $calles["id"] . "' type='checkbox' checked /></td>");
+                    echo ("<div class='form-group'>");
+                    echo ("<td><input class='form-control' id='herenciaNombre" . $calles["id"] . "' type='text' placeholder='Nombre en este mapa / Dejar vacío' value='" . $calles["nombre"] . "' disabled /></td>");
+                    echo ("</div>");
+
+                    
+
+                    echo ("
+                    <td> 
+                        <div class='custom-control custom-checkbox'> 
+                            <input type='checkbox' name='checkNombre" . $calles["id"] . "' id='checkNombre" . $calles["id"] . "' class='custom-control-input'  value='test' checked />
+                            <label class='custom-control-label' for='checkNombre" . $calles["id"] ."'> Se encuentra en el mapa insertado / Tiene otro nombre </label>
+                            
+                        </div> 
+                    </td>");
                     echo("</tr>");
                 }
                 ?>

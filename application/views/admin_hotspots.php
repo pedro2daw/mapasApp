@@ -18,6 +18,7 @@
                 success: function(data) {
                     var bk = src + "" + data;
                     $("#insImg").attr("src", bk);
+                    $("#upd_imagen").attr("src", "");
                 }
             });
             
@@ -49,6 +50,7 @@
                 error: function () {
                     console.log('ERROR!');
                 },
+                
             });
             } else {}
             return false;
@@ -85,12 +87,23 @@
                     <!-- ****************** CUERPO DEL CUADRO MODAL *********************** -->
 
                     <form enctype="multipart/form-data" id="submit">
+
+                        <div class="custom-file">
+                                <label class="custom-file-label" for="customFileLang">Seleccionar Imagen</label>
+                                <input type="file" name="imagen" class="custom-file-input" id="imagen" lang="es" onchange="openFile(event,'2')" required>
+                                <input type="hidden" name="hsId" id="hsId" value=""/>
+                                <input type="hidden" name="mapId" id="mapId" value=""/>
+                        </div>
+                        <img id='upd_imagen' class='img-thumbnail' src=''>
+
+<!--
                         <div class='form-group'>
                             <label for='imagen'>Imagen</label>
                             <input type='file' class='form-control' placeholder='Introduce una imagen' name='imagen' id='imagen' required />
                             <input type="hidden" name="hsId" id="hsId" value=""/>
                             <input type="hidden" name="mapId" id="mapId" value=""/>
                         </div>
+                        -->
                         <div class='form-group'>
                             <label for='titulo'>Titulo</label>
                             <input type='text' class='form-control' placeholder='Introduce un titulo' name='titulo' id='titulo' required>
@@ -99,6 +112,7 @@
                             <label for='descripcion'>Descripción</label>
                             <textarea type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' required></textarea>
                         </div>
+                        <!--
                         <div class='form-group'>
                             <label for='posX'>Posicion X</label>
                             <input type='number' class='form-control' name='posX' id='posX' required />
@@ -107,6 +121,7 @@
                             <label for='posY'>Posicion Y</label>
                             <input type='number' class='form-control' name='posY' id='posY' required />
                         </div>
+                        -->
                         <div class='modal-footer'>
                             <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
                             <input type='submit' class='btn btn-primary' id="insert" value='Insertar Punto' />
