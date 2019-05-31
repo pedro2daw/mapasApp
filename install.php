@@ -38,7 +38,7 @@
             .mx-auto{
                 margin: auto!important;
             }
-            h1, h4, p, label{
+            h1, h4, p, label, span{
                 color: white;
                 font-family:"Lato";
             }
@@ -97,6 +97,20 @@
             .text-white {
                 color: white;
             }
+
+           
+            a:visited {
+                color: white;
+            }
+
+            #success {
+                border: round;
+                display: block;
+                margin: 0 auto;
+                background-color: yellowgreen;
+                width: 50%;
+                padding: 10%;
+            }
         </style>         
     </head>
     <body>
@@ -123,7 +137,8 @@
 
             // Creamos la estructura de la BD
 			$db = new mysqli($host, $userdb, $passdb, $nombredb);
-	
+            
+            $pass = password_hash("1", PASSWORD_DEFAULT);
             $db->query("CREATE TABLE `calles` (
                                         `id` int(10) UNSIGNED NOT NULL,
                                         `nombre` varchar(100) DEFAULT NULL,
@@ -139,9 +154,6 @@
                                             `data` blob NOT NULL
                                             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
     
-
-
-
             $db->query("CREATE TABLE `hotspots` (
                                         `id` int(10) UNSIGNED NOT NULL,
                                         `imagen` varchar(250) NOT NULL,
@@ -211,8 +223,10 @@
 
             $db->query("ALTER TABLE `puntos` MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;");
 
-			$db->query("ALTER TABLE `usuarios` MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-COMMIT;");
+			$db->query("ALTER TABLE `usuarios` MODIFY `id` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11; COMMIT;");
+            
+            $db->query("DELETE FROM `usuarios` WHERE id = 1;");
+            $db->query("INSERT INTO `usuarios` (`id`, `username`, `passwd`, `nivel`) VALUES (1, 'admin', '$pass', 2);");
 
             // Creamos el archivo de configuración
             $nombre_archivo = ".env.development";
@@ -222,6 +236,8 @@ COMMIT;");
             } else {
                 $mensaje = "El Archivo " . $nombre_archivo . " se ha creado.";
             }
+
+            echo $mensaje;
 
             if ($archivo = fopen($nombre_archivo, "w")) {
                 fwrite($archivo, "DB_HOSTNAME='" . $host . "'\n 
@@ -259,9 +275,20 @@ COMMIT;");
             }
 
             
-			
-            echo "<br><br><span class='text-white'>La instalación ha finalizado. <strong>IMPORTANTE: elimine ahora el archivo de instalación (install.php) del servidor para evitar posibles ataques a su base de datos.</strong>.<br>"
-            . "Visite <a href='$baseurl/usuario'>$baseurl/usuario</a> para comenzar a introducir los datos de su visita virtual.</span><br>";
+			/*
+            echo "<br><br><span class='text-white'>La instalación ha finalizado. <br>
+            <strong>IMPORTANTE: elimine ahora el archivo de instalación (install.php) del servidor para evitar posibles ataques a su base de datos.</strong>.<br>"
+            . "Visite <a href='$baseurl/Login'> el formulario de Login (click) </a> para comenzar a administrar la aplicación.</span><br>";
+            */
+
+            echo "<div id='success'><span class='text-white'>
+                        ¡Enhorabuena! <br> </br>
+                        La instalación ha finalizado. <br>
+                        Visite <a href='$baseurl/Login'> el formulario de Login (click)</a> para comenzar a administrar la aplicación.
+                </span></div>";
+            
+            
+            // unlink("install.php");
          }
      }
          // fin del if
@@ -275,22 +302,22 @@ COMMIT;");
             <form action="install.php">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="text-center">Instalaci&oacute;n de Celia 360</h1>
+                        <h1 class="text-center">Instalaci&oacute;n de MapasApp</h1>
                         <p class="text-justify">
                         Este programa de instalación le ayudará a desplegar la aplicación CeliaTour/Celia360 en su servidor. Si no sabe como proceder, le recomendamos que se ponga en contacto con su administrador de sistemas.
                         </p>
                         <h4 class="text-center">Configuración del host</h4>
                         <div class="form-group">
                             <label for="host">Nombre del host</label>
-                            <input type='text' name='host' id="host" required>
+                            <input type='text' name='host' id="host" value='localhost' value='localhost' required >
                         </div>
                         <div class="form-group">
                             <label for="namebd">Nombre de la base de datos</label>
-                            <input type='text' id="namebd" name='namebd' required>
+                            <input type='text' id="namebd" name='namebd' value='mapas' required>
                         </div>
                         <div class="form-group">
                             <label for="nameuse">Usuario de la base de datos</label>
-                            <input type='text' name='nameuse' id="nameuse" required>
+                            <input type='text' name='nameuse' id="nameuse" value='root' required>
                         </div>
                         <div class="form-group">
                             <label for="passbd">Contraseña de la base de datos</label>
@@ -298,10 +325,11 @@ COMMIT;");
                         </div>
                         <div class="form-group">
                             <label for="base">Base URL del sitio</label>
-                            <input type='text' name='base' id="base" placeholder="http://ejemplo.com" required>            
+                            <input type='text' name='base' id="base" placeholder="http://ejemplo.com" value='http://[::1]/mapasApp' required>            
                         </div>
                     </div>
                 </div>
+                <!-- 
                 <div class="row">
                     <div class="col-md-12">
                         <h4 class="text-center">Configuración del usuario administrador</h4>
@@ -323,6 +351,7 @@ COMMIT;");
                         <div>
                     </div>
                 </div>
+                -->
                 <div class="row mt-3 pb-3">
                     <div class="col-md-12">
                         <input type='submit' value='Aceptar' class="btn-primary">
