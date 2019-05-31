@@ -23,13 +23,17 @@
     //var_dump($mapas_calles);
 ?>
 
-<div>
+<div id="mostrarOcultar">
     Mostrar/ocultar columnas:
     <?php
+        $arrayIdMap = array();
         $col = 0;
         foreach ($mapas_calles as $todo) {
-                    echo "<a class='toggle-vis' data-column='" . $col . "'>" . $todo["titulo"] . "</a> - ";
-                    $col++;
+            if (!in_array($todo["idMapa"], $arrayIdMap)) {
+                array_push($arrayIdMap, $todo["idMapa"]);
+                echo "<a class='toggle-vis' data-column='" . $col . "'>" . $todo["titulo"] . "</a> - ";
+                $col++;
+            }
         }
     ?>
 </div>
@@ -38,29 +42,80 @@
     <thead>
         <tr>
             <?php
-                foreach ($mapas_calles as $todo)  {
-                    echo "<th>" . $todo["titulo"] . "</th>";
+                $arrayIdMap = array();
+                foreach ($mapas_calles as $todo) {
+                    if (!in_array($todo["idMapa"], $arrayIdMap)) {
+                        array_push($arrayIdMap, $todo["idMapa"]);
+                        echo "<th>" . $todo["titulo"] . "</th>";
+                    }
                 }
             ?>
         </tr>
     </thead>
     <tbody>
+        <tr>         
         <?php
-            $lastId = -1;
-            echo "<tr>";
-            foreach ($mapas_calles as $todo)  {
-                    echo "<td>" . $todo["tipo"] . " " . $todo["nombre"] . "</td>";
-                    $lastId = $todo["idCalle"];
+            $arrayIDS = $arrayIdMap;
+            foreach ($mapas_calles as $key => $todo)  {
+                
+                if ((sizeof($mapas_calles)-1) > $key) {
+                    $nextPuntoX = $mapas_calles[$key + 1]["puntoX"];
+
+                    $nextPuntoY = $mapas_calles[$key + 1]["puntoY"];            
                 }
-            
-            echo "<tr>";
+                
+                if ((sizeof($mapas_calles)-1) == $key) {
+                    $nextPuntoX = -1000000;
+
+                    $nextPuntoY = -1000000;
+                }
+                
+                if (($todo["puntoX"] == $nextPuntoX) && ($todo["puntoY"] == $nextPuntoY)) {
+                    foreach ($arrayIDS as $key => $ids) {
+                        if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
+                            $arrayIDS[$key] = "<td>" . $todo["nombre"] . "</td>";
+                        }
+                        
+                        else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key])) {
+                            //$arrayIDS[$key] = "<td></td>";            
+                        }
+                    }
+                }
+                
+                else if (($todo["puntoX"] != $nextPuntoX) && ($todo["puntoY"] != $nextPuntoY)) {
+                    foreach ($arrayIDS as $key => $ids) {
+                        if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
+                            $arrayIDS[$key] = "<td>" . $todo["nombre"] . "</td>";
+                        }
+                        
+                        else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key]))  {
+                            $arrayIDS[$key] = "<td></td>";
+                        }
+                    }
+                    foreach ($arrayIDS as $ids) {
+                        echo $ids;                        
+                    }
+                    if (($nextPuntoX == -1000000) && ($nextPuntoY == -1000000)) {
+                        echo "</tr>";
+                    }
+                    else {
+                        $arrayIDS = $arrayIdMap;
+                        echo "</tr><tr>";
+                    }
+                    
+                }
+            }
         ?>
     </tbody>
     <tfoot>
         <tr>
             <?php
-                foreach ($mapas_calles as $todo)  {
-                    echo "<th>" . $todo["titulo"] . "</th>";
+                $arrayIdMap = array();
+                foreach ($mapas_calles as $todo) {
+                    if (!in_array($todo["idMapa"], $arrayIdMap)) {
+                        array_push($arrayIdMap, $todo["idMapa"]);
+                        echo "<th>" . $todo["titulo"] . "</th>";
+                    }
                 }
             ?>
         </tr>

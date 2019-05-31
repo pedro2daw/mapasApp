@@ -176,7 +176,83 @@ insertar_con_punto = false;
         
     });
 
+    $(".btn-generar-informe").click(function(){
+        $(".btn-generar-informe").addClass("d-none");
+        $("#save").removeClass("d-none");
+        $("#observaciones").removeClass("d-none");
+        $("#archivo").removeClass("d-none");
+        $("#cabecera").removeClass("d-none");
+
+         
+        //to canvas
+        
+    });
+
     
+
+    $("#save").on("click",function(){
+        var ul_test = 
+        $("#lista_puntos").find("li").filter(function(){
+            return $(this).find("ul").length === 0;
+        }).map(function(i,e){
+            return $(this).text();
+        }).get().join("\n");
+        ;
+        var observaciones = $("#observaciones").val();
+        var informe = "Historial de calles :\n\n"+ ul_test + "\n\nObservaciones : \n\n"+ observaciones;
+        //alert(informe);
+        var nombre_fichero = $("#nombre_archivo").val();
+        if(nombre_fichero == ""){
+            swal({
+                title: "Advertencia",
+                text: "Debes introducir un nombre para el fichero",
+                icon: "info",
+                button: "Aceptar",
+                dangerMode: true,
+                })
+        }else{
+        var blob = new Blob([informe],{type: "charset=utf-8"});
+            saveAs(blob,"informe_"+nombre_fichero+".doc");
+
+        $('#lista_puntos').html("");
+        $(".btn-generar-informe").removeClass("d-none");
+        $("#save").addClass("d-none");
+        $("#observaciones").addClass("d-none");
+        $("#observaciones").val("");
+        $("#archivo").addClass("d-none");
+        $("#nombre_archivo").val("");
+        $(function(){
+            $("#modal_puntos").modal('toggle');
+        });
+        }
+    });
+
+    $("#close").click(function(){
+        $('#lista_puntos').html("");
+        $(".btn-generar-informe").removeClass("d-none");
+        $("#save").addClass("d-none");
+        $("#observaciones").addClass("d-none");
+        $("#observaciones").val("");
+        $("#archivo").addClass("d-none");
+        $("#nombre_archivo").val("");
+    });
+
+    // TEST PARA CAPTURA DE PANTALLA //
+    $(document).ready(function(){
+        $("#camera").click(function(){
+        html2canvas($("body"),{
+					onrendered: function(canvas){
+						$("#div_captura").append(canvas);
+						
+						
+					}
+        });
+    });
+
+    })
+    
+    // TEST PARA CAPTURA DE PANTALLA //
+
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
 
@@ -990,6 +1066,7 @@ e.preventDefault();
                         </tbody>
                         
                 </table>
+                <button id="camera">CAPTURA</button>
             </div>
 
             <!-- <div id='ranges'>
@@ -1152,18 +1229,35 @@ e.preventDefault();
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Historial de calles en este punto:</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <ul id='lista_puntos'>
-                    <ul>
+                    </ul>
+                <div class="form-group d-none" id="archivo">
+                    <label for="nombre_archivo">Nombre del informe</label>
+                    <input type='text' class='form-control' id='nombre_archivo' name='nombre_archivo' placeholder='Introduce el nombre del archivo' required/>
+                </div>
+
+                <div class="form-group">
+                    <textarea id='observaciones' class='form-control d-none' aria-label='Observaciones' name='observaciones' rows='4' cols='80' placeholder='Observaciones'></textarea>
+                </div>
+
+                <div id="div_captura">DIV</div>
                 </div>
                 <div class="modal-footer">
                     
+<<<<<<< Updated upstream
                     <span id='msg_insertar_con_punto' data-toggle='tooltip' data-placement='bottom'> <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button> </span>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"></span> Modificar punto</button>
+=======
+                    <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"> </span> Asignar calle a este punto</button>
+                    <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"> </span> Modificar punto</button>
+                    <button type="button" class="btn btn-success btn-generar-informe" ><span class="fas fa-pencil-alt"> </span> Redactar informe</button>
+                    <button type='button' id='save' class='btn btn-success btn-guardar-informe d-none' ><span class='far fa-save'> </span> Guardar informe</button>
+>>>>>>> Stashed changes
                 </div>
             </div>
         </div>

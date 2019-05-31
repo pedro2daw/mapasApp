@@ -100,6 +100,13 @@
                         </label>
                     </div>
 
+                    <div class='custom-control custom-checkbox'>
+                        <input class='custom-control-input' type='checkbox' value='usuarios' id='usuarios' name='check_tables'>
+                        <label class='custom-control-label' for='usuarios'>
+                        Usuarios
+                        </label>
+                    </div>
+
                                         
                         <input type='hidden' value='' name='tablas' id='tablas_export'/>
                          
