@@ -74,7 +74,6 @@
                     foreach ($arrayIDS as $key => $ids) {
                         if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
                             $arrayIDS[$key] = "<td>" . $todo["nombre"] . "</td>";
-                            
                         }
                         
                         else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key])) {
@@ -96,12 +95,17 @@
                     foreach ($arrayIDS as $ids) {
                         echo $ids;                        
                     }
-                    $arrayIDS = $arrayIdMap;
-                    echo "</tr><tr>";
+                    if (($nextPuntoX == -1000000) && ($nextPuntoY == -1000000)) {
+                        echo "</tr>";
+                    }
+                    else {
+                        $arrayIDS = $arrayIdMap;
+                        echo "</tr><tr>";
+                    }
+                    
                 }
             }
         ?>
-        </tr>
     </tbody>
     <tfoot>
         <tr>
