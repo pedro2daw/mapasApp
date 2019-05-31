@@ -16,13 +16,10 @@
     <!-- DATATABLES: -->
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/script_datatables.js"></script>
     <link href="<?php echo base_url()?>assets/style/mdbootstrap4.7.6cssmdb.min.css" rel="stylesheet">
-<<<<<<< Updated upstream
     <link rel='shortcut icon' type='image/png' href='<?php echo base_url()?>/assets/img/icono/i2.png'/>
-=======
     <!-- HTML2CANVAS -->
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/canvas2image.js"></script>
     <script type="text/javascript" language="javascript" src="<?php echo base_url()?>assets/js/html2canvas.js"></script>
->>>>>>> Stashed changes
     <!-- ESTILOS PROPIOS:-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estilo.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo base_url()?>/assets/style/estiloHotspots.css" />
