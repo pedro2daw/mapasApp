@@ -23,7 +23,7 @@
     //var_dump($mapas_calles);
 ?>
 
-<div>
+<div id="mostrarOcultar">
     Mostrar/ocultar columnas:
     <?php
         $arrayIdMap = array();

@@ -300,6 +300,11 @@
             cursor: grabbing;
         }
 
+        #mostrarOcultar {
+            width: 600px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
         /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
 
     </style>
