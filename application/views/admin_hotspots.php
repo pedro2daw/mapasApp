@@ -112,16 +112,16 @@
                             <label for='descripcion'>Descripción</label>
                             <textarea type='text' class='form-control' placeholder='Introduce una descripción' name='descripcion' id='descripcion' required></textarea>
                         </div>
-                        <!--
+                        
                         <div class='form-group'>
                             <label for='posX'>Posicion X</label>
-                            <input type='number' class='form-control' name='posX' id='posX' required />
+                            <input type='number' class='form-control' name='posX' id='posX' hidden />
                         </div>
                         <div class='form-group'>
                             <label for='posY'>Posicion Y</label>
-                            <input type='number' class='form-control' name='posY' id='posY' required />
+                            <input type='number' class='form-control' name='posY' id='posY' hidden />
                         </div>
-                        -->
+                        
                         <div class='modal-footer'>
                             <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
                             <input type='submit' class='btn btn-primary' id="insert" value='Insertar Punto' />
