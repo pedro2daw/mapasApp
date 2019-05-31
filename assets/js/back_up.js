@@ -32,7 +32,7 @@ $(document).ready(function(){
             }
             if (cont > 0){ $("#exportar").prop("disabled",false);}
             tables.push($(this).val());
-            alert(tables);
+            //alert(tables);
         }else{
             cont --;
             if($(this).val()=="todos"){
