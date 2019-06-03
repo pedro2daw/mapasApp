@@ -5,6 +5,13 @@
 ?>
 <script src="<?php echo base_url()?>assets/js/jquery_ui.js"></script>
 <script>
+             swal({
+                    title: "Alineación de mapas",
+                    text: "Para alinear los planos, arrastre el plano secundario que se muestra en pantalla sobre el mapa principal para alinear los mapas, finalmente haga doble click para fijar la alineación del plano",
+                    icon: "info",
+                    button: "Aceptar",
+                    dangerMode: true,
+                    })
            // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
             var dominio = "<?php echo base_url();?>";
             var rutas = <?php echo json_encode($mapas_aux); ?>;
@@ -98,24 +105,13 @@
 
                                     } else {
                                         if(cont == rutas.length){
-                                            $("#previsualizar").removeClass("d-none");
+                                            //$("#previsualizar").removeClass("d-none");
                                             $(".info").addClass("d-none");
                                             $("#plano_anterior").addClass("d-none");
                                             $("#posicion_inicial").addClass("d-none");
                                             $("#mapa_alt").addClass("d-none");
-                                            }
-                                        }
-                        }
-                });
 
-
-                
-            });       
-            // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
-            
-            // PREVISUALIZACION ANTES DE INSERTAR LAS DESVIACIONES EN LA BASE DE DATOS
-            $("#previsualizar").click(function(){
-                $("#repetir_proceso").removeClass("d-none");
+                                            $("#repetir_proceso").removeClass("d-none");
                 var div_prev = $("#hotspotImg-2");
                 var id_map = "";
                     div_prev.empty();
@@ -153,10 +149,23 @@
                         $("#panel_left").append("<input style='float:left; width:95%; margin-top:2%;' type='range' id='slider_"+n+"' oninput='changeOpacity("+n+");' name='points' min='0' max='1' step='0.1'/>");
                     }
 
-                    $("#previsualizar").addClass("d-none");
+                    //$("#previsualizar").addClass("d-none");
                     $("#toJson").removeClass("d-none");
                     // cambio los elementos del panel izquierdo //
-            });
+                                            }
+                                        }
+                        }
+                });
+
+
+                
+            });       
+            // FUNCION QUE CAPTURA EL DESPLAZAMIENTO TOP Y LEFT EN POSITION ABSOLUTE DEL MAPA ALT
+            
+            // PREVISUALIZACION ANTES DE INSERTAR LAS DESVIACIONES EN LA BASE DE DATOS
+            //$("#previsualizar").click(function(){
+                
+            //});
 
             // FUNCION PARA VOLVER A ALINEAR EL PLANO ANTERIOR //
             $("#plano_anterior").click(function(){
@@ -220,7 +229,7 @@
 <div class="container-fluid">
 <div class="box">
     <h3 class="d-inline">ALINEACIÓN DE MAPAS</h3>
-    <a href="#" title="Selección de puntos" data-toggle="popover" data-trigger="focus" data-content="Arrastre el plano secundario que se muestra en pantalla sobre el mapa principal para alinear los mapas, finalmente haga doble click para terminar el proceso."><span class="far fa-question-circle"></span></a>
+    <a href="#" title="Alineación de planos" data-toggle="popover" data-trigger="focus" data-content="Arrastre el plano secundario que se muestra en pantalla sobre el mapa principal para alinear los mapas, finalmente haga doble click para fijar la alineación del plano."><span class="far fa-question-circle"></span></a>
 </div>
     <div class="row no-gutters">
     
@@ -229,8 +238,6 @@
     <input style='float:left; margin-bottom:10px; width:90%;' type='range' id='opacity_changer' class="info" value='0.5' name='points' min='0' max='1' step='0.1'/>
     <button id="plano_anterior" class="btn btn-danger" disabled>Alinear plano anterior</button>
     <button id="posicion_inicial" class="btn btn-warning">Revertir a la posicion inicial</button>
-    <br><br>
-    <button id="previsualizar" class="d-none btn btn-info">Previsualizar</button>
 
     <?php 
 echo form_open('Maps/superponer');

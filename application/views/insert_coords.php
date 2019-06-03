@@ -1245,19 +1245,16 @@ e.preventDefault();
                     <textarea id='observaciones' class='form-control d-none' aria-label='Observaciones' name='observaciones' rows='4' cols='80' placeholder='Observaciones'></textarea>
                 </div>
 
-                <div id="div_captura">DIV</div>
+                <div id="div_captura"></div>
                 </div>
                 <div class="modal-footer">
                     
-<<<<<<< Updated upstream
                     <span id='msg_insertar_con_punto' data-toggle='tooltip' data-placement='bottom'> <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button> </span>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"></span> Modificar punto</button>
-=======
                     <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"> </span> Asignar calle a este punto</button>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"> </span> Modificar punto</button>
                     <button type="button" class="btn btn-success btn-generar-informe" ><span class="fas fa-pencil-alt"> </span> Redactar informe</button>
                     <button type='button' id='save' class='btn btn-success btn-guardar-informe d-none' ><span class='far fa-save'> </span> Guardar informe</button>
->>>>>>> Stashed changes
                 </div>
             </div>
         </div>
