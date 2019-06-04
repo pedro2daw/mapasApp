@@ -31,6 +31,7 @@
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
     <script src=<?php echo base_url("assets/js/back_up.js");?>></script>
     <script src=<?php echo base_url("assets/js/FileSaver.js");?>></script>
+    <script src=<?php echo base_url("assets/js/jspdf.js");?>></script>
     
 
 

@@ -182,15 +182,11 @@ insertar_con_punto = false;
         $("#observaciones").removeClass("d-none");
         $("#archivo").removeClass("d-none");
         $("#cabecera").removeClass("d-none");
-
-         
-        //to canvas
-        
+        $("#formato").removeClass("d-none");
     });
 
-    
 
-    $("#save").on("click",function(){
+    $("#to_word").on("click",function(){
         var ul_test = 
         $("#lista_puntos").find("li").filter(function(){
             return $(this).find("ul").length === 0;
@@ -202,35 +198,79 @@ insertar_con_punto = false;
         var informe = "Historial de calles :\n\n"+ ul_test + "\n\nObservaciones : \n\n"+ observaciones;
         //alert(informe);
         var nombre_fichero = $("#nombre_archivo").val();
-        if(nombre_fichero == ""){
+        if(nombre_fichero == "") {
             swal({
                 title: "Advertencia",
-                text: "Debes introducir un nombre para el fichero",
+                text: "Debes introducir el nombre del archivo",
                 icon: "info",
                 button: "Aceptar",
                 dangerMode: true,
                 })
         }else{
-        var blob = new Blob([informe],{type: "charset=utf-8"});
-            saveAs(blob,"informe_"+nombre_fichero+".doc");
+            var blob = new Blob([informe],{type: "charset=utf-8"});
+                saveAs(blob,"informe_"+nombre_fichero+".doc");
 
-        $('#lista_puntos').html("");
-        $(".btn-generar-informe").removeClass("d-none");
-        $("#save").addClass("d-none");
-        $("#observaciones").addClass("d-none");
-        $("#observaciones").val("");
-        $("#archivo").addClass("d-none");
-        $("#nombre_archivo").val("");
-        $(function(){
-            $("#modal_puntos").modal('toggle');
+            $('#lista_puntos').html("");
+            $(".btn-generar-informe").removeClass("d-none");
+            $("#save").addClass("d-none");
+            $("#observaciones").addClass("d-none");
+            $("#observaciones").val("");
+            $("#archivo").addClass("d-none");
+            $("#nombre_archivo").val("");
+            $(function(){
+                $("#modal_puntos").modal('toggle');
+            });
+            }
+            
         });
-        }
-    });
+    
+
+    $("#to_pdf").on("click",function(){
+        var ul_test = 
+        $("#lista_puntos").find("li").filter(function(){
+            return $(this).find("ul").length === 0;
+        }).map(function(i,e){
+            return $(this).text();
+        }).get().join("\n");
+        ;
+        var observaciones = $("#observaciones").val();
+        var informe = "Historial de calles :\n\n"+ ul_test + "\n\nObservaciones : \n\n"+ observaciones;
+        //alert(informe);
+        var nombre_fichero = $("#nombre_archivo").val();
+        if(nombre_fichero == "") {
+            swal({
+                title: "Advertencia",
+                text: "Debes introducir el nombre del archivo",
+                icon: "info",
+                button: "Aceptar",
+                dangerMode: true,
+                })
+        }else{
+            var doc = new jsPDF()
+
+            doc.text(informe,10,10);
+            doc.save(nombre_fichero+".pdf");
+
+            $('#lista_puntos').html("");
+            $(".btn-generar-informe").removeClass("d-none");
+            $("#save").addClass("d-none");
+            $("#observaciones").addClass("d-none");
+            $("#observaciones").val("");
+            $("#archivo").addClass("d-none");
+            $("#nombre_archivo").val("");
+            $(function(){
+                $("#modal_puntos").modal('toggle');
+            });
+            }
+            
+        });
+    
+    
 
     $("#close").click(function(){
         $('#lista_puntos').html("");
         $(".btn-generar-informe").removeClass("d-none");
-        $("#save").addClass("d-none");
+        $("#formato").addClass("d-none");
         $("#observaciones").addClass("d-none");
         $("#observaciones").val("");
         $("#archivo").addClass("d-none");
@@ -1284,7 +1324,7 @@ e.preventDefault();
 
 
         <!-- Modal puntos -->
-    <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1305,13 +1345,23 @@ e.preventDefault();
                     <textarea id='observaciones' class='form-control d-none' aria-label='Observaciones' name='observaciones' rows='4' cols='80' placeholder='Observaciones'></textarea>
                 </div>
 
-                <div id="div_captura"></div>
+                <div class="col"></div>
+                <div class="col d-none" id="formato">
+                    <div class="row" id="third_row">    
+                        <div class="col text-center">
+                        <a id="to_word" class="hoverable"><?php echo"<img src='".base_url("/assets/img/icono/word.png")."' id='word_logo' style='width:75px;height:75px;'>";?></a>
+                        
+                        <a id="to_pdf"><?php echo"<img src='".base_url("/assets/img/icono/pdf.png")."' id='pdf_logo' style='width:75px;height:75px;margin-left:25px;'>";?></a>
+                        </div>
+
+                    </div> <!-- third_row -->
                 </div>
+
+                <div class="col"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"> </span> Asignar calle a este punto</button>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"> </span> Modificar punto</button>
                     <button type="button" class="btn btn-success btn-generar-informe" ><span class="fas fa-pencil-alt"> </span> Redactar informe</button>
-                    <button type='button' id='save' class='btn btn-success btn-guardar-informe d-none' ><span class='far fa-save'> </span> Guardar informe</button>
                 </div>
             </div>
         </div>
