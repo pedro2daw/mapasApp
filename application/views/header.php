@@ -308,13 +308,23 @@
             cursor: grabbing;
         }
 
+        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
+        
+        /* Estilo tabla calles */
         #mostrarOcultar {
             width: 600px;
             margin: 0 auto;
             margin-top: 40px;
         }
-        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
-
+        
+        #botonesTabla {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+        
+        /* Estilo tabla calles */
+        
     </style>
 </head>
 

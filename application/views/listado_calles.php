@@ -15,6 +15,111 @@
             // Toggle the visibility
             column.visible(!column.visible());
         });
+
+        //Generar un PDF
+
+        /*$(".boton-generar-informe").click(function() {
+            $(".btn-generar-informe").addClass("d-none");
+            $("#save").removeClass("d-none");
+            $("#observaciones").removeClass("d-none");
+            $("#archivo").removeClass("d-none");
+            $("#cabecera").removeClass("d-none");
+            $("#formato").removeClass("d-none");
+            swal({
+                title: "Información",
+                text: "El contenido del informe contendrá el historial de la calle seleccionada y las observaciones que introduzcas (opcional)",
+                icon: "info",
+                button: "Aceptar",
+                dangerMode: false,
+            })
+        });*/
+
+
+        $("#botonConvWord").on("click", function() {
+            var ul_test =
+                $("#lista_puntos").find("li").filter(function() {
+                    return $(this).find("ul").length === 0;
+                }).map(function(i, e) {
+                    return $(this).text();
+                }).get().join("\n");
+            var informe = "Listado de calles de calles :\n\n" + ul_test;
+            //alert(informe);
+            var nombre_fichero = $("#nombre_archivo").val();
+            if (nombre_fichero == "") {
+                swal({
+                    title: "Advertencia",
+                    text: "Debes introducir el nombre del archivo",
+                    icon: "info",
+                    button: "Aceptar",
+                    dangerMode: true,
+                })
+            } else {
+                var blob = new Blob([informe], {
+                    type: "charset=utf-8"
+                });
+                saveAs(blob, "informe_" + nombre_fichero + ".doc");
+            }
+
+        });
+
+
+        $("#botonConvPDF").on("click", function() {
+            var ul_test =
+                $("#lista_puntos").find("li").filter(function() {
+                    return $(this).find("ul").length === 0;
+                }).map(function(i, e) {
+                    return $(this).text();
+                }).get().join("\n");;
+            var observaciones = $("#observaciones").val();
+            var informe = "Historial de calles :\n\n" + ul_test + "\n\nObservaciones : \n\n" + observaciones;
+            //alert(informe);
+            var nombre_fichero = $("#nombre_archivo").val();
+            if (nombre_fichero == "") {
+                swal({
+                    title: "Advertencia",
+                    text: "Debes introducir el nombre del archivo",
+                    icon: "info",
+                    button: "Aceptar",
+                    dangerMode: true,
+                })
+            } else {
+                var doc = new jsPDF()
+
+                doc.text(informe, 10, 10);
+                doc.save(nombre_fichero + ".pdf");
+
+                $('#lista_puntos').html("");
+                $(".btn-generar-informe").removeClass("d-none");
+                $("#save").addClass("d-none");
+                $("#observaciones").addClass("d-none");
+                $("#observaciones").val("");
+                $("#archivo").addClass("d-none");
+                $("#nombre_archivo").val("");
+                $(function() {
+                    $("#modal_puntos").modal('toggle');
+                });
+            }
+
+        });
+
+
+
+        $("#close").click(function() {
+            $('#lista_puntos').html("");
+            $(".btn-generar-informe").removeClass("d-none");
+            $("#formato").addClass("d-none");
+            $("#observaciones").addClass("d-none");
+            $("#observaciones").val("");
+            $("#archivo").addClass("d-none");
+            $("#nombre_archivo").val("");
+        });
+
+        function changeOpacity(i) {
+            $(document).on("input", "#slider_" + i, function() {
+                var opacity = $(this).val();
+                $("#img_" + i).css("opacity", opacity);
+            });
+        }
     });
 
 </script>
@@ -53,8 +158,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr>         
-        <?php
+        <tr>
+            <?php
             $arrayIDS = $arrayIdMap;
             foreach ($mapas_calles as $key => $todo)  {
                 
@@ -73,7 +178,7 @@
                 if (($todo["puntoX"] == $nextPuntoX) && ($todo["puntoY"] == $nextPuntoY)) {
                     foreach ($arrayIDS as $key => $ids) {
                         if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
-                            $arrayIDS[$key] = "<td>" . $todo["nombre"] . "</td>";
+                            $arrayIDS[$key] = "<td>" . $todo["tipo"] . " " . $todo["nombre"] . "</td>";
                         }
                         
                         else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key])) {
@@ -85,7 +190,7 @@
                 else if (($todo["puntoX"] != $nextPuntoX) && ($todo["puntoY"] != $nextPuntoY)) {
                     foreach ($arrayIDS as $key => $ids) {
                         if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
-                            $arrayIDS[$key] = "<td>" . $todo["nombre"] . "</td>";
+                            $arrayIDS[$key] = "<td>" . $todo["tipo"] . " " . $todo["nombre"] . "</td>";
                         }
                         
                         else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key]))  {
@@ -121,3 +226,8 @@
         </tr>
     </tfoot>
 </table>
+
+<div id="botonesTabla">
+    <input type="button" id="botonConvWord" value="Convertir a documento de texto" />
+    <input type="button" id="botonConvPDF" value="Convertir a PDF" />
+</div>
