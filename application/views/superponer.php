@@ -7,11 +7,11 @@
 <script>
              swal({
                     title: "Alineación de mapas",
-                    text: "Para alinear los planos, arrastre el plano secundario que se muestra en pantalla sobre el mapa principal para alinear los mapas, finalmente haga doble click para fijar la alineación del plano",
+                    text: "Para alinear los planos, arrastre el plano secundario que se muestra en pantalla sobre el mapa principal, finalmente haga doble click sobre el plano para fijar la alineación.",
                     icon: "info",
                     button: "Aceptar",
                     dangerMode: true,
-                    })
+                    });
            // DECLARO LAS VARIABLES Y ARRAYS NECESARIOS 
             var dominio = "<?php echo base_url();?>";
             var rutas = <?php echo json_encode($mapas_aux); ?>;
@@ -88,7 +88,7 @@
                     })
                     .then((next) => {
                         if(next==true){
-                            $("#plano_anterior").removeAttr("disabled");
+                            $("#plano_anterior").show();
                                 var top = $("#mapa_alt").css("top");
                                 var left = $("#mapa_alt").css("left");
                                 // realizo un slice para guardar solo el valor numerico y no su unidad (px)//
@@ -107,7 +107,7 @@
                                         if(cont == rutas.length){
                                             //$("#previsualizar").removeClass("d-none");
                                             $(".info").addClass("d-none");
-                                            $("#plano_anterior").addClass("d-none");
+                                            $("#plano_anterior").hide();
                                             $("#posicion_inicial").addClass("d-none");
                                             $("#mapa_alt").addClass("d-none");
 
@@ -175,7 +175,7 @@
                 $("#mapa_alt").attr("src",dominio+rutas[cont]["imagen"]);
                 $("#mapa_alt").css({"top":"0px","left":"0px;"});
                     if(cont == 0){
-                        $("#plano_anterior").prop("disabled",true);
+                        $("#plano_anterior").hide();
                     }
             }); 
             // FUNCION PARA ALINEAR EL PLANO ANTERIOR
@@ -229,27 +229,23 @@
 <div class="container-fluid">
 <div class="box">
     <h3 class="d-inline">ALINEACIÓN DE MAPAS</h3>
-    <a href="#" title="Alineación de planos" data-toggle="popover" data-trigger="focus" data-content="Arrastre el plano secundario que se muestra en pantalla sobre el mapa principal para alinear los mapas, finalmente haga doble click para fijar la alineación del plano."><span class="far fa-question-circle"></span></a>
+    <a href="#" title="Alineación de planos" data-toggle="popover" data-trigger="focus" data-content="Arrastre el plano secundario que se muestra en pantalla sobre el mapa principal para alinear los mapas, finalmente haga doble click sobre el plano para fijar la alineación."><span class="far fa-question-circle"></span></a>
 </div>
     <div class="row no-gutters">
     
     <div class="col-md-3" id="panel_left">
     <h4 class="info">Cambiar opacidad del plano superior</h4>
     <input style='float:left; margin-bottom:10px; width:90%;' type='range' id='opacity_changer' class="info" value='0.5' name='points' min='0' max='1' step='0.1'/>
-    <button id="plano_anterior" class="btn btn-danger" disabled>Alinear plano anterior</button>
+    <button id="plano_anterior" class="btn btn-danger">Alinear plano anterior</button>
     <button id="posicion_inicial" class="btn btn-warning">Revertir a la posicion inicial</button>
 
-    <?php 
-echo form_open('Maps/superponer');
-echo("
+    <?php  echo form_open('Maps/superponer'); ?>
     <input type='hidden' value='' name='x_coord' id='x'/>
     <input type='hidden' value='' name='y_coord' id='y'/>
     <input type='hidden' value='' name='array_rutas' id='array_rutas'/>
-            <input type='submit' class='btn btn-success d-none' value='FINALIZAR' id='toJson' />
+            <input type='submit' class='btn btn-success d-none' value='Finalizar' id='toJson' />
         </form> 
-        ");
-
-?>
+        
     <button id="repetir_proceso" class="d-none btn btn-warning">Repetir proceso de alineación</button>
     </div>
     <div id="prueba" class="col-md-9" >

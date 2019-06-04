@@ -279,3 +279,6 @@ no-js #loader { display: none;  }
 }
 
 
+#plano_anterior {
+    display: none;
+}
