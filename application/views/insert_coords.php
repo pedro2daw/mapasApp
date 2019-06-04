@@ -183,6 +183,13 @@ insertar_con_punto = false;
         $("#archivo").removeClass("d-none");
         $("#cabecera").removeClass("d-none");
         $("#formato").removeClass("d-none");
+        swal({
+                title: "Información",
+                text: "El contenido del informe contendrá el historial de la calle seleccionada y las observaciones que introduzcas (opcional)",
+                icon: "info",
+                button: "Aceptar",
+                dangerMode: false,
+                })
     });
 
 
@@ -1349,9 +1356,9 @@ e.preventDefault();
                 <div class="col d-none" id="formato">
                     <div class="row" id="third_row">    
                         <div class="col text-center">
-                        <a id="to_word" class="hoverable"><?php echo"<img src='".base_url("/assets/img/icono/word.png")."' id='word_logo' style='width:75px;height:75px;'>";?></a>
+                        <a id="to_word"><?php echo"<img src='".base_url("/assets/img/icono/word.png")."' id='word_logo' style='width:75px;height:75px;'>";?></a>
                         
-                        <a id="to_pdf"><?php echo"<img src='".base_url("/assets/img/icono/pdf.png")."' id='pdf_logo' style='width:75px;height:75px;margin-left:25px;'>";?></a>
+                        <a id="to_pdf"><?php echo"<img src='".base_url("/assets/img/icono/pdf.png")."' id='pdf_logo' style='width:75px;height:72px;margin-left:25px;'>";?></a>
                         </div>
 
                     </div> <!-- third_row -->
