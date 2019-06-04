@@ -148,7 +148,7 @@
                 
                 $('#table_mapas').removeClass('blue-grey lighten-5 border');
                 $('#delCoord').hide();
-                if (modificar != null) {
+                if (modificar != null && $(".selected").hasClass("warning")) {
                     x_aux = null;
                     y_aux = null;
                     modificar = null;
