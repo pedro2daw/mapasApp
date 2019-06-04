@@ -54,11 +54,11 @@ $(document).ready(function () {
         $("#crear_paquete").show();
         
         // Cuando click en crear paquete, se pone el valor del select en default.
-        $("#select_paquetes").val(1);
+        //$("#select_paquetes").val(1);
         // El campo se vuelve required.
         $("#nombre_paquete").prop('required', true);
         $("#descripcion_paquete").prop("required", true);
-        $("#select_paquetes").prop("required", false);
+        //$("#select_paquetes").prop("required", false);
         
     });
     $("#btn_selectpaquete").click(function () {
@@ -66,7 +66,7 @@ $(document).ready(function () {
         $("#crear_paquete").hide();
         $("#nombre_paquete").val("");
         // El campo se vuelve required.
-        $("#select_paquetes").prop("required", true);
+        //$("#select_paquetes").prop("required", true);
         $("#nombre_paquete").prop("required", false);
         $("#descripcion_paquete").prop("required", false);
     });

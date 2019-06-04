@@ -160,7 +160,7 @@ class Maps extends Security {
                 } else {
                     $data["msg"] = "0";
                     $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-                    $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+                    //$data['ListaPaquetes'] = $this->modelPaquetes->get_name();
                     $this->session->set_flashdata('data',$data);
                     redirect('Maps/index');
                 }
@@ -175,13 +175,13 @@ class Maps extends Security {
             // ERROR 
             $data["msg"] = "1";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            //$data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $this->session->set_flashdata('data',$data);
             redirect('Maps/index');
         } else {
             $data["msg"] = "0";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            //$data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $this->session->set_flashdata('data',$data);
             redirect('Maps/index');
         }
@@ -202,14 +202,14 @@ class Maps extends Security {
             // ERROR 
             $data["msg"] = "1";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            //$data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $this->session->set_flashdata('data',$data);
             redirect('Maps/index');
 
         }else {
             $data["msg"] = "0";
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
+            //$data['ListaPaquetes'] = $this->modelPaquetes->get_name();
             $this->session->set_flashdata('data',$data);
             redirect('Maps/index');
         }
