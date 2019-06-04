@@ -182,15 +182,18 @@ insertar_con_punto = false;
         $("#observaciones").removeClass("d-none");
         $("#archivo").removeClass("d-none");
         $("#cabecera").removeClass("d-none");
-
-         
-        //to canvas
-        
+        $("#formato").removeClass("d-none");
+        swal({
+                title: "Información",
+                text: "El contenido del informe contendrá el historial de la calle seleccionada y las observaciones que introduzcas (opcional)",
+                icon: "info",
+                button: "Aceptar",
+                dangerMode: false,
+                })
     });
 
-    
 
-    $("#save").on("click",function(){
+    $("#to_word").on("click",function(){
         var ul_test = 
         $("#lista_puntos").find("li").filter(function(){
             return $(this).find("ul").length === 0;
@@ -202,35 +205,79 @@ insertar_con_punto = false;
         var informe = "Historial de calles :\n\n"+ ul_test + "\n\nObservaciones : \n\n"+ observaciones;
         //alert(informe);
         var nombre_fichero = $("#nombre_archivo").val();
-        if(nombre_fichero == ""){
+        if(nombre_fichero == "") {
             swal({
                 title: "Advertencia",
-                text: "Debes introducir un nombre para el fichero",
+                text: "Debes introducir el nombre del archivo",
                 icon: "info",
                 button: "Aceptar",
                 dangerMode: true,
                 })
         }else{
-        var blob = new Blob([informe],{type: "charset=utf-8"});
-            saveAs(blob,"informe_"+nombre_fichero+".doc");
+            var blob = new Blob([informe],{type: "charset=utf-8"});
+                saveAs(blob,"informe_"+nombre_fichero+".doc");
 
-        $('#lista_puntos').html("");
-        $(".btn-generar-informe").removeClass("d-none");
-        $("#save").addClass("d-none");
-        $("#observaciones").addClass("d-none");
-        $("#observaciones").val("");
-        $("#archivo").addClass("d-none");
-        $("#nombre_archivo").val("");
-        $(function(){
-            $("#modal_puntos").modal('toggle');
+            $('#lista_puntos').html("");
+            $(".btn-generar-informe").removeClass("d-none");
+            $("#save").addClass("d-none");
+            $("#observaciones").addClass("d-none");
+            $("#observaciones").val("");
+            $("#archivo").addClass("d-none");
+            $("#nombre_archivo").val("");
+            $(function(){
+                $("#modal_puntos").modal('toggle');
+            });
+            }
+            
         });
-        }
-    });
+    
+
+    $("#to_pdf").on("click",function(){
+        var ul_test = 
+        $("#lista_puntos").find("li").filter(function(){
+            return $(this).find("ul").length === 0;
+        }).map(function(i,e){
+            return $(this).text();
+        }).get().join("\n");
+        ;
+        var observaciones = $("#observaciones").val();
+        var informe = "Historial de calles :\n\n"+ ul_test + "\n\nObservaciones : \n\n"+ observaciones;
+        //alert(informe);
+        var nombre_fichero = $("#nombre_archivo").val();
+        if(nombre_fichero == "") {
+            swal({
+                title: "Advertencia",
+                text: "Debes introducir el nombre del archivo",
+                icon: "info",
+                button: "Aceptar",
+                dangerMode: true,
+                })
+        }else{
+            var doc = new jsPDF()
+
+            doc.text(informe,10,10);
+            doc.save(nombre_fichero+".pdf");
+
+            $('#lista_puntos').html("");
+            $(".btn-generar-informe").removeClass("d-none");
+            $("#save").addClass("d-none");
+            $("#observaciones").addClass("d-none");
+            $("#observaciones").val("");
+            $("#archivo").addClass("d-none");
+            $("#nombre_archivo").val("");
+            $(function(){
+                $("#modal_puntos").modal('toggle');
+            });
+            }
+            
+        });
+    
+    
 
     $("#close").click(function(){
         $('#lista_puntos').html("");
         $(".btn-generar-informe").removeClass("d-none");
-        $("#save").addClass("d-none");
+        $("#formato").addClass("d-none");
         $("#observaciones").addClass("d-none");
         $("#observaciones").val("");
         $("#archivo").addClass("d-none");
@@ -253,6 +300,67 @@ insertar_con_punto = false;
     
     // TEST PARA CAPTURA DE PANTALLA //
 
+    // TEST PARA EL ZOOM DONDE EL RATON //
+    /*
+    $(document).ready(function (){
+        new ScrollZoom($('#prueba'),3,0.1)
+    });
+
+    function ScrollZoom(container,max_scale,factor){
+        var target = container.children().first()
+        var size = {w:target.width(),h:target.height()}
+        var pos = {x:0,y:0}
+        var zoom_target = {x:0,y:0}
+        var zoom_point = {x:0,y:0}
+        var scale = 1
+        target.css('transform-origin','0 0')
+        target.on("mousewheel DOMMouseScroll",scrolled)
+    
+        function scrolled(e){
+            var offset = container.offset()
+            zoom_point.x = e.pageX - offset.left
+            zoom_point.y = e.pageY - offset.top
+    
+            e.preventDefault();
+            var delta = e.delta || e.originalEvent.wheelDelta;
+            if (delta === undefined) {
+              //we are on firefox
+              delta = e.originalEvent.detail;
+            }
+            delta = Math.max(-1,Math.min(1,delta)) // cap the delta to [-1,1] for cross browser consistency
+    
+            // determine the point on where the slide is zoomed in
+            zoom_target.x = (zoom_point.x - pos.x)/scale
+            zoom_target.y = (zoom_point.y - pos.y)/scale
+    
+            // apply zoom
+            scale += delta*factor * scale
+            scale = Math.max(1,Math.min(max_scale,scale))
+    
+            // calculate x and y based on zoom
+            pos.x = -zoom_target.x * scale + zoom_point.x
+            pos.y = -zoom_target.y * scale + zoom_point.y
+    
+    
+            // Make sure the slide stays in its container area when zooming out
+            if(pos.x>0)
+                pos.x = 0
+            if(pos.x+size.w*scale<size.w)
+                pos.x = -size.w*(scale-1)
+            if(pos.y>0)
+                pos.y = 0
+             if(pos.y+size.h*scale<size.h)
+                pos.y = -size.h*(scale-1)
+    
+            update()
+        }
+    
+        function update(){
+            target.css('transform','translate('+(pos.x)+'px,'+(pos.y)+'px) scale('+scale+','+scale+')')
+        }
+    }
+    // TEST PARA EL ZOOM DONDE EL RATON //
+*/
     // Selecciona una calle.
     $(document).on( "click", ".calles",function() {
 
@@ -1066,7 +1174,6 @@ e.preventDefault();
                         </tbody>
                         
                 </table>
-                <button id="camera">CAPTURA</button>
             </div>
 
             <!-- <div id='ranges'>
@@ -1224,7 +1331,7 @@ e.preventDefault();
 
 
         <!-- Modal puntos -->
-    <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1245,16 +1352,23 @@ e.preventDefault();
                     <textarea id='observaciones' class='form-control d-none' aria-label='Observaciones' name='observaciones' rows='4' cols='80' placeholder='Observaciones'></textarea>
                 </div>
 
-                <div id="div_captura"></div>
+                <div class="col"></div>
+                <div class="col d-none" id="formato">
+                    <div class="row" id="third_row">    
+                        <div class="col text-center">
+                        <a id="to_word"><?php echo"<img src='".base_url("/assets/img/icono/word.png")."' id='word_logo' style='width:75px;height:75px;'>";?></a>
+                        
+                        <a id="to_pdf"><?php echo"<img src='".base_url("/assets/img/icono/pdf.png")."' id='pdf_logo' style='width:75px;height:72px;margin-left:25px;'>";?></a>
+                        </div>
+
+                    </div> <!-- third_row -->
                 </div>
+
+                <div class="col"></div>
                 <div class="modal-footer">
-                    
-                    <span id='msg_insertar_con_punto' data-toggle='tooltip' data-placement='bottom'> <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"></span>Insertar en este punto</button> </span>
-                    <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"></span> Modificar punto</button>
                     <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"> </span> Asignar calle a este punto</button>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"> </span> Modificar punto</button>
                     <button type="button" class="btn btn-success btn-generar-informe" ><span class="fas fa-pencil-alt"> </span> Redactar informe</button>
-                    <button type='button' id='save' class='btn btn-success btn-guardar-informe d-none' ><span class='far fa-save'> </span> Guardar informe</button>
                 </div>
             </div>
         </div>
