@@ -41,19 +41,19 @@
 
     <style>
         .copyright {
-            background-color: #800000 !important;
+            background-color: #595959 !important;
         }
 
         .navbar-toggler {
-            background-color: #cc0000 !important;
+            background-color: #7f7f7f !important;
         }
 
         .nav-link.active {
-            color: #cc0000 !important;
+            color: white !important;
         }
 
         .footer {
-            background-color: #d33529 !important;
+            background-color: #7f7f7f !important;
         }
 
         .masthead {
@@ -61,21 +61,19 @@
         }
 
         .navbar {
-            background-color: #d33529 !important;
+            background-color: #595959 !important;
         }
 
         .active {
-            background-color: #800000 !important;
+            background-color: #7f7f7f !important;
         }
 
         a.nav-link:hover {
-            color: #cc0000 !important;
+            color: white !important;
         }
 
         #mapa {
-            background-image: url(<?php echo base_url()?>assets/img/papyrus.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
+            background-color: #cccccc !important;
         }
 
         .masthead {
@@ -93,9 +91,7 @@
         }
 
         #contacto {
-            background-image: url(<?php echo base_url()?>/assets/img/papyrus.jpg);
-            background-repeat: no-repeat;
-            background-size: cover;
+            background-color: #cccccc !important;
         }
 
         #sendMessageButton {
@@ -467,15 +463,6 @@
 
 
             });
-
-        });
-
-        function changeOpacity(i) {
-            $(document).on("input", "#slider_" + i, function() {
-                var opacity = $(this).val();
-                $("#img_" + i).css("opacity", opacity);
-            });
-        }
 
     </script>
 
