@@ -32,6 +32,7 @@
     <script src=<?php echo base_url("assets/js/back_up.js");?>></script>
     <script src=<?php echo base_url("assets/js/FileSaver.js");?>></script>
     <script src=<?php echo base_url("assets/js/jspdf.js");?>></script>
+    <script src=<?php echo base_url("assets/js/jspdf-autotable.js");?>></script>
     
 
 

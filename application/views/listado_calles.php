@@ -36,32 +36,83 @@
 
 
         $("#botonConvWord").on("click", function() {
-            var ul_test =
-                $("#lista_puntos").find("li").filter(function() {
-                    return $(this).find("ul").length === 0;
-                }).map(function(i, e) {
-                    return $(this).text();
-                }).get().join("\n");
-            var informe = "Listado de calles de calles :\n\n" + ul_test;
-            //alert(informe);
-            var nombre_fichero = $("#nombre_archivo").val();
-            if (nombre_fichero == "") {
-                swal({
-                    title: "Advertencia",
-                    text: "Debes introducir el nombre del archivo",
-                    icon: "info",
-                    button: "Aceptar",
-                    dangerMode: true,
-                })
-            } else {
-                var blob = new Blob([informe], {
-                    type: "charset=utf-8"
-                });
-                saveAs(blob, "informe_" + nombre_fichero + ".doc");
+            var pdf = new jsPDF();
+            pdf.text(20, 20, "Mostrando una Tabla con PHP y MySQL");
+
+            var columns = [ 
+                <?php
+                $arrayIdMap = array();
+                foreach ($mapas_calles as $todo) {
+                    if (!in_array($todo["idMapa"], $arrayIdMap)) {
+                        array_push($arrayIdMap, $todo["idMapa"]);
+                        echo "" . $todo["titulo"] . "";
+                    }
+                }
+                ?>
+            ];
+            var data = [
+                <?php
+            $arrayIDS = $arrayIdMap;
+            foreach ($mapas_calles as $key => $todo)  {
+                
+                if ((sizeof($mapas_calles)-1) > $key) {
+                    $nextPuntoX = $mapas_calles[$key + 1]["puntoX"];
+
+                    $nextPuntoY = $mapas_calles[$key + 1]["puntoY"];            
+                }
+                
+                if ((sizeof($mapas_calles)-1) == $key) {
+                    $nextPuntoX = -1000000;
+
+                    $nextPuntoY = -1000000;
+                }
+                
+                if (($todo["puntoX"] == $nextPuntoX) && ($todo["puntoY"] == $nextPuntoY)) {
+                    foreach ($arrayIDS as $key => $ids) {
+                        if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
+                            $arrayIDS[$key] = "<td>" . $todo["tipo"] . " " . $todo["nombre"] . "</td>";
+                        }
+                        
+                        else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key])) {
+                            //$arrayIDS[$key] = "<td></td>";            
+                        }
+                    }
+                }
+                
+                else if (($todo["puntoX"] != $nextPuntoX) && ($todo["puntoY"] != $nextPuntoY)) {
+                    foreach ($arrayIDS as $key => $ids) {
+                        if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
+                            $arrayIDS[$key] = "<td>" . $todo["tipo"] . " " . $todo["nombre"] . "</td>";
+                        }
+                        
+                        else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key]))  {
+                            $arrayIDS[$key] = "<td></td>";
+                        }
+                    }
+                    foreach ($arrayIDS as $ids) {
+                        echo $ids;                        
+                    }
+                    if (($nextPuntoX == -1000000) && ($nextPuntoY == -1000000)) {
+                        echo "</tr>";
+                    }
+                    else {
+                        $arrayIDS = $arrayIdMap;
+                        echo "</tr><tr>";
+                    }
+                    
+                }
             }
+        ?>
+            ];
 
+            pdf.autoTable(columns, data, {
+                margin: {
+                    top: 25
+                }
+            });
+
+            pdf.save('MiTabla.pdf');
         });
-
 
         $("#botonConvPDF").on("click", function() {
             var ul_test =
@@ -69,7 +120,7 @@
                     return $(this).find("ul").length === 0;
                 }).map(function(i, e) {
                     return $(this).text();
-                }).get().join("\n");;
+                }).get().join("\n");
             var observaciones = $("#observaciones").val();
             var informe = "Historial de calles :\n\n" + ul_test + "\n\nObservaciones : \n\n" + observaciones;
             //alert(informe);
