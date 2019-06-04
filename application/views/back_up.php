@@ -111,6 +111,8 @@
                         <input type='hidden' value='' name='tablas' id='tablas_export'/>
                          
                         ");
+                    echo anchor("BackUp/backup_assets/","DESCARGAR ASSETS","class='btn btn-info'");
+
             ?>
 
                 <div class='modal-footer'>
@@ -141,23 +143,38 @@
 
                 <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
                 <?php
-                echo form_open_multipart('BackUp/import_data');
-                echo("
+                echo form_open_multipart('BackUp/import_data'); ?>
+            
                 <div class='custom-file'>
                     <input type='file' name='file_sql' class='custom-file-input' id='file_sql' required>
-                    <label class='custom-file-label' for='file_sql'>Seleccionar Archivo</label>
+                    <label class='custom-file-label' for='file_sql'>Seleccionar SQL</label>
                 </div>
-                        ");
-            ?>
 
-                <div class='modal-footer'>
+                
             <?php
                 echo ("
-                    <input type='submit' class='btn btn-info' value='Importar' id='importar'/>
+                    <input type='submit' class='btn btn-info' value='Importar SQL' id='importar'/>
                     </form>
                 ");
             ?>
+
+            <?php
+                echo form_open_multipart('BackUp/restore_assets'); ?>
+                <div class='custom-file'>
+                    <input type='file' name='assetsZip' class='custom-file-input' id='assetsZip' required>
+                    <label class='custom-file-label' for='file_sql'>Seleccionar ASSETS</label>
                 </div>
+
+                
+            <?php
+                echo ("
+                    <input type='submit' class='btn btn-info' value='Importar ASSETS' id='importar'/>
+                    </form>
+                ");
+            ?>
+
+
+                
                 </div>
             </div> <!-- cierra el modal body -->
         </div>
