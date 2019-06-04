@@ -38,6 +38,10 @@ class modelMapas extends CI_Model {
 
         if ($this->db->trans_status() === FALSE || $ruta == false){
             $this->db->trans_rollback();
+            var_dump($titulo, $fecha, $ruta);
+
+                    $query = $this->db->query("INSERwwwwT INTO mapas (id, titulo, fecha, imagen, fecha_de_subida) VALUES (null,'$titulo','$fecha','$ruta',NOW());"); 
+
         } else {
             $valid = 1;
             $this->db->trans_commit();

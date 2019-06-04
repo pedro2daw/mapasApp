@@ -40,6 +40,7 @@
         coords_y = [];
         var principal = false;
         $(document).ready(function() {
+            $(".se-pre-con").fadeOut("slow");;
             // Click solo una vez.
             // Mapa ya dibujado el punto.
 
@@ -327,6 +328,7 @@
     </style>
 </head>
 
+<div class="se-pre-con"></div>
 <body>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/mdbootstrap4.7.6.js"></script>
 

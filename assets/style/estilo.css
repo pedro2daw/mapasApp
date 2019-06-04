@@ -245,3 +245,37 @@ input[type=range]:focus::-ms-fill-upper {
     color: rgb(212, 19, 19);
     font-size: 100px !important;
 }
+
+no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	/*background: url("../img/icono/Preloader_1.gif") center no-repeat #fff; */
+}
+
+
+/* estilos de backup */
+
+.backup-wrapper, #btn-assets {
+    display: flex;
+    justify-content: center;
+    
+}
+.backup-wrapper {
+    margin-bottom: 30px;
+}
+
+#tablas, #assets, #import-sql, #import-assets {
+    display: none;
+}
+
+.custom-file-input {
+    margin: 30px;
+}
+
+

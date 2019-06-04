@@ -1,13 +1,41 @@
 <script>
     $(document).ready(function(){
         $('#enlace_back').toggleClass('active');
+        $("#btn-assets").click(function(){
+        $("#btn-assets").removeClass("btn-secundary").addClass("btn-success");
+        $("#btn-tablas").removeClass("btn-success").addClass("btn-secundary");
+        $("#tablas").hide();
+        $("#assets").show();
+        });
+
+        $("#btn-tablas").click(function(){
+        $("#btn-tablas").removeClass("btn-secundary").addClass("btn-success");
+        $("#btn-assets").removeClass("btn-success").addClass("btn-secundary");
+        $("#tablas").show();
+        $("#assets").hide();
+        });
+
+        $("#btn-import-sql").click(function(){
+        $("#btn-import-sql").removeClass("btn-secundary").addClass("btn-info");
+        $("#btn-import-assets").removeClass("btn-info").addClass("btn-secundary");
+        $("#import-sql").show();
+        $("#import-assets").hide();
+        });
+
+        $("#btn-import-assets").click(function(){
+        $("#btn-import-assets").removeClass("btn-secundary").addClass("btn-info");
+        $("#btn-import-sql").removeClass("btn-info").addClass("btn-secundary");
+        $("#import-sql").hide();
+        $("#import-assets").show();
+        });
+
     });
 </script>
 <div class="container-fluid">
 
     <div class="row" id="first_row" style="margin-top:2%;">
         <div class="col"></div>
-        <div class="col text-center"><h1>BACK UP</h1></div>
+        <div class="col text-center"><h1>Copias de Seguridad</h1></div>
         <div class="col"></div>
     </div><!-- firt_row-->
 
@@ -46,24 +74,28 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Selecciona la tabla a exportar</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Exportar contenido</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-
-                <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
-                <?php
-                echo form_open('BackUp/export_database');
-                echo("
-
-                <div class='custom-control custom-checkbox'>
-                    <input class='custom-control-input' type='checkbox' value='todos' id='todos' name='check_tables'>
-                    <label class='custom-control-label' for='todos'>
-                    Todos los datos
-                    </label>
+                <div class="backup-wrapper">
+                    <button type="button" class="btn btn-secundary" id="btn-tablas"> Tablas </button>
+                    <button type="button" class="btn btn-secundary" id="btn-assets"> Contenido </button>
                 </div>
+                <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
+                <div id="tablas">
+                <h4>Seleccione las tablas a exportar</h4>
+                
+                <?php
+                echo form_open('BackUp/export_database'); ?>
+                    <div class='custom-control custom-checkbox'>
+                        <input class='custom-control-input' type='checkbox' value='todos' id='todos' name='check_tables'>
+                        <label class='custom-control-label' for='todos'>
+                        Base de datos completa
+                        </label>
+                    </div>
 
                     <div class='custom-control custom-checkbox'>
                         <input class='custom-control-input' type='checkbox' value='calles' id='calles' name='check_tables'>
@@ -107,21 +139,17 @@
                         </label>
                     </div>
 
-                                        
                         <input type='hidden' value='' name='tablas' id='tablas_export'/>
-                         
-                        ");
-                    echo anchor("BackUp/backup_assets/","DESCARGAR ASSETS","class='btn btn-info'");
-
-            ?>
+                        <input type='submit' class='btn btn-success' value='Exportar' id='exportar' disabled />
+                    </form>
+                     </div>    
+                    
+                    <div id="assets">
+                    <?php echo anchor("BackUp/backup_assets/","Descargar contenido","class='btn btn-success' id='btn-assets'"); ?>
+                    </div>
 
                 <div class='modal-footer'>
-            <?php
-                echo ("
-                    <input type='submit' class='btn btn-success' value='Exportar' id='exportar' disabled />
-                    </form>
-                ");
-            ?>
+                    
                 </div>
                 </div>
             </div> <!-- cierra el modal body -->
@@ -134,47 +162,46 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Selecciona el archivo a importar</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Seleccione el contenido a importar</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <!-- ****************** CUERPO DEL CUADRO MODAL INSERT *********************** -->
-                <?php
-                echo form_open_multipart('BackUp/import_data'); ?>
-            
-                <div class='custom-file'>
-                    <input type='file' name='file_sql' class='custom-file-input' id='file_sql' required>
-                    <label class='custom-file-label' for='file_sql'>Seleccionar SQL</label>
+            <div class="backup-wrapper">
+                    <button type="button" class="btn btn-secundary" id="btn-import-sql"> SQL </button>
+                    <button type="button" class="btn btn-secundary" id="btn-import-assets"> ASSETS </button>
                 </div>
 
-                
-            <?php
-                echo ("
-                    <input type='submit' class='btn btn-info' value='Importar SQL' id='importar'/>
-                    </form>
-                ");
-            ?>
 
-            <?php
-                echo form_open_multipart('BackUp/restore_assets'); ?>
-                <div class='custom-file'>
-                    <input type='file' name='assetsZip' class='custom-file-input' id='assetsZip' required>
-                    <label class='custom-file-label' for='file_sql'>Seleccionar ASSETS</label>
-                </div>
+                    <div id="import-sql">
+                        <?php echo form_open_multipart('BackUp/import_data'); ?>
+                    
+                        <div class='custom-file'>
+                            <input type='file' name='file_sql' class='custom-file-input' id='file_sql' required>
+                            <label class='custom-file-label' for='file_sql'>Seleccionar SQL</label>
+                        </div>
+                            <input type='submit' class='btn btn-info' value='Importar SQL' id='importar'/>
+                        </form>
+                    </div>
 
-                
-            <?php
-                echo ("
-                    <input type='submit' class='btn btn-info' value='Importar ASSETS' id='importar'/>
-                    </form>
-                ");
-            ?>
+                    <div id="import-assets">
+                        <?php
+                            echo form_open_multipart('BackUp/restore_assets'); ?>
+                            <div class='custom-file'>
+                                <input type='file' name='assetsZip' class='custom-file-input' id='assetsZip' required>
+                                <label class='custom-file-label' for='file_sql'>Seleccionar ASSETS</label>
+                            </div>
 
-
-                
+                            
+                        <?php
+                            echo ("
+                                <input type='submit' class='btn btn-info' value='Importar ASSETS' id='importar'/>
+                                </form>
+                            ");
+                        ?>
+                    </div>
                 </div>
             </div> <!-- cierra el modal body -->
         </div>
