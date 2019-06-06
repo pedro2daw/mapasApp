@@ -381,9 +381,6 @@ insertar_con_punto = false;
         // Borra el punto en el mapa:
         var top = $('#prueba').scrollTop();
         var left = $('#prueba').scrollLeft();
-
-        
-
         console.log(" ******************************* ");
         console.log("top y left "+ top + " " +left + "zoom" + zoom + "X " + x + " Y " + y);
 
@@ -411,7 +408,8 @@ insertar_con_punto = false;
             $(document).on( "mouseover", ".hot-spot-1", function (e){
                 $(this).css({'cursor':'cursor'  , 'pointer-events': 'none' });
             });
-            
+                            $('.btn-continuar').hide();
+
             } else {
                 // Si añado un punto en el mapa para una calle sin punto asignado y selecciono otra calle (con punto) del listado. El mapa debe resetearse y ocutarse el boton de continuar.
                 $('.btn-continuar').hide();

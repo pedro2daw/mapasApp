@@ -8,7 +8,7 @@ class Login extends CI_Controller {
     public function index(){
         $this->load->model('modelSecurity');
         $this->load->model('modelUser');
-        $this->load->model('modelPaquetes');
+        
         $this->load->model('modelMapas');
         $this->load->model('modelCalles');
         $data["noHeader"] = false;
@@ -25,7 +25,7 @@ class Login extends CI_Controller {
     public function logout() {
         $this->load->model('modelSecurity');
         $this->load->model('modelUser');
-        $this->load->model('modelPaquetes');
+        
         $this->load->model('modelMapas');
         $this->load->model('modelCalles');
         $data["noHeader"] = false;
@@ -39,7 +39,7 @@ class Login extends CI_Controller {
     public function checkLogin(){
         $this->load->model('modelSecurity');
         $this->load->model('modelUser');
-        $this->load->model('modelPaquetes');
+        
         $this->load->model('modelMapas');
         $this->load->model('modelCalles');
         $name = $this->input->get_post("name");
@@ -57,8 +57,7 @@ class Login extends CI_Controller {
             $this->modelSecurity->create_session();
             $this->session->set_userdata("id", $id);
             $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
-            $data['ListaPaquetes'] = $this->modelPaquetes->get_name();
-            // var_dump($data['ListaPaquetes']);
+         // var_dump($data['ListaPaquetes']);
             $data["msg"] = null;
             $this->session->set_flashdata('data',$data);
             redirect('Maps/index');

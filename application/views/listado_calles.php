@@ -3,8 +3,7 @@
         $('#enlace_listado').toggleClass('active');
 
         var table = $('#example').DataTable({
-            "scrollY": "200px",
-            "paging": false
+            "paging": true
         });
 
         $('a.toggle-vis').on('click', function(e) {
@@ -15,23 +14,32 @@
             // Toggle the visibility
             column.visible(!column.visible());
         });
+
+        $('#botonConvPDF').on('click', function(e) {
+            var nombrePDF = $("#nombrePDF").val();
+            var doc = new jsPDF();
+            doc.autoTable({
+            });
+            doc.autoTable({
+                html: '#example'
+            });
+            doc.save(nombrePDF + ".pdf");
+        });
+
     });
 
 </script>
-
-<?php 
-    //var_dump($mapas_calles);
-?>
 
 <div id="mostrarOcultar">
     Mostrar/ocultar columnas:
     <?php
         $arrayIdMap = array();
         $col = 0;
+        echo " * ";
         foreach ($mapas_calles as $todo) {
             if (!in_array($todo["idMapa"], $arrayIdMap)) {
                 array_push($arrayIdMap, $todo["idMapa"]);
-                echo "<a class='toggle-vis' data-column='" . $col . "'>" . $todo["titulo"] . "</a> - ";
+                echo "<a class='toggle-vis' style='color: blue' data-column='" . $col . "'>" . $todo["titulo"] . "</a> * ";
                 $col++;
             }
         }
@@ -53,8 +61,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr>         
-        <?php
+        <tr>
+            <?php
             $arrayIDS = $arrayIdMap;
             foreach ($mapas_calles as $key => $todo)  {
                 
@@ -73,7 +81,7 @@
                 if (($todo["puntoX"] == $nextPuntoX) && ($todo["puntoY"] == $nextPuntoY)) {
                     foreach ($arrayIDS as $key => $ids) {
                         if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
-                            $arrayIDS[$key] = "<td>" . $todo["nombre"] . "</td>";
+                            $arrayIDS[$key] = "<td>" . $todo["tipo"] . " " . $todo["nombre"] . "</td>";
                         }
                         
                         else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key])) {
@@ -85,7 +93,7 @@
                 else if (($todo["puntoX"] != $nextPuntoX) && ($todo["puntoY"] != $nextPuntoY)) {
                     foreach ($arrayIDS as $key => $ids) {
                         if (($todo["idMap"] == $ids) && ((is_numeric($arrayIDS[$key])) || ($arrayIDS[$key] == "<td></td>"))) {
-                            $arrayIDS[$key] = "<td>" . $todo["nombre"] . "</td>";
+                            $arrayIDS[$key] = "<td>" . $todo["tipo"] . " " . $todo["nombre"] . "</td>";
                         }
                         
                         else if (($todo["idMap"] != $ids) && is_numeric($arrayIDS[$key]))  {
@@ -121,3 +129,8 @@
         </tr>
     </tfoot>
 </table>
+
+<div id="botonesTabla">
+    <input type="text" id="nombrePDF">
+    <input type="button" id="botonConvPDF" value="Convertir a PDF" />
+</div>

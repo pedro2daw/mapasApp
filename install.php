@@ -211,7 +211,7 @@
 
             $db->query("ALTER TABLE `mapas` ADD PRIMARY KEY (`id`)");
 
-			$db->query("ALTER TABLE `paquetes`ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `nombre` (`nombre`);");
+			//$db->query("ALTER TABLE `paquetes`ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `nombre` (`nombre`);");
 
             $db->query("ALTER TABLE `puntos` ADD PRIMARY KEY (`id`);");
 

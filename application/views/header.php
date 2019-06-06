@@ -32,6 +32,7 @@
     <script src=<?php echo base_url("assets/js/back_up.js");?>></script>
     <script src=<?php echo base_url("assets/js/FileSaver.js");?>></script>
     <script src=<?php echo base_url("assets/js/jspdf.js");?>></script>
+    <script src=<?php echo base_url("assets/js/jspdf-autotable.js");?>></script>
     
 
 
@@ -40,6 +41,7 @@
         coords_y = [];
         var principal = false;
         $(document).ready(function() {
+            $(".se-pre-con").fadeOut("slow");;
             // Click solo una vez.
             // Mapa ya dibujado el punto.
 
@@ -147,7 +149,7 @@
                 
                 $('#table_mapas').removeClass('blue-grey lighten-5 border');
                 $('#delCoord').hide();
-                if (modificar != null) {
+                if (modificar != null && $(".selected").hasClass("warning")) {
                     x_aux = null;
                     y_aux = null;
                     modificar = null;
@@ -307,16 +309,27 @@
             cursor: grabbing;
         }
 
+        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
+        
+        /* Estilo tabla calles */
         #mostrarOcultar {
             width: 600px;
             margin: 0 auto;
             margin-top: 40px;
         }
-        /* pongo este estilo para probar , cuando funcione lo pongo en archivo externo */
-
+        
+        #botonesTabla {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+        
+        /* Estilo tabla calles */
+        
     </style>
 </head>
 
+<div class="se-pre-con"></div>
 <body>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/mdbootstrap4.7.6.js"></script>
 
