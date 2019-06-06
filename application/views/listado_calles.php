@@ -16,15 +16,14 @@
         });
 
         $('#botonConvPDF').on('click', function(e) {
-            
+            var nombrePDF = $("#nombrePDF").val();
             var doc = new jsPDF();
             doc.autoTable({
             });
             doc.autoTable({
-                html: '#example',
-                startY: 100
+                html: '#example'
             });
-            doc.output("dataurlnewwindow");
+            doc.save(nombrePDF + ".pdf");
         });
 
     });
@@ -132,5 +131,6 @@
 </table>
 
 <div id="botonesTabla">
+    <input type="text" id="nombrePDF">
     <input type="button" id="botonConvPDF" value="Convertir a PDF" />
 </div>
