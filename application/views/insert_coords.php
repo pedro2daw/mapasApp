@@ -224,6 +224,7 @@ insertar_con_punto = false;
             $("#observaciones").val("");
             $("#archivo").addClass("d-none");
             $("#nombre_archivo").val("");
+            $("#formato").addClass("d-none");
             $(function(){
                 $("#modal_puntos").modal('toggle');
             });
@@ -265,6 +266,7 @@ insertar_con_punto = false;
             $("#observaciones").val("");
             $("#archivo").addClass("d-none");
             $("#nombre_archivo").val("");
+            $("#formato").addClass("d-none");
             $(function(){
                 $("#modal_puntos").modal('toggle');
             });
