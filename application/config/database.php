@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -72,17 +71,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
+var_dump(getenv('DB_HOSTNAME'));
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => getenv("DB_HOSTNAME"),
+	'hostname' => getenv('DB_HOSTNAME'),
 	'username' => getenv('DB_USERNAME'),
 	'password' => getenv('DB_PASSWORD'),
 	'database' => getenv('DB_DATABASE'),
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
-	'db_debug' => TRUE,//(ENVIRONMENT == 'production'),
+	'db_debug' => (ENVIRONMENT == 'production'),
 	'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',
