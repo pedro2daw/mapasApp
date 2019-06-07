@@ -1236,6 +1236,7 @@ e.preventDefault();
                                         <option value='Calle'>Calle</option>
                                         <option value='Callejon'>Callejón</option>
                                         <option value='Camino'>Camino</option>
+                                        <option value='Carrera'>Carrera</option>
                                         <option value='Carretera'>Carretera</option>
                                         <option value='Glorieta'>Glorieta</option>
                                         <option value='Pasaje'>Pasaje</option>
