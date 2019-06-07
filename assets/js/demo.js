@@ -203,7 +203,8 @@ var hotspot_width = 40;
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
-            $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            //$(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            
             
         } else {
         // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
@@ -215,7 +216,8 @@ var hotspot_width = 40;
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
-            $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            //$(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            
             
                            
 

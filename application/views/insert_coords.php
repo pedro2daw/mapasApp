@@ -181,8 +181,11 @@ insertar_con_punto = false;
         $("#save").removeClass("d-none");
         $("#observaciones").removeClass("d-none");
         $("#archivo").removeClass("d-none");
-        $("#cabecera").removeClass("d-none");
+        //$("#cabecera").removeClass("d-none");
         $("#formato").removeClass("d-none");
+        $(".btn-modificar-punto").addClass("d-none");
+        $(".btn-insertar-con-punto").addClass("d-none");
+        $(".btn-cerrar-informe").removeClass("d-none");
         swal({
                 title: "Información",
                 text: "El contenido del informe contendrá el historial de la calle seleccionada y las observaciones que introduzcas (opcional)",
@@ -190,6 +193,16 @@ insertar_con_punto = false;
                 button: "Aceptar",
                 dangerMode: false,
                 })
+    });
+
+    $(".btn-cerrar-informe").click(function(){
+        $(".btn-modificar-punto").removeClass("d-none");
+        $(".btn-insertar-con-punto").removeClass("d-none");
+        $(".btn-generar-informe").removeClass("d-none");
+        $("#formato").addClass("d-none");
+        $("#archivo").addClass("d-none");
+        $("#observaciones").addClass("d-none");
+        $(".btn-cerrar-informe").addClass("d-none");
     });
 
 
@@ -463,7 +476,7 @@ insertar_con_punto = false;
             console.log('Punto X: ' + x);
             console.log('Punto Y: ' + y);
 
-            $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
+            $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y  + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block; width:20px; height:20px;'></div>");
             
             if (zoom == 1){
                 $('#prueba').scrollTop((y - ($('#prueba').height() /2) -5 )  * zoom ); 
@@ -1369,6 +1382,7 @@ e.preventDefault();
                     <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"> </span> Asignar calle a este punto</button>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"> </span> Modificar punto</button>
                     <button type="button" class="btn btn-success btn-generar-informe" ><span class="fas fa-pencil-alt"> </span> Redactar informe</button>
+                    <button type="button" class="btn btn-info btn-cerrar-informe d-none" ><span class="fas fa-pencil-alt"> </span> Cerrar informe</button>
                 </div>
             </div>
         </div>
