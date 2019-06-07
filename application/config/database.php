@@ -71,7 +71,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-var_dump(getenv('DB_HOSTNAME'));
 
 $db['default'] = array(
 	'dsn'	=> '',
