@@ -866,7 +866,7 @@ insertar_con_punto = false;
     }
     
 if (modificar == null) {
-
+console.log('pasa po raqui ');
     var formData = {
         'x' : json_x,
         'y' : json_y,
@@ -889,19 +889,21 @@ if (modificar == null) {
             var msg = data.msg;
             console.log(data);
             console.log(msg);
- 
+
             if (msg == '0'){
+                console.log('pasa por aqui por el msg');
                 $("#id_calle_warning_"+id).removeClass('warning');
                 var count = Object.keys(data).length;
-           
+                       console.log("count" + count);
+                var x = x_aux;
+                var y = y_aux;
+                if (count > 1){
                 var x = data[0].x;
                 var y = data[0].y;
                 console.log(x);
                 console.log(y);
-                console.log(count);
                 
                 for (i = 0; i < count -1 ; i++){
-                    console.log(data[i].nombre);
                    var rowNode = table.row.add( {
                             "Tipo": "",
                             "Nombre": "",
@@ -915,7 +917,7 @@ if (modificar == null) {
                         $(rowNode).find('td').eq(3).attr({'data-id': data[i].id}).addClass('calles').text(data[i].tipo + " " + data[i].nombre );
                     // $('#tabla_calles').append("<tr id='calle_"+data[i].id+"'> <td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='punto_"+data[i].id+"' class='d-none' data-x='"+data[i].x+"' data-y='"+data[i].y+"'> <td class='calles' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td> </tr> ");
                 }
-
+                }
                 
                 $('#calle_'+id).html("<td id='tipo_"+id+"' class='d-none'>"+tipo+"</td><td  id='nombre_"+id+"' class='d-none'>"+nombre+"</td> <td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> <td class='calles' data-id="+id+">"+tipo+" "+nombre+"</td>");
                 
@@ -951,6 +953,8 @@ if (modificar == null) {
                 swal("Punto insertado con éxito",{
                     icon: "success"
                 });
+                insertar_con_punto = false;
+
             } else {
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-danger' role='alert'> Se ha producido un error.  </div>");

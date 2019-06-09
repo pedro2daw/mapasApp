@@ -136,7 +136,9 @@ include_once('Security.php');
                 
             } else {
                 // obtiene las calles que acabamos de insertar, las renombradas.
+                if (isset($calles_nuevas)){
                 $data = $this->modelCalles->last_inserted_calles($length);
+                }
                 $data['msg'] = '0';
                 echo json_encode($data);
             }   
@@ -158,7 +160,9 @@ include_once('Security.php');
                 $data["listaMapas"] = $this->modelMapas->get_all();
                 $data["listaCalles"] = $this->modelCalles->get_all();
             } else {
-                $data = $this->modelCalles->last_inserted_calles($length +1);
+                if ($length > 0){
+                    $data = $this->modelCalles->last_inserted_calles($length);
+                }
                 $data['msg'] = '0';
                 echo json_encode($data);
             }   
