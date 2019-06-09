@@ -39,7 +39,7 @@
 
                         if (msg == '0'){
                             for (i = 0; i < count -1 ; i++){
-                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
+                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " Correcto en: " + data[i].titulo + "</li>")
                             }
                         } else {
                             }
@@ -466,7 +466,7 @@ insertar_con_punto = false;
                     $("li").eq('3').toggleClass('active',false);
                     $('.custom-checkbox').removeClass('disabledbutton');
                     $('.nombre_calles').hide();
-                    $('.esta-en-mapa').text("Se encuentra en el mapa");
+                    $('.esta-en-mapa').text("Correcto en:");
 
                     $('.checkbox_calles').show();
                     $('.btn-continuar').show();
@@ -1144,7 +1144,7 @@ e.preventDefault();
 
     <div class="row">
         <div class="col-md-12 botones">
-            <button type="button" class="btn btn-primary btn-anadir" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Añadir Calle</button>
+            <button type="button" class="btn btn-primary btn-anadir" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> AÑADIR A LA LISTA </button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <button type='button' class="btn btn-warning btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Punto"><span class='fas fa-map-marked-alt'></span> Confirmar Punto</button>
@@ -1197,7 +1197,7 @@ e.preventDefault();
             </div> <!-- fin table-responsive -->
 
             <div id='table_mapas'>
-                <table class="table table-hover">
+                <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Mapas</th>
@@ -1222,8 +1222,10 @@ e.preventDefault();
                                         <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en este mapa: </label> 
                                         <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> 
                                     </div>
-                                </div> 
                                 <h6 id='msg_no_existia_calle_".$mapa['id']."'> </h6>
+                                </div> 
+                                
+                                
                                 </td>";    
                                 }else {
                                 echo "<td>
@@ -1233,13 +1235,15 @@ e.preventDefault();
                                         <button id='btn-renombrar_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-success btn-renombrar'>Renombrar</button>
                                         <button id='btn-noexiste_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-warning btn-no-existe'>No existe</button>
                                     </div>
-                                <div id='renombrar_calle_".$mapa['id']."' class='wrapper-rename'>
-                                        <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en este mapa: </label> 
-                                        <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> 
+                                    <div id='renombrar_calle_".$mapa['id']."' class='wrapper-rename'>
+                                            <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en este mapa: </label> 
+                                            <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> 
+                                    </div>
+                                <h6 id='msg_no_existia_calle_".$mapa['id']."' > </h6>
                                 </div>
 
-                                <h6 id='msg_no_existia_calle_".$mapa['id']."'> </h6>
-
+                                
+                               
 
                                 </td>";
                                 }

@@ -122,22 +122,22 @@
                     $('.btn-update').hide();
                     $('.btn-delete').hide();
                     $('.btn-anadir').hide();
-                    $('#table_mapas').addClass('blue-grey lighten-5 border');
+                    
                     if (modificar != null) {
                         $('.btn-insert-coords').show();
                         $("li").eq('2').toggleClass('active', false);
                         $("li").eq('3').toggleClass('active', true);
-                        $('#table_mapas').removeClass('blue-grey lighten-5 border');
+                        $('#table_mapas').removeClass('border');
                     } else {
                         $('.custom-checkbox').removeClass('disabledbutton');
                         $('.nombre_calles').hide();
-                        $('.esta-en-mapa').text("Se encuentra en el mapa");
+                        $('.esta-en-mapa').text("Correcto en:");
                         $('.checkbox_calles').show();
                         
                         $('.btn-continuar').show();
                         $('#delCoord').show();
                         $("li").eq('2').toggleClass('active', true);
-                        $('#table_mapas').addClass('blue-grey lighten-5 border border');
+                        $('#table_mapas').addClass('border');
                     }
                 }
             });
@@ -151,7 +151,7 @@
                 }
                 $('.cb_hidden').slideUp();
 
-                $('#table_mapas').removeClass('blue-grey lighten-5 border');
+                $('#table_mapas').removeClass('border');
                 $('#delCoord').hide();
                 if (modificar != null && $(".selected").hasClass("warning")) {
                     x_aux = null;
