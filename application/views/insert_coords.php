@@ -467,7 +467,7 @@ insertar_con_punto = false;
                     $('.custom-checkbox').removeClass('disabledbutton');
                     $('.nombre_calles').hide();
                     $('.esta-en-mapa').text("Se encuentra en el mapa");
-                    
+
                     $('.checkbox_calles').show();
                     $('.btn-continuar').show();
                     $('.btn-anadir').hide();
@@ -898,8 +898,10 @@ if (modificar == null) {
                 var y = data[0].y;
                 console.log(x);
                 console.log(y);
-
-                for (i = 0; i < count -2 ; i++){ 
+                console.log(count);
+                
+                for (i = 0; i < count -1 ; i++){
+                    console.log(data[i].nombre);
                    var rowNode = table.row.add( {
                             "Tipo": "",
                             "Nombre": "",
@@ -914,14 +916,9 @@ if (modificar == null) {
                     // $('#tabla_calles').append("<tr id='calle_"+data[i].id+"'> <td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='punto_"+data[i].id+"' class='d-none' data-x='"+data[i].x+"' data-y='"+data[i].y+"'> <td class='calles' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td> </tr> ");
                 }
 
-                // Si la calle se añade y se inserta sin refrescar:
-                if ($('#punto_'+id) == null){
-                $('#calle_'+id).append("<td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> </td>");
-                } else {
-                // Si la calle se añade, se refresca y se inserta posteriormente:
-                // No se realiza el append y tiene que updatear una row punto_id
-                $('#calle_'+id).html("<td id='tipo_"+data[i].id+"' class='d-none'>"+data[i].tipo+"</td><td  id='nombre_"+data[i].id+"' class='d-none'>"+data[i].nombre+"</td> <td id='punto_"+data[i].id+"' class='d-none' data-x='"+data[i].x+"' data-y='"+data[i].y+"'> <td class='calles' data-id="+data[i].id+">"+data[i].tipo+" "+data[i].nombre+"</td>");
-                }
+                
+                $('#calle_'+id).html("<td id='tipo_"+id+"' class='d-none'>"+tipo+"</td><td  id='nombre_"+id+"' class='d-none'>"+nombre+"</td> <td id='punto_"+id+"' class='d-none' data-x='"+x+"' data-y='"+y+"'> <td class='calles' data-id="+id+">"+tipo+" "+nombre+"</td>");
+                
                 $('.box').html('');
                 $('.box').append("<div class='alert alert-success' role='alert'> Se ha realizado la operación con éxito. </div>");
                 $('.btn-update').hide();
@@ -932,13 +929,9 @@ if (modificar == null) {
                 console.log('inserta');
                 $(".hot-spot-1").remove();
                 $('.custom-checkbox').addClass('disabledbutton');
-
                 $('.nombre_calles').show();
                 $('.esta-en-mapa').text("");
-
                 $('.checkbox_calles').hide();
-
-
                 $('.cb_hidden').hide();
                
                 $('.btn-anadir').show();

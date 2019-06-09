@@ -135,7 +135,8 @@ include_once('Security.php');
                 $data["listaCalles"] = $this->modelCalles->get_all();
                 
             } else {
-                $data = $this->modelCalles->last_inserted_calles($length +1);
+                // obtiene las calles que acabamos de insertar, las renombradas.
+                $data = $this->modelCalles->last_inserted_calles($length);
                 $data['msg'] = '0';
                 echo json_encode($data);
             }   
