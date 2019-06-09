@@ -123,7 +123,6 @@
                     $('.btn-delete').hide();
                     $('.btn-anadir').hide();
                     $('#table_mapas').addClass('blue-grey lighten-5 border');
-
                     if (modificar != null) {
                         $('.btn-insert-coords').show();
                         $("li").eq('2').toggleClass('active', false);
@@ -131,6 +130,10 @@
                         $('#table_mapas').removeClass('blue-grey lighten-5 border');
                     } else {
                         $('.custom-checkbox').removeClass('disabledbutton');
+                        $('.nombre_calles').hide();
+                        $('.esta-en-mapa').text("Se encuentra en el mapa");
+                        $('.checkbox_calles').show();
+                        
                         $('.btn-continuar').show();
                         $('#delCoord').show();
                         $("li").eq('2').toggleClass('active', true);
@@ -146,7 +149,8 @@
                     y_aux = null;
                     insertar_con_punto = false;
                 }
-                
+                $('.cb_hidden').slideUp();
+
                 $('#table_mapas').removeClass('blue-grey lighten-5 border');
                 $('#delCoord').hide();
                 if (modificar != null && $(".selected").hasClass("warning")) {
@@ -161,6 +165,10 @@
 
                 $('.custom-checkbox').addClass('disabledbutton');
                 $('.btn-continuar').hide();
+                $('.nombre_calles').show();
+                $('.esta-en-mapa').text("");
+
+                $('.checkbox_calles').hide();
                 $('.cb_hidden').prop('checked', true);
                 $("li").eq('0').toggleClass('active', false);
                 $("li").eq('1').toggleClass('active', true);

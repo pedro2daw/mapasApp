@@ -176,6 +176,30 @@ insertar_con_punto = false;
         
     });
 
+    $(document).on("click", ".btn-no-existe", function(){
+        var id = $(this).data("id");
+        $("#renombrar_calle_"+id).hide();
+        $("#rename_calle_en_mapa_"+id).val('');
+        $("#msg_no_existia_calle_"+id).text("No existe " + calle + " en este mapa").show();
+    });
+
+    $(document).on("click", ".btn-renombrar", function(){
+        var id = $(this).data("id");
+        $("#rename_calle_en_mapa_"+id).val('');
+        $("#renombrar_calle_"+id).show();
+        $("#msg_no_existia_calle_"+id).hide();
+    });
+
+    $(document).on('change','.cb_mapas', function() {
+        var id =  $(this).data('id');
+        $('#cb_hidden_'+id).toggle(function(){
+            $("#renombrar_calle_"+id).hide();
+            $("#rename_calle_en_mapa_"+id).val('');
+            $("#msg_no_existia_calle_"+id).text('');
+        });
+    });
+
+
     $(".btn-generar-informe").click(function(){
         $(".btn-generar-informe").addClass("d-none");
         $("#save").removeClass("d-none");
@@ -387,6 +411,12 @@ insertar_con_punto = false;
         $(this).toggleClass('selected');
         get_data();
         $('.custom-checkbox').addClass('disabledbutton');
+
+        $('.nombre_calles').show();
+        $('.esta-en-mapa').text("");
+
+        $('.checkbox_calles').hide();
+
         $('.cb_hidden').hide();
         $('.cb_mapas').each(function(){
                     $(this).prop('checked',true);    
@@ -435,6 +465,10 @@ insertar_con_punto = false;
                     $("li").eq('2').toggleClass('active',true);
                     $("li").eq('3').toggleClass('active',false);
                     $('.custom-checkbox').removeClass('disabledbutton');
+                    $('.nombre_calles').hide();
+                    $('.esta-en-mapa').text("Se encuentra en el mapa");
+                    
+                    $('.checkbox_calles').show();
                     $('.btn-continuar').show();
                     $('.btn-anadir').hide();
                     $('.btn-update').hide();
@@ -705,12 +739,7 @@ insertar_con_punto = false;
     });
 
     
-    $(document).on('change','.cb_mapas', function() {
-        var id =  $(this).data('id');
-        $('#cb_hidden_'+id).toggle(function(){
-            $('#rename_calle_en_mapa_'+id).val('');
-        });
-    });
+    
 
 
     $(document).on('click','.btn-continuar', function() {
@@ -721,6 +750,9 @@ insertar_con_punto = false;
         $('.btn-insert-coords').show();
         $('.btn-continuar').hide();
         $('.custom-checkbox').addClass('disabledbutton');
+
+
+
         $('.cb_hidden').hide();
         $('#table_mapas').removeClass('blue-grey lighten-5 border');
 
@@ -777,6 +809,8 @@ insertar_con_punto = false;
         var mapas_unselected = [];
         var checkboxes_unselected = [];
         var nuevos_nombres = [];
+
+    
     
     /* Recorremos todos los checkbox que NO están chequeados */
     $("input.cb_mapas:checkbox:not(:checked)").each(function() {
@@ -810,6 +844,10 @@ insertar_con_punto = false;
                 })
                 .then((next) => {
     if (next){
+
+        if (mapas_selected.length < 1){
+        swal("ERROR", "Seleccione al menos un mapa en el que esté la calle que ha seleccionado en el listado. Cancele el proceso y seleccione un mapa.", "warning")
+    } else {
     // Envío de datos mediante ajax:
     console.log('Mapas seleccionados ' + mapas_selected);
     console.log('Calle seleccionada ' + id);
@@ -894,6 +932,13 @@ if (modificar == null) {
                 console.log('inserta');
                 $(".hot-spot-1").remove();
                 $('.custom-checkbox').addClass('disabledbutton');
+
+                $('.nombre_calles').show();
+                $('.esta-en-mapa').text("");
+
+                $('.checkbox_calles').hide();
+
+
                 $('.cb_hidden').hide();
                
                 $('.btn-anadir').show();
@@ -997,6 +1042,10 @@ if (modificar == null) {
                 coords_y = [];
                 $(".hot-spot-1").remove();
                 $('.custom-checkbox').addClass('disabledbutton');
+                $('.nombre_calles').show();
+                $('.esta-en-mapa').text("");
+
+                $('.checkbox_calles').hide();
                 $('.cb_hidden').hide();
                 $('.btn-anadir').show();
                 $('.btn-insert-coords').hide();
@@ -1013,11 +1062,9 @@ if (modificar == null) {
             y_aux = null;
             $('.alert').fadeIn().delay(2500).fadeOut();
             modificar = null;
-
-            $("#delCoord").hide();
-
-
 });
+}
+$("#delCoord").hide();
 }
 }
 insertar_con_punto = false;
@@ -1157,27 +1204,58 @@ e.preventDefault();
                         <thead>
                             <tr>
                                 <th scope="col">Mapas</th>
-                                <th scope="col"> </th>
+                                <th scope="col" class="esta-en-mapa"> </th>
                             </tr>
                         </thead>
                         <tbody>
-                
+                <!-- <button id='correcto_".$mapa["id"]."' type='button' class='btn btn-success'>Correcto</button> -->
                             <?php 
                                 for($i = 0; $i < count($listaMapas);$i++){
                                 $mapa = $listaMapas[$i];
                                 echo "<tr data_mapa_id=".$mapa['id']." id=mapa_".$mapa["id"].">";
                                 if ($i == 0){
                                 echo "<td>  
-                                <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div> 
+                                <input id='slider_callejero' style='float:left; margin-bottom:10px; width:100%;' type='range' value='0.5' name='points' min='0' max='1' step='0.1'/> 
+                                <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> 
+                                    <div id='btn_mapa_".$mapa["id"]."' class='btn_flex_wrapper'>
+                                        <button id='btn-renombrar_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-success btn-renombrar'>Renombrar</button>
+                                        <button id='btn-noexiste_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-warning btn-no-existe'>No existe</button>
+                                    </div>
+                                    <div id='renombrar_calle_".$mapa['id']."' class='wrapper-rename'>
+                                        <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en este mapa: </label> 
+                                        <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> 
+                                    </div>
+                                </div> 
+                                <h6 id='msg_no_existia_calle_".$mapa['id']."'> </h6>
                                 </td>";    
                                 }else {
-                                echo "<td><input style='float:left; margin-bottom:10px; width:100%;' type='range' value='1'   id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> <label for='mapa_".$mapa["id"]."'>¿Esta calle tiene otro nombre en este mapa? <br/> Deje este campo en blanco si no existe esa calle en este mapa.</label> <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> </div>
+                                echo "<td>
+                                <input style='float:left; margin-bottom:10px; width:100%;' type='range' value='1'   id='slider_".$mapa["id"]."' oninput='changeOpacity(".$mapa["id"].")' value='0' name='points' min='0' max='1' step='0.1'/> 
+                                <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> 
+                                    <div id='btn_mapa_".$mapa["id"]."' class='btn_flex_wrapper'>
+                                        <button id='btn-renombrar_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-success btn-renombrar'>Renombrar</button>
+                                        <button id='btn-noexiste_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-warning btn-no-existe'>No existe</button>
+                                    </div>
+                                <div id='renombrar_calle_".$mapa['id']."' class='wrapper-rename'>
+                                        <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en este mapa: </label> 
+                                        <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> 
+                                </div>
+
+                                <h6 id='msg_no_existia_calle_".$mapa['id']."'> </h6>
+
+
                                 </td>";
                                 }
                                 echo "<td> 
-                                <div class='custom-control custom-checkbox'>
-                                <input type='checkbox' data-id=".$mapa["id"]." name='mapa_".$mapa["id"]."' class='custom-control-input cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked>
-                                <label class='custom-control-label' for='cb_mapa_".$mapa['id']."'> ".$mapa['titulo']."</label>
+                                <div class='checkbox_calles'>
+                                    <div class='custom-control custom-checkbox'>
+                                        <input type='checkbox' data-id=".$mapa["id"]." name='mapa_".$mapa["id"]."' class='custom-control-input cb_mapas' id='cb_mapa_".$mapa['id']."' value='".$mapa['id']."' checked>
+                                        <label class='custom-control-label' for='cb_mapa_".$mapa['id']."'> ".$mapa['fecha']."</label>
+                                    </div>
+                                </div>
+
+                                <div class='nombre_calles'>
+                                <h5>".$mapa['fecha']." </h5>
                                 </div>
                                 </td>";
                                 echo "</tr>";
@@ -1242,10 +1320,14 @@ e.preventDefault();
                                         <option value='Pasaje'>Pasaje</option>
                                         <option value='Paseo'>Paseo</option>
                                         <option value='Plaza'>Plaza</option>
+                                        <option value='Parque'>Parque</option>
                                         <option value='Poligono'>Poligono</option>
                                         <option value='Rambla'>Rambla</option>
                                         <option value='Residencia'>Residencia</option>
                                         <option value='Ronda'>Ronda</option>
+                                        <option value='Loma'>Loma</option>
+                                        <option value='Malecon'>Malecón</option>
+                                        <option value='Barranco'>Barranco</option>
                                         <option value='Travesia'>Travesía</option>
                                         <option value='Urbanizacion'>Urbanización</option>
                                         <option value='Via'>Via</option>

@@ -263,8 +263,18 @@ no-js #loader { display: none;  }
 
 .backup-wrapper, #btn-assets {
     display: flex;
-    justify-content: center;
-    
+    justify-content: center; 
+}
+
+.mapas {
+    filter: contrast(1);
+    filter: saturate(1);
+}
+
+.btn_flex_wrapper{
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
 }
 .backup-wrapper {
     margin-bottom: 30px;
@@ -280,5 +290,10 @@ no-js #loader { display: none;  }
 
 
 #plano_anterior {
+    display: none;
+}
+
+
+.checkbox_calles{
     display: none;
 }
