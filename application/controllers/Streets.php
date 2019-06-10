@@ -122,6 +122,7 @@ include_once('Security.php');
             $mapas_selected = json_decode($this->input->post('id_mapas_selected'));
             $mapas_unselected = json_decode($this->input->post('id_mapas_unselected'));
             $length = count($mapas_unselected);
+            //$length = $length + count($mapas_selected);
             $calles_nuevas = $this->input->post('nuevos_nombres');
             $id_calle = $this->input->post('id_calle');
 
@@ -136,9 +137,10 @@ include_once('Security.php');
                 
             } else {
                 // obtiene las calles que acabamos de insertar, las renombradas.
-                if (isset($calles_nuevas)){
-                $data = $this->modelCalles->last_inserted_calles($length);
+                if ($length >= 1){
+                    $data = $this->modelCalles->last_inserted_calles($length);
                 }
+                
                 $data['msg'] = '0';
                 echo json_encode($data);
             }   

@@ -273,9 +273,12 @@ no-js #loader { display: none;  }
 
 .btn_flex_wrapper{
     width: 100%;
+    border: 1px solid black;
     display: flex !important;
     justify-content: center !important;
 }
+
+
 .backup-wrapper {
     margin-bottom: 30px;
 }

@@ -197,26 +197,26 @@ var hotspot_width = 40;
             // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
             if (actWdth  < width *10) {
                 zoom += 0.04;
-                hotspot_width -= 5;
+                hotspot_width -= 10;
                 
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
-            //$(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
             
             
         } else {
         // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
             if (actWdth > width + 200) {
                 zoom -= 0.04;
-                hotspot_width += 5;
+                hotspot_width += 3;
 
             }
             $("#hotspotImg-1").css("transition", "transform 1s");
             $("#hotspotImg-1").css("transform-origin", "top left");
             $("#hotspotImg-1").css("transform", "scale(" + (zoom) + ")");
-            //$(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
+            $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
             
             
                            
