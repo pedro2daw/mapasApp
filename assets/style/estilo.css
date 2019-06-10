@@ -27,12 +27,12 @@ html, body {
 #lista_puntos {
     list-style: none;
 }
-
+/*
 .border {
     border: 2px solid gray !important; 
     border-style: dashed !important;
 }
-
+*/
 #celia_portada{
     width: 20%;
     height: auto;
@@ -273,7 +273,6 @@ no-js #loader { display: none;  }
 
 .btn_flex_wrapper{
     width: 100%;
-    border: 1px solid black;
     display: flex !important;
     justify-content: center !important;
 }
@@ -300,3 +299,13 @@ no-js #loader { display: none;  }
 .checkbox_calles{
     display: none;
 }
+
+.wrapper-rename{
+    display: none;
+}
+
+#botonConvPDF {
+    display: block;
+    margin: 0 auto;
+}
+

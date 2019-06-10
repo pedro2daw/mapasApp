@@ -1,10 +1,31 @@
 <script>
     $(document).ready(function() {
         $('#enlace_listado').toggleClass('active');
-
         var table = $('#example').DataTable({
-            "paging": true
+            "paging": true,
+
+            "language": {
+            "search": "Buscador:",
+            "info": "Mostrando de _START_ - _END_ de _TOTAL_ entrada(s).",
+            "emptyTable": "No hay datos disponibles",
+            "infoEmpty":      "",
+            "loadingRecords": "Cargando...",
+            "processing":     "Procesando petición...",
+            "zeroRecords":    "No se encuentran coincidencias",
+            "lengthMenu":     "Mostrar _MENU_ entradas",
+            "paginate": {
+                "first":      "<<",
+                "last":       ">>",
+                "next":       ">",
+                "previous":   "<"
+            }
+            },
         });
+        
+        $("input[type='search']").addClass('form-control');
+        $("select[name='example_length']").addClass("form-control form-control-sm");
+        // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
+        $("input[type='search']").addClass('form-control');
 
         $('a.toggle-vis').on('click', function(e) {
             e.preventDefault();
@@ -16,14 +37,21 @@
         });
 
         $('#botonConvPDF').on('click', function(e) {
+
             var nombrePDF = $("#nombrePDF").val();
-            var doc = new jsPDF();
-            doc.autoTable({
-            });
-            doc.autoTable({
-                html: '#example'
-            });
-            doc.save(nombrePDF + ".pdf");
+
+            if (nombrePDF != ""){
+                var doc = new jsPDF();
+                doc.autoTable({
+                });
+                doc.autoTable({
+                    html: '#example'
+                });
+                doc.save(nombrePDF + ".pdf");
+            } else {
+                swal("Introduzca un nombre para el archivo PDF, por favor.");
+            }
+            
         });
 
     });
@@ -35,18 +63,18 @@
     <?php
         $arrayIdMap = array();
         $col = 0;
-        echo " * ";
+        echo " - ";
         foreach ($mapas_calles as $todo) {
             if (!in_array($todo["idMapa"], $arrayIdMap)) {
                 array_push($arrayIdMap, $todo["idMapa"]);
-                echo "<a class='toggle-vis' style='color: blue' data-column='" . $col . "'>" . $todo["titulo"] . "</a> * ";
+                echo "<a class='toggle-vis' style='color: blue' data-column='" . $col . "'>" . $todo["titulo"] . "</a> - ";
                 $col++;
             }
         }
     ?>
 </div>
 
-<table id="example" class="display" style="width:100%">
+<table id="example" class="display" name="example" style="width:100%">
     <thead>
         <tr>
             <?php
@@ -131,6 +159,6 @@
 </table>
 
 <div id="botonesTabla">
-    <input type="text" id="nombrePDF">
-    <input type="button" id="botonConvPDF" value="Convertir a PDF" />
+    <input type="text" class='form-control'  id="nombrePDF" placeholder="Nombre del archivo PDF">
+    <input type="button" id="botonConvPDF" class="btn btn-info" value="Convertir a PDF" />
 </div>
