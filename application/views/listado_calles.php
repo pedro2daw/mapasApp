@@ -131,6 +131,7 @@
 </table>
 
 <div id="botonesTabla">
+    <label for="nombrePDF">Nombre del archivo:</label>
     <input type="text" id="nombrePDF">
     <input type="button" id="botonConvPDF" value="Convertir a PDF" />
 </div>

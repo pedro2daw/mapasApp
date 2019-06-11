@@ -218,7 +218,7 @@
                 });
 
             });
-
+});
 
 
             $("#hotspotImg").on("wheel", function(e) {
