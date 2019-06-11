@@ -159,12 +159,9 @@
 </table>
 
 <div id="botonesTabla">
-<<<<<<< HEAD
     <label for="nombrePDF">Nombre del archivo:</label>
     <input type="text" id="nombrePDF">
     <input type="button" id="botonConvPDF" value="Convertir a PDF" />
-=======
     <input type="text" class='form-control'  id="nombrePDF" placeholder="Nombre del archivo PDF">
     <input type="button" id="botonConvPDF" class="btn btn-info" value="Convertir a PDF" />
->>>>>>> c835c5f447b54282811001398153d7f4e7ea6a6f
 </div>

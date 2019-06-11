@@ -218,7 +218,6 @@
                 });
 
             });
-});
 
 
             $("#hotspotImg").on("wheel", function(e) {
@@ -250,219 +249,219 @@
                     $("#hotspotImg").css("transform", "scale(" + (zoom) + ")");
                 }
             });
+        
+        //Funciones calles
 
-            //Funciones calles
 
+        function lista_mapas_calles() {
+            var x = $(this).attr('x');
+            var y = $(this).attr('y');
+            var formData = {
+                'x': x,
+                'y': y
+            };
 
-            function lista_mapas_calles() {
-                var x = $(this).attr('x');
-                var y = $(this).attr('y');
-                var formData = {
-                    'x': x,
-                    'y': y
-                };
+            $.ajax({
+                    type: "POST",
+                    cache: false,
+                    url: "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
+                    data: formData,
+                    dataType: 'json',
+                    encode: true
+                })
+                .done(function(data) {
+                    var msg = data.msg;
+                    console.log(data);
+                    var count = Object.keys(data).length;
+                    $('#modal_puntos').modal('toggle');
 
-                $.ajax({
-                        type: "POST",
-                        cache: false,
-                        url: "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
-                        data: formData,
-                        dataType: 'json',
-                        encode: true
-                    })
-                    .done(function(data) {
-                        var msg = data.msg;
-                        console.log(data);
-                        var count = Object.keys(data).length;
-                        $('#modal_puntos').modal('toggle');
+                    if (msg == '0') {
+                        for (i = 0; i < count - 1; i++) {
+                            $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
+                        }
+                    } else {}
 
-                        if (msg == '0') {
-                            for (i = 0; i < count - 1; i++) {
-                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
-                            }
-                        } else {}
+                });
+        }
 
-                    });
-            }
+        // Carga la tabla de calles el plug-in de DataTables.
+        $('#tabla_calles').DataTable({
+            "scrollY": "210px",
+            "scrollCollapse": true,
+            "paging": false,
 
-            // Carga la tabla de calles el plug-in de DataTables.
-            $('#tabla_calles').DataTable({
-                "scrollY": "210px",
-                "scrollCollapse": true,
-                "paging": false,
-
-                "language": {
-                    "info": "",
-                    "infoEmpty": "",
-                    "infoFiltered": "",
-                    "zeroRecords": "No se encuentran datos" /* No hay data disponible */
+            "language": {
+                "info": "",
+                "infoEmpty": "",
+                "infoFiltered": "",
+                "zeroRecords": "No se encuentran datos" /* No hay data disponible */
+            },
+            "columns": [{
+                    "data": "Tipo",
+                    className: "d-none"
                 },
-                "columns": [{
-                        "data": "Tipo",
-                        className: "d-none"
-                    },
-                    {
-                        "data": "Nombre",
-                        className: "d-none"
-                    },
-                    {
-                        "data": "Punto",
-                        className: "d-none"
-                    },
-                    {
-                        "data": "Calle"
-                    },
-                ]
-            });
-            table = $('#tabla_calles').DataTable();
-            // Establecemos un placeholder para el buscador de calles.
-            $("input[type='search']").attr('placeholder', 'Buscar Calle');
-            // Eliminamos la etiqueta del input de buscador de calles.
-            $('#tabla_calles_filter label').contents().first().remove();
-            // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
-            $("input[type='search']").addClass('form-control');
-            $('.btn-continuar').hide();
-            // Cambia la opacidad del mapa principal.
-            $(document).on("input", "#slider_callejero", function() {
-                var opacity = $(this).val();
-                $("#img_callejero").css("opacity", opacity);
-            });
+                {
+                    "data": "Nombre",
+                    className: "d-none"
+                },
+                {
+                    "data": "Punto",
+                    className: "d-none"
+                },
+                {
+                    "data": "Calle"
+                },
+            ]
+        });
+        table = $('#tabla_calles').DataTable();
+        // Establecemos un placeholder para el buscador de calles.
+        $("input[type='search']").attr('placeholder', 'Buscar Calle');
+        // Eliminamos la etiqueta del input de buscador de calles.
+        $('#tabla_calles_filter label').contents().first().remove();
+        // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
+        $("input[type='search']").addClass('form-control');
+        $('.btn-continuar').hide();
+        // Cambia la opacidad del mapa principal.
+        $(document).on("input", "#slider_callejero", function() {
+            var opacity = $(this).val();
+            $("#img_callejero").css("opacity", opacity);
+        });
 
-            $("#hotspotImg-1").on("wheel", function(e) {
-                var width = $("#hotspotImg-1").first().width();
-                console.log('zoom ' + zoom1);
+        $("#hotspotImg-1").on("wheel", function(e) {
+            var width = $("#hotspotImg-1").first().width();
+            console.log('zoom ' + zoom1);
 
-                var e0 = e.originalEvent,
-                    delta = e0.wheelDelta || -e0.detail;
+            var e0 = e.originalEvent,
+                delta = e0.wheelDelta || -e0.detail;
 
-                this.scrollTop += (delta < 0 ? 1 : -1) * 30;
-                e.preventDefault();
-                actWdth = $("#hotspotImg-1 img").width() * zoom1;
-                if (e.originalEvent.deltaY < 0) {
+            this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+            e.preventDefault();
+            actWdth = $("#hotspotImg-1 img").width() * zoom1;
+            if (e.originalEvent.deltaY < 0) {
 
-                    // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
-                    if (actWdth < width * 10) {
-                        zoom1 += 0.04;
-                    }
-                    $("#hotspotImg-1").css("transition", "transform 1s");
-                    $("#hotspotImg-1").css("transform-origin", "top left");
-                    $("#hotspotImg-1").css("transform", "scale(" + (zoom1) + ")");
-                } else {
-                    // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
-                    if (actWdth > width + 200) {
-                        zoom1 -= 0.04;
-                    }
-                    $("#hotspotImg-1").css("transition", "transform 1s");
-                    $("#hotspotImg-1").css("transform-origin", "top left");
-                    $("#hotspotImg-1").css("transform", "scale(" + (zoom1) + ")");
+                // Tony: SE PODRA HACER 10 VECES MAS PEQUEÑO
+                if (actWdth < width * 10) {
+                    zoom1 += 0.04;
                 }
-            });
+                $("#hotspotImg-1").css("transition", "transform 1s");
+                $("#hotspotImg-1").css("transform-origin", "top left");
+                $("#hotspotImg-1").css("transform", "scale(" + (zoom1) + ")");
+            } else {
+                // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
+                if (actWdth > width + 200) {
+                    zoom1 -= 0.04;
+                }
+                $("#hotspotImg-1").css("transition", "transform 1s");
+                $("#hotspotImg-1").css("transform-origin", "top left");
+                $("#hotspotImg-1").css("transform", "scale(" + (zoom1) + ")");
+            }
+        });
+
+        modificar = null;
+        x_aux = null;
+        y_aux = null;
+
+        function get_data() {
+            id = $(".selected").data("id");
+            nombre = $('#nombre_' + id).text();
+            tipo = $('#tipo_' + id).text();
+            if (x_aux == null) {
+                x = $('#punto_' + id).data('x');
+                y = $('#punto_' + id).data('y');
+            } else {
+                x = x_aux;
+                y = y_aux;
+            }
+            calle = tipo + " " + nombre;
+        }
+
+        $(document).on("click", ".calles", function() {
+            $('#table_mapas').removeClass('blue-grey lighten-5 border');
 
             modificar = null;
-            x_aux = null;
-            y_aux = null;
+            $(".hot-spot-1").remove();
+            $('.calles').removeClass('selected');
+            $(this).toggleClass('selected');
+            get_data();
+            $('.custom-checkbox').addClass('disabledbutton');
+            $('.cb_hidden').hide();
+            $('.cb_mapas').each(function() {
+                $(this).prop('checked', true);
+            });
+            // Borra el punto en el mapa:
+            var top = $('#tabla2').scrollTop();
+            var left = $('#tabla2').scrollLeft();
+            console.log(" ******************************* ");
+            console.log("top y left " + top + " " + left + "zoom" + zoom + "X " + x + " Y " + y);
 
-            function get_data() {
-                id = $(".selected").data("id");
-                nombre = $('#nombre_' + id).text();
-                tipo = $('#tipo_' + id).text();
-                if (x_aux == null) {
-                    x = $('#punto_' + id).data('x');
-                    y = $('#punto_' + id).data('y');
-                } else {
-                    x = x_aux;
-                    y = y_aux;
-                }
-                calle = tipo + " " + nombre;
+            $("#delCoord").hide();
+            $('.btn-update').data('id', id);
+            $('.btn-insert').show();
+            $('.btn-update').show();
+            $('.btn-anadir').show();
+            $('.btn-delete').show();
+            $('.btn-delete').data('id', id);
+
+
+            if (x_aux != null) {
+                console.log(x_aux);
+                x = x_aux;
+                y = y_aux;
             }
-
-            $(document).on("click", ".calles", function() {
-                $('#table_mapas').removeClass('blue-grey lighten-5 border');
-
-                modificar = null;
-                $(".hot-spot-1").remove();
-                $('.calles').removeClass('selected');
-                $(this).toggleClass('selected');
-                get_data();
-                $('.custom-checkbox').addClass('disabledbutton');
-                $('.cb_hidden').hide();
-                $('.cb_mapas').each(function() {
-                    $(this).prop('checked', true);
+            if (x == null || y == null) {
+                $("li").eq('0').toggleClass('active', false);
+                $("li").eq('1').toggleClass('active', true);
+                $("li").eq('2').toggleClass('active', false);
+                $("li").eq('3').toggleClass('active', false);
+                $(document).on("mouseover", ".hot-spot-1", function(e) {
+                    $(this).css({
+                        'cursor': 'cursor',
+                        'pointer-events': 'none'
+                    });
                 });
-                // Borra el punto en el mapa:
-                var top = $('#tabla2').scrollTop();
-                var left = $('#tabla2').scrollLeft();
-                console.log(" ******************************* ");
-                console.log("top y left " + top + " " + left + "zoom" + zoom + "X " + x + " Y " + y);
 
-                $("#delCoord").hide();
-                $('.btn-update').data('id', id);
-                $('.btn-insert').show();
-                $('.btn-update').show();
-                $('.btn-anadir').show();
-                $('.btn-delete').show();
-                $('.btn-delete').data('id', id);
-
-
+            } else {
                 if (x_aux != null) {
-                    console.log(x_aux);
-                    x = x_aux;
-                    y = y_aux;
-                }
-                if (x == null || y == null) {
                     $("li").eq('0').toggleClass('active', false);
-                    $("li").eq('1').toggleClass('active', true);
+                    $("li").eq('1').toggleClass('active', false);
+                    $("li").eq('2').toggleClass('active', true);
+                    $("li").eq('3').toggleClass('active', false);
+                    $('.custom-checkbox').removeClass('disabledbutton');
+                    $('.btn-continuar').show();
+                    $('.btn-anadir').hide();
+                    $('.btn-update').hide();
+
+
+                    // DELETE
+                    $('.btn-delete').hide();
+                    // INSERTAR COORDENADAS:
+                    $('.btn-insert-coords').hide();
+
+                } else {
+                    $("li").eq('0').toggleClass('active', false);
+                    $("li").eq('1').toggleClass('active', false);
                     $("li").eq('2').toggleClass('active', false);
                     $("li").eq('3').toggleClass('active', false);
-                    $(document).on("mouseover", ".hot-spot-1", function(e) {
-                        $(this).css({
-                            'cursor': 'cursor',
-                            'pointer-events': 'none'
-                        });
-                    });
-
-                } else {
-                    if (x_aux != null) {
-                        $("li").eq('0').toggleClass('active', false);
-                        $("li").eq('1').toggleClass('active', false);
-                        $("li").eq('2').toggleClass('active', true);
-                        $("li").eq('3').toggleClass('active', false);
-                        $('.custom-checkbox').removeClass('disabledbutton');
-                        $('.btn-continuar').show();
-                        $('.btn-anadir').hide();
-                        $('.btn-update').hide();
-
-
-                        // DELETE
-                        $('.btn-delete').hide();
-                        // INSERTAR COORDENADAS:
-                        $('.btn-insert-coords').hide();
-
-                    } else {
-                        $("li").eq('0').toggleClass('active', false);
-                        $("li").eq('1').toggleClass('active', false);
-                        $("li").eq('2').toggleClass('active', false);
-                        $("li").eq('3').toggleClass('active', false);
-                    }
-
-                    $(document).on("mouseover", ".hot-spot-1", function(e) {
-                        $(this).css({
-                            'cursor': 'pointer',
-                            'pointer-events': 'auto'
-                        });
-                    });
-
-                    console.log("Calle seleccionada: " + id);
-                    console.log('Punto X: ' + x);
-                    console.log('Punto Y: ' + y);
-
-                    $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
-                    $('#tabla2').scrollTop(y - ($('#tabla2').height() / 2) - 5);
-                    $('#tabla2').scrollLeft(x - ($('#tabla2').width() / 2) - 5);
                 }
 
+                $(document).on("mouseover", ".hot-spot-1", function(e) {
+                    $(this).css({
+                        'cursor': 'pointer',
+                        'pointer-events': 'auto'
+                    });
+                });
 
-            });
+                console.log("Calle seleccionada: " + id);
+                console.log('Punto X: ' + x);
+                console.log('Punto Y: ' + y);
+
+                $('#img_callejero').after("<div id='id_hot-spot-1'class='hot-spot-1' x='" + x + "'y='" + y + "'style='z-index:1000 ; top:" + y + "px;left:" + x + "px; display:block;'></div>");
+                $('#tabla2').scrollTop(y - ($('#tabla2').height() / 2) - 5);
+                $('#tabla2').scrollLeft(x - ($('#tabla2').width() / 2) - 5);
+            }
+
+});
+        });
 
     </script>
 
