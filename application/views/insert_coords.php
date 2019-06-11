@@ -177,16 +177,17 @@ insertar_con_punto = false;
     });
 
     $(document).on("click", ".btn-no-existe", function(){
+        var mapa = $(this).data("fecha");
         var id = $(this).data("id");
         $("#renombrar_calle_"+id).hide();
         $("#rename_calle_en_mapa_"+id).val('');
-        $("#msg_no_existia_calle_"+id).text("No existe " + calle + " en este mapa").show();
+        $("#msg_no_existia_calle_"+id).text("No existe " + calle + " en el mapa de " + mapa ).fadeIn("slow","linear");
     });
 
     $(document).on("click", ".btn-renombrar", function(){
         var id = $(this).data("id");
         $("#rename_calle_en_mapa_"+id).val('');
-        $("#renombrar_calle_"+id).show();
+        $("#renombrar_calle_"+id).fadeIn("slow","linear");
         $("#msg_no_existia_calle_"+id).hide();
     });
 
@@ -1242,14 +1243,14 @@ e.preventDefault();
                                 echo" <tr> 
                                 <td colspan='2'> <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> 
                                             <div id='btn_mapa_".$mapa["id"]."' class='btn_flex_wrapper'>
-                                                <button id='btn-renombrar_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-success btn-renombrar'>Renombrar</button>
-                                                <button id='btn-noexiste_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-warning btn-no-existe'>No existe</button>
+                                                <button id='btn-renombrar_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-info btn-renombrar'>Renombrar</button>
+                                                <button id='btn-noexiste_".$mapa["id"]."' data-id='".$mapa["id"]."' data-fecha='".$mapa["fecha"]."' type='button' class='btn btn-danger btn-no-existe'>No existe</button>
                                             </div>
                                             <div id='renombrar_calle_".$mapa['id']."' class='wrapper-rename'>
-                                                <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en este mapa: </label> 
-                                                <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> 
+                                                <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en el mapa".$mapa["titulo"]." de ".$mapa["fecha"].": </label> 
+                                                <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en el mapa".$mapa["titulo"]." de ".$mapa["fecha"].":'/> 
                                             </div>
-                                            <h6 id='msg_no_existia_calle_".$mapa['id']."'> </h6>
+                                            <label id='msg_no_existia_calle_".$mapa['id']."'></label>
                                         </div>
                                         </td> 
                                     </tr> ";
@@ -1257,14 +1258,14 @@ e.preventDefault();
                                       echo" <tr>    <td colspan='2'>    
                                             <div id='cb_hidden_".$mapa["id"]."' class='cb_hidden'> 
                                                 <div id='btn_mapa_".$mapa["id"]."' class='btn_flex_wrapper'>
-                                                    <button id='btn-renombrar_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-success btn-renombrar'>Renombrar</button>
-                                                    <button id='btn-noexiste_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-warning btn-no-existe'>No existe</button>
+                                                    <button id='btn-renombrar_".$mapa["id"]."' data-id='".$mapa["id"]."' type='button' class='btn btn-info btn-renombrar'>Renombrar</button>
+                                                    <button id='btn-noexiste_".$mapa["id"]."' data-id='".$mapa["id"]."' data-fecha='".$mapa["fecha"]."' type='button' class='btn btn-danger btn-no-existe'>No existe</button>
                                                 </div>
                                                 <div id='renombrar_calle_".$mapa['id']."' class='wrapper-rename'>
-                                                        <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en este mapa: </label> 
-                                                        <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en este mapa'/> 
+                                                        <label for='mapa_".$mapa["id"]."'> Complete el campo con el nombre de esta calle en el mapa".$mapa["titulo"]." de ".$mapa["fecha"].":: </label> 
+                                                        <input id='rename_calle_en_mapa_".$mapa['id']."' type='text' class='form-control renamed_calle' placeholder='Nombre en el mapa".$mapa["titulo"]." de ".$mapa["fecha"].":'/> 
                                                 </div>
-                                                <h6 id='msg_no_existia_calle_".$mapa['id']."' > </h6>
+                                                <label id='msg_no_existia_calle_".$mapa['id']."' > </label>
                                             </div>
                                             </td> 
                                     </tr> ";
