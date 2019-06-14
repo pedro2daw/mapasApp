@@ -516,30 +516,25 @@
         function lista_mapas_calles() {
             var x = $(this).attr('x');
             var y = $(this).attr('y');
-            var formData = {
-                'x': x,
-                'y': y
-            };
-            alert("<?php echo base_url("Front/get_streets_associated_to_coord/"); ?>" + x + "/" + y);
 
             $.ajax({
-                    cache: false,
-                    url: "<?php echo base_url("Front/get_streets_associated_to_coord/"); ?>" + x + "/" + y,
-                    dataType: 'json',
-                    encode: true
-                }).done(function(data) {
-                    var msg = data.msg;
-                    console.log(data);
-                    var count = Object.keys(data).length;
-                    $('#modal_puntos').modal('toggle');
+                cache: false,
+                url: "<?php echo base_url("Front/get_streets_associated_to_coord/"); ?>" + x + "/" + y,
+                dataType: 'json',
+                encode: true
+            }).done(function(data) {
+                var msg = data.msg;
+                console.log(data);
+                var count = Object.keys(data).length;
+                $('#modal_puntos').modal('toggle');
 
-                    if (msg == '0') {
-                        for (i = 0; i < count - 1; i++) {
-                            $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " está en el mapa " + data[i].titulo + "</li>")
-                        }
-                    } else {}
+                if (msg == '0') {
+                    for (i = 0; i < count - 1; i++) {
+                        $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " está en el mapa " + data[i].titulo + "</li>")
+                    }
+                } else {}
 
-                });
+            });
         }
 
     </script>
