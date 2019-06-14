@@ -252,38 +252,6 @@
 
             //Funciones calles
 
-
-            function lista_mapas_calles() {
-                var x = $(this).attr('x');
-                var y = $(this).attr('y');
-                var formData = {
-                    'x': x,
-                    'y': y
-                };
-
-                $.ajax({
-                        type: "POST",
-                        cache: false,
-                        url: "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
-                        data: formData,
-                        dataType: 'json',
-                        encode: true
-                    })
-                    .done(function(data) {
-                        var msg = data.msg;
-                        console.log(data);
-                        var count = Object.keys(data).length;
-                        $('#modal_puntos').modal('toggle');
-
-                        if (msg == '0') {
-                            for (i = 0; i < count - 1; i++) {
-                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " se encuentra en el mapa " + data[i].titulo + "</li>")
-                            }
-                        } else {}
-
-                    });
-            }
-
             // Carga la tabla de calles el plug-in de DataTables.
             $('#tabla_calles').DataTable({
                 "scrollY": "210px",
@@ -552,12 +520,11 @@
                 'x': x,
                 'y': y
             };
+            alert("<?php echo base_url("Front/get_streets_associated_to_coord/"); ?>" + x + "/" + y);
 
             $.ajax({
-                    type: "POST",
                     cache: false,
-                    url: "[<?php echo base_url(); ?>]index.php/Front/get_streets_associated_to_coord",
-                    data: formData,
+                    url: "<?php echo base_url("Front/get_streets_associated_to_coord/"); ?>" + x + "/" + y,
                     dataType: 'json',
                     encode: true
                 }).done(function(data) {

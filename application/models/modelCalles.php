@@ -208,6 +208,7 @@ class modelCalles extends CI_Model {
     // gets calles asociadas a ese punto y en que mapa
     public function get_streets_associated_to_coord($x,$y){
         $query = $this->db->query("SELECT calles.id as id_calle, calles.nombre as nombre ,calles.tipo as tipo, puntos.id as id_punto, puntos.punto_x as x, puntos.punto_y as y, mapas.id as id_mapa , mapas.titulo as titulo   from calles inner join puntos on calles.id = puntos.id_calle inner join mapas_calles on calles.id = mapas_calles.id_calle inner join mapas on mapas.id = mapas_calles.id_map where puntos.punto_x = $x and puntos.punto_y = $y;");
+
         $data = array();
             if ($query->num_rows() > 0){
                 foreach ($query->result_array() as $row){

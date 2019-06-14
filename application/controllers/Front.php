@@ -21,10 +21,10 @@ class Front extends CI_Controller {
         echo json_encode($puntos);
     }
     
-    public function get_streets_associated_to_coord() {
+    public function get_streets_associated_to_coord($x,$y) {
         $this->load->model('modelCalles');
-        $y = $this->input->post('y');
-        $x = $this->input->post('x');
+        //$y = $this->input->post('y');
+        //$x = $this->input->post('x');
         $data = $this->modelCalles->get_streets_associated_to_coord($x,$y);
         $data['msg'] = '0';
         echo json_encode($data);
