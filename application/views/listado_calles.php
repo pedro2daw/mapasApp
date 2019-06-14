@@ -63,11 +63,11 @@
     <?php
         $arrayIdMap = array();
         $col = 0;
-        echo " - ";
+        echo " * ";
         foreach ($mapas_calles as $todo) {
             if (!in_array($todo["idMapa"], $arrayIdMap)) {
                 array_push($arrayIdMap, $todo["idMapa"]);
-                echo "<a class='toggle-vis' style='color: blue' data-column='" . $col . "'>" . $todo["titulo"] . "</a> - ";
+                echo "<a class='toggle-vis' style='color: blue' data-column='" . $col . "'>" . $todo["titulo"] . "</a> * ";
                 $col++;
             }
         }
@@ -159,9 +159,6 @@
 </table>
 
 <div id="botonesTabla">
-    <label for="nombrePDF">Nombre del archivo:</label>
-    <input type="text" id="nombrePDF">
-    <input type="button" id="botonConvPDF" value="Convertir a PDF" />
-    <input type="text" class='form-control'  id="nombrePDF" placeholder="Nombre del archivo PDF">
+    <input type="text" class='form-control'  id="nombrePDF" placeholder="Nombre del archivo PDF"> <br/>
     <input type="button" id="botonConvPDF" class="btn btn-info" value="Convertir a PDF" />
 </div>

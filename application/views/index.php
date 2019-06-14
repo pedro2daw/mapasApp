@@ -522,57 +522,56 @@
 
 
             });
-            
-             $('#tabla_calles tbody').on( 'click', 'tr', function () {
-    row = table.row( this ).index();
-    });
- //aqui
-    $(document).on("click",".hot-spot-1", function (e){
-            $('#lista_puntos').html("");
-            lista_mapas_calles();
-            var length = $(".warning").length;
-            if(length == 0){
-                $(".btn-insertar-con-punto").prop("disabled",true);
-                $("#msg_insertar_con_punto").attr('title','Todas las calles insertadas tienen un punto asignado. Añada una calle nueva para asignar este punto.');
-            } else {
-              $(".btn-insertar-con-punto").prop("disabled",false);
-              $("#msg_insertar_con_punto").attr('title','Puede establecer este punto para una calle que no tiene un punto asignado.');  
-            }
-            e.preventDefault();
-    });
-            
-            
+
+            $('#tabla_calles tbody').on('click', 'tr', function() {
+                row = table.row(this).index();
+            });
+            //aqui
+            $(document).on("click", ".hot-spot-1", function(e) {
+                $('#lista_puntos').html("");
+                lista_mapas_calles();
+                var length = $(".warning").length;
+                if (length == 0) {
+                    $(".btn-insertar-con-punto").prop("disabled", true);
+                    $("#msg_insertar_con_punto").attr('title', 'Todas las calles insertadas tienen un punto asignado. Añada una calle nueva para asignar este punto.');
+                } else {
+                    $(".btn-insertar-con-punto").prop("disabled", false);
+                    $("#msg_insertar_con_punto").attr('title', 'Puede establecer este punto para una calle que no tiene un punto asignado.');
+                }
+                e.preventDefault();
+            });
+
+
 
         });
-        function lista_mapas_calles () {
+
+        function lista_mapas_calles() {
             var x = $(this).attr('x');
             var y = $(this).attr('y');
             var formData = {
-                'x' : x,
-                'y' : y
-                };
+                'x': x,
+                'y': y
+            };
 
             $.ajax({
-                    type     : "POST",
-                    cache    : false,
-                    url      : "<?php echo base_url(); ?>index.php/Streets/get_streets_associated_to_coord",
-                    data     : formData,
-                    dataType : 'json',
-                    encode : true
-                    })
-                    .done(function(data) {
-                        var msg = data.msg;
-                        console.log(data);
-                        var count = Object.keys(data).length;
-                        $('#modal_puntos').modal('toggle');
+                    type: "POST",
+                    cache: false,
+                    url: "[<?php echo base_url(); ?>]index.php/Front/get_streets_associated_to_coord",
+                    data: formData,
+                    dataType: 'json',
+                    encode: true
+                }).done(function(data) {
+                    var msg = data.msg;
+                    console.log(data);
+                    var count = Object.keys(data).length;
+                    $('#modal_puntos').modal('toggle');
 
-                        if (msg == '0'){
-                            for (i = 0; i < count -1 ; i++){
-                                $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " está en el mapa " + data[i].titulo + "</li>")
-                            }
-                        } else {
-                            }
-                        
+                    if (msg == '0') {
+                        for (i = 0; i < count - 1; i++) {
+                            $('#lista_puntos').append("<li>" + data[i].tipo + " " + data[i].nombre + " está en el mapa " + data[i].titulo + "</li>")
+                        }
+                    } else {}
+
                 });
         }
 
@@ -827,49 +826,35 @@
             </div>
         </div>
     </footer>
-    
-    
-            <!-- Modal puntos -->
+
+
+    <!-- Modal puntos -->
     <div class="modal fade" id="modal_puntos" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Historial de calles en este punto:</h5>
                     <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <ul id='lista_puntos'>
                     </ul>
-                <div class="form-group d-none" id="archivo">
-                    <label for="nombre_archivo">Nombre del informe</label>
-                    <input type='text' class='form-control' id='nombre_archivo' name='nombre_archivo' placeholder='Introduce el nombre del archivo' required/>
+                    <div class="form-group d-none" id="archivo">
+                        <label for="nombre_archivo">Nombre del informe</label>
+                        <input type='text' class='form-control' id='nombre_archivo' name='nombre_archivo' placeholder='Introduce el nombre del archivo' required />
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id='observaciones' class='form-control d-none' aria-label='Observaciones' name='observaciones' rows='4' cols='80' placeholder='Observaciones'></textarea>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <textarea id='observaciones' class='form-control d-none' aria-label='Observaciones' name='observaciones' rows='4' cols='80' placeholder='Observaciones'></textarea>
-                </div>
-
-                <div class="col"></div>
-                <div class="col d-none" id="formato">
-                    <div class="row" id="third_row">    
-                        <div class="col text-center">
-                        <a id="to_word"><?php echo"<img src='".base_url("/assets/img/icono/word.png")."' id='word_logo' style='width:75px;height:75px;'>";?></a>
-                        
-                        <a id="to_pdf"><?php echo"<img src='".base_url("/assets/img/icono/pdf.png")."' id='pdf_logo' style='width:75px;height:72px;margin-left:25px;'>";?></a>
-                        </div>
-
-                    </div> <!-- third_row -->
-                </div>
-
-                <div class="col"></div>
             </div>
         </div>
-    </div>
 
-</div> <!-- fin container fluid -->
-    
+    </div> <!-- fin container fluid -->
+
 
     <div class="copyright py-4 text-center text-white">
         <div class="container">

@@ -1,6 +1,6 @@
 <?php
 
-class Front extends CI_Controller{
+class Front extends CI_Controller {
     
     public function index() {
         $this->load->model('modelHotspot');
@@ -19,5 +19,14 @@ class Front extends CI_Controller{
         $this->load->model('modelHotspot');
         $puntos = $this->modelHotspot->get_all($id_mapa);
         echo json_encode($puntos);
+    }
+    
+    public function get_streets_associated_to_coord() {
+        $this->load->model('modelCalles');
+        $y = $this->input->post('y');
+        $x = $this->input->post('x');
+        $data = $this->modelCalles->get_streets_associated_to_coord($x,$y);
+        $data['msg'] = '0';
+        echo json_encode($data);
     }
 }
