@@ -26,15 +26,14 @@
     <!-- JS PROPIOS: -->
     <script src=<?php echo base_url("assets/js/sweetalert.min.js");?>></script>
     <script src=<?php echo base_url("assets/js/Mapas.js");?>></script>
-    <script src=<?php echo base_url("assets/js/demo.js");?>></script>
+    <!-- <script src=<                ?php echo base_url("assets/js/demo.js");?>></script> -->
     <script src=<?php echo base_url("assets/js/jquery.hotspot.js");?>></script>
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
     <script src=<?php echo base_url("assets/js/back_up.js");?>></script>
     <script src=<?php echo base_url("assets/js/FileSaver.js");?>></script>
     <script src=<?php echo base_url("assets/js/jspdf.js");?>></script>
     <script src=<?php echo base_url("assets/js/jspdf-autotable.js");?>></script>
-    
-
+    <script src=<?php echo base_url("assets/js/wheelzoom.js");?>></script>
 
     <script>
         coords_x = [];

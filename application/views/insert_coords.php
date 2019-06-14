@@ -49,6 +49,11 @@
 
 
     $(document).ready( function (){
+
+     // assign wheelzoom
+wheelzoom(document.querySelectorAll('.mapas'));
+
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
