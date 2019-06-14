@@ -108,7 +108,7 @@ $(document).ready(function () {
         });
     });
 
-    /*
+    
 
     var offset = $('#hotspotImg-1').offset();
 var size = {w:$('#hotspotImg-1').width(),h:$('#hotspotImg-1').height()}
@@ -176,7 +176,7 @@ $("#hotspotImg-1").css("transition", "transform 1s");
         
     });
 
-    */
+    
 var hotspot_width = 40;
     //Aumentar el tamaña del mapa con las calles manteniendo los puntos
     $("#hotspotImg-1").on("wheel", function (e) {
