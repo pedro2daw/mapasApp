@@ -110,7 +110,7 @@ $(document).ready(function () {
 
     var hotspot_width = 40;
 
-    /* INTENTO DE ZOOM AL MOUSE */ 
+    /* INTENTO DE ZOOM AL MOUSE 
 
     var offset = $('#hotspotImg-1').offset();
     var size = {w:$('#hotspotImg-1').width(),h:$('#hotspotImg-1').height()}
@@ -173,10 +173,10 @@ $("#hotspotImg-1").css("transition", "transform 1s");
             $(".hot-spot-1").css({"width" : hotspot_width , "height" : hotspot_width});
     });
 
-    
+    */ 
 
    /*
-    //Aumentar el tamaña del mapa con las calles manteniendo los puntos
+    //Aumentar el tamaña del mapa con las calles manteniendo los puntos */
     $("#hotspotImg-1").on("wheel", function (e) {
         
         var width = $("#hotspotImg-1").first().width();
@@ -223,7 +223,7 @@ $("#hotspotImg-1").css("transition", "transform 1s");
 
         
     });
-*/
+
     // ZOOM PERSONALIZADO PARA LA SUPERPOSICION DE MAPAS
         $("#hotspotImg-2").on("wheel", function (e) {
         var width = $("#hotspotImg-2").first().width();
