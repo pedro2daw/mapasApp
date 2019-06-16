@@ -34,8 +34,6 @@
     <script src=<?php echo base_url("assets/js/jspdf.js");?>></script>
     <script src=<?php echo base_url("assets/js/jspdf-autotable.js");?>></script>
     
-
-
     <script>
         coords_x = [];
         coords_y = [];

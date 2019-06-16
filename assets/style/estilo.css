@@ -33,6 +33,18 @@ html, body {
     border-style: dashed !important;
 }
 */
+
+#btn-dejar-de-filtrar {
+display: none;
+}
+
+.btn-filtro{
+    background-color: transparent !important;
+    box-shadow: none !important;
+    
+}
+
+
 #celia_portada{
     width: 20%;
     height: auto;

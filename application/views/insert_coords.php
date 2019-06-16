@@ -49,9 +49,9 @@
 
 
     $(document).ready( function (){
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip();
-});
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    });
 
         $('#delCoord').hide();
 
@@ -94,7 +94,7 @@ $(function () {
             { "data": "Tipo" , className: "d-none", "searchable": true  },
             { "data": "Nombre",className: "d-none", "searchable": true },
             { "data": "Punto",className: "d-none" },
-            { "data": "Calle" },
+            { "data": "Calle", "searchable": true }
         ]
         });
         table = $('#tabla_calles').DataTable();
@@ -111,7 +111,26 @@ $(function () {
          $("#img_callejero").css("opacity",opacity);
         });
 
+        $("#filtrar").click(function(){
+            $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+            return $(table.row(dataIndex).node()).find('td.warning').length;
+            }
+            );
+            table.draw(); 
 
+            $(this).hide();
+            $('#btn-dejar-de-filtrar').show();
+        });
+        
+        $('#btn-dejar-de-filtrar').on('click',function(){
+            $.fn.dataTable.ext.search.pop();
+            table.draw();
+            
+            $(this).hide();
+            $("#filtrar").show();
+        });
+    
     $('#tabla_calles tbody').on( 'click', 'tr', function () {
     row = table.row( this ).index();
     });
@@ -1156,6 +1175,7 @@ e.preventDefault();
             <button id="delCoord" class="btn bg-white"> <span class="far fa-times-circle"></span> Cancelar </button>
             <button type="button" class="btn btn-ayuda-calles" data-toggle="modal" data-target="#modal_leyenda"> <span class="fas fa-question-circle"></span></button>
             
+            
             <?php /*echo anchor('Csv/index','CSV',' class="btn btn-warning"');*/ ?>
 
         </div>
@@ -1171,7 +1191,15 @@ e.preventDefault();
                             <th class='d-none' scope="col">Tipo</th>
                             <th class='d-none' scope="col">Nombre</th>
                             <th class='d-none' scope="col">Punto</th>
-                            <th scope="col">Calle</th>
+                            <th scope="col"> Calle 
+                                <button type="button" class="btn px-3 btn-filtro" id="filtrar"> <span class="fas fa-filter"></span></button>
+                                <button type="button" class="btn px-3 btn-filtro" id="btn-dejar-de-filtrar"> <span class="fas fa-filter text-info"></span></button>
+                            </th>
+
+
+                            
+
+
                             
                         </tr>
                     </thead>
