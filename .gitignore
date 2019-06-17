@@ -41,5 +41,6 @@ assets/img/img_hotspots
 SyncToy_a97e1a2b-8b8c-44be-9f23-e0cc8c163cb3.dat
 assets/img/subir.png
 #application/config/database.php
+.env.development
 assets/img/icono/pdf.png
 assets/img/icono/word.png
