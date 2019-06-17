@@ -2,12 +2,12 @@
     class Security extends CI_Controller {
             public function __construct(){
                 parent::__construct();
-                $this->load->model('modelUser');
-                $this->load->model('modelBackUp');
-                $this->load->model('modelMapas');
-                $this->load->model('modelCalles');
-                $this->load->model('modelHotspot');
-                $this->load->model('modelInheritance');
+                $this->load->model('ModelUser');
+                $this->load->model('ModelBackUp');
+                $this->load->model('ModelMapas');
+                $this->load->model('ModelCalles');
+                $this->load->model('ModelHotspot');
+                $this->load->model('ModelInheritance');
                 
                 if (isset($this->session->userdata['loguedIn'])) {
                     

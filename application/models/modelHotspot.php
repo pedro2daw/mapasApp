@@ -1,5 +1,5 @@
 <?php
-class modelHotspot extends CI_Model {
+class ModelHotspot extends CI_Model {
     
     public function get_all($id_mapa) {
         $query = $this->db->query("SELECT * FROM hotspots WHERE id_mapa = $id_mapa;"); 
@@ -46,4 +46,4 @@ class modelHotspot extends CI_Model {
         return $row->titulo;
     }
     
-} // cierra class modelUser
+} // cierra class ModelUser

@@ -1,5 +1,5 @@
 <?php 
-class modelUser extends CI_Model{
+class ModelUser extends CI_Model{
 
 // ------- COMPRUEBO EL LOGIN CON LOS PARAMETROS DEL CONTROLADOR -------------------- //
     public function checkLogin($name,$pass) {
@@ -89,4 +89,4 @@ class modelUser extends CI_Model{
         return $pass;
     }
     
-} // cierra class modelUser
+} // cierra class ModelUser

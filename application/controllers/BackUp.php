@@ -44,11 +44,11 @@ class BackUp extends Security {
     }
 
     public function backup_assets(){
-        $this->modelBackUp->backupAssets();
+        $this->ModelBackUp->backupAssets();
     }
         
     public function restore_assets(){
-        if($this->modelBackUp->restoreAssets()){
+        if($this->ModelBackUp->restoreAssets()){
             echo "<script>alert('Sql restaurados con exito')</script>";
         }else{
             echo "<script>alert('Error al restaurar sql')</script>";
@@ -57,7 +57,7 @@ class BackUp extends Security {
     
 
     public function import_data(){
-        if($this->modelBackUp->restoreSql()){
+        if($this->ModelBackUp->restoreSql()){
             echo "<script>alert('Sql restaurados con exito')</script>";
         }else{
             echo "<script>alert('Error al restaurar sql')</script>";

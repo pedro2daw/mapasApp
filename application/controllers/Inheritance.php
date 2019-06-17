@@ -10,11 +10,11 @@ class inheritance extends Security {
             
         foreach ($Data as $fila) {
             if ($fila["caso"] == 1) {
-                $this->modelInheritance->insert_streets_1($fila["id_mapa"], $fila["id"]);
+                $this->ModelInheritance->insert_streets_1($fila["id_mapa"], $fila["id"]);
             }
             
             if ($fila["caso"] == 2) {
-                $this->modelInheritance->insert_streets_2($fila["id_mapa"], $fila["nombre"], $fila["tipo"], $fila["id"]);
+                $this->ModelInheritance->insert_streets_2($fila["id_mapa"], $fila["nombre"], $fila["tipo"], $fila["id"]);
             }
             
             if ($fila["caso"] == 3) {
@@ -22,7 +22,7 @@ class inheritance extends Security {
         }
         
         $data["msg"] = "0";
-        $data['ListaMapas'] = $this->modelMapas->get_all_ordenados();
+        $data['ListaMapas'] = $this->ModelMapas->get_all_ordenados();
         $this->session->set_flashdata('data',$data);
         redirect('Maps/index');
     }

@@ -348,7 +348,7 @@
                     
                 if (isset($this->session->userdata["id"])) {
                     $id = $this->session->userdata["id"];
-                    $nivel = $this->modelUser->getNivel($id);
+                    $nivel = $this->ModelUser->getNivel($id);
                     
                     if (isset($noHeader)) {
                         if ($noHeader == false) {

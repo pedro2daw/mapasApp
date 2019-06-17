@@ -378,7 +378,7 @@ $('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros 
                         <!-- ***************************** SUBIR UNA IMAGEN ******************** -->
                         <div class="custom-file">
                             <input type="file" name="upd_img" class="custom-file-input" id="upd_img" lang="es" onchange="openFile(event,'2')">
-                            <label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
+                            <label class="custom-file-label" for="upd_img">Seleccionar Archivo</label>
                         </div>
                         <img id='upd_imagen' class='img-thumbnail' src=''>
                     </div>

@@ -3,7 +3,7 @@ include_once('Security.php');
    class Streets extends Security {
 
         public function view_admin_streets(){
-            //$data["$slides_avialables"] =  $this->modelMapas->get_slides(); // traigo todos las laminas disponibles // decirle a Tony que me implemente la siguiente
+            //$data["$slides_avialables"] =  $this->ModelMapas->get_slides(); // traigo todos las laminas disponibles // decirle a Tony que me implemente la siguiente
                                                                             // funcion en su controlador de Maps.php:
             /*
             public function get_slides(){
@@ -18,16 +18,16 @@ include_once('Security.php');
                 return array_column($data,'nombre','id_slide');
             }
             */
-            $data["img_mapas"] = $this->modelCalles->get_maps_img();
-            $data["lista_calles_no_insertadas"] = $this->modelCalles->get_not_inserted();
-            $data["listaMapas"] = $this->modelMapas->get_all_ordenados();
-            $data["listaCalles"] = $this->modelCalles->get_all();
+            $data["img_mapas"] = $this->ModelCalles->get_maps_img();
+            $data["lista_calles_no_insertadas"] = $this->ModelCalles->get_not_inserted();
+            $data["listaMapas"] = $this->ModelMapas->get_all_ordenados();
+            $data["listaCalles"] = $this->ModelCalles->get_all();
             $data["viewName"] = "insert_coords";
             $this->load->view('template', $data);
         }
 
         public function form_update_map() {
-            $data['datosMapa'] = $this->modelMapas->get($id);
+            $data['datosMapa'] = $this->ModelMapas->get($id);
             echo json_encode($data['datosMapa']);
         }
 
@@ -36,14 +36,14 @@ include_once('Security.php');
             
             $calle = $this->input->post('calle_nueva');
 
-            $r = $this->modelCalles->insert_street($calle);
+            $r = $this->ModelCalles->insert_street($calle);
             if ($r == 0){
                 $data["msg"] = "1";
-                $data["listaMapas"] = $this->modelMapas->get_all();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["listaMapas"] = $this->ModelMapas->get_all();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 
             } else {
-                $data = $this->modelCalles->get_last();
+                $data = $this->ModelCalles->get_last();
                 $data['msg'] = '0';
                 echo json_encode($data);
             }
@@ -54,14 +54,14 @@ include_once('Security.php');
             $nombre= $this->input->post('nombre');
             $tipo = $this->input->post('via');
             
-            $r = $this->modelCalles->update_street($id,$nombre,$tipo);
+            $r = $this->ModelCalles->update_street($id,$nombre,$tipo);
             if ($r == 0){
                 $data["msg"] = "1";
-                $data["listaMapas"] = $this->modelMapas->get_all();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["listaMapas"] = $this->ModelMapas->get_all();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 
             } else {
-                $data = $this->modelCalles->get($id);
+                $data = $this->ModelCalles->get($id);
                 $data['msg'] = '0';
                 echo json_encode($data);
             }
@@ -74,13 +74,13 @@ include_once('Security.php');
             $x_aux = $this->input->post('x_aux');
             
             
-            $r = $this->modelCalles->update_coord($x, $y, $x_aux, $y_aux);
+            $r = $this->ModelCalles->update_coord($x, $y, $x_aux, $y_aux);
             
             if ($r == 0){
                 $data["msg"] = "1";
                 echo json_encode($data);
             } else {
-                $data["calles_relacionadas"] = $this->modelCalles->get_id_calles_relacionadas($x,$y);
+                $data["calles_relacionadas"] = $this->ModelCalles->get_id_calles_relacionadas($x,$y);
                 $data['msg'] = '0';
                
                 echo json_encode($data);
@@ -90,11 +90,11 @@ include_once('Security.php');
         public function get_streets_associated_to_coord(){
             $y = $this->input->post('y');
             $x = $this->input->post('x');
-            $data = $this->modelCalles->get_streets_associated_to_coord($x,$y);
+            $data = $this->ModelCalles->get_streets_associated_to_coord($x,$y);
             if ($data == 0){
                 $data["msg"] = "1";
-                $data["listaMapas"] = $this->modelMapas->get_all();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["listaMapas"] = $this->ModelMapas->get_all();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
             } else {
                 $data['msg'] = '0';
                 echo json_encode($data);
@@ -104,11 +104,11 @@ include_once('Security.php');
         public function delete_street() {
             $id = $this->input->post('id');
             
-            $r = $this->modelCalles->delete_street($id);
+            $r = $this->ModelCalles->delete_street($id);
             if ($r == 0){
                 $data["msg"] = "1";
-                $data["listaMapas"] = $this->modelMapas->get_all();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["listaMapas"] = $this->ModelMapas->get_all();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 
             } else {
                 $data['msg'] = '0';
@@ -127,18 +127,18 @@ include_once('Security.php');
             $id_calle = $this->input->post('id_calle');
 
             if (isset($calles_nuevas)){
-            $r1 = $this->modelCalles->insert_street($calles_nuevas);
+            $r1 = $this->ModelCalles->insert_street($calles_nuevas);
             } 
-            $r = $this->modelCalles->insert_coords($x,$y,$id_calle,$mapas_selected, $mapas_unselected);
+            $r = $this->ModelCalles->insert_coords($x,$y,$id_calle,$mapas_selected, $mapas_unselected);
             if ($r == 0){
                 $data["msg"] = "1";
-                $data["listaMapas"] = $this->modelMapas->get_all();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["listaMapas"] = $this->ModelMapas->get_all();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 
             } else {
                 // obtiene las calles que acabamos de insertar, las renombradas.
                 if ($length >= 1){
-                    $data = $this->modelCalles->last_inserted_calles($length);
+                    $data = $this->ModelCalles->last_inserted_calles($length);
                 }
                 
                 $data['msg'] = '0';
@@ -154,16 +154,16 @@ include_once('Security.php');
             $length = count($mapas_unselected);
             $calles_nuevas = $this->input->post('nuevos_nombres');
         
-            $r1 = $this->modelCalles->insert_street($calles_nuevas);
+            $r1 = $this->ModelCalles->insert_street($calles_nuevas);
             
-            $r = $this->modelCalles->insert_coords($x,$y,$mapas_selected, $mapas_unselected);
+            $r = $this->ModelCalles->insert_coords($x,$y,$mapas_selected, $mapas_unselected);
             if ($r == 0 && $r == 0){
                 $data["msg"] = "1";
-                $data["listaMapas"] = $this->modelMapas->get_all();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["listaMapas"] = $this->ModelMapas->get_all();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
             } else {
                 if ($length > 0){
-                    $data = $this->modelCalles->last_inserted_calles($length);
+                    $data = $this->ModelCalles->last_inserted_calles($length);
                 }
                 $data['msg'] = '0';
                 echo json_encode($data);
@@ -179,40 +179,40 @@ include_once('Security.php');
             // pasar el json a php array
             $xCoord = json_decode($xCoordjson);
             $yCoord = json_decode($yCoordjson);
-            //$next_id_street = modelCalles->get_ids();
-            $next_id_street = $this->modelCalles->get_next_id();
+            //$next_id_street = ModelCalles->get_ids();
+            $next_id_street = $this->ModelCalles->get_next_id();
 
-            // $resultado = $this->modelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa);
-            $r2 = $this->modelCalles->insert_coords($xCoord,$yCoord,$next_id_street);
+            // $resultado = $this->ModelCalles->insert_street($nombre,$tipo,$aInicio,$aFin,$id_mapa);
+            $r2 = $this->ModelCalles->insert_coords($xCoord,$yCoord,$next_id_street);
 
             if ($r2 == 0){
                 $data["msg"] = "1";
-                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["mapas_disponibles"] = $this->ModelCalles->get_maps();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 $data["viewName"] = "admin_streets";
                 $this->load->view('template', $data);
             }else{
                 $data["msg"] = "0";
-                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["mapas_disponibles"] = $this->ModelCalles->get_maps();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 $data["viewName"] = "admin_streets";
                 $this->load->view('template', $data);
             }
         }
 
         public function delete_street($id){
-            $resultado = $this->modelCalles->delete_street($id);
+            $resultado = $this->ModelCalles->delete_street($id);
 
             if($resultado == 0){
                 $data["msg"] = "1";
-                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["mapas_disponibles"] = $this->ModelCalles->get_maps();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 $data["viewName"] = "admin_streets";
                 $this->load->view('template', $data);
             }else{
                 $data["msg"] = "0";
-                $data["mapas_disponibles"] = $this->modelCalles->get_maps();
-                $data["listaCalles"] = $this->modelCalles->get_all();
+                $data["mapas_disponibles"] = $this->ModelCalles->get_maps();
+                $data["listaCalles"] = $this->ModelCalles->get_all();
                 $data["viewName"] = "admin_streets";
                 $this->load->view('template', $data);
             }
