@@ -89,7 +89,7 @@
                     <form enctype="multipart/form-data" id="submit">
 
                         <div class="custom-file">
-                                <label class="custom-file-label" for="customFileLang">Seleccionar Imagen</label>
+                                <label class="custom-file-label" for="imagen">Seleccionar Imagen</label>
                                 <input type="file" name="imagen" class="custom-file-input" id="imagen" lang="es" onchange="openFile(event,'2')" required>
                                 <input type="hidden" name="hsId" id="hsId" value=""/>
                                 <input type="hidden" name="mapId" id="mapId" value=""/>
