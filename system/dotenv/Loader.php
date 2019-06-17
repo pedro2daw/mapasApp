@@ -75,7 +75,12 @@ class Loader
     {
         $filePath = $this->filePath;
         if (!is_readable($filePath) || !is_file($filePath)) {
-            echo "Related \".env\" not found, please configure \"". basename($filePath) ."\" it before running codeigniter application"; exit;
+            // echo "Related \".env\" not found, please configure \"". basename($filePath) ."\" it before running codeigniter application"; 
+            // CARGAR EL INSTALADOR POR PRIMERA VEZ:
+            include "install.php";
+            exit;
+
+
             // throw new InvalidArgumentException(sprintf(
             //     'Dotenv: Environment file .env not found or not readable. '.
             //     'Create file with your environment settings at %s',
