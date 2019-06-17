@@ -1,5 +1,5 @@
 <?php
-class modelSecurity extends CI_Model {
+class ModelSecurity extends CI_Model {
 
     public function create_session() {
         $sessionLogued = array('loguedIn' => TRUE);
@@ -10,4 +10,4 @@ class modelSecurity extends CI_Model {
     public function destroy_session() {
         $this->session->sess_destroy();
     }
-} // cierra la class modelCalles
+} // cierra la class ModelCalles

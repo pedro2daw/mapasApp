@@ -1,5 +1,5 @@
 <?php
-class modelCalles extends CI_Model {
+class ModelCalles extends CI_Model {
    // select calles.id as id_calle, calles.nombre as nombre ,calles.tipo as tipo, puntos.id as id_punto, puntos.punto_x as x, puntos.punto_y as y, mapas.id as id_mapa , mapas.titulo as titulo   from calles inner join puntos on calles.id = puntos.id_calle inner join mapas_calles on calles.id = mapas_calles.id_calle inner join mapas on mapas.id = mapas_calles.id_map
     public function get_all(){
         $query = $this->db->query("SELECT calles.id as id, calles.nombre as nombre, calles.tipo as tipo,  puntos.id as id_punto, puntos.punto_x as x, puntos.punto_y as y FROM calles LEFT JOIN puntos on calles.id = id_calle ORDER BY calles.id asc");
@@ -264,4 +264,4 @@ class modelCalles extends CI_Model {
         return $data;
     }
     
-} // cierra la class modelCalles
+} // cierra la class ModelCalles

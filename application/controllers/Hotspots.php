@@ -8,13 +8,13 @@ class Hotspots extends Security {
         $url = base64_decode(urldecode($imgUrl));
         $data['id_mapa'] = $id_mapa;
         $data['urlImg'] = $url;
-        $data['ListaHotspots'] = $this->modelHotspot->get_all($id_mapa);
+        $data['ListaHotspots'] = $this->ModelHotspot->get_all($id_mapa);
         $data['viewName'] = "admin_hotspots";
         $this->load->view('template', $data);
     }
     
     public function select_maps() {
-        $data['ListaMapas'] = $this->modelHotspot->get_mapas();
+        $data['ListaMapas'] = $this->ModelHotspot->get_mapas();
         $data["viewName"] = "select_map";
         $this->load->view('template', $data);
     }
@@ -24,7 +24,7 @@ class Hotspots extends Security {
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
 
         $id_mapa = $this->input->get_post('mapId');
-        $titulo = $this->modelHotspot->get_nombre_mapa($id_mapa);
+        $titulo = $this->ModelHotspot->get_nombre_mapa($id_mapa);
         
             
         $config["file_name"] = $id_mapa . "_" . $titulo;
@@ -56,7 +56,7 @@ class Hotspots extends Security {
         $pos_x = $this->input->get_post('posX');
         $pos_y = $this->input->get_post('posY');
         $imagen = $this->upload->data('file_name');
-        $this->modelHotspot->insert($id, $imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
+        $this->ModelHotspot->insert($id, $imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
         
         echo $imagen;
     }
@@ -64,6 +64,6 @@ class Hotspots extends Security {
     public function delete_hotspot() {
         $id_mapa = $this->input->get_post('id_mapa');
         $id = $this->input->get_post('id');
-        $r = $this->modelHotspot->delete($id, $id_mapa);
+        $r = $this->ModelHotspot->delete($id, $id_mapa);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-class modelBackUp extends CI_Model {
+class ModelBackUp extends CI_Model {
 
 // descargar assets como zip
         public function backupAssets(){

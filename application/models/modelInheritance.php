@@ -1,5 +1,5 @@
 <?php 
-class modelInheritance extends CI_Model{
+class ModelInheritance extends CI_Model{
 
     public function get_calles_mapa($id_mapa) {        
         $query = $this->db->query("SELECT id_calle FROM mapas_calles WHERE id_map = '$id_mapa';");
@@ -49,4 +49,4 @@ class modelInheritance extends CI_Model{
         $this->db->query("INSERT INTO mapas_calles (id_map, id_calle) VALUES ('$id_mapa', '$insertId');");
     }
     
-} // cierra class modelUser
+} // cierra class ModelUser

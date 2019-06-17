@@ -1,5 +1,5 @@
 <?php
-class modelMapas extends CI_Model {
+class ModelMapas extends CI_Model {
     // $titulo, $descripcion, $ciudad, $fecha,$img,$nivel,$ancho,$alto
 
     function get_all(){

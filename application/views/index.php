@@ -38,6 +38,8 @@
     <link href="<?php echo base_url()?>assets/style/mdbootstrap4.7.6cssmdb.min.css" rel="stylesheet">
 
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
+    
+    <script type="text/javascript" src="<?php echo base_url()?>assets/wheelzoom.js"></script>
 
     <style>
         .copyright {
