@@ -94,8 +94,8 @@
                 font-size: 1.5rem;
             }
 
-            .text-white {
-                color: white;
+            .text-black {
+                color: #414a4c;
             }
 
            
@@ -104,21 +104,22 @@
             }
 
             #success {
+                border: 4px solid yellowgreen;
                 border-radius: 20px;
                 display: block;
                 margin: 0 auto;
-                background-color: yellowgreen;
-                width: 50%;
+                background-color: rgba(194, 194, 194, 0.219);
+                width: 30%;
                 font-size: 1.5em;
                 padding: 10%;
             }
 
             #fondo_form {
-    margin-top: 5%;
-    background-color: rgba(194, 194, 194, 0.219);
-    border-radius: 20px;
-    padding: 40px;
-}
+                margin-top: 5%;
+                background-color: rgba(194, 194, 194, 0.219);
+                border-radius: 20px;
+                padding: 40px;
+            }
 
         </style>         
     </head>
@@ -283,15 +284,22 @@
 
             
 			/*
-            echo "<br><br><span class='text-white'>La instalación ha finalizado. <br>
+            echo "<br><br><span class='text-black'>La instalación ha finalizado. <br>
             <strong>IMPORTANTE: elimine ahora el archivo de instalación (install.php) del servidor para evitar posibles ataques a su base de datos.</strong>.<br>"
             . "Visite <a href='$baseurl/Login'> el formulario de Login (click) </a> para comenzar a administrar la aplicación.</span><br>";
             */
 
-            echo "<div id='success'><span class='text-white'>
+            echo "<div id='success'><span class='text-black'>
+            
                         ¡Enhorabuena! <br> </br>
                         La instalación ha finalizado. <br><br>
-                        <a class='btn-primary' href='$baseurl/Login'> ¡Comenzar! </a>
+
+                        Credenciales de usuario por defecto: <br>
+                        User: admin<br>
+                        Clave: 1<br><br>
+                        Le recomendamos encarecidamente que modifique su contraseña mediante el menú de usuarios. <br>  <br>
+
+                        <a class='btn-primary mx-auto' href='$baseurl/Login'> ¡Comenzar! </a>
                 </span></div>";
             
             
@@ -311,7 +319,7 @@
                     <div class="col-md-12">
                         <h1 class="text-center">Instalaci&oacute;n de MapasApp</h1>
                         <p class="text-justify">
-                        Este programa de instalación le ayudará a desplegar la aplicación CeliaTour/Celia360 en su servidor. Si no sabe como proceder, le recomendamos que se ponga en contacto con su administrador de sistemas.
+                        Este programa de instalación le ayudará a desplegar la aplicación MapasApp en su servidor. Si no sabe como proceder, le recomendamos que se ponga en contacto con su administrador de sistemas.
                         </p>
                         <h4 class="text-center">Configuración del host</h4>
                         <div class="form-group">

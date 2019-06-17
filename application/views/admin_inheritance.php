@@ -12,7 +12,7 @@
                     <!-- <th scope="col">#</th> -->
                     <th scope="col">Tipo de vía</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Se encuentra en el mapa insertado / Tiene otro nombre</th>
+                    <th class="d-none" scope="col">Se encuentra en el mapa</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +47,7 @@
                             </select>
                         </td>");
                     echo ("<div class='form-group'>");
-                    echo ("<td><input class='form-control' id='herenciaNombre" . $calles["id"] . "' type='text' placeholder='Nombre en este mapa / Dejar vacío' value='" . $calles["nombre"] . "' disabled /></td>");
+                    echo ("<td><input class='form-control' id='herenciaNombre" . $calles["id"] . "' type='text' placeholder='Renombrar / Dejar vacío si no existía' value='" . $calles["nombre"] . "' disabled /></td>");
                     echo ("</div>");
 
                     
@@ -56,7 +56,7 @@
                     <td> 
                         <div class='custom-control custom-checkbox'> 
                             <input type='checkbox' name='checkNombre" . $calles["id"] . "' id='checkNombre" . $calles["id"] . "' class='custom-control-input'  value='test' checked />
-                            <label class='custom-control-label' for='checkNombre" . $calles["id"] ."'> Se encuentra en el mapa insertado / Tiene otro nombre </label>
+                            <label class='custom-control-label' for='checkNombre" . $calles["id"] ."'> Se encuentra en el mapa insertado </label>
                             
                         </div> 
                     </td>");

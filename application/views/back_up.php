@@ -191,7 +191,7 @@
                             echo form_open_multipart('BackUp/restore_assets'); ?>
                             <div class='custom-file'>
                                 <input type='file' name='assetsZip' class='custom-file-input' id='assetsZip' required>
-                                <label class='custom-file-label' for='file_sql'>Seleccionar ASSETS</label>
+                                <label class='custom-file-label' for='assetsZip'>Seleccionar ASSETS</label>
                             </div>
 
                             
