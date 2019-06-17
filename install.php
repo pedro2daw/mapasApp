@@ -27,7 +27,7 @@
                 max-width: 1300px;
             }
             .bg-secondary {
-                background-color: #4E5D6C;
+                background-color: white;
             }
             .col-md-6{
                 width: 50%;
@@ -39,7 +39,7 @@
                 margin: auto!important;
             }
             h1, h4, p, label, span{
-                color: white;
+                color: #414a4c;
                 font-family:"Lato";
             }
             input, label{
@@ -59,8 +59,8 @@
                 width: 90%;
             }
             .btn-primary {
-                color: #fff;
-                background-color: #DF691A;
+                color: #ffff;
+                background-color: #4285F4;
                 border: none;
                 width: auto;
                 padding: 0.375rem 0.75rem;
@@ -73,7 +73,7 @@
                 padding-bottom: 15px; 
             }
             body{
-                background-color: #2B3E50;
+                background-color: white;
             }
             .text-justify{
                 text-align: justify;
@@ -104,13 +104,22 @@
             }
 
             #success {
-                border: round;
+                border-radius: 20px;
                 display: block;
                 margin: 0 auto;
                 background-color: yellowgreen;
                 width: 50%;
+                font-size: 1.5em;
                 padding: 10%;
             }
+
+            #fondo_form {
+    margin-top: 5%;
+    background-color: rgba(194, 194, 194, 0.219);
+    border-radius: 20px;
+    padding: 40px;
+}
+
         </style>         
     </head>
     <body>
@@ -237,8 +246,6 @@
                 $mensaje = "El Archivo " . $nombre_archivo . " se ha creado.";
             }
 
-            echo $mensaje;
-
             if ($archivo = fopen($nombre_archivo, "w")) {
                 fwrite($archivo, "DB_HOSTNAME='" . $host . "'\n 
         								DB_USERNAME='" . $userdb . "'\n 
@@ -255,7 +262,7 @@
         								DB_DATABASE='" . $nombredb . "<br> 
         								BASE_URL='" . $baseurl . "'<br>
         								SESSION_DIR='/tmp'<br><br><br>
-                Cuando haya creado el archivo puede visitar <a href='$baseurl/usuario'>$baseurl/usuario</a> para comenzar a administrar su visita virtual. Pida ayuda a su administrador de sistemas si no sabe cómo hacer todo esto.";
+                Cuando haya creado el archivo puede visitar <a href='$baseurl/login'>$baseurl/login</a> para comenzar a administrar su visita virtual. Pida ayuda a su administrador de sistemas si no sabe cómo hacer todo esto.";
             }
 
             fclose($archivo);
@@ -283,8 +290,8 @@
 
             echo "<div id='success'><span class='text-white'>
                         ¡Enhorabuena! <br> </br>
-                        La instalación ha finalizado. <br>
-                        Visite <a href='$baseurl/Login'> el formulario de Login (click)</a> para comenzar a administrar la aplicación.
+                        La instalación ha finalizado. <br><br>
+                        <a class='btn-primary' href='$baseurl/Login'> ¡Comenzar! </a>
                 </span></div>";
             
             
@@ -298,7 +305,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6 mx-auto bg-secondary">
+        <div id="fondo_form" class="col-md-6 mx-auto bg-secondary">
             <form action="install.php">
                 <div class="row">
                     <div class="col-md-12">
