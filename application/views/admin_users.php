@@ -27,6 +27,23 @@
         // Añadimos la clase form-control para que el buscador tenga el aspecto de bootstrap.
         $("input[type='search']").addClass('form-control');
     
+        $(document).on("click","#btn-delete",function (e){
+            var id = $(this).data("id");
+            e.preventDefault();
+            swal({
+                title: "Precaución",
+                text: "Va a borrar el mapa seleccionado, esta operación es irreversible. ¿Desea continuar?",
+                icon: "warning",
+                buttons: ["No, gracias", "Borrar Mapa"],
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    location.href='<?php echo site_url();?>/Maps/delete_map/'+id;
+                }
+            });
+        });
+
 
             $(document).on("click",'#btn_update', function(){
                 $("#submitUsuMod").prop("disabled", true);
@@ -116,12 +133,16 @@
         </div> <!-- final del div .box -->
         <div class="row">
             <div class="col-md-12 botones">
+            <?php if ($nivel == 2){  ?> 
                 <button type="button" id="boton_usuario" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> Insertar Usuario </button>
+            <?php } ?> 
             </div>
         </div>
-
+        
+        <?php if ($nivel == 2){ ?>
         <div class="row">
             <div class="col-md-12">
+                
                 <table id='tabla_usuarios' class="table table-hover">
                     <thead>
                         <tr>
@@ -135,7 +156,8 @@
                     </thead>
                     <tbody>
 
-                        <?php
+                <?php
+                 
                 for($i = 0; $i < count($ListaUsuarios);$i++){
                     $usuario = $ListaUsuarios[$i];
                     echo ("<tr class=''>");
@@ -160,7 +182,9 @@
                 </table>
             </div>
         </div>
+        <?php } ?>
 
+        <?php if ($nivel == 2){ ?>
         <!-- *********************** INSERCIÓN DE UN USUARIO ************************** -->
         <div class="modal fade" id="modal_insert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -209,7 +233,8 @@
                 </div> <!-- cierra el modal body -->
             </div>
         </div> <!-- modal_insert -->
-
+        <?php } ?>
+        
         <!-- MODAL DEL UPDATE USERS : -->
         <div class="modal fade" id="modal_mod" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -250,8 +275,7 @@
                         <br />
 
                         <div class='modal-footer'>
-                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cerrar</button>
-                            <input type="submit" name="submit" id="submitUsuMod" value="Insertar Usuario" class="btn btn-primary">
+                            <input type="submit" name="submit" id="submitUsuMod" value="Modificar datos" class="btn btn-primary">
                         </div>
                         <?php 
                             echo form_close(); 

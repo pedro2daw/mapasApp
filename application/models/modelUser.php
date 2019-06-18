@@ -25,6 +25,11 @@ class ModelUser extends CI_Model{
         return $this->db->affected_rows();
     }
     
+    public function get($id) {
+        $query = $this->db->query("SELECT id, username, nivel FROM usuarios WHERE id = '$id';"); 
+        return $query->result_array();
+    }
+    
     public function get_all() {
         $query = $this->db->query("SELECT id, username, nivel FROM usuarios;"); 
         $data = array();

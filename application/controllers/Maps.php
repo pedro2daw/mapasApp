@@ -5,6 +5,8 @@ include_once('Security.php');
 class Maps extends Security {
 
     public function index(){
+        $id = $this->session->userdata("id");
+        $data['nivel'] = $this->ModelUser->getNivel($id);
         $data['ListaMapas'] = $this->ModelMapas->get_all_ordenados();
         $data["viewName"] = "admin_panel";
         if ($this->session->flashdata('data') != null){
@@ -15,6 +17,7 @@ class Maps extends Security {
     }
 
     public function insert(){
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){ 
         $titulo = $this->input->get_post('titulo');
         // $descripcion = $this->input->get_post('descripcion');
         $ciudad = 'Almeria';
@@ -95,11 +98,14 @@ class Maps extends Security {
                 }
             }
         }
-        
-        
+        } else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
 
     public function update() {
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){ 
         $id = $this->input->get_post('id_update');
         $titulo = $this->input->get_post('upd_titulo');
         $ciudad = $this->input->get_post('upd_ciudad');
@@ -165,12 +171,16 @@ class Maps extends Security {
                     redirect('Maps/index');
                 }
             }
-        }   
-    }     
+        } 
+    }   else {
+        $data["viewName"] = "error";
+        $this->load->view('template', $data);
+    }  
+    }
 
     public function delete_map($id) {
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){ 
         $r = $this->ModelMapas->delete($id);
-
         if ($r == 0){
             // ERROR 
             $data["msg"] = "1";
@@ -185,9 +195,15 @@ class Maps extends Security {
             $this->session->set_flashdata('data',$data);
             redirect('Maps/index');
         }
+                } else {
+                    $data["viewName"] = "error";
+                                $this->load->view('template', $data);
+
+                }
     }
 
     public function superponer(){
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){ 
         $x_json = $this->input->get_post('x_coord');
         $y_json = $this->input->get_post('y_coord');
         $rutas_json = $this->input->get_post('array_rutas');
@@ -213,21 +229,33 @@ class Maps extends Security {
             $this->session->set_flashdata('data',$data);
             redirect('Maps/index');
         }
+        } else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
 
     public function update_principal(){
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){ 
         $id = $this->input->post();
-
         $id_principal = $id["id_principal"];
-
         $this->ModelMapas->update_principal($id_principal);
+        }else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
 
     public function get_maps(){
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){ 
+
         $data["mapas_aux"] = $this->ModelMapas->get_maps_aux();
         $data["mapa_main"] = $this->ModelMapas->get_mapa_main();
         $data["viewName"] = "superponer";
         $this->load->view('template', $data);
+        } else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
-
 }

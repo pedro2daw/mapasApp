@@ -9,6 +9,9 @@
                     case 2:
                         echo "<div class='alert alert-danger' role='alert'> Usuario o contraseña incorrectos. </div>";
                         break;
+                    case 4:
+                        echo "<div class='alert alert-success' role='alert'> Usuario borrado con éxito. </div>";
+                        break;
                 }
             }
             ?>

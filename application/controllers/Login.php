@@ -28,6 +28,11 @@ class Login extends CI_Controller {
         
         $this->load->model('ModelMapas');
         $this->load->model('ModelCalles');
+
+        if ($this->session->flashdata('data') != null){
+            $a = $this->session->flashdata('data');
+            $data['msg'] = $a['msg'];
+        }
         $data["noHeader"] = false;
         $data["viewName"] = "login";
         $this->ModelSecurity->destroy_session();

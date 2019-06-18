@@ -1167,14 +1167,16 @@ e.preventDefault();
 
     <div class="row">
         <div class="col-md-12 botones">
+        <?php if ($nivel == 2){ ?>
             <button type="button" class="btn btn-primary btn-anadir" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> AÑADIR CALLE </button>
             <button type='button' class="btn btn-info btn-update" data-toggle='modal' data-target='#modal_update' data-id=''><span class='far fa-edit'></span> Modificar Calle</button>
             <button type='button' class="btn btn-danger btn-delete" data-id='' data-toggle="tooltip" data-placement="bottom" title="Borrar"><span class='fas fa-trash-alt'></span> Borrar Calle</button>
             <button type='button' class="btn btn-warning btn-insert-coords" data-id='' data-toggle="tooltip" data-placement="bottom" title="Insertar Punto"><span class='fas fa-map-marked-alt'></span> Confirmar Punto</button>
             <button type="button" class="btn btn-success btn-continuar"> <span class="fas fa-long-arrow-alt-right"></span> Continuar </button>
             <button id="delCoord" class="btn bg-white"> <span class="far fa-times-circle"></span> Cancelar </button>
+        <?php } ?>
             <button type="button" class="btn btn-ayuda-calles" data-toggle="modal" data-target="#modal_leyenda"> <span class="fas fa-question-circle"></span></button>
-            
+        
             
             <?php /*echo anchor('Csv/index','CSV',' class="btn btn-warning"');*/ ?>
 
@@ -1501,8 +1503,10 @@ e.preventDefault();
 
                 <div class="col"></div>
                 <div class="modal-footer">
+                <?php if ($nivel == 2){ ?>
                     <button type="button" class="btn btn-primary btn-insertar-con-punto"><span class="fas fa-map-pin"> </span> Asignar calle a este punto</button>
                     <button type="button" class="btn btn-info btn-modificar-punto" ><span class="fas fa-drafting-compass"> </span> Modificar punto</button>
+                <?php } ?>
                     <button type="button" class="btn btn-success btn-generar-informe" ><span class="fas fa-pencil-alt"> </span> Redactar informe</button>
                     <button type="button" class="btn btn-info btn-cerrar-informe d-none" ><span class="fas fa-pencil-alt"> </span> Cerrar informe</button>
                 </div>

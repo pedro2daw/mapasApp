@@ -18,6 +18,8 @@ include_once('Security.php');
                 return array_column($data,'nombre','id_slide');
             }
             */
+            $id = $this->session->userdata("id");
+            $data['nivel'] = $this->ModelUser->getNivel($id);
             $data["img_mapas"] = $this->ModelCalles->get_maps_img();
             $data["lista_calles_no_insertadas"] = $this->ModelCalles->get_not_inserted();
             $data["listaMapas"] = $this->ModelMapas->get_all_ordenados();

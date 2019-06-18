@@ -105,6 +105,8 @@ $('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros 
         <div class="col-md-12">
             <div class='box'>
                 <?php
+                //VARIABLE NIVEL:
+                echo "<div id='nivel' class='d-none'>$nivel</div>";
             if (isset($msg)){
                 switch ($msg) {
                     case 0:
@@ -119,7 +121,7 @@ $('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros 
             </div> <!-- final del div .box -->
         </div>
     </div>
-
+    <?php if ($nivel == 2){ ?>
     <div class="row">
         <div class="col-md-12 botones">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_insert"> <span class="far fa-plus-square"></span> Insertar Mapa </button>
@@ -129,6 +131,7 @@ $('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros 
            
         </div>
     </div>
+    <?php } ?>
 
     <div class="row">
         <div class="col-md-12">
@@ -137,11 +140,15 @@ $('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros 
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Imagen</th>
+                <?php if ($nivel == 2){ ?>
                         <th scope="col">Marcar como principal</th>
+                <?php   } ?>
                         <th scope="col">Titulo</th>
                         <th scope="col">Fecha</th>
+                <?php if ($nivel == 2){ ?>
                         <th scope="col">Modificar</th>
                         <th scope="col">Borrar</th>
+                <?php   } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -183,9 +190,9 @@ $('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros 
                     echo ("<td class='d-none' id=desviacion_x_".$mapa["id"]." data-x='".$mapa['desviacion_x']."'></td>");
                     echo ("<td class='d-none' id='desviacion_y_".$mapa["id"]."' data-y='".$mapa['desviacion_y']."'></td>");
                     echo ("<td><img alt ='Modifica el plano e inserta una imagen' src='".base_url($mapa["imagen"])."' class='thumbnail_mapa' id='src_imagen_".$mapa["id"]."'></td>");
+                    if ($nivel == 2){ 
                     if (($check_principal == true && $mapa["principal"] == true)){
                         echo ("<td style='text-align:center;'> <span id='msg_principal' data-toggle='tooltip' data-placement='bottom'> <button class='main btn btn-success' value='".$mapa['id']."' disabled> PRINCIPAL </button> </span> </td>");
-
                     }
                     else if($check_principal==false){
                         echo ("<td style='text-align:center;'>
@@ -197,15 +204,18 @@ $('#msg_principal').attr('title','Plano sobre el que se van a alinear los otros 
                        echo("<td style='text-align:center;'>
                        <span class='msg_seleccionar' data-toggle='tooltip' data-placement='bottom'> <button class='main btn btn-secundary' value='".$mapa['id']."'>Seleccionar</button> </span> </td>");
                     }
+                    }
                     
                     echo ("<td id=titulo_".$mapa["id"].">".$mapa["titulo"]."</td>");
                     echo ("<td id=fecha_".$mapa["id"].">".$mapa["fecha"]."</td>");
+                    if ($nivel == 2){ 
                     echo("<td>");
                     echo anchor("Maps/form_update_map/".$mapa['id'],"<span class='far fa-edit'></span>","class='btn btn-info btn-update' data-toggle='modal' data-target='#modal_update' data-id='".$mapa['id']."' class=''");
                     echo("</td>");  
                     echo("<td>");
                     echo anchor("Maps/delete_map/".$mapa['id'],"<span class='fas fa-trash-alt'></span>","class='btn btn-danger btn-delete' data-id='".$mapa['id']."'");
                     echo("</td>");
+                    }
                     echo("</tr>");
                 }
                 ?>

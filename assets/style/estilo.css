@@ -321,3 +321,13 @@ no-js #loader { display: none;  }
     margin: 0 auto;
 }
 
+#fondo_form {
+    margin-top: 5%;
+    background-color: rgba(194, 194, 194, 0.219);
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.text-black {
+    color: #414a4c;
+}

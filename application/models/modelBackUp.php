@@ -44,7 +44,7 @@ class ModelBackUp extends CI_Model {
 
         //Restaurar base de datos sql
     public function restoreSql(){
-        $config['upload_path'] = "."; //Ruta donde se guarda el zip de la base de datos
+        $config['upload_path'] = "./assets/db"; //Ruta donde se guarda el zip de la base de datos
         $config['allowed_types'] = '*'; //Tipo de fichero permitido
         
         $this->load->library('upload', $config);//Cargamos la libreria y pasamos parametros 
@@ -58,7 +58,7 @@ class ModelBackUp extends CI_Model {
             // Temporary variable, used to store current query
             $templine = '';
             // Read in entire file
-            $lines = file($file_name);
+            $lines = file("./assets/db/".$file_name);
             $error = '';
             // Loop through each line
             foreach ($lines as $line){
