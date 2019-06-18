@@ -708,9 +708,9 @@
             <div id="puntosInteres" class="row">
                 <div id="tabla" class="col-sm dragscroll">
                     <div id="hotspotImg" class="responsive-hotspot-wrap">
-
+                        <?php if (isset($ListaMapas[0]["id"])) { ?>
                         <img src="<?php echo base_url($ListaMapas[0]["imagen"])?>" id="slide" data-id-mapa="<?php echo $ListaMapas[0]["id"]?>" class="img-responsive span4 proj-div" />
-
+                        <?php } else {} ?>
                         <?php 
                         if (isset($ListaHotspots)) {
                             foreach ($ListaHotspots as $hotspot) {
