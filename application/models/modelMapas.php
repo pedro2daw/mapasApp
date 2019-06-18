@@ -205,8 +205,15 @@ class ModelMapas extends CI_Model {
     
     public function get_id_first_map() {
         $query = $this->db->query("SELECT id FROM mapas ORDER BY id ASC ");
-        $first = $query->row();
-        return $first->id;
+        $id;
+        if (!is_null($query->row())) {
+            $first = $query->row();
+            $id = $first->id;
+        } else {
+            $id = false;
+        };
+        
+        return $id;
     }
     
     public function get_maps_aux() { 

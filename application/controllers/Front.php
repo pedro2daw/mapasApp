@@ -6,12 +6,20 @@ class Front extends CI_Controller {
         $this->load->model('ModelHotspot');
         $this->load->model('ModelMapas');
         $this->load->model('ModelCalles');
-        $id = $this->ModelMapas->get_id_first_map();
+        
+        if ($this->ModelMapas->get_id_first_map() != false) {
+            $id = $this->ModelMapas->get_id_first_map();
+        } else {};
+        
         $data["img_mapas"] = $this->ModelCalles->get_maps_img();
         $data["listaCalles"] = $this->ModelCalles->get_all_calles_activadas();
         $data['listaMapas'] = $this->ModelMapas->get_all();
         $data['ListaMapas'] = $this->ModelMapas->get_all();
-        $data['ListaHotspots'] = $this->ModelHotspot->get_all($id);
+        
+        if (isset($id)) {
+            $data['ListaHotspots'] = $this->ModelHotspot->get_all($id);
+        } else {};
+        
         $this->load->view("index.php", $data);
     }
     
