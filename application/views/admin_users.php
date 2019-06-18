@@ -138,20 +138,20 @@
                         <?php
                 for($i = 0; $i < count($ListaUsuarios);$i++){
                     $usuario = $ListaUsuarios[$i];
-                    echo ("<tr>");
-                    echo ("<td class='fila".$usuario["id"]."'>".$usuario["id"]."</td>");
-                    echo ("<td id='user_".$usuario["id"]."' class='fila".$usuario["id"]."'>".$usuario["username"]."</td>");
+                    echo ("<tr class=''>");
+                    echo ("<td class='fila".$usuario["id"]." vertical-align'>".$usuario["id"]."</td>");
+                    echo ("<td id='user_".$usuario["id"]."' class='fila".$usuario["id"]." vertical-align'>".$usuario["username"]."</td>");
                     if ($usuario["nivel"] == 2){
-                        echo ("<td class='fila".$usuario["id"]."'> Administrador </td>");
+                        echo ("<td class='fila".$usuario["id"]." vertical-align'> Administrador </td>");
                     } else {
-                        echo ("<td class='fila".$usuario["id"]."'> Usuario Básico </td>");
+                        echo ("<td class='fila".$usuario["id"]." vertical-align'> Usuario Básico </td>");
                     }
-                    echo ("<td id='nivel_".$usuario["id"]."'class='d-none fila".$usuario["id"]."'>".$usuario["nivel"]."</td>");
+                    echo ("<td id='nivel_".$usuario["id"]."' class='d-none fila vertical-align".$usuario["id"]."'>".$usuario["nivel"]."</td>");
                     echo ("<td>");
-                    echo anchor("Users/update_user/".$usuario['id'],"<span class='far fa-edit'></span>","  data-id='".$usuario['id']."'id='btn_update' class='btn btn-info btn-update' data-toggle='modal'  data-target='#modal_mod'");
+                    echo anchor("Users/update_user/".$usuario['id'],"<span class='far fa-edit'></span>","  data-id='".$usuario['id']."'id='btn_update' class='btn btn-info btn-update vertical-align' data-toggle='modal'  data-target='#modal_mod'");
                     echo ("</td>");  
                     echo ("<td>");
-                    echo anchor("Users/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span>","id='btn_delete' class='btn btn-danger'");
+                    echo anchor("Users/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span>","id='btn_delete' class='btn btn-danger vertical-align'");
                     echo ("</td>");
                     echo ("</tr>");
                 }

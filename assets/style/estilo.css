@@ -53,7 +53,7 @@ display: none;
 }
 
 
-th {
+th , .vertical-align {
     vertical-align:middle !important;
 }
 /*
