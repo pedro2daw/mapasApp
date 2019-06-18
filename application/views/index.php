@@ -631,7 +631,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?php
                             for($i = 0; $i < count($listaCalles);$i++){
                             $calle = $listaCalles[$i];
                             echo "<tr id=calle_".$calle["id"]." >";
@@ -712,6 +712,7 @@
                         <img src="<?php echo base_url($ListaMapas[0]["imagen"])?>" id="slide" data-id-mapa="<?php echo $ListaMapas[0]["id"]?>" class="img-responsive span4 proj-div" />
 
                         <?php 
+                        if (isset($ListaHotspots)) {
                             foreach ($ListaHotspots as $hotspot) {
                                 echo "<div id='" .$hotspot["id"]. "' class='hot-spot' data-posx='" .$hotspot["punto_x"]. "' data-posy='" .$hotspot["punto_y"]. "' style='top: " .$hotspot["punto_y"]. "px; left: " .$hotspot["punto_x"]. "px; display: block;'>
                                     <div class='circle'></div>
@@ -724,6 +725,7 @@
                                     </div>
                                 </div>";
                             }
+                        } else {};
 
                         ?>
 
@@ -753,7 +755,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contacto">
+    <!-- <section id="contacto">
         <div class="container">
             <h2 class="text-center text-uppercase text-secondary mb-0">Vacio</h2>
             <hr class="star-dark mb-5">
@@ -763,7 +765,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- FOOTER -->
     <footer class="footer text-center">
@@ -772,17 +774,17 @@
                 <div class="col-sm">
                     <h4 class="text-uppercase mb-4">Contacto</h4>
                     <p class="lead mb-0">Pedro López:
-                        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/pedro2daw">
                             <i class="fab fa-fw fa-github"></i>
                         </a>
                     </p>
                     <p class="lead mb-0">Eduard Adrian Voicu:
-                        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/edi2012">
                             <i class="fab fa-fw fa-github"></i>
                         </a>
                     </p>
                     <p class="lead mb-0">Antonio Jiménez:
-                        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/ajl200">
                             <i class="fab fa-fw fa-github"></i>
                         </a>
                     </p>
