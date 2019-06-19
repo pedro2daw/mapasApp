@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Install CMS Celia Tour</title>
+        <title>Asistente de instalación</title>
         <!-- Fuente externa -->
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
         <!-- Estilos del formulario de instalación -->
@@ -325,7 +325,7 @@
                         </div>
                         <div class="form-group">
                             <label for="namebd">Nombre de la base de datos</label>
-                            <input type='text' id="namebd" name='namebd' value='mapas' required>
+                            <input type='text' id="namebd" name='namebd' value='' required>
                         </div>
                         <div class="form-group">
                             <label for="nameuse">Usuario de la base de datos</label>
@@ -337,7 +337,7 @@
                         </div>
                         <div class="form-group">
                             <label for="base">Base URL del sitio</label>
-                            <input type='text' name='base' id="base" placeholder="http://ejemplo.com" value='http://[::1]/mapasApp' required>            
+                            <input type='text' name='base' id="base" placeholder="http://ejemplo.com" value='http://[::1]/' required>            
                         </div>
                     </div>
                 </div>
