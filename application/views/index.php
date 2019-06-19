@@ -9,7 +9,8 @@
     <meta name="author" content="">
 
     <title>Mapas Developers</title>
-
+    <link rel='shortcut icon' type='image/png' href='<?php echo base_url()?>/assets/img/icono/i2.png'/>
+    
     <!-- Bootstrap core CSS -->
     <link href="<?php echo base_url()?>/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
