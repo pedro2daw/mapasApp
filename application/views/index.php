@@ -225,6 +225,7 @@
 
             $("#hotspotImg").on("wheel", function(e) {
                 var width = $("#hotspotImg").first().width();
+                console.log(width);
                 console.log('zoom ' + zoom);
 
                 var e0 = e.originalEvent,
@@ -239,14 +240,16 @@
                     if (actWdth < width * 10) {
                         zoom += 0.04;
                     }
+                    console.log(actWdth);
                     $("#hotspotImg").css("transition", "transform 1s");
                     $("#hotspotImg").css("transform-origin", "top left");
                     $("#hotspotImg").css("transform", "scale(" + (zoom) + ")");
                 } else {
                     // Tony: Se podrá hacer zoom hacia afuera hasta que el width de la imagen sea mayor que el width del div + 200
-                    if (actWdth > width + 200) {
+                    if (actWdth > width + 15000) {
                         zoom -= 0.04;
                     }
+                    console.log(actWdth);
                     $("#hotspotImg").css("transition", "transform 1s");
                     $("#hotspotImg").css("transform-origin", "top left");
                     $("#hotspotImg").css("transform", "scale(" + (zoom) + ")");
