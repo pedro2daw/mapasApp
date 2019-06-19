@@ -70,6 +70,7 @@ class BackUp extends Security {
         }else{
             echo "<script>alert('Error al restaurar sql')</script>";
         }
+        redirect('BackUp/back_up');
     } else {
         $data["viewName"] = "error";
         $this->load->view('template', $data);

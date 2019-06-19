@@ -392,7 +392,6 @@
                         else if ($nivel == 1) {
                             echo anchor('Maps/index/',$path,' class="flex-sm-fill text-sm-center nav-link "');
                             echo anchor('Maps/index/','Mapas','id="enlace_mapas" class="flex-sm-fill text-sm-center nav-link "');
-                            echo anchor('Hotspots/select_maps/','Puntos de Interés',' id="enlace_hotspots" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Streets/view_admin_streets/','Calles',' id="enlace_calles" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('ListadoCalles/get_listado','Listado de calles','id="enlace_listado" class="flex-sm-fill text-sm-center nav-link"');
                             echo anchor('Users/view_users/','Mi Usuario',' id="enlace_usuarios" class="flex-sm-fill text-sm-center nav-link"');

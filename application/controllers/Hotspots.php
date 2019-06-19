@@ -5,21 +5,32 @@ include_once('Security.php');
 class Hotspots extends Security {
     
     public function view_hotspots($id_mapa, $imgUrl) {
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){
         $url = base64_decode(urldecode($imgUrl));
         $data['id_mapa'] = $id_mapa;
         $data['urlImg'] = $url;
         $data['ListaHotspots'] = $this->ModelHotspot->get_all($id_mapa);
         $data['viewName'] = "admin_hotspots";
         $this->load->view('template', $data);
+        } else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
     
     public function select_maps() {
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){
         $data['ListaMapas'] = $this->ModelHotspot->get_mapas();
         $data["viewName"] = "select_map";
         $this->load->view('template', $data);
+        } else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
 
     public function insert_hotspot() {
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){
         $config['upload_path'] = "./assets/img/img_hotspots";
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
 
@@ -59,11 +70,20 @@ class Hotspots extends Security {
         $this->ModelHotspot->insert($id, $imagen, $titulo, $descripcion, $pos_x, $pos_y, $id_mapa);
         
         echo $imagen;
+        } else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
     
     public function delete_hotspot() {
+        if ($this->ModelUser->getNivel($this->session->userdata("id"))  == 2){
         $id_mapa = $this->input->get_post('id_mapa');
         $id = $this->input->get_post('id');
         $r = $this->ModelHotspot->delete($id, $id_mapa);
+        } else {
+            $data["viewName"] = "error";
+            $this->load->view('template', $data);
+        }
     }
 }

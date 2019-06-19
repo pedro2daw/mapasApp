@@ -59,13 +59,11 @@
         
         // Carga de los puntos insertados desde la BD
         $('#hotspotImg').hotSpot({
-
           // default selectors
           mainselector: '#hotspotImg',
           selector: '.hot-spot',
           imageselector: '.img-responsive',
           tooltipselector: '.tooltip',
-
           // or 'click'
           bindselector: 'hover'
 
@@ -95,8 +93,7 @@
                                 <input type="hidden" name="mapId" id="mapId" value=""/>
                         </div>
                         <img id='upd_imagen' class='img-thumbnail' src=''>
-
-<!--
+                        <!--
                         <div class='form-group'>
                             <label for='imagen'>Imagen</label>
                             <input type='file' class='form-control' placeholder='Introduce una imagen' name='imagen' id='imagen' required />

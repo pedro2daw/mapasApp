@@ -24,7 +24,7 @@
         <div class="col-md-4"></div> 
             <div class="col-md-4" id='fondo_form'>
             <!-- <img src='".base_url("/assets/img/icono/i2.png")."' id='favicon'> -->
-                    <h4 class='text-center'>Formulario de Login</h4>
+                    <h4 class='text-center size-1'>MapasApp</h4>
                     <?php echo form_open('Login/checkLogin'); ?>
                     <div class='form-group'>
                         Nombre</br>
