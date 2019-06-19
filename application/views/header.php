@@ -65,7 +65,7 @@
                                 success: function(data) {
                                     $(".alert_principal").addClass("d-none");
                                     
-                                    swal("", "Se ha actualizado el mapa principal", "success");
+                                    //swal("", "Se ha actualizado el mapa principal", "success");
                                     if (num_mapas > 1) {
                                         //alert("Debes alinear los planos de nuevo. Se procederá a redirigir al proceso de alineación");
                                         //var redirect = confirm("Debes alinear los planos. ¿Quieres realizar ahora el proceso de alineacion?");
