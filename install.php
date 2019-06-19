@@ -284,7 +284,10 @@
             if (!file_exists('assets/img/mapas')) {
                 mkdir('assets/img/mapas');
             }
-
+                
+            if (!file_exists('assets/img/img_hotspots')) {
+                mkdir('assets/img/img_hotspots');
+            }  
             
 			/*
             echo "<br><br><span class='text-black'>La instalación ha finalizado. <br>
