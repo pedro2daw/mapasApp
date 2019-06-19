@@ -38,7 +38,7 @@
     <link href="<?php echo base_url()?>assets/style/mdbootstrap4.7.6cssmdb.min.css" rel="stylesheet">
 
     <script type="text/javascript" src="<?php echo base_url()?>assets/js/dragscroll.js"></script>
-    
+
     <script type="text/javascript" src="<?php echo base_url()?>assets/wheelzoom.js"></script>
 
     <style>
@@ -292,6 +292,7 @@
             $("input[type='search']").addClass('form-control');
             $('.btn-continuar').hide();
             // Cambia la opacidad del mapa principal.
+
             $(document).on("input", "#slider_callejero", function() {
                 var opacity = $(this).val();
                 $("#img_callejero").css("opacity", opacity);
@@ -536,6 +537,13 @@
                     }
                 } else {}
 
+            });
+        }
+
+        function changeOpacity(i) {
+            $(document).on("input", "#slider_" + i, function() {
+                var opacity = $(this).val();
+                $("#img_" + i).css("opacity", opacity);
             });
         }
 
