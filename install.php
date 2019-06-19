@@ -151,11 +151,8 @@
             $pass = password_hash("1", PASSWORD_DEFAULT);
             $db->query("CREATE TABLE `calles` (
                                         `id` int(10) UNSIGNED NOT NULL,
-                                        `nombre` varchar(100) DEFAULT NULL,
                                         `tipo` varchar(25) NOT NULL,
-                                        `ano_inicio` smallint(6) NOT NULL,
-                                        `ano_fin` smallint(6) NOT NULL,
-                                        `id_mapa` int(10) UNSIGNED DEFAULT NULL
+                                        `nombre` varchar(100) DEFAULT NULL
                                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
             $db->query("CREATE TABLE `ci_sessions` (
                                             `id` varchar(128) NOT NULL,
