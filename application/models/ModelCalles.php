@@ -252,7 +252,7 @@ class ModelCalles extends CI_Model {
     }
     
     public function get_mapas_calles() {
-        $query = $this->db->query("SELECT calles.id as idCalle, calles.nombre as nombre, calles.tipo as tipo, mapas.id as idMapa, mapas.titulo as titulo, mapas_calles.id_map as idMap, mapas_calles.id_calle as idCall, puntos.id as id_punto, puntos.id_calle as idCallePunto, puntos.punto_x as puntoX, puntos.punto_y as puntoY FROM mapas INNER JOIN mapas_calles ON mapas.id = mapas_calles.id_map INNER JOIN calles ON calles.id = mapas_calles.id_calle INNER JOIN puntos ON puntos.id_calle = calles.id");
+        $query = $this->db->query("SELECT calles.id as idCalle, calles.nombre as nombre, calles.tipo as tipo, mapas.id as idMapa, mapas.titulo as titulo, mapas_calles.id_map as idMap, mapas_calles.id_calle as idCall, puntos.id as id_punto, puntos.id_calle as idCallePunto, puntos.punto_x as puntoX, puntos.punto_y as puntoY FROM mapas INNER JOIN mapas_calles ON mapas.id = mapas_calles.id_map INNER JOIN calles ON calles.id = mapas_calles.id_calle INNER JOIN puntos ON puntos.id_calle = calles.id ORDER BY id_calle");
         
         $data = array();
             if ($query->num_rows() > 0){
