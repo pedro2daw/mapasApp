@@ -14,17 +14,18 @@
 
             $(document).on("click","#btn-delete",function (e){
             var id = $(this).data("id");
+            console.log(id);
             e.preventDefault();
             swal({
                 title: "Precaución",
-                text: "Va a borrar el mapa seleccionado, esta operación es irreversible. ¿Desea continuar?",
+                text: "Si continúa, su usuario será dado de baja. Esta acción es irreversible, ¿Desea continuar?.",
                 icon: "warning",
-                buttons: ["No, gracias", "Borrar Mapa"],
+                buttons: ["No, gracias", "Adelante"],
                 dangerMode: true,
                 })
                 .then((willDelete) => {
                 if (willDelete) {
-                    location.href='<?php echo site_url();?>/Maps/delete_map/'+id;
+                    location.href='<?php echo site_url();?>Users/delete_user/'+id;
                 }
             });
         });
@@ -94,8 +95,8 @@
                         echo ("<p class='fila".$usuario["id"]." '> Usuario Básico </p>");
                         echo ("<h5 id='nivel_".$usuario["id"]."' class='d-none fila ".$usuario["id"]."'>".$usuario["nivel"]."</h5>");
                         echo "<div class='btn_flex_wrapper'>";
-                        echo anchor("Users/update_user/".$usuario['id'],"<span class='far fa-edit'></span> Modificar mis datos ","  data-id='".$usuario['id']."'id='btn_update' class='btn btn-info btn-update ' data-toggle='modal'  data-target='#modal_mod'");
-                        echo anchor("Users/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span> Darme de baja","id='btn_delete' class='btn btn-danger vertical-align'");
+                        echo anchor("Users/update_user/".$usuario['id'],"<span class='far fa-edit'></span> Modificar mis datos ","  data-id='".$usuario['id']."' id='btn_update' class='btn btn-info btn-update ' data-toggle='modal'  data-target='#modal_mod'");
+                        echo anchor("Users/delete_user/".$usuario['id'],"<span class='fas fa-trash-alt'></span> Darme de baja"," data-id='".$usuario['id']."' id='btn-delete' class='btn btn-danger vertical-align btn-delete'");
                         echo "</div>";
                     ?>
             </div>
